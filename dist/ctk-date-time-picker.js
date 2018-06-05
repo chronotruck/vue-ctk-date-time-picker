@@ -13384,12 +13384,12 @@ function vue_wc_wrapper_wrap (Vue, Component) {
 
 /* harmony default export */ var dist_vue_wc_wrapper = (vue_wc_wrapper_wrap);
 
-// CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js?{"cacheDirectory":"/Users/mazel/workspace/vue-ctk-date-time-picker/node_modules/.cache/vue-loader","cacheIdentifier":"b3fca2dc-vue-loader-template"}!/usr/local/lib/node_modules/@vue/cli-service/node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/cache-loader/dist/cjs.js??ref--0-0!./node_modules/vue-loader/lib??vue-loader-options!./src/components/CtkDateTimePicker.vue?vue&type=template&id=2440ac5c
+// CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js?{"cacheDirectory":"/Users/mazel/workspace/vue-ctk-date-time-picker/node_modules/.cache/vue-loader","cacheIdentifier":"b3fca2dc-vue-loader-template"}!/usr/local/lib/node_modules/@vue/cli-service/node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/cache-loader/dist/cjs.js??ref--0-0!./node_modules/vue-loader/lib??vue-loader-options!./src/components/CtkDateTimePicker.vue?vue&type=template&id=5faa616e
 var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('div',{staticClass:"time-picker",attrs:{"id":"CtkDateTimePicker"}},[_c('div',{ref:"parent",staticClass:"field",class:{'is-focused': _vm.isFocus || _vm.isVisible, 'has-value': _vm.dateTime, 'has-error': _vm.errorHint},on:{"click":function($event){$event.stopPropagation();return _vm.showDatePicker($event)}}},[_c('input',{ref:"CtkDateTimePicker",staticClass:"field-input",style:(_vm.isFocus && !_vm.errorHint || _vm.isVisible ? _vm.borderStyle : ''),attrs:{"type":"text","id":_vm.id,"readonly":""},domProps:{"value":_vm.getDateTimeMoment()},on:{"focus":_vm.onFocus,"blur":_vm.onBlur}}),_c('input',{attrs:{"type":"hidden"},domProps:{"value":_vm.dateRaw}}),_c('label',{staticClass:"field-label",class:_vm.hint ? (_vm.errorHint ? 'text-danger' : 'text-primary') : '',style:(_vm.isFocus || _vm.isVisible ? _vm.colorStyle : ''),attrs:{"for":_vm.id}},[_vm._v(_vm._s(_vm.hint || _vm.label))]),_c('ctk-date-picker-agenda',{attrs:{"date-time":_vm.dateTime,"color":_vm.color,"visible":_vm.isVisible,"without-header":!_vm.withoutHeader,"disable-time":_vm.disableTime,"disable-date":_vm.disableDate,"minute-interval":_vm.minuteInterval,"time-format":_vm.timeFormat,"locale":_vm.locale,"min-date":_vm.minDate,"max-date":_vm.maxDate},on:{"change-date":_vm.changeDate}})],1)])}
 var staticRenderFns = []
 
 
-// CONCATENATED MODULE: ./src/components/CtkDateTimePicker.vue?vue&type=template&id=2440ac5c
+// CONCATENATED MODULE: ./src/components/CtkDateTimePicker.vue?vue&type=template&id=5faa616e
 
 // EXTERNAL MODULE: ./node_modules/core-js/modules/es6.number.constructor.js
 var es6_number_constructor = __webpack_require__("xfY5");
@@ -14346,7 +14346,7 @@ function nearestMinutes(interval, someMoment, m) {
     },
     timeFormat: {
       type: String,
-      default: 'HH:mm'
+      default: 'H:mm a'
     },
     withoutHeader: {
       type: Boolean,
