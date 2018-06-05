@@ -30,14 +30,6 @@
 </template>
 
 <script>
-  import Vue from 'vue'
-  import VueMoment from 'vue-moment'
-  import Moment from 'moment'
-  import { extendMoment } from 'moment-range'
-  const moment = extendMoment(Moment)
-  Vue.use(VueMoment, {
-    moment
-  })
   import CtkDatePickerAgenda from './_subs/CtkDatePickerAgenda'
   function nearestMinutes (interval, someMoment, m) {
     const roundedMinutes = Math.ceil(someMoment.minute() / interval) * interval
