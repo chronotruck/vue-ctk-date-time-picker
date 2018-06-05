@@ -60,7 +60,7 @@
       disableDate: { type: Boolean, default: false },
       minuteInterval: { type: Number, default: 1 },
       color: { type: String },
-      timeFormat: { type: String, default: 'HH:mm' },
+      timeFormat: { type: String, default: 'H:mm a' },
       withoutHeader: { type: Boolean, default: false },
       id: { type: String, default: 'CtkDateTimePicker'},
       minDate: { type: String },
