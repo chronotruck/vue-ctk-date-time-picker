@@ -22,8 +22,8 @@ var yourComponent = new Vue({
 ``` html
 <template>
   ...
-  <ctk-datetime-picker
-    v-model="value" // if you want init value : always this format 'HH:mm'
+  <ctk-date-time-picker
+    v-model="value"
     :label="'Choose a time'"
     :hint="'Text'"
     :error-hint="true"
@@ -47,7 +47,7 @@ var yourComponent = new Vue({
 
 *hint : Is a text that replaces the label/placeholder
 
-**error-hint : When is `true` --> Input border & label are red 
+**error-hint : When is `true` --> Input border & label are red
 
 ***color: Replace color for the hint, the borders & time selected in dropdown   
 
@@ -58,5 +58,8 @@ var yourComponent = new Vue({
 npm install
 
 # serve with hot reload at localhost:8080
-npm run dev
+npm run serve
+
+# build component
+vue-cli-service build --target wc --name ctk-date-time-picker ./src/main-build.js
 ```
