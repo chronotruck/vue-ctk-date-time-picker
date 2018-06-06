@@ -1,2 +1,8 @@
-node_modules
-demo
+assets
+index.html
+node_modules/
+demo/*
+webpack.config.js
+.gitignore
+.editorconfig
+.babelrc

@@ -1,14 +1,30 @@
 #vueCtkDateTimePicker, html, body {
-  font-family: 'Avenir', Helvetica, Arial, sans-serif;
+  font-family: 'Roboto', Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
   color: #2c3e50;
 }
-#vueCtkDateTimePicker {
-  width: 80%;
-  margin: 0 auto;
-}
 *, *::before, *::after {
   box-sizing: border-box;
+}
+.logo {
+  width: 180px;
+}
+p {
+  margin-top: 0;
+}
+h3 {
+  margin-top: 0;
+}
+.component-container {
+  float: left;
+  width: 46%;
+  margin: 0 2%;
+  padding: 20px;
+  background: #F2F2F2;
+  border: 1px solid #EAEAEA;
+  border-radius: 4px;
+  margin-bottom: 20px;
+  box-shadow: 0 2px 1px -1px rgba(0, 0, 0, 0.2), 0 1px 1px 0 rgba(0, 0, 0, 0.14), 0 1px 3px 0 rgba(0, 0, 0, 0.12);
 }
