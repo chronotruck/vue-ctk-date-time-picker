@@ -1,0 +1,11 @@
+./assets/main.css
+./assets/logo.png
+index.html
+node_modules/
+demo/*
+webpack.config.js
+.gitignore
+.editorconfig
+.babelrc
+.eslintignore
+.eslintrc
