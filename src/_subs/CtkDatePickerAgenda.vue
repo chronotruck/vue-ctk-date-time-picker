@@ -146,7 +146,7 @@
 
 <style lang="scss" scoped>
   @import url('https://fonts.googleapis.com/css?family=Roboto:400,500,700');
-  @import "../assets/animation.scss";
+  @import "../component_assets/animation.scss";
   .datepicker {
     font-family: 'Roboto', sans-serif;
     position: absolute;

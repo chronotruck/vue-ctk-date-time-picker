@@ -104,7 +104,7 @@
   }
 </script>
 <style lang="scss" scoped>
-  @import "../../assets/animation.scss";
+  @import "../../component_assets/animation.scss";
   #CtkDatePicker {
     width: 290px;
     padding: 0 10px;

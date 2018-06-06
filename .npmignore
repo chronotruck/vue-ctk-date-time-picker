@@ -1,8 +1,11 @@
-assets
+./assets
 index.html
 node_modules/
-demo/*
+demo
 webpack.config.js
 .gitignore
 .editorconfig
 .babelrc
+.eslintignore
+.eslintrc
+.main.css

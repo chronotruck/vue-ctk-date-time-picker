@@ -136,7 +136,7 @@
 
 
 <style lang="scss">
- @import "/assets/main.scss";
+ @import "/component_assets/main.scss";
   #CtkDateTimePicker {
     position: relative;
     width: 100%;
