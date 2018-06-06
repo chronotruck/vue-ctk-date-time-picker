@@ -42,17 +42,17 @@ var yourComponent = new Vue({
 | hint*       | text       | no       | -         |
 | error-hint** | Boolean    | no      | false     |
 | color***     | String (hex) | no    | dodgerblue |
-| minute-interval | Int | no    | 1    |    -        |
-| formatted   | string | no    | 1    | 'llll' (momentjs format) |
-| format   | string | no    | 1    | 'YYYY-MM-DDTHH:mm' |
-| time-format   | string | no    | 1    | 'H:mm a' |
-| locale   | string | no    | 1    | en |
-| disable-time   | Boolean | no    | 1    | false |
-| disable-date   | Boolean | no    | 1    | false |
-| without-header   | Boolean | no    | 1    | false |
-| id  | string | no    | 1    | CtkDateTimePicker |
-| min-date****  | string | no    | 1    | null |
-| max-date****  | string | no    | 1    | null |
+| minute-interval | Int | no    | 1    |
+| formatted   | string | no    | 'llll' (momentjs format) |
+| format   | string | no      | 'YYYY-MM-DDTHH:mm' |
+| time-format   | string | no  | 'H:mm a' |
+| locale   | string | no     | en |
+| disable-time   | Boolean | no     | false |
+| disable-date   | Boolean | no  | false |
+| without-header   | Boolean | no   | false |
+| id  | string | no  | CtkDateTimePicker |
+| min-date****  | string | no  | - |
+| max-date****  | string | no  | - |
 
 *hint : Is a text that replaces the label/placeholder
 
