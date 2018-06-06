@@ -82,12 +82,13 @@
         return this.month.getFormatted()
       },
       isDisabled: function (day) {
-        if (this.minDate || this.maxDate) {
-          const minDate = moment(this.minDate)
-          const maxDate = moment(this.maxDate)
-          return day.isBefore(minDate) || day.isAfter(maxDate)
+        if (this.minDate && this.maxDate) {
+          return !moment(day).isBetween(this.minDate,this.maxDate)
+        } else if (this.minDate) {
+          return moment(day).isBefore(this.minDate)
+        } else {
+          return moment(day).isAfter(this.maxDate)
         }
-        return false
       },
       isSelected: function (day) {
         return moment(moment(this.dateTime).format('YYYY-MM-DD')).isSame(day.format('YYYY-MM-DD'))
