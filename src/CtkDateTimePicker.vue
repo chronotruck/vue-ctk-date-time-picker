@@ -1,15 +1,15 @@
 <template>
   <div id="CtkDateTimePicker" class="time-picker">
-    <div ref="parent" class="field" :class="{'is-focused': isFocus || isVisible, 'has-value': dateTime, 'has-error': errorHint}"  @click.stop="showDatePicker">
+    <div ref="parent" class="field" :class="{'is-focused': isFocus || isVisible, 'has-value': dateFormatted, 'has-error': errorHint}"  @click.stop="showDatePicker">
       <input type="text" :id="id"
-             :value="getDateTimeMoment()"
+             :value="dateFormatted"
              class="field-input"
              @focus="onFocus"
              @blur="onBlur"
+             :placeholder="label"
              :style="isFocus && !errorHint || isVisible ? borderStyle : ''"
              ref="CtkDateTimePicker" readonly>
-
-      <input type="hidden" :value="dateRaw">
+      <input type="hidden" :value="dateRaw" >
       <label :for="id" class="field-label"
              :class="hint ? (errorHint ? 'text-danger' : 'text-primary') : ''"
              :style="isFocus || isVisible ? colorStyle : ''">{{hint || label}}</label>
@@ -24,6 +24,8 @@
                               :locale="locale"
                               :min-date="minDate"
                               :max-date="maxDate"
+                              @validate="validate"
+                              @cancel="cancel"
                               @change-date="changeDate" />
     </div>
   </div>
@@ -63,7 +65,9 @@
       return {
         dateTime: this.getDateTime(),
         isVisible: false,
-        isFocus: false
+        isFocus: false,
+        dateRaw: this.value ? moment(this.value).format(this.format) : null,
+        dateFormatted: this.value ? moment(this.value).locale(this.locale).format(this.formatted) : null
       }
     },
     computed: {
@@ -76,10 +80,6 @@
         return {
           borderColor: this.color
         }
-      },
-      dateRaw: function () {
-        this.$emit('input', moment(this.dateTime).clone().format(this.format))
-        return moment(this.dateTime).clone().format(this.format)
       }
     },
     created: function () {
@@ -99,17 +99,13 @@
         return nearestMinutes(this.minuteInterval, this.value ? moment(this.value).clone() : moment().clone(), moment)
       },
       changeDate: function (day) {
+        this.dateFormatted = moment(day).clone().locale(this.locale).format(this.formatted)
         this.dateTime = day
       },
       showDatePicker: function () {
         this.isVisible = true
-        const vm = this
-        setTimeout(function () {
-          document.addEventListener('click', vm.hideDatePicker)
-        }, 0)
       },
       hideDatePicker: function () {
-        document.removeEventListener('click', this.hideDatePicker)
         this.isVisible = false
       },
       onFocus: function () {
@@ -117,6 +113,17 @@
       },
       onBlur: function () {
         this.isFocus = false
+      },
+      validate: function () {
+        this.$emit('input', moment(this.dateTime).clone().format(this.format))
+        this.dateRaw = moment(this.dateTime).clone().format(this.format)
+        this.dateFormatted = moment(this.dateTime).clone().locale(this.locale).format(this.formatted)
+        this.hideDatePicker()
+      },
+      cancel: function () {
+        this.dateRaw = this.value ? moment(this.value).format(this.format) : null,
+        this.dateFormatted = this.value ? moment(this.value).locale(this.locale).format(this.formatted) : null
+        this.hideDatePicker()
       }
     },
     watch: {

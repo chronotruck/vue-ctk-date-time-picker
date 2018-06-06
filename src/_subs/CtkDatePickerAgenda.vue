@@ -32,6 +32,16 @@
           <ctk-date-picker :month="month" :date-time="dateTime" :locale="locale" :color="color" @change-date="selectDate" @change-month="changeMonth" v-if="!disableDate" :min-date="minDate" :max-date="maxDate" />
           <ctk-time-picker :month="month" :date-time="dateTime" :color="color" :format="timeFormat" :minute-interval="minuteInterval" v-if="!disableTime" @change-time="selectTime" />
         </div>
+        <div class="datepicker-buttons-container flex justify-content-right">
+          <button class="cancel  flex align-center justify-content-center"  @click="cancel">
+            <span class="datepicker-button-effect"></span>
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/><path d="M0 0h24v24H0z" fill="none"/></svg>
+          </button>
+          <button class="validation flex align-center justify-content-center" @click="validate">
+            <span class="datepicker-button-effect"></span>
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path d="M0 0h24v24H0z" fill="none"/><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/></svg>
+          </button>
+        </div>
       </div>
     </div>
   </transition>
@@ -120,6 +130,12 @@
           month = (val === 'prev' ? 11 : 0)
         }
         this.month = new Month(month, year)
+      },
+      validate: function () {
+        this.$emit('validate')
+      },
+      cancel: function () {
+        this.$emit('cancel')
       }
     },
     watch: {
@@ -173,6 +189,65 @@
       }
       .datepicker-date {
         text-transform: capitalize;
+      }
+    }
+    .datepicker-buttons-container {
+      padding: 5px 10px;
+      border-top: 1px solid #EAEAEA;
+      button {
+        cursor: pointer;
+        -webkit-appearance: none;
+        appearance: none;
+        border: none;
+        outline: none;
+        height: 35px;
+        width: 35px;
+        border-radius: 50%;
+        padding: 0;
+        position: relative;
+        svg {
+          position: relative;
+          -webkit-transition: all 1s cubic-bezier(0.23, 1, 0.32, 1) 0ms;
+          transition: all 1s cubic-bezier(0.23, 1, 0.32, 1) 0ms;
+        }
+        .datepicker-button-effect {
+          position: absolute;
+          opacity: 0.6;
+          height: 32px;
+          width: 32px;
+          border-radius: 50%;
+          -webkit-transition: all 450ms cubic-bezier(0.23, 1, 0.32, 1) 0ms;
+          transition: all 450ms cubic-bezier(0.23, 1, 0.32, 1) 0ms;
+          transform: scale(0);
+        }
+        &.validation {
+          svg {
+            fill: green
+          }
+          .datepicker-button-effect {
+            background: green;
+          }
+        }
+        &.cancel {
+          svg {
+            fill: orangered
+          }
+          .datepicker-button-effect {
+            background: orangered;
+          }
+        }
+        &:hover {
+          svg {
+            fill: #FFF;
+          }
+          .datepicker-button-effect {
+            transform: scale(1);
+            opacity: 0.6;
+          }
+        }
+        &:first-child {
+          margin-right: 15px;
+        }
       }
     }
   }

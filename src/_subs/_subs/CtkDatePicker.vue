@@ -86,9 +86,10 @@
           return !moment(day).isBetween(this.minDate,this.maxDate)
         } else if (this.minDate) {
           return moment(day).isBefore(this.minDate)
-        } else {
+        } else if (this.maxDate) {
           return moment(day).isAfter(this.maxDate)
         }
+        return false
       },
       isSelected: function (day) {
         return moment(moment(this.dateTime).format('YYYY-MM-DD')).isSame(day.format('YYYY-MM-DD'))
