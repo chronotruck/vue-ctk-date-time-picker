@@ -8,6 +8,14 @@
   opacity: 0;
   transform: translateY(-20px);
 }
+/** Slide animation **/
+.slideinvert-enter-active, .slideinvert-leave-active {
+  opacity: 1;
+  transition: all 0.3s;
+}
+.slideinvert-enter, .slideinvert-leave-to /* .fade-leave-active below version 2.1.8 */ {
+  opacity: 0;
+}
 /** Slide next/prev animation  **/
 .slidenext-leave-active,
 .slidenext-enter-active, .slideprev-leave-active,

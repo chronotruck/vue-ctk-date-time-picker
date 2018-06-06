@@ -1,7 +1,7 @@
 <template>
-  <transition name="slide">
+  <transition :name="this.agendaPosition === 'top' ? 'slide' : 'slideinvert'">
     <div class="datetimepicker flex" v-if="visible" @click.stop>
-      <div class="datepicker">
+      <div class="datepicker" :style="position">
         <div class="datepicker-header" :style="bgStyle" v-if="withoutHeader">
           <div class="datepicker-year" v-if="!disableDate">
             <transition-group :name="transitionDayName" >
@@ -69,7 +69,8 @@
       locale: {},
       maxDate: {},
       minDate: {},
-      withoutButtonAction: {}
+      withoutButtonAction: {},
+      agendaPosition: {}
     },
     data: function () {
       return {
@@ -78,6 +79,17 @@
       }
     },
     computed: {
+      position: function () {
+        if (this.agendaPosition === 'top') {
+          return {
+            top: '100%',
+          }
+        } else {
+          return {
+            bottom: '100%'
+          }
+        }
+      },
       isFormatTwelve: function () {
         if (this.timeFormat) {
           return (this.timeFormat.indexOf('a') > -1) || (this.timeFormat.indexOf('A') > -1)
@@ -161,11 +173,9 @@
   .datepicker {
     font-family: 'Roboto', sans-serif;
     position: absolute;
-    top: 100%;
     z-index: 5;
     border-radius: 4px;
     background: #FFF;
-    margin-bottom: 20px;
     -webkit-box-shadow: 0 2px 1px -1px rgba(0, 0, 0, 0.2), 0 1px 1px 0 rgba(0, 0, 0, 0.14), 0 1px 3px 0 rgba(0, 0, 0, 0.12);
     box-shadow: 0 2px 1px -1px rgba(0, 0, 0, 0.2), 0 1px 1px 0 rgba(0, 0, 0, 0.14), 0 1px 3px 0 rgba(0, 0, 0, 0.12);
     .datepicker-header {

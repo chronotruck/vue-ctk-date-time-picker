@@ -14,7 +14,8 @@
              :class="hint ? (errorHint ? 'text-danger' : 'text-primary') : ''"
              :style="isFocus || isVisible ? colorStyle : ''">{{hint || label}}</label>
       <div class="time-picker-overlay" v-if="isVisible" @click.stop="withoutButtonAction ? validate() : cancel()"></div>
-      <ctk-date-picker-agenda :date-time="dateTime"
+      <ctk-date-picker-agenda ref="agenda"
+                              :date-time="dateTime"
                               :color="color"
                               :visible="isVisible"
                               :without-header="!withoutHeader"
@@ -26,6 +27,7 @@
                               :locale="locale"
                               :min-date="minDate"
                               :max-date="maxDate"
+                              :agenda-position="agendaPosition"
                               @validate="validate"
                               @cancel="cancel"
                               @change-date="changeDate" />
@@ -69,8 +71,9 @@
         dateTime: this.getDateTime(),
         isVisible: false,
         isFocus: false,
-        dateRaw: this.value ? moment(this.value).format(this.format) : null,
-        dateFormatted: this.value ? moment(this.value).locale(this.locale).format(this.formatted) : null
+        dateRaw: this.value ? moment(this.getDateTime()).format(this.format) : null,
+        dateFormatted: this.value ? moment(this.getDateTime()).locale(this.locale).format(this.formatted) : null,
+        agendaPosition: 'top'
       }
     },
     computed: {
@@ -114,7 +117,19 @@
         }
       },
       showDatePicker: function () {
-        this.isVisible = true
+        const elem = this.$refs.parent
+        const rect = elem.getBoundingClientRect()
+        const windowHeight = window.innerHeight
+        console.log('rect.top > rect.bottom', rect)
+        if ((windowHeight - rect.top) > windowHeight / 2 + rect.height) {
+          this.agendaPosition = 'top'
+        } else {
+          this.agendaPosition = 'bottom'
+        }
+        const vm = this
+        setTimeout(function () {
+          vm.isVisible = true
+        }, 300)
       },
       hideDatePicker: function () {
         this.isVisible = false
@@ -132,8 +147,12 @@
         this.hideDatePicker()
       },
       cancel: function () {
-        this.dateRaw = this.value ? moment(this.value).format(this.format) : null,
-        this.dateFormatted = this.value ? moment(this.value).locale(this.locale).format(this.formatted) : null
+        if (!this.disableDate) {
+          this.dateRaw = this.value ? moment(this.value).format(this.format) : null,
+          this.dateFormatted = this.value ? moment(this.value).locale(this.locale).format(this.formatted) : null
+        } else {
+
+        }
         this.hideDatePicker()
       }
     },

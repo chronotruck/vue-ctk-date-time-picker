@@ -53,6 +53,7 @@ var yourComponent = new Vue({
 | id  | string | no  | CtkDateTimePicker |
 | min-date****  | string | no  | - |
 | max-date****  | string | no  | - |
+| without-button-action | Boolean | no | false |
 
 *hint : Is a text that replaces the label/placeholder
 
