@@ -11,19 +11,23 @@
         <p>v-model = {{value}}</p>
         <p>no format, no formatted</p>
         <p>min-date="2018-06-03" max-date="2018-06-12"</p>
-        <ctk-date-time-picker v-model="value" :minute-interval="minuteInterval" name="start" color="#96bf31" min-date="2018-04-03" max-date="2018-04-12" />
+        <p>without-button-action (auto validation)</p>
+        <ctk-date-time-picker v-model="value"
+        :minute-interval="minuteInterval" name="start" color="#96bf31"
+        min-date="2018-04-03" max-date="2018-04-12" without-button-action />
       </div>
       <div class="component-container">
         <h3>DatePicker</h3>
+        <p>-</p>
+        <p>-</p>
         <p>Inititale value : null</p>
         <p>v-model = {{value2}}</p>
         <p>format="YYYY-MM-DD" formatted="ddd D MMM YYYY"</p>
         <p>disable-timepicker</p>
-        <p>-</p>
         <ctk-date-time-picker format="YYYY-MM-DD"
                               formatted="ddd D MMM YYYY"
                               v-model="value2" name="end"
-                              label="Choose date & time"
+                              label="Choose date"
                               disable-time />
       </div>
       <br>
