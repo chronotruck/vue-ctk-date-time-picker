@@ -12,7 +12,6 @@
     "lint": "./node_modules/eslint/bin/eslint.js ./"
   },
   "dependencies": {
-    "eslint": "^4.19.1",
     "vue": "^2.5.16",
     "moment": "^2.22.1",
     "moment-range": "^4.0.1",
@@ -36,7 +35,8 @@
     "vue-loader": "^13.0.5",
     "vue-template-compiler": "^2.4.4",
     "webpack": "^3.6.0",
-    "webpack-dev-server": "^2.9.1"
+    "webpack-dev-server": "^2.9.1",
+    "eslint": "^4.19.1"
   },
   "repository": {
     "type": "git",
