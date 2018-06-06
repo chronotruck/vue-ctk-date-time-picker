@@ -13,10 +13,12 @@
       <label :for="id" class="field-label"
              :class="hint ? (errorHint ? 'text-danger' : 'text-primary') : ''"
              :style="isFocus || isVisible ? colorStyle : ''">{{hint || label}}</label>
+      <div class="time-picker-overlay" v-if="isVisible" @click.stop="withoutButtonAction ? validate() : cancel()"></div>
       <ctk-date-picker-agenda :date-time="dateTime"
                               :color="color"
                               :visible="isVisible"
                               :without-header="!withoutHeader"
+                              :without-button-action="!withoutButtonAction"
                               :disable-time="disableTime"
                               :disable-date="disableDate"
                               :minute-interval="minuteInterval"
@@ -59,7 +61,8 @@
       withoutHeader: { type: Boolean, default: false },
       id: { type: String, default: 'CtkDateTimePicker'},
       minDate: { type: String },
-      maxDate: { type: String }
+      maxDate: { type: String },
+      withoutButtonAction: { type: Boolean, default: false }
     },
     data: function () {
       return {
@@ -83,6 +86,10 @@
       }
     },
     created: function () {
+      if (this.value) {
+        this.$emit('input', moment(this.dateTime).clone().format(this.format))
+        this.dateRaw = moment(this.dateTime).clone().format(this.format)
+      }
       moment.locale(this.locale)
     },
     methods: {
@@ -101,6 +108,10 @@
       changeDate: function (day) {
         this.dateFormatted = moment(day).clone().locale(this.locale).format(this.formatted)
         this.dateTime = day
+        if (this.withoutButtonAction) {
+          this.$emit('input', moment(this.dateTime).clone().format(this.format))
+          this.dateRaw = moment(this.dateTime).clone().format(this.format)
+        }
       },
       showDatePicker: function () {
         this.isVisible = true
@@ -138,7 +149,6 @@
 <style lang="scss">
  @import "/assets/main.scss";
   #CtkDateTimePicker {
-    position: relative;
     width: 100%;
     margin: 0 auto;
     text-align: left;
@@ -146,6 +156,14 @@
     border-radius: 4px;
     * {
       box-sizing: border-box;
+    }
+    .time-picker-overlay {
+      z-index: 2;
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
     }
     .field{
       position: relative;
