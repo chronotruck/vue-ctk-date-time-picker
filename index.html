@@ -17,7 +17,7 @@
         <p>v-model = {{value}}</p>
         <p>no format, no formatted</p>
         <p>min-date="2018-06-03" max-date="2018-06-12"</p>
-        <ctk-date-time-picker v-model="value" :minute-interval="minuteInterval" name="start" color="#96bf31" min-date="2018-04-03" max-date="2018-04-12"></ctk-date-time-picker>
+        <ctk-date-time-picker v-model="value" :minute-interval="minuteInterval" name="start" color="#96bf31" min-date="2018-04-03" max-date="2018-04-12" />
       </div>
       <div class="component-container">
         <h3>DatePicker</h3>
@@ -30,7 +30,7 @@
                               formatted="ddd D MMM YYYY"
                               v-model="value2" name="end"
                               label="Choose date & time"
-                              disable-time></ctk-date-time-picker>
+                              disable-time />
       </div>
       <br>
       <div class="component-container">
@@ -39,24 +39,24 @@
         <p>v-model = {{value3}}</p>
         <p>minute-interval = 10</p>
         <p>format="HH:mm" time-format="h:mm a" formatted="h:mm a"</p>
-        <ctk-date-time-picker id="timepicker" format="HH:mm" formatted="h:mm a" :time-format="timeFormat" v-model="value3" label="Choose time" :minute-interval="minuteInterval2" disable-date></ctk-date-time-picker>
+        <ctk-date-time-picker id="timepicker" format="HH:mm" formatted="h:mm a" :time-format="timeFormat" v-model="value3" label="Choose time" :minute-interval="minuteInterval2" disable-date />
       </div>
       <br>
       <div class="component-container">
         <h3>DateTimePicker without header</h3>
         <p>Inititale value : '2018-04-05T04:26'</p>
         <p>v-model = {{value}}</p>
-        <p>Locale : {{locale}}</p>
-        <p>format="h:mm a" formatted="null" (default: 'llll')</p>
+        <p>locale="{{locale}}" time-format="HH:mm"</p>
+        <p>format="null" formatted="null"</p>
          <ctk-date-time-picker without-header
                               v-model="value"
-                               :time-format="timeFormat"
+                              time-format="HH:mm"
                               id="datetimepicker-optins"
                               label="Custom label"
                               :minute-interval="minuteInterval2"
                               :error-hint="errorHint"
                               :locale="locale"
-                              :hint="hint"></ctk-date-time-picker>
+                              :hint="hint" />
       </div>
     </div>
     <script src="/dist/build.js"></script>

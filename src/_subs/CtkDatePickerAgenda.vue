@@ -29,7 +29,7 @@
           </div>
         </div>
         <div class="datetimepicker-container flex">
-          <ctk-date-picker :month="month" :date-time="dateTime" :color="color" @change-date="selectDate" @change-month="changeMonth" v-if="!disableDate" :min-date="minDate" :max-date="maxDate" />
+          <ctk-date-picker :month="month" :date-time="dateTime" :locale="locale" :color="color" @change-date="selectDate" @change-month="changeMonth" v-if="!disableDate" :min-date="minDate" :max-date="maxDate" />
           <ctk-time-picker :month="month" :date-time="dateTime" :color="color" :format="timeFormat" :minute-interval="minuteInterval" v-if="!disableTime" @change-time="selectTime" />
         </div>
       </div>
@@ -40,14 +40,8 @@
 <script>
   import CtkTimePicker from './_subs/CtkTimePicker'
   import CtkDatePicker from './_subs/CtkDatePicker'
-  function Month (m, month, year) {
-    return {
-      start: m([year, month]),
-      end: m([year, month]).clone().endOf('month'),
-      month: month,
-      year: year
-    }
-  }
+  import Month from './../modules/month'
+  import moment from 'moment'
   export default {
     name: 'CtkDatePickerAgenda',
     components: {
@@ -68,7 +62,7 @@
     },
     data: function () {
       return {
-        month: this.disableDate ? '' : Month(this.$moment, this.dateTime.month(), this.dateTime.year()),
+        month: this.disableDate ? '' : new Month(this.dateTime.month(), this.dateTime.year()),
         transitionDayName: 'slidevnext',
       }
     },
@@ -100,7 +94,7 @@
     },
     methods: {
       getDateFormatted: function () {
-        return this.$moment(this.dateTime).locale(this.locale).format('ddd D MMM')
+        return moment(this.dateTime).locale(this.locale).format('ddd D MMM')
       },
       selectTime: function (dateTime) {
         this.transitionDayName = 'slidevprev'
@@ -125,19 +119,19 @@
           year += (val === 'prev' ? -1 : +1)
           month = (val === 'prev' ? 11 : 0)
         }
-        this.month = Month(this.$moment, month, year)
+        this.month = new Month(month, year)
       }
     },
     watch: {
       dateTime: {
         handler: function () {
-          this.month = this.disableDate ? '' : Month(this.$moment, this.dateTime.month(), this.dateTime.year())
+          this.month = this.disableDate ? '' : new Month(this.dateTime.month(), this.dateTime.year())
           this.getDateFormatted()
         },
         deep: true
       },
       locale: function () {
-        this.month = this.disableDate ? '' : Month(this.$moment, this.dateTime.month(), this.dateTime.year())
+        this.month = this.disableDate ? '' : new Month(this.dateTime.month(), this.dateTime.year())
         this.getDateFormatted()
       }
     }
@@ -146,7 +140,7 @@
 
 <style lang="scss" scoped>
   @import url('https://fonts.googleapis.com/css?family=Roboto:400,500,700');
-  @import "../component_assets/animation.scss";
+  @import "../assets/animation.scss";
   .datepicker {
     font-family: 'Roboto', sans-serif;
     position: absolute;

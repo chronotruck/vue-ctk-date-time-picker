@@ -39,6 +39,7 @@
   </div>
 </template>
 <script>
+  import moment from 'moment'
   const CONFIG = {
     HOUR_TOKENS: ['HH', 'H', 'hh', 'h', 'kk', 'k'],
     MINUTE_TOKENS: ['mm', 'm'],
@@ -75,11 +76,10 @@
         }
       },
       monthDays: function () {
-        const r1 = this.$moment.range(this.month.start, this.month.end).by('days')
-        return Array.from(r1)
+        return this.month.getMonthDays()
       },
       weekDay: function () {
-        return this.month.start.weekday()
+        return this.month.getWeekStart()
       }
     },
     watch: {
@@ -302,11 +302,11 @@
         }
         let time
         if (this.apm) {
-          time = this.$moment(this.hour + ':' + this.minute + (this.apm ? this.apm : ''), 'HH:mm A').format('HH:mm')
+          time = moment(this.hour + ':' + this.minute + (this.apm ? this.apm : ''), 'HH:mm A').format('HH:mm')
         } else{
-          time = this.$moment(this.hour + ':' + this.minute + (this.apm ? this.apm : ''), 'HH:mm').format('HH:mm')
+          time = moment(this.hour + ':' + this.minute + (this.apm ? this.apm : ''), 'HH:mm').format('HH:mm')
         }
-        let dateTime = this.$moment(this.$moment(this.dateTime).format('YYYY-MM-DD') + ' ' + time)
+        let dateTime = moment(moment(this.dateTime).format('YYYY-MM-DD') + ' ' + time)
         this.$emit('change-time', dateTime)
       }
   },

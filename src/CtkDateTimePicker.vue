@@ -30,14 +30,7 @@
 </template>
 
 <script>
-  import Vue from 'vue'
-  import VueMoment from 'vue-moment'
-  import Moment from 'moment'
-  import { extendMoment } from 'moment-range'
-  const moment = extendMoment(Moment)
-  Vue.use(VueMoment, {
-    moment
-  })
+  import moment from 'moment'
   import CtkDatePickerAgenda from './_subs/CtkDatePickerAgenda'
   function nearestMinutes (interval, someMoment, m) {
     const roundedMinutes = Math.ceil(someMoment.minute() / interval) * interval
@@ -85,25 +78,25 @@
         }
       },
       dateRaw: function () {
-        this.$emit('input', this.$moment(this.dateTime).clone().format(this.format))
-        return this.$moment(this.dateTime).clone().format(this.format)
+        this.$emit('input', moment(this.dateTime).clone().format(this.format))
+        return moment(this.dateTime).clone().format(this.format)
       }
     },
     created: function () {
-      this.$moment.locale(this.locale)
+      moment.locale(this.locale)
     },
     methods: {
       getDateTimeMoment: function () {
-        return this.$moment(this.dateTime).locale(this.locale).format(this.formatted)
+        return moment(this.dateTime).locale(this.locale).format(this.formatted)
       },
       getDateTime: function () {
         if (this.disableDate) {
           if (this.value) {
-            return nearestMinutes(this.minuteInterval, this.$moment(this.value).clone(), this.$moment)
+            return nearestMinutes(this.minuteInterval, moment(this.value).clone(), moment)
           }
-          return nearestMinutes(this.minuteInterval, this.$moment().clone(), this.$moment)
+          return nearestMinutes(this.minuteInterval, moment().clone(), moment)
         }
-        return nearestMinutes(this.minuteInterval, this.value ? this.$moment(this.value).clone() : this.$moment().clone(), this.$moment)
+        return nearestMinutes(this.minuteInterval, this.value ? moment(this.value).clone() : moment().clone(), moment)
       },
       changeDate: function (day) {
         this.dateTime = day
@@ -136,7 +129,7 @@
 
 
 <style lang="scss">
- @import "/component_assets/main.scss";
+ @import "/assets/main.scss";
   #CtkDateTimePicker {
     position: relative;
     width: 100%;

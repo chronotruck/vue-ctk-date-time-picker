@@ -8,9 +8,7 @@
       </div>
       <div class="datepicker-container-label">
         <transition-group :name="transitionLabelName" class="h-100 flex align-center justify-content-center">
-          <div class="datepicker-label fs-18" v-for="month in [month]" :key="month.month">
-            {{ month.start | moment('MMMM YYYY') }}
-          </div>
+          <div class="datepicker-label fs-18" v-for="month in [month]" :key="month.month" v-text="getMonthFormatted()"></div>
         </transition-group>
       </div>
       <div class="flex-1 h-100 text-right">
@@ -46,13 +44,16 @@
 </template>
 
 <script>
+  import moment from 'moment'
+  import { getWeekDays } from './../../modules/month'
   export default {
     name: 'CtkDatePicker',
-    props: ['month', 'dateTime', 'color', 'minDate', 'maxDate'],
+    props: ['month', 'dateTime', 'color', 'minDate', 'maxDate', 'locale'],
     data () {
       return {
         transitionDaysName: 'slidenext',
-        transitionLabelName: 'slidevnext'
+        transitionLabelName: 'slidevnext',
+        weekDays: getWeekDays(this.locale)
       }
     },
     computed: {
@@ -69,28 +70,27 @@
         }
       },
       monthDays: function () {
-        const r1 = this.$moment.range(this.month.start, this.month.end).by('days')
-        return Array.from(r1)
+        const r1 = moment.range(this.month.start, this.month.end).by('days')
+        return this.month.getMonthDays()
       },
       weekDay: function () {
-        return this.month.start.weekday()
-      },
-      weekDays: function () {
-        const firstDay = this.$moment.localeData(this.$moment.locale()).firstDayOfWeek()
-        return this.$moment.weekdaysShort(firstDay === 1)
+        return this.month.getWeekStart()
       }
     },
     methods: {
+      getMonthFormatted: function () {
+        return this.month.getFormatted()
+      },
       isDisabled: function (day) {
         if (this.minDate || this.maxDate) {
-          const minDate = this.$moment(this.minDate)
-          const maxDate = this.$moment(this.maxDate)
+          const minDate = moment(this.minDate)
+          const maxDate = moment(this.maxDate)
           return day.isBefore(minDate) || day.isAfter(maxDate)
         }
         return false
       },
       isSelected: function (day) {
-        return this.$moment(this.$moment(this.dateTime).format('YYYY-MM-DD')).isSame(day.format('YYYY-MM-DD'))
+        return moment(moment(this.dateTime).format('YYYY-MM-DD')).isSame(day.format('YYYY-MM-DD'))
       },
       selectDate: function (day) {
         this.$emit('change-date', day)
@@ -104,7 +104,7 @@
   }
 </script>
 <style lang="scss" scoped>
-  @import "../../component_assets/animation.scss";
+  @import "../../assets/animation.scss";
   #CtkDatePicker {
     width: 290px;
     padding: 0 10px;
