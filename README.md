@@ -1,29 +1,29 @@
-# vue-ctk-datetime-picker
+# vue-ctk-time-picker
 
-> A vue component for select date & time (by Chronotruck)
+> A vue component for select time (by Chronotruck)
 
 ## Demo
-An [example](https://htmlpreview.github.io/?https://github.com/chronotruck/vue-ctk-datetime-picker/blob/master/demo/dist/index.html) is available
+An [example](https://htmlpreview.github.io/?https://github.com/chronotruck/vue-ctk-time-picker/blob/master/demo/dist/index.html) is available
 
 ## Install
 
 ``` bash
-npm install vue-ctk-date-time-picker --save
+npm install vue-ctk-time-picker --save
 ```
 #### In single component
 ``` js
-import CtkDateTimePicker from 'vue-ctk-date-time-picker'
+import CtkTimePicker from 'vue-ctk-time-picker'
 
 var yourComponent = new Vue({
-  components: { CtkDateTimePicker },
+  components: { CtkTimePicker },
   ...
 })
 ```
 ``` html
 <template>
   ...
-  <ctk-date-time-picker
-    v-model="value"
+  <ctk-time-picker
+    v-model="value" // if you want init value : always this format 'HH:mm'
     :label="'Choose a time'"
     :hint="'Text'"
     :error-hint="true"
@@ -47,7 +47,7 @@ var yourComponent = new Vue({
 
 *hint : Is a text that replaces the label/placeholder
 
-**error-hint : When is `true` --> Input border & label are red
+**error-hint : When is `true` --> Input border & label are red 
 
 ***color: Replace color for the hint, the borders & time selected in dropdown   
 
@@ -58,8 +58,5 @@ var yourComponent = new Vue({
 npm install
 
 # serve with hot reload at localhost:8080
-npm run serve
-
-# build component
-vue-cli-service build --target wc --name ctk-date-time-picker ./src/main-build.js
+npm run dev
 ```
