@@ -1,10 +1,12 @@
 <template>
-  <div id="CtkDateTimePicker" class="time-picker">
-    <div ref="parent" class="field" @blur="onBlur" :class="{'is-focused': isFocus || isVisible, 'has-value': dateFormatted, 'has-error': errorHint}" v-click-outside="cancel">
+  <div :id="id" ref="bigParent" class="ctk-date-time-picker">
+    <div ref="parent" class="field" :class="{'is-focused': isFocus || isVisible, 'has-value': dateFormatted, 'has-error': errorHint}" v-click-outside="cancel">
       <input type="text" :id="id"
              :value="dateFormatted"
              class="field-input"
              @focus="onFocus"
+             @click="showDatePicker"
+             @blur="onBlur"
              :placeholder="label"
              :style="isFocus && !errorHint || isVisible ? borderStyle : ''"
              ref="CtkDateTimePicker" readonly>
@@ -12,6 +14,7 @@
       <label :for="id" class="field-label"
              :class="hint ? (errorHint ? 'text-danger' : 'text-primary') : ''"
              :style="isFocus || isVisible ? colorStyle : ''">{{hint || label}}</label>
+      <div class="time-picker-overlay" v-if="isVisible" @click.stop="withoutButtonAction ? validate() : cancel()"></div>
       <ctk-date-picker-agenda ref="agenda"
                               :date-time="dateTime"
                               :color="color"
@@ -153,25 +156,30 @@
         }
         this.isVisible = true
       },
-      hideDatePicker: function () {
+      hideDatePicker: function (target) {
         this.isVisible = false
       },
       onFocus: function () {
         this.isFocus = true
-        this.showDatePicker()
       },
       onBlur: function () {
+        this.unFocus()
+      },
+      unFocus: function () {
         this.isFocus = false
-        this.isVisible 
       },
       validate: function () {
+        this.unFocus()
         this.$emit('input', moment(this.dateTime).format(this.format))
         this.dateRaw = moment(this.dateTime).format(this.format)
         this.dateFormatted = moment(this.dateTime).locale(this.locale).format(this.formatted)
         this.hideDatePicker()
       },
       cancel: function () {
-        this.dateFormatted = this.value ? this.getDateTime().locale(this.locale).format(this.formatted) : null
+        this.unFocus()
+        if (!this.withoutButtonAction) {
+          this.dateFormatted = this.value ? this.getDateTime().locale(this.locale).format(this.formatted) : null
+        }
         this.hideDatePicker()
       }
     },
@@ -186,7 +194,7 @@
 
 <style lang="scss">
  @import "/assets/main.scss";
-  #CtkDateTimePicker {
+  .ctk-date-time-picker {
     width: 100%;
     margin: 0 auto;
     text-align: left;
@@ -194,6 +202,14 @@
     border-radius: 4px;
     * {
       box-sizing: border-box;
+    }
+    .time-picker-overlay {
+      z-index: 2;
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
     }
     .field{
       position: relative;

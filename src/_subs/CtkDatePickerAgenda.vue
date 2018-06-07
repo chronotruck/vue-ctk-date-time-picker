@@ -34,12 +34,18 @@
         </div>
         <div class="datepicker-buttons-container flex justify-content-right" v-if="withoutButtonAction">
           <div class="datepicker-button cancel flex align-center justify-content-center"  @click="cancel">
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
+              <path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/>
+              <path d="M0 0h24v24H0z" fill="none"/>
+            </svg>
             <span class="datepicker-button-effect"></span>
-            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/><path d="M0 0h24v24H0z" fill="none"/></svg>
           </div>
           <div class="datepicker-button validation flex align-center justify-content-center" @click="validate">
             <span class="datepicker-button-effect"></span>
-            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path d="M0 0h24v24H0z" fill="none"/><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/></svg>
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
+              <path d="M0 0h24v24H0z" fill="none"/>
+              <path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/>
+            </svg>
           </div>
         </div>
       </div>
@@ -214,19 +220,18 @@
       border-top: 1px solid #EAEAEA;
       .datepicker-button {
         cursor: pointer;
-        -webkit-appearance: none;
-        appearance: none;
-        border: none;
-        outline: none;
         height: 35px;
         width: 35px;
+        border: none;
+        outline: none;
+        appearance: none;
         border-radius: 50%;
         padding: 0;
         position: relative;
         svg {
           position: relative;
-          -webkit-transition: all 1s cubic-bezier(0.23, 1, 0.32, 1) 0ms;
-          transition: all 1s cubic-bezier(0.23, 1, 0.32, 1) 0ms;
+          -webkit-transition: all 450s cubic-bezier(0.23, 1, 0.32, 1) 0ms;
+          transition: all 450s cubic-bezier(0.23, 1, 0.32, 1) 0ms;
         }
         .datepicker-button-effect {
           position: absolute;
@@ -240,7 +245,7 @@
         }
         &.validation {
           svg {
-            fill: green
+            fill: green;
           }
           .datepicker-button-effect {
             background: green;
@@ -248,19 +253,20 @@
         }
         &.cancel {
           svg {
-            fill: orangered
+            fill: orangered;
           }
           .datepicker-button-effect {
             background: orangered;
           }
         }
         &:hover {
-          svg {
-            fill: #FFF;
-          }
           .datepicker-button-effect {
             transform: scale(1);
             opacity: 0.6;
+          }
+          svg {
+            fill: white;
+            position: relative;
           }
         }
         &:first-child {
