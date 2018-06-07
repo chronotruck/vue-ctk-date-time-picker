@@ -1,4 +1,4 @@
-# vue-ctk-time-picker
+# vue-ctk-date-time-picker
 
 > A vue component for select date & time (by Chronotruck)
 

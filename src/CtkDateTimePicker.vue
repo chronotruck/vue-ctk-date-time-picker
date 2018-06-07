@@ -1,11 +1,10 @@
 <template>
   <div :id="id" ref="bigParent" class="ctk-date-time-picker">
-    <div ref="parent" class="field" :class="{'is-focused': isFocus || isVisible, 'has-value': dateFormatted, 'has-error': errorHint}" v-click-outside="cancel">
+    <div ref="parent" class="field" @click="showDatePicker" :class="{'is-focused': isFocus || isVisible, 'has-value': dateFormatted, 'has-error': errorHint}" v-click-outside="cancel">
       <input type="text" :id="id"
              :value="dateFormatted"
              class="field-input"
              @focus="onFocus"
-             @click="showDatePicker"
              @blur="onBlur"
              :placeholder="label"
              :style="isFocus && !errorHint || isVisible ? borderStyle : ''"
@@ -216,6 +215,7 @@
       .field-label{
         position: absolute;
         top: 3px;
+        cursor: pointer;
         left: 13px;
         -webkit-transform: translateY(25%);
         transform: translateY(25%);
