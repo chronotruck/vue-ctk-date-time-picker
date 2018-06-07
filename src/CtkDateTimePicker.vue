@@ -36,6 +36,7 @@
 <script>
   import moment from 'moment'
   import CtkDatePickerAgenda from './_subs/CtkDatePickerAgenda'
+  import ClickOutside from './modules/v-click-outside'
   function nearestMinutes (interval, someMoment, m) {
     const roundedMinutes = Math.ceil(someMoment.minute() / interval) * interval
     return m(someMoment.clone().minute(roundedMinutes).second(0))
@@ -44,6 +45,9 @@
     name: 'CtkDateTimePicker',
     components: {
       CtkDatePickerAgenda
+    },
+    directives: {
+      'click-outside': ClickOutside
     },
     props: {
       label: { type: String, default: 'Select date & time' },
@@ -158,6 +162,7 @@
       },
       onBlur: function () {
         this.isFocus = false
+        this.isVisible 
       },
       validate: function () {
         this.$emit('input', moment(this.dateTime).format(this.format))
