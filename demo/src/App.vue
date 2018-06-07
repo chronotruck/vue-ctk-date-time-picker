@@ -33,21 +33,21 @@
       <br>
       <div class="component-container">
         <h3>TimePicker</h3>
-        <p>Inititale value : '2018-04-05T14:26'</p>
-        <p>v-model = {{value3}}</p>
+        <p>Inititale value : '14:26'</p>
+        <p>v-model = {{timePickerValue}}</p>
         <p>minute-interval = 10</p>
         <p>format="HH:mm" time-format="h:mm a" formatted="h:mm a"</p>
-        <ctk-date-time-picker id="timepicker" format="HH:mm" formatted="h:mm a" :time-format="timeFormat" v-model="value3" label="Choose time" :minute-interval="minuteInterval2" disable-date />
+        <ctk-date-time-picker id="timepicker" format="HH:mm" formatted="h:mm a" :time-format="timeFormat" v-model="timePickerValue" label="Choose time" :minute-interval="minuteInterval2" disable-date />
       </div>
       <br>
       <div class="component-container">
         <h3>DateTimePicker without header</h3>
-        <p>Inititale value : '2018-04-05T04:26'</p>
-        <p>v-model = {{value}}</p>
+        <p>Inititale value : '2018-04-05T14:26'</p>
+        <p>v-model = {{value3}}</p>
         <p>locale="{{locale}}" time-format="HH:mm"</p>
         <p>format="null" formatted="null"</p>
          <ctk-date-time-picker without-header
-                              v-model="value"
+                              v-model="value3"
                               time-format="HH:mm"
                               id="datetimepicker-optins"
                               label="Custom label"
@@ -73,6 +73,7 @@ export default {
       value: '2018-04-05T04:26',
       value2: null,
       value3: '2018-04-05T14:26',
+      timePickerValue: '14:26',
       minuteInterval: 5,
       minuteInterval2: 10,
       hint: 'Error message',
