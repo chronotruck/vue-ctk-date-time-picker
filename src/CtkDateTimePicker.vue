@@ -1,19 +1,17 @@
 <template>
   <div id="CtkDateTimePicker" class="time-picker">
-    <div ref="parent" class="field" :class="{'is-focused': isFocus || isVisible, 'has-value': dateFormatted, 'has-error': errorHint}"  @click.stop="showDatePicker">
+    <div ref="parent" class="field" @blur="onBlur" :class="{'is-focused': isFocus || isVisible, 'has-value': dateFormatted, 'has-error': errorHint}" v-click-outside="cancel">
       <input type="text" :id="id"
              :value="dateFormatted"
              class="field-input"
              @focus="onFocus"
-             @blur="onBlur"
              :placeholder="label"
              :style="isFocus && !errorHint || isVisible ? borderStyle : ''"
              ref="CtkDateTimePicker" readonly>
-      <input type="hidden" :value="dateRaw" >
+      <input type="hidden" :value="dateRaw" tabindex="-1">
       <label :for="id" class="field-label"
              :class="hint ? (errorHint ? 'text-danger' : 'text-primary') : ''"
              :style="isFocus || isVisible ? colorStyle : ''">{{hint || label}}</label>
-      <div class="time-picker-overlay" v-if="isVisible" @click.stop="withoutButtonAction ? validate() : cancel()"></div>
       <ctk-date-picker-agenda ref="agenda"
                               :date-time="dateTime"
                               :color="color"
@@ -71,8 +69,8 @@
         dateTime: this.getDateTime(),
         isVisible: false,
         isFocus: false,
-        dateRaw: this.value ? moment(this.getDateTime()).format(this.format) : null,
-        dateFormatted: this.value ? moment(this.getDateTime()).locale(this.locale).format(this.formatted) : null,
+        dateRaw: null,
+        dateFormatted: this.getDateFormatted(),
         agendaPosition: 'top'
       }
     },
@@ -90,21 +88,45 @@
     },
     created: function () {
       if (this.value) {
-        this.$emit('input', moment(this.dateTime).clone().format(this.format))
-        this.dateRaw = moment(this.dateTime).clone().format(this.format)
+        this.$emit('input', this.dateTime.format(this.format))
+        this.dateRaw = this.dateTime.format(this.format)
       }
       moment.locale(this.locale)
     },
     methods: {
+      getDateFormatted: function () {
+        let dateFormat
+        if (this.value) {
+          if (!moment(this.value, 'YYYY-MM-DD').isValid()) {
+            dateFormat = moment(moment().format('YYYY-MM-DD') + ' ' + this.value)
+          } else {
+            dateFormat = moment(this.value)
+          }
+        } else {
+          dateFormat = null
+        }
+        if (dateFormat) {
+          return nearestMinutes(this.minuteInterval, dateFormat, moment).locale(this.locale).format(this.formatted)
+        } else {
+          return null
+        }
+      },
       getDateTimeMoment: function () {
-        return moment(this.dateTime).locale(this.locale).format(this.formatted)
+        return moment(this.dateTime).locale(this.locale)
       },
       getDateTime: function () {
         if (this.disableDate) {
           if (this.value) {
-            return nearestMinutes(this.minuteInterval, moment(this.value).clone(), moment)
+            let date
+            if (!moment(this.value, 'YYYY-MM-DD').isValid()) {
+              date = moment(moment().format('YYYY-MM-DD') + ' ' + this.value)
+            } else {
+              date = moment(this.value)
+            }
+            return nearestMinutes(this.minuteInterval, date, moment)
+          } else {
+            return nearestMinutes(this.minuteInterval, moment().clone(), moment)  
           }
-          return nearestMinutes(this.minuteInterval, moment().clone(), moment)
         }
         return nearestMinutes(this.minuteInterval, this.value ? moment(this.value).clone() : moment().clone(), moment)
       },
@@ -117,48 +139,40 @@
         }
       },
       showDatePicker: function () {
-        const elem = this.$refs.parent
-        const rect = elem.getBoundingClientRect()
+        const rect = this.$refs.parent.getBoundingClientRect()
         const windowHeight = window.innerHeight
-        console.log('rect.top > rect.bottom', rect)
-        if ((windowHeight - rect.top) > windowHeight / 2 + rect.height) {
+        const datePickerHeight = 300
+        if (((windowHeight - (rect.top + rect.height)) > datePickerHeight) || ((windowHeight - rect.top) > windowHeight / 2 + rect.height)) {
           this.agendaPosition = 'top'
         } else {
           this.agendaPosition = 'bottom'
         }
-        const vm = this
-        setTimeout(function () {
-          vm.isVisible = true
-        }, 300)
+        this.isVisible = true
       },
       hideDatePicker: function () {
         this.isVisible = false
       },
       onFocus: function () {
         this.isFocus = true
+        this.showDatePicker()
       },
       onBlur: function () {
         this.isFocus = false
       },
       validate: function () {
-        this.$emit('input', moment(this.dateTime).clone().format(this.format))
-        this.dateRaw = moment(this.dateTime).clone().format(this.format)
-        this.dateFormatted = moment(this.dateTime).clone().locale(this.locale).format(this.formatted)
+        this.$emit('input', moment(this.dateTime).format(this.format))
+        this.dateRaw = moment(this.dateTime).format(this.format)
+        this.dateFormatted = moment(this.dateTime).locale(this.locale).format(this.formatted)
         this.hideDatePicker()
       },
       cancel: function () {
-        if (!this.disableDate) {
-          this.dateRaw = this.value ? moment(this.value).format(this.format) : null,
-          this.dateFormatted = this.value ? moment(this.value).locale(this.locale).format(this.formatted) : null
-        } else {
-
-        }
+        this.dateFormatted = this.value ? this.getDateTime().locale(this.locale).format(this.formatted) : null
         this.hideDatePicker()
       }
     },
     watch: {
       locale: function () {
-        this.dateTime = this.getDateTime()
+        this.dateTime = this.dateTime
       }
     }
   }
@@ -176,14 +190,6 @@
     * {
       box-sizing: border-box;
     }
-    .time-picker-overlay {
-      z-index: 2;
-      position: fixed;
-      top: 0;
-      left: 0;
-      right: 0;
-      bottom: 0;
-    }
     .field{
       position: relative;
       .field-label{
@@ -199,6 +205,7 @@
         color: rgba(0, 0, 0, 0.54);
       }
       .field-input{
+        cursor: pointer;
         background-color: #FFF;
         -webkit-transition-duration: 0.3s;
         transition-duration: 0.3s;

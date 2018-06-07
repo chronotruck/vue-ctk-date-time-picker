@@ -1,6 +1,6 @@
 <template>
   <transition :name="this.agendaPosition === 'top' ? 'slide' : 'slideinvert'">
-    <div class="datetimepicker flex" v-if="visible" @click.stop>
+    <div class="datetimepicker flex" v-if="visible" @click.stop :style="position">
       <div class="datepicker" :style="position">
         <div class="datepicker-header" :style="bgStyle" v-if="withoutHeader">
           <div class="datepicker-year" v-if="!disableDate">
@@ -33,14 +33,14 @@
           <ctk-time-picker :month="month" :date-time="dateTime" :color="color" :format="timeFormat" :minute-interval="minuteInterval" v-if="!disableTime" @change-time="selectTime" />
         </div>
         <div class="datepicker-buttons-container flex justify-content-right" v-if="withoutButtonAction">
-          <button class="cancel  flex align-center justify-content-center"  @click="cancel">
+          <div class="datepicker-button cancel flex align-center justify-content-center"  @click="cancel">
             <span class="datepicker-button-effect"></span>
             <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/><path d="M0 0h24v24H0z" fill="none"/></svg>
-          </button>
-          <button class="validation flex align-center justify-content-center" @click="validate">
+          </div>
+          <div class="datepicker-button validation flex align-center justify-content-center" @click="validate">
             <span class="datepicker-button-effect"></span>
             <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path d="M0 0h24v24H0z" fill="none"/><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/></svg>
-          </button>
+          </div>
         </div>
       </div>
     </div>
@@ -83,10 +83,12 @@
         if (this.agendaPosition === 'top') {
           return {
             top: '100%',
+            marginBottom: '10px'
           }
         } else {
           return {
-            bottom: '100%'
+            bottom: '100%',
+            marginTop: '10px'
           }
         }
       },
@@ -170,6 +172,9 @@
 <style lang="scss" scoped>
   @import url('https://fonts.googleapis.com/css?family=Roboto:400,500,700');
   @import "../assets/animation.scss";
+  .datetimepicker {
+    position: absolute;
+  }
   .datepicker {
     font-family: 'Roboto', sans-serif;
     position: absolute;
@@ -184,6 +189,8 @@
       padding: 10px 0 10px 10px;
       position: relative;
       border-bottom: 1px solid #EAEAEA;
+      border-top-left-radius: 4px;
+      border-top-right-radius: 4px;
       .datepicker-year {
         opacity: 0.7;
         margin-bottom: 10px;
@@ -205,7 +212,7 @@
     .datepicker-buttons-container {
       padding: 5px 10px;
       border-top: 1px solid #EAEAEA;
-      button {
+      .datepicker-button {
         cursor: pointer;
         -webkit-appearance: none;
         appearance: none;

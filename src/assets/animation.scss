@@ -12,9 +12,11 @@
 .slideinvert-enter-active, .slideinvert-leave-active {
   opacity: 1;
   transition: all 0.3s;
+  transform: translateY(0);
 }
 .slideinvert-enter, .slideinvert-leave-to /* .fade-leave-active below version 2.1.8 */ {
   opacity: 0;
+  transform: translateY(40px);
 }
 /** Slide next/prev animation  **/
 .slidenext-leave-active,
