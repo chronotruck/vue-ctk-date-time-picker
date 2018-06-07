@@ -1,9 +1,7 @@
 import Vue from 'vue'
 import CtkDateTimePicker from './CtkDateTimePicker.vue'
-import ClickOutside from './modules/v-click-outside'
 if (document.querySelector('#vueCtkDateTimePicker')) {
   Vue.component('ctk-date-time-picker', CtkDateTimePicker)
-  Vue.directive('click-outside', ClickOutside)
   new Vue({
     el: '#vueCtkDateTimePicker',
     data: function () {
