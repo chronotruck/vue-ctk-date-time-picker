@@ -44,11 +44,17 @@
     "url": "git+https://github.com/chronotruck/vue-ctk-date-time-picker.git"
   },
   "keywords": [
-    "VueJs",
+    "vue",
+    "javascript",
+    "vue-component",
     "input",
-    "text",
+    "date",
+    "time",
+    "picker",
     "ctk",
-    "chronotruck"
+    "chronotruck",
+    "datepicker",
+    "timepicker"
   ],
   "bugs": {
     "url": "https://github.com/chronotruck/vue-ctk-date-time-picker/issues"
