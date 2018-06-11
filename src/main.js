@@ -1,5 +1,7 @@
 import Vue from 'vue'
 import CtkDateTimePicker from './CtkDateTimePicker.vue'
+import 'classlist-polyfill'
+import 'babel-polyfill'
 if (document.querySelector('#vueCtkDateTimePicker')) {
   Vue.component('ctk-date-time-picker', CtkDateTimePicker)
   new Vue({
