@@ -1,3 +1,5 @@
+![vue-ctk-date-time-picker](./assets/illu.png)
+
 # vue-ctk-date-time-picker
 
 > A vue component for select date & time (by Chronotruck)
