@@ -12,7 +12,7 @@
   },
   "dependencies": {
     "vue": "^2.5.2",
-    "vue-ctk-date-time-picker": "^1.0.7"
+    "vue-ctk-date-time-picker": "^1.0.8"
   },
   "devDependencies": {
     "autoprefixer": "^7.1.2",
