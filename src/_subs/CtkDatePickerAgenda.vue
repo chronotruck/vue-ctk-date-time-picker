@@ -238,6 +238,8 @@
           opacity: 0.6;
           height: 32px;
           width: 32px;
+          top: 2px;
+          left: 2px;
           border-radius: 50%;
           -webkit-transition: all 450ms cubic-bezier(0.23, 1, 0.32, 1) 0ms;
           transition: all 450ms cubic-bezier(0.23, 1, 0.32, 1) 0ms;
