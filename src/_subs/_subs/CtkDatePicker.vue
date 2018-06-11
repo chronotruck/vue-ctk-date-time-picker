@@ -24,7 +24,7 @@
     </div>
     <div class="month-container" :style="{height: (monthDays.length + weekDay) > 35 ? '250px' : '210px'}">
       <transition-group :name="transitionDaysName">
-        <div class="datepicker-days" v-for="month in [month]" :key="month.month">
+        <div class="datepicker-days flex" v-for="month in [month]" :key="month.month">
           <div class="datepicker-day align-center justify-content-center"
                v-for="start in weekDay" :key="start + 'startEmptyDay'"></div>
           <div class="datepicker-day enable flex align-center justify-content-center"
@@ -153,8 +153,10 @@
     }
     .datepicker-days {
       display: flex;
+      display: -ms-flexbox;
       overflow: hidden;
       flex-wrap: wrap;
+      -ms-flex-wrap: wrap;
       .datepicker-day {
         height: 41px;
         flex-grow: 1;
