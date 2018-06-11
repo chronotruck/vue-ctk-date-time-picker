@@ -3,7 +3,7 @@
 > A vue component for select date & time (by Chronotruck)
 
 ## Demo
-An [example](https://htmlpreview.github.io/?https://github.com/chronotruck/vue-ctk-date-time-picker/blob/master/demo/dist/index.html) is available
+A [demo](https://htmlpreview.github.io/?https://github.com/chronotruck/vue-ctk-date-time-picker/blob/master/demo/dist/index.html) is available
 
 ## Install
 
@@ -24,10 +24,9 @@ var yourComponent = new Vue({
   ...
   <ctk-date-time-picker
     v-model="value"
-    :label="'Choose a time'"
+    label="Choose a date time"
     :hint="'Text'"
     :error-hint="true"
-    :minute-interval="10" // (for time)
     color="#FF0000" />
   ...
 </template>  
@@ -37,8 +36,8 @@ var yourComponent = new Vue({
 
 | Props      | Type       | Required | Default    |
 |------------|------------|----------|------------|
-| v-model    | String/Int | true     | -          |
-| label      | String     | false    | Enter Text |
+| v-model    | String/Int | yes     | -          |
+| label      | String     | no    | Select date & time |
 | hint*       | text       | no       | -         |
 | error-hint** | Boolean    | no      | false     |
 | color***     | String (hex) | no    | dodgerblue |
