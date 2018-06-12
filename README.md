@@ -64,6 +64,10 @@ var yourComponent = new Vue({
 
 ****min-date & max-date : Must be 'YYYY-MM-DD' format
 
+## To do
+
+- Mobile support (responsive)
+
 ## Contribution
 
 ``` bash
