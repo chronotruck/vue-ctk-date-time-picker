@@ -196,6 +196,7 @@
     background: #FFF;
     -webkit-box-shadow: 0 2px 1px -1px rgba(0, 0, 0, 0.2), 0 1px 1px 0 rgba(0, 0, 0, 0.14), 0 1px 3px 0 rgba(0, 0, 0, 0.12);
     box-shadow: 0 2px 1px -1px rgba(0, 0, 0, 0.2), 0 1px 1px 0 rgba(0, 0, 0, 0.14), 0 1px 3px 0 rgba(0, 0, 0, 0.12);
+    max-width: 360px;
     .datepicker-header {
       background: dodgerblue;
       color: #FFF;
@@ -293,6 +294,7 @@
       box-shadow: none;
       -webkit-box-shadow: none;
       width: 100%;
+      max-width: 100%;
     }
   }
 </style>

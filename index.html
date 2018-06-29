@@ -64,13 +64,10 @@
       </div>
       <div class="component-container">
         <p>v-model = {{value2}}</p>
-        <ctk-date-time-picker format="YYYY-MM-DD"
-                              formatted="ddd D MMM YYYY"
-                              v-model="value2" name="end"
-                              label="Choose date"
+        <p>Option : 'without-input'</p>
+        <ctk-date-time-picker v-model="value" name="end"
+                              label="Choose date time"
                               without-button-action
-                              disable-time
-                              without-header
                               without-input/>
       </div>
     </div>
