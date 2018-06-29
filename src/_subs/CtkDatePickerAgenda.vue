@@ -1,6 +1,12 @@
 <template>
   <transition :name="this.agendaPosition === 'top' ? 'slide' : 'slideinvert'">
-    <div class="datetimepicker flex" v-if="visible" @click.stop :style="position">
+    <div
+      class="datetimepicker flex"
+      :class="{'without-input': withoutInput}"
+      v-if="visible || withoutInput"
+      @click.stop
+      :style="position"
+    >
       <div class="datepicker" :style="position">
         <div class="datepicker-header" :style="bgStyle" v-if="withoutHeader">
           <div class="datepicker-year" v-if="!disableDate">
@@ -29,7 +35,7 @@
           </div>
         </div>
         <div class="datetimepicker-container flex">
-          <ctk-date-picker :month="month" :date-time="dateTime" :locale="locale" :color="color" @change-date="selectDate" @change-month="changeMonth" v-if="!disableDate" :min-date="minDate" :max-date="maxDate" />
+          <ctk-date-picker :without-input="withoutInput" :month="month" :date-time="dateTime" :locale="locale" :color="color" @change-date="selectDate" @change-month="changeMonth" v-if="!disableDate" :min-date="minDate" :max-date="maxDate" />
           <ctk-time-picker :month="month" :date-time="dateTime" :color="color" :format="timeFormat" :minute-interval="minuteInterval" v-if="!disableTime" @change-time="selectTime" />
         </div>
         <div class="datepicker-buttons-container flex justify-content-right" v-if="withoutButtonAction">
@@ -76,7 +82,8 @@
       maxDate: {},
       minDate: {},
       withoutButtonAction: {},
-      agendaPosition: {}
+      agendaPosition: {},
+      withoutInput: {}
     },
     data: function () {
       return {
@@ -275,6 +282,17 @@
           margin-right: 15px;
         }
       }
+    }
+  }
+  .without-input {
+    &.datetimepicker, .datepicker {
+      position: relative;
+    }
+    .datepicker {
+      margin-bottom: 0 !important;
+      box-shadow: none;
+      -webkit-box-shadow: none;
+      width: 100%;
     }
   }
 </style>

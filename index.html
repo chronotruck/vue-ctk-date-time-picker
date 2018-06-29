@@ -62,6 +62,17 @@
                               :locale="locale"
                               :hint="hint" />
       </div>
+      <div class="component-container">
+        <p>v-model = {{value2}}</p>
+        <ctk-date-time-picker format="YYYY-MM-DD"
+                              formatted="ddd D MMM YYYY"
+                              v-model="value2" name="end"
+                              label="Choose date"
+                              without-button-action
+                              disable-time
+                              without-header
+                              without-input/>
+      </div>
     </div>
     <script src="/dist/build.js"></script>
   </body>
