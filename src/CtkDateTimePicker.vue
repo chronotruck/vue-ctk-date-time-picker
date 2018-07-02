@@ -147,7 +147,7 @@
       changeDate: function (day) {
         this.dateFormatted = moment(day).clone().locale(this.locale).format(this.formatted)
         this.dateTime = day
-        if (this.withoutButtonAction || this.autoClose) {
+        if (this.withoutButtonAction || this.autoClose || this.withoutInput) {
           this.$emit('input', moment(this.dateTime).clone().format(this.format))
           this.dateRaw = moment(this.dateTime).clone().format(this.format)
         }
@@ -187,7 +187,7 @@
       },
       cancel: function () {
         this.unFocus()
-        if (!this.withoutButtonAction || ! this.autoClose) {
+        if (!this.withoutButtonAction || ! this.autoClose || this.withoutInput) {
           this.dateFormatted = this.value ? this.getDateTime().locale(this.locale).format(this.formatted) : null
         }
         this.hideDatePicker()
