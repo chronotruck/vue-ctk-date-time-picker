@@ -1,19 +1,21 @@
 <template>
   <div :id="id" ref="bigParent" class="ctk-date-time-picker">
     <div ref="parent" class="field" @click="showDatePicker" :class="{'is-focused': isFocus || isVisible, 'has-value': dateFormatted, 'has-error': errorHint}" v-click-outside="cancel">
-      <input type="text" :id="id"
-             :value="dateFormatted"
-             class="field-input"
-             @focus="onFocus"
-             @blur="onBlur"
-             :placeholder="label"
-             :style="isFocus && !errorHint || isVisible ? borderStyle : ''"
-             ref="CtkDateTimePicker" readonly>
-      <input type="hidden" :value="dateRaw" tabindex="-1">
-      <label :for="id" class="field-label"
-             :class="hint ? (errorHint ? 'text-danger' : 'text-primary') : ''"
-             :style="isFocus || isVisible ? colorStyle : ''">{{hint || label}}</label>
-      <div class="time-picker-overlay" v-if="isVisible" @click.stop="withoutButtonAction ? validate() : cancel()"></div>
+      <div v-if="!withoutInput">
+        <input type="text" :id="id"
+               :value="dateFormatted"
+               class="field-input"
+               @focus="onFocus"
+               @blur="onBlur"
+               :placeholder="label"
+               :style="isFocus && !errorHint || isVisible ? borderStyle : ''"
+               ref="CtkDateTimePicker" readonly>
+        <input type="hidden" :value="dateRaw" tabindex="-1">
+        <label :for="id" class="field-label"
+               :class="hint ? (errorHint ? 'text-danger' : 'text-primary') : ''"
+               :style="isFocus || isVisible ? colorStyle : ''">{{hint || label}}</label>
+        <div class="time-picker-overlay" v-if="isVisible" @click.stop="withoutButtonAction ? validate() : cancel()"></div>
+      </div>
       <ctk-date-picker-agenda ref="agenda"
                               :date-time="dateTime"
                               :color="color"
@@ -28,6 +30,8 @@
                               :min-date="minDate"
                               :max-date="maxDate"
                               :agenda-position="agendaPosition"
+                              :without-input="withoutInput"
+                              :no-week-ends="noWeekEnds"
                               @validate="validate"
                               @cancel="cancel"
                               @change-date="changeDate" />
@@ -68,7 +72,9 @@
       id: { type: String, default: 'CtkDateTimePicker'},
       minDate: { type: String },
       maxDate: { type: String },
-      withoutButtonAction: { type: Boolean, default: false }
+      withoutButtonAction: { type: Boolean, default: false },
+      withoutInput: { type: Boolean, default: false },
+      noWeekEnds: {type: Boolean, default: false}
     },
     data: function () {
       return {
@@ -131,7 +137,7 @@
             }
             return nearestMinutes(this.minuteInterval, date, moment)
           } else {
-            return nearestMinutes(this.minuteInterval, moment().clone(), moment)  
+            return nearestMinutes(this.minuteInterval, moment().clone(), moment)
           }
         }
         return nearestMinutes(this.minuteInterval, this.value ? moment(this.value).clone() : moment().clone(), moment)
@@ -241,6 +247,7 @@
         border: 1px solid rgba(0, 0, 0, 0.2);
         border-radius: 4px;
         font-size: 14px;
+        z-index: 0;
       }
       &.has-error {
         .field-input {

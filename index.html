@@ -62,6 +62,15 @@
                               :locale="locale"
                               :hint="hint" />
       </div>
+      <div class="component-container">
+        <p>v-model = {{value}}</p>
+        <p>Option : 'without-input' && 'no-week-ends'</p>
+        <p>(When 'without-input' option is present : Option : 'without-button-action' is automatically enable)</p>
+        <ctk-date-time-picker v-model="value" name="end"
+                              label="Choose date time"
+                              no-week-ends
+                              without-input/>
+      </div>
     </div>
     <script src="/dist/build.js"></script>
   </body>

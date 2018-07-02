@@ -1,18 +1,18 @@
 <template>
-  <div id="CtkDatePicker" class="datepicker-container">
+  <div id="CtkDatePicker" class="datepicker-container" :class="{'flex-1': withoutInput}">
     <div class="datepicker-controls flex align-center justify-content-center">
-      <div class="flex-1 h-100">
+      <div class="arrow-month h-100">
         <div class="datepicker-button datepicker-prev text-center h-100 flex align-center" @click="changeMonth('prev')">
           <svg viewBox="0 0 1000 1000"><path d="M336.2 274.5l-210.1 210h805.4c13 0 23 10 23 23s-10 23-23 23H126.1l210.1 210.1c11 11 11 21 0 32-5 5-10 7-16 7s-11-2-16-7l-249.1-249c-11-11-11-21 0-32l249.1-249.1c21-21.1 53 10.9 32 32z"></path></svg>
         </div>
       </div>
-      <div class="datepicker-container-label">
+      <div class="datepicker-container-label flex-1">
         <transition-group :name="transitionLabelName" class="h-100 flex align-center justify-content-center">
-          <div class="datepicker-label fs-18" v-for="month in [month]" :key="month.month" v-text="getMonthFormatted()"></div>
+          <div class="datepicker-label fs-16" v-for="month in [month]" :key="month.month" v-text="getMonthFormatted()"></div>
         </transition-group>
       </div>
-      <div class="flex-1 h-100 text-right">
-        <div class="datepicker-button datepicker-next text-center h-100 flex align-center" @click="changeMonth('next')">
+      <div class="arrow-month h-100 text-right">
+        <div class="datepicker-button datepicker-next text-center h-100 flex align-center justify-content-right" @click="changeMonth('next')">
           <svg viewBox="0 0 1000 1000"><path d="M694.4 242.4l249.1 249.1c11 11 11 21 0 32L694.4 772.7c-5 5-10 7-16 7s-11-2-16-7c-11-11-11-21 0-32l210.1-210.1H67.1c-13 0-23-10-23-23s10-23 23-23h805.4L662.4 274.5c-21-21.1 11-53.1 32-32.1z"></path></svg>
         </div>
       </div>
@@ -27,10 +27,10 @@
         <div class="datepicker-days flex" v-for="month in [month]" :key="month.month">
           <div class="datepicker-day align-center justify-content-center"
                v-for="start in weekDay" :key="start + 'startEmptyDay'"></div>
-          <div class="datepicker-day enable flex align-center justify-content-center"
+          <div class="datepicker-day flex align-center justify-content-center"
                v-for="day in monthDays" :key="day.format('D')"
-               :class="{selected: isSelected(day), 'disabled': isDisabled(day)}"
-               @click="isDisabled(day) ? '' : selectDate(day) ">
+               :class="{selected: isSelected(day), disabled: (isDisabled(day) || isWeekEndDay(day)), enable: !(isDisabled(day) || isWeekEndDay(day))}"
+               @click="isDisabled(day) || isWeekEndDay(day) ? '' : selectDate(day)">
             <span class="datepicker-day-effect" v-show="!isDisabled(day) || isSelected(day)" :style="bgStyle"></span>
             <span class="datepicker-day-text">{{day.format('D')}}</span>
           </div>
@@ -48,7 +48,7 @@
   import { getWeekDays } from './../../modules/month'
   export default {
     name: 'CtkDatePicker',
-    props: ['month', 'dateTime', 'color', 'minDate', 'maxDate', 'locale'],
+    props: ['month', 'dateTime', 'color', 'minDate', 'maxDate', 'locale', 'withoutInput', 'noWeekEnds'],
     data () {
       return {
         transitionDaysName: 'slidenext',
@@ -94,6 +94,10 @@
       isSelected: function (day) {
         return moment(moment(this.dateTime).format('YYYY-MM-DD')).isSame(day.format('YYYY-MM-DD'))
       },
+      isWeekEndDay: function (day) {
+        const dayConst = new Date(day)
+        return this.noWeekEnds ? dayConst.getDay() === 6 || dayConst.getDay() === 5 : false
+      },
       selectDate: function (day) {
         this.$emit('change-date', day)
       },
@@ -112,6 +116,9 @@
     padding: 0 10px;
     .datepicker-controls {
       height: 56px;
+      .arrow-month {
+        flex: 0 0 40px;
+      }
       .datepicker-button {
         background: transparent;
         cursor: pointer;
@@ -135,8 +142,6 @@
         position: relative;
         height: 18px;
         overflow: hidden;
-        max-width: 250px;
-        min-width: 200px;
       }
       .datepicker-label {
         text-transform: capitalize;
@@ -171,8 +176,6 @@
           background: dodgerblue;
           height: 32px;
           width: 32px;
-          top: 5px;
-          left: 4px;
           border-radius: 50%;
           -webkit-transition: all 450ms cubic-bezier(0.23, 1, 0.32, 1) 0ms;
           transition: all 450ms cubic-bezier(0.23, 1, 0.32, 1) 0ms;
@@ -202,8 +205,8 @@
             color: #fff;
           }
           .datepicker-day-effect {
-            transform: scale(1);
-            opacity: 0.6;
+            transform: scale(0);
+            opacity: 0;
           }
         }
       }

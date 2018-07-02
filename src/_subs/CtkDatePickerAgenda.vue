@@ -1,6 +1,12 @@
 <template>
   <transition :name="this.agendaPosition === 'top' ? 'slide' : 'slideinvert'">
-    <div class="datetimepicker flex" v-if="visible" @click.stop :style="position">
+    <div
+      class="datetimepicker flex"
+      :class="{'without-input': withoutInput}"
+      v-if="visible || withoutInput"
+      @click.stop
+      :style="position"
+    >
       <div class="datepicker" :style="position">
         <div class="datepicker-header" :style="bgStyle" v-if="withoutHeader">
           <div class="datepicker-year" v-if="!disableDate">
@@ -29,10 +35,10 @@
           </div>
         </div>
         <div class="datetimepicker-container flex">
-          <ctk-date-picker :month="month" :date-time="dateTime" :locale="locale" :color="color" @change-date="selectDate" @change-month="changeMonth" v-if="!disableDate" :min-date="minDate" :max-date="maxDate" />
+          <ctk-date-picker :without-input="withoutInput" :no-week-ends="noWeekEnds" :month="month" :date-time="dateTime" :locale="locale" :color="color" @change-date="selectDate" @change-month="changeMonth" v-if="!disableDate" :min-date="minDate" :max-date="maxDate" />
           <ctk-time-picker :month="month" :date-time="dateTime" :color="color" :format="timeFormat" :minute-interval="minuteInterval" v-if="!disableTime" @change-time="selectTime" />
         </div>
-        <div class="datepicker-buttons-container flex justify-content-right" v-if="withoutButtonAction">
+        <div class="datepicker-buttons-container flex justify-content-right" v-if="withoutButtonAction && !withoutInput">
           <div class="datepicker-button cancel flex align-center justify-content-center"  @click="cancel">
             <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
               <path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/>
@@ -76,7 +82,9 @@
       maxDate: {},
       minDate: {},
       withoutButtonAction: {},
-      agendaPosition: {}
+      agendaPosition: {},
+      withoutInput: {},
+      noWeekEnds: {}
     },
     data: function () {
       return {
@@ -189,6 +197,7 @@
     background: #FFF;
     -webkit-box-shadow: 0 2px 1px -1px rgba(0, 0, 0, 0.2), 0 1px 1px 0 rgba(0, 0, 0, 0.14), 0 1px 3px 0 rgba(0, 0, 0, 0.12);
     box-shadow: 0 2px 1px -1px rgba(0, 0, 0, 0.2), 0 1px 1px 0 rgba(0, 0, 0, 0.14), 0 1px 3px 0 rgba(0, 0, 0, 0.12);
+    max-width: 360px;
     .datepicker-header {
       background: dodgerblue;
       color: #FFF;
@@ -275,6 +284,18 @@
           margin-right: 15px;
         }
       }
+    }
+  }
+  .without-input {
+    &.datetimepicker, .datepicker {
+      position: relative;
+    }
+    .datepicker {
+      margin-bottom: 0 !important;
+      box-shadow: none;
+      -webkit-box-shadow: none;
+      width: 100%;
+      max-width: 100%;
     }
   }
 </style>
