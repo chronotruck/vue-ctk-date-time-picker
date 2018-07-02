@@ -35,10 +35,10 @@
           </div>
         </div>
         <div class="datetimepicker-container flex">
-          <ctk-date-picker :without-input="withoutInput" :month="month" :date-time="dateTime" :locale="locale" :color="color" @change-date="selectDate" @change-month="changeMonth" v-if="!disableDate" :min-date="minDate" :max-date="maxDate" />
+          <ctk-date-picker :without-input="withoutInput" :no-week-ends="noWeekEnds" :month="month" :date-time="dateTime" :locale="locale" :color="color" @change-date="selectDate" @change-month="changeMonth" v-if="!disableDate" :min-date="minDate" :max-date="maxDate" />
           <ctk-time-picker :month="month" :date-time="dateTime" :color="color" :format="timeFormat" :minute-interval="minuteInterval" v-if="!disableTime" @change-time="selectTime" />
         </div>
-        <div class="datepicker-buttons-container flex justify-content-right" v-if="withoutButtonAction">
+        <div class="datepicker-buttons-container flex justify-content-right" v-if="withoutButtonAction && !withoutInput">
           <div class="datepicker-button cancel flex align-center justify-content-center"  @click="cancel">
             <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
               <path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/>
@@ -83,7 +83,8 @@
       minDate: {},
       withoutButtonAction: {},
       agendaPosition: {},
-      withoutInput: {}
+      withoutInput: {},
+      noWeekEnds: {}
     },
     data: function () {
       return {

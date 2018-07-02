@@ -31,6 +31,7 @@
                               :max-date="maxDate"
                               :agenda-position="agendaPosition"
                               :without-input="withoutInput"
+                              :no-week-ends="noWeekEnds"
                               @validate="validate"
                               @cancel="cancel"
                               @change-date="changeDate" />
@@ -72,7 +73,8 @@
       minDate: { type: String },
       maxDate: { type: String },
       withoutButtonAction: { type: Boolean, default: false },
-      withoutInput: { type: Boolean, default: false }
+      withoutInput: { type: Boolean, default: false },
+      noWeekEnds: {type: Boolean, default: false}
     },
     data: function () {
       return {

@@ -27,10 +27,10 @@
         <div class="datepicker-days flex" v-for="month in [month]" :key="month.month">
           <div class="datepicker-day align-center justify-content-center"
                v-for="start in weekDay" :key="start + 'startEmptyDay'"></div>
-          <div class="datepicker-day enable flex align-center justify-content-center"
+          <div class="datepicker-day flex align-center justify-content-center"
                v-for="day in monthDays" :key="day.format('D')"
-               :class="{selected: isSelected(day), 'disabled': isDisabled(day)}"
-               @click="isDisabled(day) ? '' : selectDate(day) ">
+               :class="{selected: isSelected(day), disabled: (isDisabled(day) || isWeekEndDay(day)), enable: !(isDisabled(day) || isWeekEndDay(day))}"
+               @click="isDisabled(day) || isWeekEndDay(day) ? '' : selectDate(day)">
             <span class="datepicker-day-effect" v-show="!isDisabled(day) || isSelected(day)" :style="bgStyle"></span>
             <span class="datepicker-day-text">{{day.format('D')}}</span>
           </div>
@@ -48,7 +48,7 @@
   import { getWeekDays } from './../../modules/month'
   export default {
     name: 'CtkDatePicker',
-    props: ['month', 'dateTime', 'color', 'minDate', 'maxDate', 'locale', 'withoutInput'],
+    props: ['month', 'dateTime', 'color', 'minDate', 'maxDate', 'locale', 'withoutInput', 'noWeekEnds'],
     data () {
       return {
         transitionDaysName: 'slidenext',
@@ -93,6 +93,10 @@
       },
       isSelected: function (day) {
         return moment(moment(this.dateTime).format('YYYY-MM-DD')).isSame(day.format('YYYY-MM-DD'))
+      },
+      isWeekEndDay: function (day) {
+        const dayConst = new Date(day)
+        return this.noWeekEnds ? dayConst.getDay() === 6 || dayConst.getDay() === 5 : false
       },
       selectDate: function (day) {
         this.$emit('change-date', day)
@@ -201,8 +205,8 @@
             color: #fff;
           }
           .datepicker-day-effect {
-            transform: scale(1);
-            opacity: 0.6;
+            transform: scale(0);
+            opacity: 0;
           }
         }
       }
