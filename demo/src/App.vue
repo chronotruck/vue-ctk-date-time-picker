@@ -61,11 +61,11 @@
       </div>
       <div class="component-container">
         <p>v-model = {{value}}</p>
-        <p>Option : 'without-input' && 'no-week-ends'</p>
+        <p>Option : 'without-input' && 'no-weekends-days'</p>
         <p>(When 'without-input' option is present : Option : 'without-button-action' is automatically enable)</p>
         <ctk-date-time-picker v-model="value" name="end"
                               label="Choose date time"
-                              no-week-ends
+                              no-weekends-days
                               without-input/>
       </div>
     </div>

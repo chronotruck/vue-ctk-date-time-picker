@@ -48,7 +48,7 @@
   import { getWeekDays } from './../../modules/month'
   export default {
     name: 'CtkDatePicker',
-    props: ['month', 'dateTime', 'color', 'minDate', 'maxDate', 'locale', 'withoutInput', 'noWeekEnds'],
+    props: ['month', 'dateTime', 'color', 'minDate', 'maxDate', 'locale', 'withoutInput', 'noWeekendsDays'],
     data () {
       return {
         transitionDaysName: 'slidenext',
@@ -96,7 +96,7 @@
       },
       isWeekEndDay: function (day) {
         const dayConst = new Date(day)
-        return this.noWeekEnds ? dayConst.getDay() === 6 || dayConst.getDay() === 5 : false
+        return this.noWeekendsDays ? dayConst.getDay() === 6 || dayConst.getDay() === 5 : false
       },
       selectDate: function (day) {
         this.$emit('change-date', day)
