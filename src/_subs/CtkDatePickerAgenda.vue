@@ -18,7 +18,7 @@
             <transition-group :name="transitionDayName" class="datepicker-date dots-text flex-1" v-if="!disableDate">
               <span v-for="dateFormatted in [getDateFormatted()]" :key="dateFormatted">{{ getDateFormatted() }}</span>
             </transition-group>
-            <div class="datepicker-time flex justify-content-center" v-if="!disableTime && !isFormatTwelve" :style="dateTimeWidth">
+            <div class="datepicker-time flex justify-content-center" v-if="!disableTime && !isFormatTwelve" :style="timeWidth">
               <transition-group :name="transitionDayName" class="dots-text datepicker-hour flex-1 flex justify-content-right">
                 <span v-for="hour in [dateTime.format('HH')]" :key="hour">{{ hour }}</span>
               </transition-group>
@@ -27,7 +27,7 @@
                 <span v-for="min in [dateTime.format('mm')]" :key="min">{{ min }}</span>
               </transition-group>
             </div>
-            <div class="datepicker-time flex justify-content-center" v-else-if="!disableTime" :style="dateTimeWidth">
+            <div class="datepicker-time flex justify-content-center" v-else-if="!disableTime" :style="timeWidth">
               <transition-group :name="transitionDayName" class="dots-text datepicker-hour flex-1 flex justify-content-center">
                 <span v-for="hour in [dateTime.format(timeFormat)]" :key="hour">{{ hour }}</span>
               </transition-group>
@@ -36,7 +36,7 @@
         </div>
         <div class="datetimepicker-container flex">
           <ctk-date-picker :without-input="withoutInput" :no-week-ends="noWeekEnds" :month="month" :date-time="dateTime" :locale="locale" :color="color" @change-date="selectDate" @change-month="changeMonth" v-if="!disableDate" :min-date="minDate" :max-date="maxDate" />
-          <ctk-time-picker :month="month" :date-time="dateTime" :color="color" :format="timeFormat" :minute-interval="minuteInterval" v-if="!disableTime" @change-time="selectTime" />
+          <ctk-time-picker ref="timePickerComponent" :month="month" :date-time="dateTime" :color="color" :format="timeFormat" :minute-interval="minuteInterval" v-if="!disableTime" @change-time="selectTime" />
         </div>
         <div class="datepicker-buttons-container flex justify-content-right" v-if="withoutButtonAction && !withoutInput">
           <div class="datepicker-button cancel flex align-center justify-content-center"  @click="cancel">
@@ -90,6 +90,7 @@
       return {
         month: this.disableDate ? '' : new Month(this.dateTime.month(), this.dateTime.year()),
         transitionDayName: 'slidevnext',
+        timeWidth: !this.disableTime ? this.dateTimeWidth() : null
       }
     },
     computed: {
@@ -121,14 +122,6 @@
       },
       year: function () {
         return this.dateTime.format('YYYY')
-      },
-      dateTimeWidth: function () {
-        return {
-          flex: '0 0 160px',
-          width: '160px',
-          minWidth: '160px',
-          maxWidth: '160px'
-        }
       }
     },
     methods: {
@@ -165,6 +158,23 @@
       },
       cancel: function () {
         this.$emit('cancel')
+      },
+      dateTimeWidth: function () {
+        var width
+        var result
+        if (this.$refs.timePickerComponent && this.$refs.timePickerComponent.$el.clientWidth) {
+          width = this.$refs.timePickerComponent.$el.clientWidth
+        } else {
+          width = 160
+        }
+        console.log(width)
+        var result = {
+          flex: '0 0 ' + width + 'px',
+          width: width + 'px',
+          minWidth: width + 'px',
+          maxWidth: width + 'px'
+        }
+        return result
       }
     },
     watch: {
@@ -178,6 +188,13 @@
       locale: function () {
         this.month = this.disableDate ? '' : new Month(this.dateTime.month(), this.dateTime.year())
         this.getDateFormatted()
+      },
+      visible: function (val) {
+        if (val && !this.disableTime) {
+          this.$nextTick(function () {
+            this.timeWidth = this.dateTimeWidth()
+          })
+        }
       }
     }
   }
@@ -245,8 +262,8 @@
         .datepicker-button-effect {
           position: absolute;
           opacity: 0.6;
-          height: 32px;
-          width: 32px;
+          height: 30px;
+          width: 30px;
           top: 2px;
           left: 2px;
           border-radius: 50%;

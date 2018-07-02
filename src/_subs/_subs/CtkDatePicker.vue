@@ -113,7 +113,7 @@
   @import "../../assets/animation.scss";
   #CtkDatePicker {
     width: 290px;
-    padding: 0 10px;
+    padding: 0 5px;
     .datepicker-controls {
       height: 56px;
       .arrow-month {
@@ -174,8 +174,8 @@
           position: absolute;
           opacity: 0.6;
           background: dodgerblue;
-          height: 32px;
-          width: 32px;
+          height: 30px;
+          width: 30px;
           border-radius: 50%;
           -webkit-transition: all 450ms cubic-bezier(0.23, 1, 0.32, 1) 0ms;
           transition: all 450ms cubic-bezier(0.23, 1, 0.32, 1) 0ms;

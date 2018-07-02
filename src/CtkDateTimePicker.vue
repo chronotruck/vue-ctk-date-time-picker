@@ -74,7 +74,8 @@
       maxDate: { type: String },
       withoutButtonAction: { type: Boolean, default: false },
       withoutInput: { type: Boolean, default: false },
-      noWeekEnds: {type: Boolean, default: false}
+      noWeekEnds: {type: Boolean, default: false},
+      autoClose: {type: Boolean, default: false}
     },
     data: function () {
       return {
@@ -148,6 +149,9 @@
         if (this.withoutButtonAction) {
           this.$emit('input', moment(this.dateTime).clone().format(this.format))
           this.dateRaw = moment(this.dateTime).clone().format(this.format)
+        }
+        if (this.autoClose) {
+          this.hideDatePicker()
         }
       },
       showDatePicker: function () {
