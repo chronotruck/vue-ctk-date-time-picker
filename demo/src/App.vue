@@ -46,6 +46,7 @@
         <p>v-model = {{value3}}</p>
         <p>locale="{{locale}}" time-format="HH:mm"</p>
         <p>format="null" formatted="null"</p>
+        <p>Option : 'auto-close' (Close component on select date)</p>
          <ctk-date-time-picker without-header
                               v-model="value3"
                               time-format="HH:mm"
@@ -54,7 +55,9 @@
                               :minute-interval="minuteInterval2"
                               :error-hint="errorHint"
                               :locale="locale"
-                              :hint="hint" />
+                              :hint="hint"
+                              without-button-action
+                              auto-close />
       </div>
       <div class="component-container">
         <p>v-model = {{value}}</p>
