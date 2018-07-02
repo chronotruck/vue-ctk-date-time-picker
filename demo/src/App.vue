@@ -47,6 +47,7 @@
         <p>locale="{{locale}}" time-format="HH:mm"</p>
         <p>format="null" formatted="null"</p>
         <p>Option : 'auto-close' (Close component on select date)</p>
+        <p>(When 'auto-close' option is present --> 'without-button-action' option is automatically enable)</p>
          <ctk-date-time-picker without-header
                               v-model="value3"
                               time-format="HH:mm"
@@ -61,8 +62,8 @@
       </div>
       <div class="component-container">
         <p>v-model = {{value}}</p>
-        <p>Option : 'without-input' && 'no-weekends-days'</p>
-        <p>(When 'without-input' option is present : Option : 'without-button-action' is automatically enable)</p>
+        <p>Option : 'without-input' && 'no-weekends-days' && 'auto-close'</p>
+        <p>(When 'without-input' option is present --> 'without-button-action' option is automatically enable)</p>
         <ctk-date-time-picker v-model="value" name="end"
                               label="Choose date time"
                               no-weekends-days
