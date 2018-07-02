@@ -95,8 +95,9 @@
         return moment(moment(this.dateTime).format('YYYY-MM-DD')).isSame(day.format('YYYY-MM-DD'))
       },
       isWeekEndDay: function (day) {
-        const dayConst = new Date(day)
-        return this.noWeekendsDays ? dayConst.getDay() === 6 || dayConst.getDay() === 5 : false
+        var dayConst = moment(day).day()
+        var weekendsDaysNumbers = [6, 0]
+        return this.noWeekendsDays ? weekendsDaysNumbers.indexOf(dayConst) > -1 : false
       },
       selectDate: function (day) {
         this.$emit('change-date', day)

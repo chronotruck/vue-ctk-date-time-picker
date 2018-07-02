@@ -31,13 +31,6 @@ export default class Month {
     const r1 = moment.range(this.start, this.end).by('days')
     return Array.from(r1)
   }
-
-  // getYears() {
-  //   let start = moment([this.start.year() - 50, 0]);
-  //   let end = moment([this.start.year() + 50, 0]);
-  //
-  //   return Array.from(moment.range(start, end).by('years'));
-  // }
 }
 
 export const getWeekDays = function (locale) {
