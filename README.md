@@ -5,7 +5,7 @@
 ![vue-ctk-date-time-picker](./assets/illu.png)
 
 ## Demo
-A [demo](https://htmlpreview.github.io/?https://github.com/chronotruck/vue-ctk-date-time-picker/blob/master/styleguide/index.html) is available
+A [demo](https://htmlpreview.github.io/?https://github.com/chronotruck/vue-ctk-date-time-picker/blob/feature/compilation/styleguide/index.html) is available
 
 ## Installation
 
@@ -33,7 +33,7 @@ Vue.component('vue-ctk-date-time-picker', VueCtkDateTimePicker);
 ```
 
 ```html
-<vue-ctk-date-time-picker text="Hello World!"></vue-ctk-date-time-picker>
+<vue-ctk-date-time-picker></vue-ctk-date-time-picker>
 ```
 
 ### UMD
