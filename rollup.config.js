@@ -9,6 +9,7 @@ import uglify from 'rollup-plugin-uglify'
 import livereload from 'rollup-plugin-livereload'
 import serve from 'rollup-plugin-serve'
 import replace from 'rollup-plugin-replace'
+import babel from 'rollup-plugin-babel'
 
 let plugins = [
   alias({
@@ -28,7 +29,8 @@ let plugins = [
     browser: true
   }),
   commonjs(),
-  nodeGlobals()
+  nodeGlobals(),
+  babel()
 ]
 
 let config = {

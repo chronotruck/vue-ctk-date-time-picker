@@ -3,6 +3,7 @@
 index.html
 node_modules/
 demo/*
+build/*
 webpack.config.js
 .gitignore
 .editorconfig
