@@ -4,7 +4,7 @@
       ref="parent"
       class="field"
       @click="showDatePicker"
-      :class="{'is-focused': isFocus || isVisible, 'has-value': dateFormatted, 'has-error': errorHint}"
+      :class="{'is-focused': isFocus || isVisible, 'has-value': dateFormatted, 'has-error': errorHint, 'is-disabled': disabled}"
       v-click-outside="unFocus"
     >
       <div v-if="!withoutInput">
@@ -14,6 +14,7 @@
           class="field-input"
           @focus="onFocus"
           :placeholder="label"
+          :disabled="disabled"
           :style="isFocus && !errorHint || isVisible ? borderStyle : ''"
           ref="CtkDateTimePicker" readonly
         >
@@ -86,7 +87,8 @@
       maxDate: { type: String },
       withoutInput: { type: Boolean, default: false },
       noWeekendsDays: {type: Boolean, default: false},
-      autoClose: {type: Boolean, default: false}
+      autoClose: {type: Boolean, default: false},
+      disabled: {type: Boolean, default: false}
     },
     data: function () {
       return {
@@ -168,6 +170,9 @@
         }
       },
       showDatePicker: function () {
+        if (this.disabled) {
+          return
+        }
         const rect = this.$refs.parent.getBoundingClientRect()
         const windowHeight = window.innerHeight
         const datePickerHeight = 300
@@ -261,7 +266,7 @@
         }
       }
       &.has-value {
-        .field-label{
+        .field-label {
           opacity: 1;
           -webkit-transform: translateY(0);
           transform: translateY(0);
@@ -277,6 +282,15 @@
         }
         .field-label {
           color: dodgerblue;
+        }
+      }
+      &.is-disabled {
+        .field-input {
+          border-color: #CCC;
+          background: #F2F2F2;
+        }
+        .field-label, .field-input {
+          cursor: default;
         }
       }
     }
