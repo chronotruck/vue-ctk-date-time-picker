@@ -1,6 +1,6 @@
 {
   "name": "vue-ctk-date-time-picker",
-  "version": "0.0.1",
+  "version": "1.1.0",
   "description": "A vue component for select date & time (by Chronotruck)",
   "author": "Louis Mazel <loic.mazuel@chronotruck.com>",
   "main": "dist/vue-ctk-date-time-picker.min.js",
@@ -15,7 +15,7 @@
     "test": "poi test",
     "test:watch": "poi test --watch",
     "test:cov": "poi test --coverage",
-    "dev": "cross-env NODE_ENV=development rollup -cw"
+    "dev": "cross-env NODE_ENV=development webpack-dev-server --open --hot"
   },
   "files": [
     "src/",
@@ -47,23 +47,12 @@
     "poi": "^9.5.2",
     "poi-preset-karma": "^9.2.1",
     "postcss-cli": "^5.0.0",
-    "rollup": "^0.57.1",
-    "rollup-plugin-alias": "^1.4.0",
-    "rollup-plugin-babel": "^3.0.7",
-    "rollup-plugin-buble": "^0.19.1",
-    "rollup-plugin-commonjs": "^9.1.0",
-    "rollup-plugin-livereload": "^0.6.0",
-    "rollup-plugin-node-globals": "^1.1.0",
-    "rollup-plugin-node-resolve": "^3.0.2",
-    "rollup-plugin-replace": "^2.0.0",
-    "rollup-plugin-serve": "^0.4.2",
-    "rollup-plugin-uglify": "^3.0.0",
-    "rollup-plugin-vue": "^3.0.0",
     "sass-loader": "^7.0.3",
     "typescript": "^2.6.1",
     "vue-styleguidist": "^1.4.4",
     "vue-webpack-loaders": "^1.0.6",
-    "webpack": "^3.1.0"
+    "webpack": "^3.1.0",
+    "webpack-dev-server": "^2.9.1"
   },
   "repository": {
     "type": "git",
