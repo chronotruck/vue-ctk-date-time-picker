@@ -26,6 +26,7 @@
         >
           {{hint || label}}
          </label>
+         <div class="time-picker-overlay" v-if="isVisible" @click.stop="unFocus"></div>
       </div>
       <ctk-date-picker-agenda
         ref="agenda"
@@ -203,6 +204,14 @@
     border-radius: 4px;
     * {
       box-sizing: border-box;
+    }
+    .time-picker-overlay {
+      z-index: 2;
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
     }
     .field{
       position: relative;
