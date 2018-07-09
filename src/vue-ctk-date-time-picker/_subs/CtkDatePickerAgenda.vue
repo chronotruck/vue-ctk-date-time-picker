@@ -60,8 +60,8 @@
 </template>
 
 <script>
-  import CtkTimePicker from './_subs/CtkTimePicker'
-  import CtkDatePicker from './_subs/CtkDatePicker'
+  import CtkTimePicker from './_subs/CtkTimePicker.vue'
+  import CtkDatePicker from './_subs/CtkDatePicker.vue'
   import Month from './../modules/month'
   import moment from 'moment'
   export default {

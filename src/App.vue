@@ -1,13 +1,6 @@
-<!DOCTYPE html>
-<html lang="en">
-  <head>
-    <meta charset="utf-8">
-    <title>vue-ctk-date-time-picker</title>
-    <link rel="stylesheet" href="./assets/main.css">
-  </head>
-  <body>
-    <div id="app" style="width: 90%; margin: 0 auto;">
-      <img src="./assets/logo.png" class="logo" alt="Ctk logo">
+<template>
+  <div id="app">
+    <div id="vueCtkDateTimePicker" style="width: 90%; margin: 0 auto;">
       <h1>CtkDatetimePicker</h1>
       <h3>A VueJs component for select date & time</h3>
       <div class="component-container">
@@ -19,8 +12,8 @@
         <p>min-date="2018-06-03" max-date="2018-06-12"</p>
         <p>without-button-action (auto validation)</p>
         <ctk-date-time-picker v-model="value"
-        :minute-interval="minuteInterval" name="start" color="#96bf31"
-        min-date="2018-04-03" max-date="2018-04-12" without-button-action />
+                              :minute-interval="minuteInterval" name="start" color="#96bf31"
+                              min-date="2018-04-03" max-date="2018-04-12" without-button-action />
       </div>
       <div class="component-container">
         <h3>DatePicker</h3>
@@ -54,7 +47,7 @@
         <p>format="null" formatted="null"</p>
         <p>Option : 'auto-close' (Close component on select date)</p>
         <p>(When 'auto-close' option is present --> 'without-button-action' option is automatically enable)</p>
-         <ctk-date-time-picker without-header
+        <ctk-date-time-picker without-header
                               v-model="value3"
                               time-format="HH:mm"
                               id="datetimepicker-optins"
@@ -76,6 +69,63 @@
                               without-input/>
       </div>
     </div>
-    <script src="/dist/build.js"></script>
-  </body>
-</html>
+  </div>
+</template>
+
+<script>
+  import CtkDateTimePicker from './vue-ctk-date-time-picker/vue-ctk-date-time-picker.vue'
+
+  export default {
+    name: 'App',
+    components: {
+      CtkDateTimePicker
+    },
+    data () {
+      return {
+        value: '2018-04-05T04:26',
+        value2: null,
+        value3: '2018-04-05T14:26',
+        timePickerValue: '14:26',
+        minuteInterval: 5,
+        minuteInterval2: 10,
+        hint: 'Error message',
+        errorHint: true,
+        timeFormat: 'h:mm a',
+        locale: 'fr'
+      }
+    }
+  }
+</script>
+
+<style>
+  #app {
+    font-family: 'Avenir', Helvetica, Arial, sans-serif;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    text-align: center;
+  }
+  #app {
+    width: 90%;
+    margin: 0 auto;
+  }
+  *, *::before, *::after {
+    box-sizing: border-box;
+  }
+  img {
+    height: 140px;
+  }
+  h1 {
+    margin-top: 0;
+  }
+  .component-container {
+    float: left;
+    width: 46%;
+    margin: 0 2%;
+    padding: 20px;
+    background: #F2F2F2;
+    border: 1px solid #EAEAEA;
+    border-radius: 4px;
+    margin-bottom: 20px;
+    box-shadow: 0 2px 1px -1px rgba(0, 0, 0, 0.2), 0 1px 1px 0 rgba(0, 0, 0, 0.14), 0 1px 3px 0 rgba(0, 0, 0, 0.12);
+  }
+</style>

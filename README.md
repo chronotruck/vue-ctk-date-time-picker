@@ -1,39 +1,54 @@
-![vue-ctk-date-time-picker](./assets/illu.png)
-
 # vue-ctk-date-time-picker
 
 > A vue component for select date & time (by Chronotruck)
 
+![vue-ctk-date-time-picker](./assets/illu.png)
+
 ## Demo
-A [demo](https://htmlpreview.github.io/?https://github.com/chronotruck/vue-ctk-date-time-picker/blob/master/demo/dist/index.html) is available
+A [demo](https://htmlpreview.github.io/?https://github.com/chronotruck/vue-ctk-date-time-picker/blob/master/styleguide/index.html) is available
 
-## Install
+## Installation
 
-``` bash
-npm install vue-ctk-date-time-picker --save
-```
-#### In single component
-``` js
-import CtkDateTimePicker from 'vue-ctk-date-time-picker'
+### Using yarn
 
-var yourComponent = new Vue({
-  components: { CtkDateTimePicker },
-  ...
-})
-```
-``` html
-<template>
-  ...
-  <ctk-date-time-picker
-    v-model="value"
-    label="Choose a date time"
-    :hint="'Text'"
-    :error-hint="true"
-    color="#FF0000" />
-  ...
-</template>  
+`yarn add vue-ctk-date-time-picker`
+
+### Using npm
+
+`npm i --save vue-ctk-date-time-picker`
+
+## Demo and Docs
+
+`npm run serve`
+
+## Usage
+
+### ES6 Modules / CommonJS
+
+```js
+import VueCtkDateTimePicker from 'vue-ctk-date-time-picker';
+import 'vue-ctk-date-time-picker/dist/vue-ctk-date-time-picker.min.css';
+
+Vue.component('vue-ctk-date-time-picker', VueCtkDateTimePicker);
 ```
 
+```html
+<vue-ctk-date-time-picker></vue-ctk-date-time-picker>
+```
+
+### UMD
+
+```html
+<vue-ctk-date-time-picker></vue-ctk-date-time-picker>
+
+<script src="https://unpkg.com/vue" charset="utf-8"></script>
+<script src="./dist/umd/vue-ctk-date-time-picker.min.js" charset="utf-8"></script>
+<link rel="stylesheet" type="text/css" href="./dist/umd/vue-ctk-date-time-picker.min.css">
+
+<script type="text/javascript">
+  Vue.component('vue-ctk-date-time-picker', window.VueCtkDateTimePicker.default);
+</script>
+```
 ## Props API
 
 | Props      | Type       | Required | Default    |
@@ -67,9 +82,6 @@ var yourComponent = new Vue({
 
 ****min-date & max-date : Must be 'YYYY-MM-DD' format
 
-## To do
-
-- Mobile support (responsive)
 
 ## Contribution
 
@@ -80,3 +92,19 @@ npm install
 # serve with hot reload at localhost:8080
 npm run dev
 ```
+
+## Build
+
+Build configuration is located in the `poi.config.js` file, to build just run: `npm run build`, it will build to `cjs` and `umd` directories.
+
+## Tests
+
+This template uses karma with chai by default, you can change test settings in poi.config.js
+
+`npm run test`
+`npm run test:watch`
+`npm run test:cov`
+
+## License
+
+This project is licensed under [MIT License](http://en.wikipedia.org/wiki/MIT_License)

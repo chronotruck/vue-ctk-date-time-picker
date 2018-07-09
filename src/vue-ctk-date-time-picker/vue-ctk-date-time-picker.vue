@@ -42,14 +42,17 @@
 
 <script>
   import moment from 'moment'
-  import CtkDatePickerAgenda from './_subs/CtkDatePickerAgenda'
+  import CtkDatePickerAgenda from './_subs/CtkDatePickerAgenda.vue'
   import ClickOutside from './modules/v-click-outside'
   function nearestMinutes (interval, someMoment, m) {
     const roundedMinutes = Math.ceil(someMoment.minute() / interval) * interval
     return m(someMoment.clone().minute(roundedMinutes).second(0))
   }
+  /*
+    * Kikoooo
+  */
   export default {
-    name: 'CtkDateTimePicker',
+    name: 'ctk-date-time-picker',
     components: {
       CtkDatePickerAgenda
     },
@@ -57,6 +60,9 @@
       'click-outside': ClickOutside
     },
     props: {
+      /*
+        * The label of button
+      */
       label: { type: String, default: 'Select date & time' },
       hint: { type: String },
       errorHint: { type: Boolean },
@@ -203,7 +209,7 @@
 
 
 <style lang="scss">
- @import "/assets/main.scss";
+  @import "./assets/main.scss";
   .ctk-date-time-picker {
     width: 100%;
     margin: 0 auto;
