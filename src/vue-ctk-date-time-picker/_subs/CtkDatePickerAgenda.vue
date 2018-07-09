@@ -38,22 +38,6 @@
           <ctk-date-picker :without-input="withoutInput" :no-weekends-days="noWeekendsDays" :month="month" :date-time="dateTime" :locale="locale" :color="color" @change-date="selectDate" @change-month="changeMonth" v-if="!disableDate" :min-date="minDate" :max-date="maxDate" />
           <ctk-time-picker ref="timePickerComponent" :month="month" :date-time="dateTime" :color="color" :format="timeFormat" :minute-interval="minuteInterval" v-if="!disableTime" @change-time="selectTime" />
         </div>
-        <div class="datepicker-buttons-container flex justify-content-right" v-if="withoutButtonAction && !withoutInput && !autoClose">
-          <div class="datepicker-button cancel flex align-center justify-content-center"  @click="cancel">
-            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
-              <path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/>
-              <path d="M0 0h24v24H0z" fill="none"/>
-            </svg>
-            <span class="datepicker-button-effect"></span>
-          </div>
-          <div class="datepicker-button validation flex align-center justify-content-center" @click="validate">
-            <span class="datepicker-button-effect"></span>
-            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
-              <path d="M0 0h24v24H0z" fill="none"/>
-              <path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/>
-            </svg>
-          </div>
-        </div>
       </div>
     </div>
   </transition>
@@ -81,9 +65,8 @@
       locale: {},
       maxDate: {},
       minDate: {},
-      withoutButtonAction: {},
-      agendaPosition: {},
       withoutInput: {},
+      agendaPosition: {},
       noWeekendsDays: {},
       autoClose: {}
     },
@@ -156,9 +139,6 @@
       },
       validate: function () {
         this.$emit('validate')
-      },
-      cancel: function () {
-        this.$emit('cancel')
       },
       dateTimeWidth: function () {
         var width
@@ -274,31 +254,20 @@
         &.validation {
           svg {
             fill: green;
+            position: relative;
           }
           .datepicker-button-effect {
             background: green;
           }
-        }
-        &.cancel {
-          svg {
-            fill: orangered;
+          &:hover {
+            .datepicker-button-effect {
+              transform: scale(1);
+              opacity: 0.6;
+            }
+            svg {
+              fill: white !important;
+            }
           }
-          .datepicker-button-effect {
-            background: orangered;
-          }
-        }
-        &:hover {
-          .datepicker-button-effect {
-            transform: scale(1);
-            opacity: 0.6;
-          }
-          svg {
-            fill: white;
-            position: relative;
-          }
-        }
-        &:first-child {
-          margin-right: 15px;
         }
       }
     }
