@@ -66,8 +66,6 @@
       <div class="component-container">
         <p>Option : 'disabled'</p>
         <ctk-date-time-picker
-          v-model="value2"
-          name="end"
           disabled
         />
       </div>

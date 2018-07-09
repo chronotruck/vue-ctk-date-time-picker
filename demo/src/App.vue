@@ -64,6 +64,12 @@
                               no-weekends-days
                               without-input/>
       </div>
+      <div class="component-container">
+        <p>Option : 'disabled'</p>
+        <ctk-date-time-picker
+          disabled
+        />
+      </div>
     </div>
   </div>
 </template>
