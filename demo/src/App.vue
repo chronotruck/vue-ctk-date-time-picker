@@ -11,14 +11,12 @@
         <p>v-model = {{value}}</p>
         <p>no format, no formatted</p>
         <p>min-date="2018-06-03" max-date="2018-06-12"</p>
-        <p>without-button-action (auto validation)</p>
         <ctk-date-time-picker v-model="value"
-        :minute-interval="minuteInterval" name="start" color="#96bf31"
-        min-date="2018-04-03" max-date="2018-04-12" without-button-action />
+                              :minute-interval="minuteInterval" name="start" color="#96bf31"
+                              min-date="2018-04-03" max-date="2018-04-12" />
       </div>
       <div class="component-container">
         <h3>DatePicker</h3>
-        <p>-</p>
         <p>-</p>
         <p>Inititale value : null</p>
         <p>v-model = {{value2}}</p>
@@ -47,8 +45,7 @@
         <p>locale="{{locale}}" time-format="HH:mm"</p>
         <p>format="null" formatted="null"</p>
         <p>Option : 'auto-close' (Close component on select date)</p>
-        <p>(When 'auto-close' option is present --> 'without-button-action' option is automatically enable)</p>
-         <ctk-date-time-picker without-header
+        <ctk-date-time-picker without-header
                               v-model="value3"
                               time-format="HH:mm"
                               id="datetimepicker-optins"
@@ -57,13 +54,11 @@
                               :error-hint="errorHint"
                               :locale="locale"
                               :hint="hint"
-                              without-button-action
                               auto-close />
       </div>
       <div class="component-container">
         <p>v-model = {{value}}</p>
         <p>Option : 'without-input' && 'no-weekends-days' && 'auto-close'</p>
-        <p>(When 'without-input' option is present --> 'without-button-action' option is automatically enable)</p>
         <ctk-date-time-picker v-model="value" name="end"
                               label="Choose date time"
                               no-weekends-days
@@ -75,6 +70,7 @@
 
 <script>
 import CtkDateTimePicker from 'vue-ctk-date-time-picker'
+import 'vue-ctk-date-time-picker/dist/vue-ctk-date-time-picker.min.css'
 
 export default {
   name: 'App',
