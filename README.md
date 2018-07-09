@@ -5,7 +5,7 @@
 ![vue-ctk-date-time-picker](./assets/illu.png)
 
 ## Demo
-A [demo](https://htmlpreview.github.io/?https://github.com/chronotruck/vue-ctk-date-time-picker/blob/master/styleguide/index.html) is available
+A [demo](https://htmlpreview.github.io/?https://github.com/chronotruck/vue-ctk-date-time-picker/blob/master/demo/dist/index.html)
 
 ## Installation
 
