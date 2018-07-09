@@ -11,6 +11,7 @@
         <p>no format, no formatted</p>
         <p>min-date="2018-06-03" max-date="2018-06-12"</p>
         <p>without-button-action (auto validation)</p>
+        <button @click="value = '2018-04-11T11:43:00.000Z'">COucou</button>
         <ctk-date-time-picker v-model="value"
                               :minute-interval="minuteInterval" name="start" color="#96bf31"
                               min-date="2018-04-03" max-date="2018-04-12" without-button-action />

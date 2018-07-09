@@ -107,10 +107,10 @@
       }
     },
     created: function () {
-      if (this.value) {
-        this.$emit('input', this.dateTime.format(this.format))
-        this.dateRaw = this.dateTime.format(this.format)
-      }
+      // if (this.value) {
+      //   this.$emit('input', this.dateTime.format(this.format))
+      //   this.dateRaw = this.dateTime.format(this.format)
+      // }
       moment.locale(this.locale)
     },
     methods: {
@@ -202,6 +202,14 @@
     watch: {
       locale: function () {
         this.dateTime = this.dateTime
+      },
+      value: function (v) {
+        if (v) {
+          this.dateTime = this.getDateTime()
+          this.dateFormatted = this.getDateFormatted()
+          this.$emit('input', this.dateTime.format(this.format))
+          this.dateRaw = this.dateTime.format(this.format)
+        }
       }
     }
   }
