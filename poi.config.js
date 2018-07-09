@@ -4,7 +4,7 @@ const glob = require('glob').sync;
 const {name} = require('./package.json');
 
 module.exports = {
-  entry: glob('./src/**/*.vue'),
+  entry: glob('./src/vue-ctk-date-time-picker/*.vue'),
   filename: {
     js: name + '.min.js',
     css: name + '.min.css',
