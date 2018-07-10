@@ -18,7 +18,6 @@
           :style="isFocus && !errorHint || isVisible ? borderStyle : ''"
           ref="CtkDateTimePicker" readonly
         >
-        <input type="hidden" :value="dateRaw" tabindex="-1">
         <label
           :for="id"
           class="field-label"
@@ -94,7 +93,6 @@
       return {
         isVisible: false,
         isFocus: false,
-        dateRaw: null,
         agendaPosition: 'top',
         oldValue: this.value
       }
@@ -115,7 +113,7 @@
           if (this.disableDate) {
             if (this.value) {
               let date
-              if (!moment(this.value, 'YYYY-MM-DD').isValid()) {
+              if (this.disableDate) {
                 date = moment(moment().format('YYYY-MM-DD') + ' ' + this.value)
               } else {
                 date = moment(this.value)
@@ -126,16 +124,13 @@
             }
           }
           return nearestMinutes(this.minuteInterval, this.value ? moment(this.value).clone() : moment().clone(), moment)
-        },
-        set (val) {
-          this.dateTime = val
         }
       },
       dateFormatted: {
         get () {
           let dateFormat
           if (this.value) {
-            if (!moment(this.value, 'YYYY-MM-DD').isValid()) {
+            if (this.disableDate) {
               dateFormat = moment(moment().format('YYYY-MM-DD') + ' ' + this.value)
             } else {
               dateFormat = moment(this.value)
@@ -143,28 +138,23 @@
           } else {
             dateFormat = null
           }
-          if (dateFormat) {
+          if (dateFormat && !this.disableTime) {
             return nearestMinutes(this.minuteInterval, dateFormat, moment).locale(this.locale).format(this.formatted)
           } else {
             return null
           }
-        },
-        set (val) {
-          this.dateFormatted = val
         }
       }
     },
     created: function () {
       if (this.value) {
         this.$emit('input', this.dateTime.format(this.format))
-        this.dateRaw = this.dateTime.format(this.format)
       }
       moment.locale(this.locale)
     },
     methods: {
       changeDate: function (day) {
-        this.$emit('input', moment(day).clone().format(this.format))
-        this.dateRaw = moment(day).clone().format(this.format)
+        this.$emit('input', moment(day).format(this.format))
         if (this.autoClose) {
           this.hideDatePicker()
         }

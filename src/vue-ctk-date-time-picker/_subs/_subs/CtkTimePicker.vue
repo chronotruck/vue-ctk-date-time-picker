@@ -172,20 +172,6 @@
         if (this.apmType) {
           this.apm = this.dateTime.format('HH') >= 12 ? this.apms[1] : this.apms[0]
         }
-
-        // if (!this.value || this.muteWatch) { return }
-        // const timeValue = JSON.parse(JSON.stringify(this.value || {}))
-        // const values = Object.keys(timeValue)
-        // if (values.length === 0) { return }
-        // if (values.indexOf(this.hourType) > -1) {
-        //   this.hour = timeValue[this.hourType]
-        // }
-        // if (values.indexOf(this.minuteType) > -1) {
-        //   this.minute = timeValue[this.minuteType]
-        // }
-        // if (values.indexOf(this.apmType) > -1) {
-        //   this.apm = timeValue[this.apmType]
-        // }
         this.fillValues()
       },
       fillValues: function () {
@@ -306,7 +292,7 @@
         } else{
           time = moment(this.hour + ':' + this.minute + (this.apm ? this.apm : ''), 'HH:mm').format('HH:mm')
         }
-        let dateTime = moment(moment(this.dateTime).format('YYYY-MM-DD') + ' ' + time)
+        let dateTime = moment(this.dateTime.format('YYYY-MM-DD') + 'T' + time)
         this.$emit('change-time', dateTime)
       }
   },

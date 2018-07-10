@@ -35,8 +35,29 @@
           </div>
         </div>
         <div class="datetimepicker-container flex">
-          <ctk-date-picker :without-input="withoutInput" :no-weekends-days="noWeekendsDays" :month="month" :date-time="dateTime" :locale="locale" :color="color" @change-date="selectDate" @change-month="changeMonth" v-if="!disableDate" :min-date="minDate" :max-date="maxDate" />
-          <ctk-time-picker ref="timePickerComponent" :month="month" :date-time="dateTime" :color="color" :format="timeFormat" :minute-interval="minuteInterval" v-if="!disableTime" @change-time="selectTime" />
+          <ctk-date-picker
+            :without-input="withoutInput"
+            :no-weekends-days="noWeekendsDays"
+            :month="month"
+            :date-time="dateTime"
+            :locale="locale"
+            :color="color"
+            @change-date="selectDate"
+            @change-month="changeMonth"
+            v-if="!disableDate"
+            :min-date="minDate"
+            :max-date="maxDate"
+          />
+          <ctk-time-picker
+            ref="timePickerComponent"
+            :month="month"
+            :date-time="dateTime"
+            :color="color"
+            :format="timeFormat"
+            :minute-interval="minuteInterval"
+            v-if="!disableTime"
+            @change-time="selectTime"
+          />
         </div>
       </div>
     </div>
