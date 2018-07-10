@@ -10,7 +10,7 @@
         <div class="component-container">
           <h3>DateTimePicker</h3>
           <p>Inititale value : '2018-04-05T04:26'</p>
-          <p>v-model = {{value}}</p>
+          <p>v-model = {{value || 'null'}}</p>
           <ctk-date-time-picker
             v-model="value"
             :minute-interval="5"
@@ -33,7 +33,7 @@
         <div class="component-container">
           <h3>DatePicker</h3>
           <p>Inititale value : null</p>
-          <p>v-model = {{value2}}</p>
+          <p>v-model = {{value2 || 'null'}}</p>
           <ctk-date-time-picker
             format="YYYY-MM-DD"
             formatted="ddd D MMM YYYY"
@@ -57,7 +57,7 @@
         <div class="component-container">
           <h3>TimePicker</h3>
           <p>Inititale value : '14:26'</p>
-          <p>v-model = {{timePickerValue}}</p>
+          <p>v-model = {{timePickerValue || 'null'}}</p>
           <ctk-date-time-picker
             id="timepicker"
             formatted="h:mm a"
@@ -85,7 +85,7 @@
         <div class="component-container">
           <h3>DateTimePicker without header & auto close</h3>
           <p>Inititale value : '2018-04-05T14:26'</p>
-          <p>v-model = {{value3}}</p>
+          <p>v-model = {{value3 || 'null'}}</p>
           <ctk-date-time-picker
             without-header
             auto-close
@@ -114,7 +114,7 @@
       <div class="flex flex-start">
         <div class="component-container">
           <h3>Inline DateTimePicker</h3>
-          <p>v-model = {{value}}</p>
+          <p>v-model = {{value || 'null'}}</p>
           <ctk-date-time-picker
             v-model="value"
             label="Choose date time"

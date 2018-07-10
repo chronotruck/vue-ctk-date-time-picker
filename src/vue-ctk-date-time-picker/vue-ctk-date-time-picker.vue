@@ -122,10 +122,10 @@ export default {
             }
             return nearestMinutes(this.minuteInterval, date, moment)
           } else {
-            return nearestMinutes(this.minuteInterval, moment().clone(), moment)
+            return nearestMinutes(this.minuteInterval, moment(), moment)
           }
         }
-        return nearestMinutes(this.minuteInterval, this.value ? moment(this.value).clone() : moment().clone(), moment)
+        return nearestMinutes(this.minuteInterval, this.value ? moment(this.value) : moment(), moment)
       }
     },
     dateFormatted: {
@@ -140,7 +140,7 @@ export default {
         } else {
           dateFormat = null
         }
-        if (dateFormat && !this.disableTime) {
+        if (dateFormat) {
           return nearestMinutes(this.minuteInterval, dateFormat, moment).locale(this.locale).format(this.formatted)
         } else {
           return null
