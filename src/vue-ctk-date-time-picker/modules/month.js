@@ -3,7 +3,6 @@ import { extendMoment } from 'moment-range'
 const moment = extendMoment(Moment)
 
 export default class Month {
-
   constructor (month, year) {
     this.start = moment([year, month])
     this.end = this.start.clone().endOf('month')

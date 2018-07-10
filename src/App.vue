@@ -150,28 +150,28 @@
 </template>
 
 <script>
-  import CtkDateTimePicker from './vue-ctk-date-time-picker/vue-ctk-date-time-picker.vue'
+import CtkDateTimePicker from './vue-ctk-date-time-picker/vue-ctk-date-time-picker.vue'
 
-  export default {
-    name: 'App',
-    components: {
-      CtkDateTimePicker
-    },
-    data () {
-      return {
-        value: '2018-04-05T04:26',
-        value2: null,
-        value3: '2018-04-05T14:26',
-        timePickerValue: '14:26',
-        minuteInterval: 5,
-        minuteInterval2: 10,
-        hint: 'Error message',
-        errorHint: true,
-        timeFormat: 'hh:mm a',
-        locale: 'fr'
-      }
+export default {
+  name: 'App',
+  components: {
+    CtkDateTimePicker
+  },
+  data () {
+    return {
+      value: '2018-04-05T04:26',
+      value2: null,
+      value3: '2018-04-05T14:26',
+      timePickerValue: '14:26',
+      minuteInterval: 5,
+      minuteInterval2: 10,
+      hint: 'Error message',
+      errorHint: true,
+      timeFormat: 'hh:mm a',
+      locale: 'fr'
     }
   }
+}
 </script>
 
 <style>
@@ -219,16 +219,5 @@
     font-weight: 700;
     font-family: monospace, monospace;
     resize: none;
-  }
-  pre{
-    font-family: Consolas, Menlo, Monaco, Lucida Console, Liberation Mono, DejaVu Sans Mono, Bitstream Vera Sans Mono, Courier New, monospace, serif;
-    margin-bottom: 10px;
-    overflow: auto;
-    width: auto;
-    padding: 5px;
-    background-color: #eee;
-    width: 650px!ie7;
-    padding-bottom: 20px!ie7;
-    max-height: 600px;
   }
 </style>

@@ -29,7 +29,7 @@
                v-for="start in weekDay" :key="start + 'startEmptyDay'"></div>
           <div class="datepicker-day flex align-center justify-content-center"
                v-for="day in monthDays" :key="day.format('D')"
-               :class="{selected: isSelected(day), disabled: (isDisabled(day) || isWeekEndDay(day)), enable: !(isDisabled(day) || isWeekEndDay(day))}"
+               :class="{selected: isSelected(day), disabled: (isDisabled(day) || isWeekEndDay(day)), enable: !(isDisabled(day) || isWeekEndDay(day))}"
                @click="isDisabled(day) || isWeekEndDay(day) ? '' : selectDate(day)">
             <span class="datepicker-day-effect" v-show="!isDisabled(day) || isSelected(day)" :style="bgStyle"></span>
             <span class="datepicker-day-text">{{day.format('D')}}</span>
@@ -44,71 +44,70 @@
 </template>
 
 <script>
-  import moment from 'moment'
-  import { getWeekDays } from './../../modules/month'
-  export default {
-    name: 'CtkDatePicker',
-    props: ['month', 'dateTime', 'color', 'minDate', 'maxDate', 'locale', 'withoutInput', 'noWeekendsDays'],
-    data () {
+import moment from 'moment'
+import { getWeekDays } from './../../modules/month'
+export default {
+  name: 'CtkDatePicker',
+  props: ['month', 'dateTime', 'color', 'minDate', 'maxDate', 'locale', 'withoutInput', 'noWeekendsDays'],
+  data () {
+    return {
+      transitionDaysName: 'slidenext',
+      transitionLabelName: 'slidevnext',
+      weekDays: getWeekDays(this.locale)
+    }
+  },
+  computed: {
+    bgStyle: function () {
       return {
-        transitionDaysName: 'slidenext',
-        transitionLabelName: 'slidevnext',
-        weekDays: getWeekDays(this.locale)
+        backgroundColor: this.color
       }
     },
-    computed: {
-      bgStyle: function () {
-        return {
-          backgroundColor: this.color
-        }
-      },
-      endEmptyDays: function () {
-        if ((this.monthDays.length + this.weekDay) > 35) {
-          return 42 - this.monthDays.length - this.weekDay
-        } else {
-          return 35 - this.monthDays.length - this.weekDay
-        }
-      },
-      monthDays: function () {
-        const r1 = moment.range(this.month.start, this.month.end).by('days')
-        return this.month.getMonthDays()
-      },
-      weekDay: function () {
-        return this.month.getWeekStart()
+    endEmptyDays: function () {
+      if ((this.monthDays.length + this.weekDay) > 35) {
+        return 42 - this.monthDays.length - this.weekDay
+      } else {
+        return 35 - this.monthDays.length - this.weekDay
       }
     },
-    methods: {
-      getMonthFormatted: function () {
-        return this.month.getFormatted()
-      },
-      isDisabled: function (day) {
-        if (this.minDate && this.maxDate) {
-          return !moment(day).isBetween(this.minDate,this.maxDate)
-        } else if (this.minDate) {
-          return moment(day).isBefore(this.minDate)
-        } else if (this.maxDate) {
-          return moment(day).isAfter(this.maxDate)
-        }
-        return false
-      },
-      isSelected: function (day) {
-        return moment(moment(this.dateTime).format('YYYY-MM-DD')).isSame(day.format('YYYY-MM-DD'))
-      },
-      isWeekEndDay: function (day) {
-        var dayConst = moment(day).day()
-        var weekendsDaysNumbers = [6, 0]
-        return this.noWeekendsDays ? weekendsDaysNumbers.indexOf(dayConst) > -1 : false
-      },
-      selectDate: function (day) {
-        this.$emit('change-date', day)
-      },
-      changeMonth: function (val) {
-        this.transitionDaysName = 'slide' + val
-        this.transitionLabelName = 'slidev' + val
-        this.$emit('change-month', val)
+    monthDays: function () {
+      return this.month.getMonthDays()
+    },
+    weekDay: function () {
+      return this.month.getWeekStart()
+    }
+  },
+  methods: {
+    getMonthFormatted: function () {
+      return this.month.getFormatted()
+    },
+    isDisabled: function (day) {
+      if (this.minDate && this.maxDate) {
+        return !moment(day).isBetween(this.minDate, this.maxDate)
+      } else if (this.minDate) {
+        return moment(day).isBefore(this.minDate)
+      } else if (this.maxDate) {
+        return moment(day).isAfter(this.maxDate)
       }
+      return false
+    },
+    isSelected: function (day) {
+      return moment(moment(this.dateTime).format('YYYY-MM-DD')).isSame(day.format('YYYY-MM-DD'))
+    },
+    isWeekEndDay: function (day) {
+      var dayConst = moment(day).day()
+      var weekendsDaysNumbers = [6, 0]
+      return this.noWeekendsDays ? weekendsDaysNumbers.indexOf(dayConst) > -1 : false
+    },
+    selectDate: function (day) {
+      this.$emit('change-date', day)
+    },
+    changeMonth: function (val) {
+      this.transitionDaysName = 'slide' + val
+      this.transitionLabelName = 'slidev' + val
+      this.$emit('change-month', val)
     }
   }
+}
 </script>
 <style lang="scss" scoped>
   @import "../../assets/animation.scss";

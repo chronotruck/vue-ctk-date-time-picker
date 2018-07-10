@@ -65,140 +65,140 @@
 </template>
 
 <script>
-  import CtkTimePicker from './_subs/CtkTimePicker.vue'
-  import CtkDatePicker from './_subs/CtkDatePicker.vue'
-  import Month from './../modules/month'
-  import moment from 'moment'
-  export default {
-    name: 'CtkDatePickerAgenda',
-    components: {
-      CtkTimePicker, CtkDatePicker
-    },
-    props: {
-      dateTime: {},
-      visible: { type: Boolean, required: true, default: true },
-      disableTime: { type: Boolean },
-      disableDate: { type: Boolean },
-      minuteInterval: { type: Number },
-      color: { type: String },
-      timeFormat: { type: String },
-      withoutHeader: {},
-      locale: {},
-      maxDate: {},
-      minDate: {},
-      withoutInput: {},
-      agendaPosition: {},
-      noWeekendsDays: {},
-      autoClose: {}
-    },
-    data: function () {
-      return {
-        month: this.disableDate ? '' : new Month(this.dateTime.month(), this.dateTime.year()),
-        transitionDayName: 'slidevnext',
-        timeWidth: !this.disableTime ? this.dateTimeWidth() : null
-      }
-    },
-    computed: {
-      position: function () {
-        if (this.agendaPosition === 'top') {
-          return {
-            top: '100%',
-            marginBottom: '10px'
-          }
-        } else {
-          return {
-            bottom: '100%',
-            marginTop: '10px'
-          }
-        }
-      },
-      isFormatTwelve: function () {
-        if (this.timeFormat) {
-          return (this.timeFormat.indexOf('a') > -1) || (this.timeFormat.indexOf('A') > -1)
-        } else {
-          return false
-        }
-      },
-      bgStyle: function () {
+import CtkTimePicker from './_subs/CtkTimePicker.vue'
+import CtkDatePicker from './_subs/CtkDatePicker.vue'
+import Month from './../modules/month'
+import moment from 'moment'
+export default {
+  name: 'CtkDatePickerAgenda',
+  components: {
+    CtkTimePicker, CtkDatePicker
+  },
+  props: {
+    dateTime: {},
+    visible: { type: Boolean, required: true, default: true },
+    disableTime: { type: Boolean },
+    disableDate: { type: Boolean },
+    minuteInterval: { type: Number },
+    color: { type: String },
+    timeFormat: { type: String },
+    withoutHeader: {},
+    locale: {},
+    maxDate: {},
+    minDate: {},
+    withoutInput: {},
+    agendaPosition: {},
+    noWeekendsDays: {},
+    autoClose: {}
+  },
+  data () {
+    return {
+      month: this.disableDate ? '' : new Month(this.dateTime.month(), this.dateTime.year()),
+      transitionDayName: 'slidevnext',
+      timeWidth: !this.disableTime ? this.dateTimeWidth() : null
+    }
+  },
+  computed: {
+    position () {
+      if (this.agendaPosition === 'top') {
         return {
-          backgroundColor: this.color,
-          padding: this.disableDate ? '10px 0' : '10px 0 10px 10px'
+          top: '100%',
+          marginBottom: '10px'
         }
-      },
-      year: function () {
-        return this.dateTime.format('YYYY')
+      } else {
+        return {
+          bottom: '100%',
+          marginTop: '10px'
+        }
       }
     },
-    methods: {
-      getDateFormatted: function () {
-        return moment(this.dateTime).locale(this.locale).format('ddd D MMM')
-      },
-      selectTime: function (dateTime) {
-        this.transitionDayName = 'slidevprev'
-        if (dateTime > this.dateTime) {
-          this.transitionDayName = 'slidevnext'
-        }
-        this.$emit('change-date', dateTime)
-      },
-      selectDate: function (dateTime) {
+    isFormatTwelve () {
+      if (this.timeFormat) {
+        return (this.timeFormat.indexOf('a') > -1) || (this.timeFormat.indexOf('A') > -1)
+      } else {
+        return false
+      }
+    },
+    bgStyle () {
+      return {
+        backgroundColor: this.color,
+        padding: this.disableDate ? '10px 0' : '10px 0 10px 10px'
+      }
+    },
+    year () {
+      return this.dateTime.format('YYYY')
+    }
+  },
+  methods: {
+    getDateFormatted () {
+      return moment(this.dateTime).locale(this.locale).format('ddd D MMM')
+    },
+    selectTime (dateTime) {
+      this.transitionDayName = 'slidevprev'
+      if (dateTime > this.dateTime) {
         this.transitionDayName = 'slidevnext'
-        if (dateTime.isBefore(this.dateTime)) {
-          this.transitionDayName = 'slidevprev'
-        }
-        dateTime.add(this.dateTime.hour(), 'hours')
-        dateTime.add(this.dateTime.minute(), 'minutes')
-        this.$emit('change-date', dateTime)
-      },
-      changeMonth: function (val) {
-        let month = this.month.month + (val === 'prev' ? -1 : +1)
-        let year = this.month.year
-        if (month > 11 || month < 0) {
-          year += (val === 'prev' ? -1 : +1)
-          month = (val === 'prev' ? 11 : 0)
-        }
-        this.month = new Month(month, year)
-      },
-      validate: function () {
-        this.$emit('validate')
-      },
-      dateTimeWidth: function () {
-        var width
-        var result
-        if (this.$refs.timePickerComponent && this.$refs.timePickerComponent.$el.clientWidth) {
-          width = this.$refs.timePickerComponent.$el.clientWidth
-        } else {
-          width = 160
-        }
-        var result = {
-          flex: '0 0 ' + width + 'px',
-          width: width + 'px',
-          minWidth: width + 'px',
-          maxWidth: width + 'px'
-        }
-        return result
       }
+      this.$emit('change-date', dateTime)
     },
-    watch: {
-      dateTime: {
-        handler: function () {
-          this.month = this.disableDate ? '' : new Month(this.dateTime.month(), this.dateTime.year())
-          this.getDateFormatted()
-        },
-        deep: true
-      },
-      locale: function () {
+    selectDate (dateTime) {
+      this.transitionDayName = 'slidevnext'
+      if (dateTime.isBefore(this.dateTime)) {
+        this.transitionDayName = 'slidevprev'
+      }
+      dateTime.add(this.dateTime.hour(), 'hours')
+      dateTime.add(this.dateTime.minute(), 'minutes')
+      this.$emit('change-date', dateTime)
+    },
+    changeMonth (val) {
+      let month = this.month.month + (val === 'prev' ? -1 : +1)
+      let year = this.month.year
+      if (month > 11 || month < 0) {
+        year += (val === 'prev' ? -1 : +1)
+        month = (val === 'prev' ? 11 : 0)
+      }
+      this.month = new Month(month, year)
+    },
+    validate () {
+      this.$emit('validate')
+    },
+    dateTimeWidth () {
+      let width
+      let result
+      if (this.$refs.timePickerComponent && this.$refs.timePickerComponent.$el.clientWidth) {
+        width = this.$refs.timePickerComponent.$el.clientWidth
+      } else {
+        width = 160
+      }
+      result = {
+        flex: '0 0 ' + width + 'px',
+        width: width + 'px',
+        minWidth: width + 'px',
+        maxWidth: width + 'px'
+      }
+      return result
+    }
+  },
+  watch: {
+    dateTime: {
+      handler () {
         this.month = this.disableDate ? '' : new Month(this.dateTime.month(), this.dateTime.year())
         this.getDateFormatted()
       },
-      visible: function (val) {
-        if (val && !this.disableTime) {
-          this.$nextTick(function () {
-            this.timeWidth = this.dateTimeWidth()
-          })
-        }
+      deep: true
+    },
+    locale () {
+      this.month = this.disableDate ? '' : new Month(this.dateTime.month(), this.dateTime.year())
+      this.getDateFormatted()
+    },
+    visible (val) {
+      if (val && !this.disableTime) {
+        this.$nextTick(() => {
+          this.timeWidth = this.dateTimeWidth()
+        })
       }
     }
   }
+}
 </script>
 
 <style lang="scss" scoped>
