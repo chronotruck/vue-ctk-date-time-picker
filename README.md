@@ -17,7 +17,7 @@ A [demo](https://htmlpreview.github.io/?https://github.com/chronotruck/vue-ctk-d
 
 `npm i --save vue-ctk-date-time-picker`
 
-## Demo and Docs
+## Docs
 
 `npm run serve`
 

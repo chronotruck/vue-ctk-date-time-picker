@@ -1,3 +1,3 @@
 Click above for show all props
 
-    <ctk-date-time-picker />
+    <vue-ctk-date-time-picker />
