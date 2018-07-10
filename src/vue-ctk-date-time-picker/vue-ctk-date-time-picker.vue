@@ -16,10 +16,12 @@
           :placeholder="label"
           :disabled="disabled"
           :style="isFocus && !errorHint || isVisible ? borderStyle : ''"
-          ref="CtkDateTimePicker" readonly
+          ref="CtkDateTimePicker"
+          readonly
         >
         <label
           :for="id"
+          ref="label"
           class="field-label"
           :class="hint ? (errorHint ? 'text-danger' : 'text-primary') : ''"
           :style="isFocus || isVisible ? colorStyle : ''"
@@ -60,7 +62,7 @@ function nearestMinutes (interval, someMoment, m) {
   return m(someMoment.clone().minute(roundedMinutes).second(0))
 }
 export default {
-  name: 'ctk-date-time-picker',
+  name: 'vue-ctk-date-time-picker',
   components: {
     CtkDatePickerAgenda
   },
@@ -146,20 +148,20 @@ export default {
       }
     }
   },
-  created: function () {
+  created () {
     if (this.value) {
       this.$emit('input', this.dateTime.format(this.format))
     }
     moment.locale(this.locale)
   },
   methods: {
-    changeDate: function (day) {
+    changeDate (day) {
       this.$emit('input', moment(day).format(this.format))
       if (this.autoClose) {
         this.hideDatePicker()
       }
     },
-    showDatePicker: function () {
+    showDatePicker () {
       if (this.disabled) {
         return
       }
@@ -173,14 +175,14 @@ export default {
       }
       this.isVisible = true
     },
-    hideDatePicker: function () {
+    hideDatePicker () {
       this.isVisible = false
     },
-    onFocus: function () {
+    onFocus () {
       this.isFocus = true
       this.showDatePicker()
     },
-    unFocus: function () {
+    unFocus () {
       this.hideDatePicker()
       this.isFocus = false
     }

@@ -57,30 +57,30 @@ export default {
     }
   },
   computed: {
-    bgStyle: function () {
+    bgStyle () {
       return {
         backgroundColor: this.color
       }
     },
-    endEmptyDays: function () {
+    endEmptyDays () {
       if ((this.monthDays.length + this.weekDay) > 35) {
         return 42 - this.monthDays.length - this.weekDay
       } else {
         return 35 - this.monthDays.length - this.weekDay
       }
     },
-    monthDays: function () {
+    monthDays () {
       return this.month.getMonthDays()
     },
-    weekDay: function () {
+    weekDay () {
       return this.month.getWeekStart()
     }
   },
   methods: {
-    getMonthFormatted: function () {
+    getMonthFormatted () {
       return this.month.getFormatted()
     },
-    isDisabled: function (day) {
+    isDisabled (day) {
       if (this.minDate && this.maxDate) {
         return !moment(day).isBetween(this.minDate, this.maxDate)
       } else if (this.minDate) {
@@ -90,18 +90,18 @@ export default {
       }
       return false
     },
-    isSelected: function (day) {
+    isSelected (day) {
       return moment(moment(this.dateTime).format('YYYY-MM-DD')).isSame(day.format('YYYY-MM-DD'))
     },
-    isWeekEndDay: function (day) {
-      var dayConst = moment(day).day()
-      var weekendsDaysNumbers = [6, 0]
+    isWeekEndDay (day) {
+      const dayConst = moment(day).day()
+      const weekendsDaysNumbers = [6, 0]
       return this.noWeekendsDays ? weekendsDaysNumbers.indexOf(dayConst) > -1 : false
     },
-    selectDate: function (day) {
+    selectDate (day) {
       this.$emit('change-date', day)
     },
-    changeMonth: function (val) {
+    changeMonth (val) {
       this.transitionDaysName = 'slide' + val
       this.transitionLabelName = 'slidev' + val
       this.$emit('change-month', val)
