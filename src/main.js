@@ -2,8 +2,8 @@
 import Vue from 'vue'
 import App from './App.vue'
 
-Vue.config.productionTip = false;
+Vue.config.productionTip = false
 
-const app = new Vue({
+new Vue({
   render: h => h(App)
 }).$mount('#app')

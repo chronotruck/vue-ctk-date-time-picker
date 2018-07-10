@@ -1,101 +1,177 @@
 <template>
   <div id="app">
     <div id="vueCtkDateTimePicker" style="width: 90%; margin: 0 auto;">
-      <h1>CtkDatetimePicker</h1>
-      <h3>A VueJs component for select date & time</h3>
-      <div class="component-container">
-        <h3>DateTimePicker</h3>
-        <p>color="#96bf31"</p>
-        <p>Inititale value : '2018-04-05T04:26'</p>
-        <p>v-model = {{value}}</p>
-        <p>no format, no formatted</p>
-        <p>min-date="2018-06-03" max-date="2018-06-12"</p>
-        <ctk-date-time-picker v-model="value"
-                              :minute-interval="minuteInterval" name="start" color="#96bf31"
-                              min-date="2018-04-03" max-date="2018-04-12" />
+      <header>
+        <img src="./assets/logo.png" alt="">
+        <h1>CtkDatetimePicker</h1>
+        <h3>A VueJs component for select date & time</h3>
+      </header>
+      <div class="flex flex-start">
+        <div class="component-container">
+          <h3>DateTimePicker</h3>
+          <p>Inititale value : '2018-04-05T04:26'</p>
+          <p>v-model = {{value}}</p>
+          <ctk-date-time-picker
+            v-model="value"
+            :minute-interval="5"
+            color="#96bf31"
+            min-date="2018-04-03"
+            max-date="2018-04-12"
+          />
+          <br>
+          <textarea readonly style="height: 110px;">
+            <ctk-date-time-picker
+              v-model="value"
+              :minute-interval="5"
+              color="#96bf31"
+              min-date="2018-04-03"
+              max-date="2018-04-12"
+            />
+          </textarea>
+
+        </div>
+        <div class="component-container">
+          <h3>DatePicker</h3>
+          <p>Inititale value : null</p>
+          <p>v-model = {{value2}}</p>
+          <ctk-date-time-picker
+            format="YYYY-MM-DD"
+            formatted="ddd D MMM YYYY"
+            v-model="value2"
+            label="Choose date"
+            disable-time
+          />
+          <br>
+          <textarea readonly style="height: 110px;">
+            <ctk-date-time-picker
+              format="YYYY-MM-DD"
+              formatted="ddd D MMM YYYY"
+              v-model="value2"
+              label="Choose date"
+              disable-time
+            />
+          </textarea>
+        </div>
       </div>
-      <div class="component-container">
-        <h3>DatePicker</h3>
-        <p>-</p>
-        <p>Inititale value : null</p>
-        <p>v-model = {{value2}}</p>
-        <p>format="YYYY-MM-DD" formatted="ddd D MMM YYYY"</p>
-        <p>disable-timepicker</p>
-        <ctk-date-time-picker format="YYYY-MM-DD"
-                              formatted="ddd D MMM YYYY"
-                              v-model="value2" name="end"
-                              label="Choose date"
-                              disable-time />
+      <div class="flex flex-start">
+        <div class="component-container">
+          <h3>TimePicker</h3>
+          <p>Inititale value : '14:26'</p>
+          <p>v-model = {{timePickerValue}}</p>
+          <ctk-date-time-picker
+            id="timepicker"
+            formatted="h:mm a"
+            format="HH:mm"
+            time-format="h:mm a"
+            v-model="timePickerValue"
+            label="Choose time"
+            :minute-interval="minuteInterval2"
+            disable-date
+            :disabled="false"
+          />
+          <br>
+          <textarea readonly style="height: 130px;">
+            <ctk-date-time-picker
+              v-model="yourValue"
+              formatted="h:mm a"
+              format="HH:mm"
+              time-format="h:mm a"
+              label="Choose time"
+              :minute-interval="10"
+              disable-date
+            />
+          </textarea>
+        </div>
+        <div class="component-container">
+          <h3>DateTimePicker without header & auto close</h3>
+          <p>Inititale value : '2018-04-05T14:26'</p>
+          <p>v-model = {{value3}}</p>
+          <ctk-date-time-picker
+            without-header
+            auto-close
+            v-model="value3"
+            time-format="HH:mm"
+            :minute-interval="10"
+            :error-hint="errorHint"
+            :hint="hint"
+            locale="fr"
+          />
+          <br>
+          <textarea readonly style="height: 130px;">
+            <ctk-date-time-picker
+              without-header
+              auto-close
+              v-model="yourValue"
+              time-format="HH:mm"
+              :minute-interval="10"
+              :error-hint="true"
+              hint="Error message"
+              locale="fr"
+            />
+          </textarea>
+        </div>
       </div>
-      <br>
-      <div class="component-container">
-        <h3>TimePicker</h3>
-        <p>Inititale value : '14:26'</p>
-        <p>v-model = {{timePickerValue}}</p>
-        <p>minute-interval = 10</p>
-        <p>format="HH:mm" time-format="h:mm a" formatted="h:mm a"</p>
-        <ctk-date-time-picker id="timepicker" format="HH:mm" formatted="h:mm a" :time-format="timeFormat" v-model="timePickerValue" label="Choose time" :minute-interval="minuteInterval2" disable-date />
-      </div>
-      <br>
-      <div class="component-container">
-        <h3>DateTimePicker without header</h3>
-        <p>Inititale value : '2018-04-05T14:26'</p>
-        <p>v-model = {{value3}}</p>
-        <p>locale="{{locale}}" time-format="HH:mm"</p>
-        <p>format="null" formatted="null"</p>
-        <p>Option : 'auto-close' (Close component on select date)</p>
-        <ctk-date-time-picker without-header
-                              v-model="value3"
-                              time-format="HH:mm"
-                              id="datetimepicker-optins"
-                              label="Custom label"
-                              :minute-interval="minuteInterval2"
-                              :error-hint="errorHint"
-                              :locale="locale"
-                              :hint="hint"
-                              auto-close />
-      </div>
-      <div class="component-container">
-        <p>v-model = {{value}}</p>
-        <p>Option : 'without-input' && 'no-weekends-days' && 'auto-close'</p>
-        <ctk-date-time-picker v-model="value" name="end"
-                              label="Choose date time"
-                              no-weekends-days
-                              without-input/>
-      </div>
-      <div class="component-container">
-        <p>Option : 'disabled'</p>
-        <ctk-date-time-picker
-          disabled
-        />
+      <div class="flex flex-start">
+        <div class="component-container">
+          <h3>Inline DateTimePicker</h3>
+          <p>v-model = {{value}}</p>
+          <ctk-date-time-picker
+            v-model="value"
+            label="Choose date time"
+            no-weekends-days
+            without-input
+          />
+          <br>
+          <textarea readonly style="height: 100px;">
+            <ctk-date-time-picker
+              v-model="value"
+              label="Choose date time"
+              no-weekends-days
+              without-input
+            />
+          </textarea>
+        </div>
+        <div class="component-container">
+          <h3>DateTimePicker disabled</h3>
+          <p>Option : 'disabled'</p>
+          <ctk-date-time-picker
+            disabled
+          />
+          <br>
+          <textarea readonly style="height: 60px;">
+            <ctk-date-time-picker
+              disabled
+            />
+          </textarea>
+        </div>
       </div>
     </div>
   </div>
 </template>
 
 <script>
-  import CtkDateTimePicker from './vue-ctk-date-time-picker/vue-ctk-date-time-picker.vue'
+import CtkDateTimePicker from './vue-ctk-date-time-picker/vue-ctk-date-time-picker.vue'
 
-  export default {
-    name: 'App',
-    components: {
-      CtkDateTimePicker
-    },
-    data () {
-      return {
-        value: '2018-04-05T04:26',
-        value2: null,
-        value3: '2018-04-05T14:26',
-        timePickerValue: '14:26',
-        minuteInterval: 5,
-        minuteInterval2: 10,
-        hint: 'Error message',
-        errorHint: true,
-        timeFormat: 'h:mm a',
-        locale: 'fr'
-      }
+export default {
+  name: 'App',
+  components: {
+    CtkDateTimePicker
+  },
+  data () {
+    return {
+      value: '2018-04-05T04:26',
+      value2: null,
+      value3: '2018-04-05T14:26',
+      timePickerValue: '14:26',
+      minuteInterval: 5,
+      minuteInterval2: 10,
+      hint: 'Error message',
+      errorHint: true,
+      timeFormat: 'hh:mm a',
+      locale: 'fr'
     }
   }
+}
 </script>
 
 <style>
@@ -103,11 +179,13 @@
     font-family: 'Avenir', Helvetica, Arial, sans-serif;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
-    text-align: center;
   }
   #app {
     width: 90%;
     margin: 0 auto;
+  }
+  header {
+    text-align: center;
   }
   *, *::before, *::after {
     box-sizing: border-box;
@@ -115,7 +193,7 @@
   img {
     height: 140px;
   }
-  h1 {
+  h3, h1, p {
     margin-top: 0;
   }
   .component-container {
@@ -128,5 +206,18 @@
     border-radius: 4px;
     margin-bottom: 20px;
     box-shadow: 0 2px 1px -1px rgba(0, 0, 0, 0.2), 0 1px 1px 0 rgba(0, 0, 0, 0.14), 0 1px 3px 0 rgba(0, 0, 0, 0.12);
+  }
+  textarea {
+    background-color: #FFF;
+    color: #bd4147;
+    border: 1px solid #CCC;
+    /* display: inline-block; */
+    border-radius: 4px;
+    outline: none;
+    font-size: 85%;
+    width: 100%;
+    font-weight: 700;
+    font-family: monospace, monospace;
+    resize: none;
   }
 </style>
