@@ -46,3 +46,13 @@
   transform: translateY(-100%);
   opacity: 0;
 }
+
+@media screen and (max-width: 412px) {
+  .slide-enter-active, .slide-leave-active {
+    transition: all 0s;
+  }
+  /** Slide animation **/
+  .slideinvert-enter-active, .slideinvert-leave-active {
+    transition: all 0s;
+  }
+}

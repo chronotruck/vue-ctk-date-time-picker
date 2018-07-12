@@ -1,8 +1,12 @@
 <template>
-  <div class="timepicker-container flex" :style="[{height: this.month ? (monthDays.length + weekDay) > 35 ? '347px' : '307px' : '180px' }]">
+  <div
+    class="timepicker-container flex"
+    :class="{'inline': withoutInput}"
+    :style="[{height: this.month ? (monthDays.length + weekDay) > 35 ? '347px' : '307px' : '180px' }]"
+  >
     <div class="time-container hours-container flex flex-1 flex-direction-column h-100 mh-100 w-100">
       <div class="flex align-center justify-content-center time-label text-muted">{{hourType}}</div>
-      <div class="h-100 mh-100 numbers-container">
+      <div class="h-100 mh-100 numbers-container" ref="hours">
         <div v-for="hr in hours" :key="hr"
              class="item flex align-center justify-content-center"
              :class="[{active: hour === hr}, hr]"
@@ -14,7 +18,7 @@
     </div>
     <div class="time-container minutes-container flex-1 flex flex-direction-column h-100 mh-100 w-100">
       <div class="flex align-center justify-content-center time-label text-muted">{{minuteType}}</div>
-      <div class="h-100 mh-100 numbers-container">
+      <div class="h-100 mh-100 numbers-container" ref="minutes">
         <div v-for="m in minutes" :key="m"
              :class="[{active: minute === m}, m]"
              @click.stop="select('minute', m)"
@@ -52,9 +56,11 @@ export default {
     minuteInterval: {type: Number},
     month: {},
     dateTime: {type: Object},
-    color: { type: String }
+    color: { type: String },
+    withoutInput: { type: Boolean },
+    visible: { type: Boolean }
   },
-  data: function () {
+  data () {
     return {
       hours: [],
       minutes: [],
@@ -84,10 +90,27 @@ export default {
   },
   watch: {
     'format': 'renderFormat',
-    minuteInterval: function (newInteval) {
+    minuteInterval (newInteval) {
       this.renderList('minute', newInteval)
     },
-    'displayTime': 'fillValues'
+    'displayTime': 'fillValues',
+    visible (v) {
+      if (v) {
+        this.$nextTick(() => {
+          const containers = ['hours', 'minutes']
+          containers.forEach((container) => {
+            const elem = this.$refs[`${container}`]
+            elem.scrollTop = 0
+            const selected = this.$refs[`${container}`].querySelector('.item.active')
+            const boundsSelected = selected.getBoundingClientRect()
+            const boundsElem = elem.getBoundingClientRect()
+            if (elem && boundsSelected && boundsElem) {
+              elem.scrollTop = boundsSelected.top - boundsElem.top - 40
+            }
+          })
+        })
+      }
+    }
   },
   methods: {
     formatValue: function (type, i) {
@@ -296,7 +319,7 @@ export default {
       this.$emit('change-time', dateTime)
     }
   },
-  mounted: function () {
+  mounted () {
     this.renderFormat()
   }
 }
@@ -356,6 +379,16 @@ export default {
           }
         }
       }
+    }
+  }
+  @media screen and (max-width: 412px) {
+    .timepicker-container:not(.inline) {
+      .time-container.hours-container {
+        border: 0;
+      }
+      width: 100%;
+      border-top: 1px solid #EAEAEA;
+      height: 120px !important;
     }
   }
 </style>

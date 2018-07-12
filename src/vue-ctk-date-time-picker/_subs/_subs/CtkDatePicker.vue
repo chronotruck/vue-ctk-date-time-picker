@@ -1,5 +1,5 @@
 <template>
-  <div id="CtkDatePicker" class="datepicker-container" :class="{'flex-1': withoutInput}">
+  <div id="CtkDatePicker" class="datepicker-container" :class="{'flex-1 inline': withoutInput}">
     <div class="datepicker-controls flex align-center justify-content-center">
       <div class="arrow-month h-100">
         <div class="datepicker-button datepicker-prev text-center h-100 flex align-center" @click="changeMonth('prev')">
@@ -208,6 +208,19 @@ export default {
             transform: scale(0);
             opacity: 0;
           }
+        }
+      }
+    }
+  }
+  @media screen and (max-width: 412px) {
+    #CtkDatePicker {
+      width: 100%;
+      &:not(.inline) {
+        .datepicker-controls {
+          height: 36px !important;
+        }
+        .datepicker-week {
+          height: 21px !important;
         }
       }
     }

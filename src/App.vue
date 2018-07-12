@@ -6,8 +6,8 @@
         <h1>CtkDatetimePicker</h1>
         <h3>A VueJs component for select date & time</h3>
       </header>
-      <div class="flex flex-start">
-        <div class="component-container">
+      <div class="components-container flex">
+        <div class="component-container flex-1">
           <h3>DateTimePicker</h3>
           <p>Inititale value : '2018-04-05T04:26'</p>
           <p>v-model = {{value || 'null'}}</p>
@@ -30,7 +30,7 @@
           </textarea>
 
         </div>
-        <div class="component-container">
+        <div class="component-container flex-1">
           <h3>DatePicker</h3>
           <p>Inititale value : null</p>
           <p>v-model = {{value2 || 'null'}}</p>
@@ -53,8 +53,8 @@
           </textarea>
         </div>
       </div>
-      <div class="flex flex-start">
-        <div class="component-container">
+      <div class="components-container flex">
+        <div class="component-container flex-1">
           <h3>TimePicker</h3>
           <p>Inititale value : '14:26'</p>
           <p>v-model = {{timePickerValue || 'null'}}</p>
@@ -82,7 +82,7 @@
             />
           </textarea>
         </div>
-        <div class="component-container">
+        <div class="component-container flex-1">
           <h3>DateTimePicker without header & auto close</h3>
           <p>Inititale value : '2018-04-05T14:26'</p>
           <p>v-model = {{value3 || 'null'}}</p>
@@ -111,8 +111,8 @@
           </textarea>
         </div>
       </div>
-      <div class="flex flex-start">
-        <div class="component-container">
+      <div class="components-container flex">
+        <div class="component-container flex-1">
           <h3>Inline DateTimePicker</h3>
           <p>v-model = {{value || 'null'}}</p>
           <ctk-date-time-picker
@@ -131,7 +131,7 @@
             />
           </textarea>
         </div>
-        <div class="component-container">
+        <div class="component-container flex-1">
           <h3>DateTimePicker disabled</h3>
           <p>Option : 'disabled'</p>
           <ctk-date-time-picker
@@ -174,15 +174,11 @@ export default {
 }
 </script>
 
-<style>
+<style lang="scss">
   #app {
     font-family: 'Avenir', Helvetica, Arial, sans-serif;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
-  }
-  #app {
-    width: 90%;
-    margin: 0 auto;
   }
   header {
     text-align: center;
@@ -197,9 +193,7 @@ export default {
     margin-top: 0;
   }
   .component-container {
-    float: left;
-    width: 46%;
-    margin: 0 2%;
+    margin: 0 10px;
     padding: 20px;
     background: #F2F2F2;
     border: 1px solid #EAEAEA;
@@ -219,5 +213,14 @@ export default {
     font-weight: 700;
     font-family: monospace, monospace;
     resize: none;
+  }
+  @media screen and (max-width: 1024px) {
+    .components-container.flex {
+      -webkit-flex-direction: column;
+      -ms-flex-direction: column;
+      flex-direction: column;
+      flex-flow: column;
+      -moz-flex-direction: column;
+    }
   }
 </style>
