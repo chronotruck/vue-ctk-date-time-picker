@@ -1,11 +1,14 @@
 <template>
-  <div :id="id" ref="bigParent" class="ctk-date-time-picker">
+  <div
+    :id="id"
+    class="ctk-date-time-picker"
+    :class="{'inline': withoutInput}"
+  >
     <div
       ref="parent"
       class="field"
       @click="showDatePicker"
       :class="{'is-focused': isFocus || isVisible, 'has-value': dateFormatted, 'has-error': errorHint, 'is-disabled': disabled}"
-      v-click-outside="unFocus"
     >
       <div v-if="!withoutInput">
         <input
@@ -28,35 +31,39 @@
         >
           {{hint || label}}
          </label>
-         <div class="time-picker-overlay" v-if="isVisible" @click.stop="unFocus"></div>
+
       </div>
-      <ctk-date-picker-agenda
-        ref="agenda"
-        :date-time="dateTime"
-        :color="color"
-        :visible="isVisible"
-        :without-header="!withoutHeader"
-        :disable-time="disableTime"
-        :disable-date="disableDate"
-        :minute-interval="minuteInterval"
-        :time-format="timeFormat"
-        :locale="locale"
-        :min-date="minDate"
-        :max-date="maxDate"
-        :agenda-position="agendaPosition"
-        :without-input="withoutInput"
-        :no-weekends-days="noWeekendsDays"
-        :auto-close="autoClose"
-        @change-date="changeDate"
-      />
     </div>
+    <div
+      class="time-picker-overlay"
+      v-if="isVisible && !withoutInput"
+      @click.stop="unFocus"
+    ></div>
+    <ctk-date-picker-agenda
+      ref="agenda"
+      :date-time="dateTime"
+      :color="color"
+      :visible="isVisible"
+      :without-header="!withoutHeader"
+      :disable-time="disableTime"
+      :disable-date="disableDate"
+      :minute-interval="minuteInterval"
+      :time-format="timeFormat"
+      :locale="locale"
+      :min-date="minDate"
+      :max-date="maxDate"
+      :agenda-position="agendaPosition"
+      :without-input="withoutInput"
+      :no-weekends-days="noWeekendsDays"
+      :auto-close="autoClose"
+      @change-date="changeDate"
+    />
   </div>
 </template>
 
 <script>
 import moment from 'moment'
 import CtkDatePickerAgenda from './_subs/CtkDatePickerAgenda.vue'
-import ClickOutside from './modules/v-click-outside'
 function nearestMinutes (interval, someMoment, m) {
   const roundedMinutes = Math.ceil(someMoment.minute() / interval) * interval
   return m(someMoment.clone().minute(roundedMinutes).second(0))
@@ -65,9 +72,6 @@ export default {
   name: 'vue-ctk-date-time-picker',
   components: {
     CtkDatePickerAgenda
-  },
-  directives: {
-    'click-outside': ClickOutside
   },
   props: {
     label: { type: String, default: 'Select date & time' },
@@ -96,7 +100,8 @@ export default {
       isVisible: false,
       isFocus: false,
       agendaPosition: 'top',
-      oldValue: this.value
+      oldValue: this.value,
+      clientWidth: null
     }
   },
   computed: {
@@ -198,6 +203,7 @@ export default {
     text-align: left;
     font-size: 14px;
     border-radius: 4px;
+    position: relative;
     * {
       box-sizing: border-box;
     }
@@ -287,6 +293,14 @@ export default {
     }
     .text-danger {
       color: orangered !important;
+    }
+  }
+  @media screen and (max-width: 412px) {
+    .time-picker-overlay {
+      background: rgba(0, 0, 0, 0.4);
+    }
+    .ctk-date-time-picker:not(.inline) {
+      position: inherit !important;
     }
   }
 </style>

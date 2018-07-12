@@ -1,9 +1,11 @@
 <template>
-  <transition :name="this.agendaPosition === 'top' ? 'slide' : 'slideinvert'">
+  <transition
+    :name="this.agendaPosition === 'top' ? 'slide' : 'slideinvert'"
+  >
     <div
       class="datetimepicker flex"
-      :class="{'without-input': withoutInput}"
-      v-if="visible || withoutInput"
+      :class="{'inline': withoutInput}"
+      v-show="visible || withoutInput"
       @click.stop
       :style="position"
     >
@@ -56,6 +58,7 @@
             :format="timeFormat"
             :minute-interval="minuteInterval"
             v-if="!disableTime"
+            :visible="visible"
             @change-time="selectTime"
           />
         </div>
@@ -215,8 +218,13 @@ export default {
     background: #FFF;
     -webkit-box-shadow: 0 2px 1px -1px rgba(0, 0, 0, 0.2), 0 1px 1px 0 rgba(0, 0, 0, 0.14), 0 1px 3px 0 rgba(0, 0, 0, 0.12);
     box-shadow: 0 2px 1px -1px rgba(0, 0, 0, 0.2), 0 1px 1px 0 rgba(0, 0, 0, 0.14), 0 1px 3px 0 rgba(0, 0, 0, 0.12);
-    max-width: 360px;
-    .datepicker-header {
+    max-width: 400px;
+    .datetimepicker-container {
+      background: #FFF;
+      border-bottom-left-radius: 4px;
+      border-bottom-right-radius: 4px;
+    }
+    &-header {
       background: dodgerblue;
       color: #FFF;
       padding: 10px 0 10px 10px;
@@ -293,7 +301,7 @@ export default {
       }
     }
   }
-  .without-input {
+  .inline {
     &.datetimepicker, .datepicker {
       position: relative;
     }
@@ -303,6 +311,47 @@ export default {
       -webkit-box-shadow: none;
       width: 100%;
       max-width: 100%;
+    }
+  }
+  @media screen and (max-width: 412px) {
+    .datetimepicker-container {
+      -webkit-flex-direction: column;
+      -ms-flex-direction: column;
+      flex-direction: column;
+      flex-flow: column;
+      -moz-flex-direction: column;
+    }
+    .datetimepicker:not(.inline) {
+      margin: 0 !important;
+      position: absolute;
+      top: 0 !important;
+      bottom: 0;
+      right: 0;
+      left: 0;
+      .datepicker {
+        top: 50px !important;
+        left: 5%;
+        width: 90%;
+        max-width: inherit;
+        position: fixed;
+        margin: 0 !important;
+      }
+      .datepicker-header {
+        padding: 10px !important;
+        .datepicker-time {
+          min-width: 100px !important;
+          max-width: 100px !important;
+        }
+        .datepicker-time, .datepicker-time .flex-1 {
+          justify-content: flex-end;
+          -ms-flex-pack: end;
+          -moz-box-align: end;
+          -moz-box-pack: end;
+          -webkit-box-pack: end;
+          -webkit-justify-content: flex-end;
+          -webkit-box-align: end;
+        }
+      }
     }
   }
 </style>
