@@ -7,37 +7,37 @@
     <div class="time-container hours-container flex flex-1 flex-direction-column h-100 mh-100 w-100">
       <div class="flex align-center justify-content-center time-label text-muted">{{hourType}}</div>
       <div class="h-100 mh-100 numbers-container" ref="hours">
-        <div v-for="hr in hours" :key="hr"
+        <button tabindex="-1" v-for="hr in hours" :key="hr"
              class="item flex align-center justify-content-center"
-             :class="[{active: hour === hr}, hr]"
+             :class="[{active: (hour === hr) && value}, hr]"
              @click.stop="select('hour', hr)">
           <span class="timepicker-day-effect" :style="styleColor"></span>
           <span class="timepicker-day-text">{{hr}}</span>
-        </div>
+        </button>
       </div>
     </div>
     <div class="time-container minutes-container flex-1 flex flex-direction-column h-100 mh-100 w-100">
       <div class="flex align-center justify-content-center time-label text-muted">{{minuteType}}</div>
       <div class="h-100 mh-100 numbers-container" ref="minutes">
-        <div v-for="m in minutes" :key="m"
-             :class="[{active: minute === m}, m]"
+        <button tabindex="-1" v-for="m in minutes" :key="m"
+             :class="[{active: (minute === m) && value}, m]"
              @click.stop="select('minute', m)"
              class="item flex align-center justify-content-center">
           <span class="timepicker-day-effect" :style="styleColor"></span>
           <span class="timepicker-day-text">{{m}}</span>
-        </div>
+        </button>
       </div>
     </div>
     <div class="time-container apms-container flex flex-1 flex-direction-column h-100 mh-100 w-100" v-if="apmType">
       <div class="flex align-center justify-content-center time-label text-muted">{{apmType}}</div>
       <div class="h-100 mh-100 numbers-container">
-        <div v-for="a in apms" :key="a"
-             :class="[{active: apm === a}, a]"
+        <button tabindex="-1" v-for="a in apms" :key="a"
+             :class="[{active: (apm === a)  && value}, a]"
              @click.stop="select('apm', a)"
              class="item flex align-center justify-content-center">
           <span class="timepicker-day-effect" :style="styleColor"></span>
           <span class="timepicker-day-text">{{a}}</span>
-        </div>
+        </button>
       </div>
     </div>
   </div>
@@ -58,7 +58,8 @@ export default {
     dateTime: {type: Object},
     color: { type: String },
     withoutInput: { type: Boolean },
-    visible: { type: Boolean }
+    visible: { type: Boolean },
+    value: {}
   },
   data () {
     return {
@@ -346,6 +347,11 @@ export default {
           color: #161616;
           cursor: pointer;
           position: relative;
+          border: none;
+          background: transparent;
+          font-size: 14px;
+          width: 100%;
+          outline: none;
           .timepicker-day-effect {
             position: absolute;
             opacity: 0.6;

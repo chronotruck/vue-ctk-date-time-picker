@@ -13,17 +13,19 @@
           <p>v-model = {{value || 'null'}}</p>
           <ctk-date-time-picker
             v-model="value"
-            :minute-interval="5"
+            :minute-interval="10"
             color="#96bf31"
+            enable-button-validate
             min-date="2018-04-03"
             max-date="2018-04-12"
           />
           <br>
-          <textarea readonly style="height: 110px;">
+          <textarea readonly tabindex="-1" style="height: 120px;">
             <ctk-date-time-picker
               v-model="value"
-              :minute-interval="5"
+              :minute-interval="10"
               color="#96bf31"
+              enable-button-validate
               min-date="2018-04-03"
               max-date="2018-04-12"
             />
@@ -42,7 +44,7 @@
             disable-time
           />
           <br>
-          <textarea readonly style="height: 110px;">
+          <textarea readonly tabindex="-1" style="height: 110px;">
             <ctk-date-time-picker
               format="YYYY-MM-DD"
               formatted="ddd D MMM YYYY"
@@ -70,7 +72,7 @@
             :disabled="false"
           />
           <br>
-          <textarea readonly style="height: 130px;">
+          <textarea readonly tabindex="-1" style="height: 130px;">
             <ctk-date-time-picker
               v-model="yourValue"
               formatted="h:mm a"
@@ -97,7 +99,7 @@
             locale="fr"
           />
           <br>
-          <textarea readonly style="height: 130px;">
+          <textarea readonly tabindex="-1" style="height: 130px;">
             <ctk-date-time-picker
               without-header
               auto-close
@@ -122,7 +124,7 @@
             without-input
           />
           <br>
-          <textarea readonly style="height: 100px;">
+          <textarea readonly tabindex="-1" style="height: 100px;">
             <ctk-date-time-picker
               v-model="value"
               label="Choose date time"
@@ -138,7 +140,7 @@
             disabled
           />
           <br>
-          <textarea readonly style="height: 60px;">
+          <textarea readonly tabindex="-1" style="height: 60px;">
             <ctk-date-time-picker
               disabled
             />
@@ -175,6 +177,7 @@ export default {
 </script>
 
 <style lang="scss">
+  @import "./vue-ctk-date-time-picker/assets/main.scss";
   #app {
     font-family: 'Avenir', Helvetica, Arial, sans-serif;
     -webkit-font-smoothing: antialiased;
