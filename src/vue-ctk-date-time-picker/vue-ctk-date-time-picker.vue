@@ -41,6 +41,7 @@
     ></div>
     <ctk-date-picker-agenda
       ref="agenda"
+      :value="value"
       :date-time="dateTime"
       :color="color"
       :visible="isVisible"
@@ -55,8 +56,10 @@
       :agenda-position="agendaPosition"
       :without-input="withoutInput"
       :no-weekends-days="noWeekendsDays"
+      :enable-button-validate="enableButtonValidate"
       :auto-close="autoClose"
       @change-date="changeDate"
+      @validate="validate"
     />
   </div>
 </template>
@@ -85,7 +88,7 @@ export default {
     disableDate: { type: Boolean, default: false },
     minuteInterval: { type: Number, default: 1 },
     color: { type: String },
-    timeFormat: { type: String, default: 'H:mm a' },
+    timeFormat: { type: String, default: 'h:mm a' },
     withoutHeader: { type: Boolean, default: false },
     id: { type: String, default: 'CtkDateTimePicker' },
     minDate: { type: String },
@@ -93,7 +96,8 @@ export default {
     withoutInput: { type: Boolean, default: false },
     noWeekendsDays: {type: Boolean, default: false},
     autoClose: {type: Boolean, default: false},
-    disabled: {type: Boolean, default: false}
+    disabled: {type: Boolean, default: false},
+    enableButtonValidate: {type: Boolean, default: false}
   },
   data: function () {
     return {
@@ -190,6 +194,10 @@ export default {
     unFocus () {
       this.hideDatePicker()
       this.isFocus = false
+    },
+    validate: function () {
+      this.unFocus()
+      this.hideDatePicker()
     }
   }
 }
