@@ -41,7 +41,6 @@
             formatted="ddd D MMM YYYY"
             v-model="value2"
             label="Choose date"
-            disable-time
           />
           <br>
           <textarea readonly tabindex="-1" style="height: 110px;">

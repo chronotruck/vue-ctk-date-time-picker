@@ -101,12 +101,14 @@ export default {
           const containers = ['hours', 'minutes']
           containers.forEach((container) => {
             const elem = this.$refs[`${container}`]
-            elem.scrollTop = 0
             const selected = this.$refs[`${container}`].querySelector('.item.active')
-            const boundsSelected = selected.getBoundingClientRect()
-            const boundsElem = elem.getBoundingClientRect()
-            if (elem && boundsSelected && boundsElem) {
-              elem.scrollTop = boundsSelected.top - boundsElem.top - 40
+            if (selected) {
+              elem.scrollTop = 0
+              const boundsSelected = selected.getBoundingClientRect()
+              const boundsElem = elem.getBoundingClientRect()
+              if (elem && boundsSelected && boundsElem) {
+                elem.scrollTop = boundsSelected.top - boundsElem.top - 40
+              }
             }
           })
         })
