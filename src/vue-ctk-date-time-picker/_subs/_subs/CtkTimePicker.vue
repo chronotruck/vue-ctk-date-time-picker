@@ -7,7 +7,7 @@
     <div class="time-container hours-container flex flex-1 flex-direction-column h-100 mh-100 w-100">
       <div class="flex align-center justify-content-center time-label text-muted">{{hourType}}</div>
       <div class="h-100 mh-100 numbers-container" ref="hours">
-        <button tabindex="-1" v-for="hr in hours" :key="hr"
+        <button type="button" tabindex="-1" v-for="hr in hours" :key="hr"
              class="item flex align-center justify-content-center"
              :class="[{active: (hour === hr) && value}, hr]"
              @click.stop="select('hour', hr)">
@@ -19,7 +19,7 @@
     <div class="time-container minutes-container flex-1 flex flex-direction-column h-100 mh-100 w-100">
       <div class="flex align-center justify-content-center time-label text-muted">{{minuteType}}</div>
       <div class="h-100 mh-100 numbers-container" ref="minutes">
-        <button tabindex="-1" v-for="m in minutes" :key="m"
+        <button type="button" tabindex="-1" v-for="m in minutes" :key="m"
              :class="[{active: (minute === m) && value}, m]"
              @click.stop="select('minute', m)"
              class="item flex align-center justify-content-center">
@@ -31,7 +31,7 @@
     <div class="time-container apms-container flex flex-1 flex-direction-column h-100 mh-100 w-100" v-if="apmType">
       <div class="flex align-center justify-content-center time-label text-muted">{{apmType}}</div>
       <div class="h-100 mh-100 numbers-container">
-        <button tabindex="-1" v-for="a in apms" :key="a"
+        <button type="button" tabindex="-1" v-for="a in apms" :key="a"
              :class="[{active: (apm === a)  && value}, a]"
              @click.stop="select('apm', a)"
              class="item flex align-center justify-content-center">
