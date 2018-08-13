@@ -176,7 +176,14 @@ export default {
       }
       const rect = this.$refs.parent.getBoundingClientRect()
       const windowHeight = window.innerHeight
-      const datePickerHeight = 300
+      let datePickerHeight = 428
+      if (!this.enableButtonValidate) {
+        datePickerHeight = datePickerHeight - 46
+      }
+      if (this.withoutHeader) {
+        datePickerHeight = datePickerHeight - 65
+      }
+      console.log('datePickerHeight', datePickerHeight)
       if (((windowHeight - (rect.top + rect.height)) > datePickerHeight) || ((windowHeight - rect.top) > windowHeight / 2 + rect.height)) {
         this.agendaPosition = 'top'
       } else {
