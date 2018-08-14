@@ -183,7 +183,6 @@ export default {
       if (this.withoutHeader) {
         datePickerHeight = datePickerHeight - 65
       }
-      console.log('datePickerHeight', datePickerHeight)
       if (((windowHeight - (rect.top + rect.height)) > datePickerHeight) || ((windowHeight - rect.top) > windowHeight / 2 + rect.height)) {
         this.agendaPosition = 'top'
       } else {
