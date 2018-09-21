@@ -67,6 +67,7 @@ Vue.component('vue-ctk-date-time-picker', VueCtkDateTimePicker);
 | disable-date   | Boolean | no  | false |
 | without-header   | Boolean | no   | false |
 | id  | string | no  | CtkDateTimePicker |
+| overlay | Boolean | no | true |
 | enable-button-validate | Boolean | no | false |
 | min-date****  | string | no  | - |
 | max-date****  | string | no  | - |

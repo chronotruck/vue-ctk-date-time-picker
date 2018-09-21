@@ -36,7 +36,7 @@
     </div>
     <div
       class="time-picker-overlay"
-      v-if="isVisible && !withoutInput"
+      v-if="overlay && (isVisible && !withoutInput)"
       @click.stop="unFocus"
     ></div>
     <ctk-date-picker-agenda
@@ -97,6 +97,7 @@ export default {
     noWeekendsDays: {type: Boolean, default: false},
     autoClose: {type: Boolean, default: false},
     disabled: {type: Boolean, default: false},
+    overlay: {type: Boolean, default: true},
     enableButtonValidate: {type: Boolean, default: false}
   },
   data: function () {
