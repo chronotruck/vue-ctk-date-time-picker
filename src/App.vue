@@ -16,8 +16,8 @@
             :minute-interval="10"
             color="#96bf31"
             enable-button-validate
-            min-date="2018-04-03"
-            max-date="2018-04-12"
+            :min-date="minDate"
+            :max-date="maxDate"
           />
           <br>
           <textarea readonly tabindex="-1" style="height: 120px;">
@@ -26,8 +26,8 @@
               :minute-interval="10"
               color="#96bf31"
               enable-button-validate
-              min-date="2018-04-03"
-              max-date="2018-04-12"
+              :min-date="2018-04-03"
+              :max-date="2018-04-12"
             />
           </textarea>
 
@@ -41,6 +41,7 @@
             formatted="ddd D MMM YYYY"
             v-model="value2"
             label="Choose date"
+            disable-time
           />
           <br>
           <textarea readonly tabindex="-1" style="height: 110px;">
@@ -169,7 +170,9 @@ export default {
       hint: 'Error message',
       errorHint: true,
       timeFormat: 'hh:mm a',
-      locale: 'fr'
+      locale: 'fr',
+      minDate: '2018-04-03',
+      maxDate: '2018-04-12'
     }
   }
 }
