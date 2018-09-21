@@ -26,8 +26,8 @@
               :minute-interval="10"
               color="#96bf31"
               enable-button-validate
-              :min-date=" {{ minDate }} "
-              :max-date=" {{ maxDate }} "
+              :min-date="2018-04-03"
+              :max-date="2018-04-12"
             />
           </textarea>
 
