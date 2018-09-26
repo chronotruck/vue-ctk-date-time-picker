@@ -116,7 +116,9 @@ export default {
   },
   computed: {
     position () {
-      if (this.agendaPosition === 'top') {
+      if (window.innerWidth < 412) {
+        return null
+      } else if (this.agendaPosition === 'top') {
         return {
           top: '100%',
           marginBottom: '10px'
@@ -344,6 +346,7 @@ export default {
       left: 0;
       .datepicker {
         top: 50px !important;
+        bottom: unset !important;
         left: 5%;
         width: 90%;
         max-width: inherit;
