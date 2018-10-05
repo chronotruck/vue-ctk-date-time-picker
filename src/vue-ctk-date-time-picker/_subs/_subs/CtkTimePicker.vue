@@ -148,7 +148,7 @@
         switch (type) {
         case 'H': case 'm':
           return String(i)
-          case 'HH': case 'mm':
+        case 'HH': case 'mm':
           return i < 10 ? `0${i}` : String(i)
         case 'h': case 'k':
           return String(i + 1)
