@@ -1,123 +1,151 @@
 <template>
   <div
-    class="timepicker-container flex"
     :class="{'inline': withoutInput}"
-    :style="[{height: this.month ? (monthDays.length + weekDay) > 35 ? '347px' : '307px' : '180px' }]"
+    :style="[{height: month ? (monthDays.length + weekDay) > 35 ? '347px' : '307px' : '180px' }]"
+    class="timepicker-container flex"
   >
     <div class="time-container hours-container flex flex-1 flex-direction-column h-100 mh-100 w-100">
-      <div class="flex align-center justify-content-center time-label text-muted">{{hourType}}</div>
-      <div class="h-100 mh-100 numbers-container" ref="hours">
-        <button type="button" tabindex="-1" v-for="hr in hours" :key="hr"
-             class="item flex align-center justify-content-center"
-             :class="[{active: (hour === hr) && value}, hr]"
-             @click.stop="select('hour', hr)">
-          <span class="timepicker-day-effect" :style="styleColor"></span>
-          <span class="timepicker-day-text">{{hr}}</span>
+      <div class="flex align-center justify-content-center time-label text-muted">{{ hourType }}</div>
+      <div
+        ref="hours"
+        class="h-100 mh-100 numbers-container">
+        <button
+          v-for="hr in hours"
+          :key="hr"
+          :class="[{active: (hour === hr) && value}, hr]"
+          type="button"
+          tabindex="-1"
+          class="item flex align-center justify-content-center"
+          @click.stop="select('hour', hr)">
+          <span
+            :style="styleColor"
+            class="timepicker-day-effect"/>
+          <span class="timepicker-day-text">{{ hr }}</span>
         </button>
       </div>
     </div>
     <div class="time-container minutes-container flex-1 flex flex-direction-column h-100 mh-100 w-100">
-      <div class="flex align-center justify-content-center time-label text-muted">{{minuteType}}</div>
-      <div class="h-100 mh-100 numbers-container" ref="minutes">
-        <button type="button" tabindex="-1" v-for="m in minutes" :key="m"
-             :class="[{active: (minute === m) && value}, m]"
-             @click.stop="select('minute', m)"
-             class="item flex align-center justify-content-center">
-          <span class="timepicker-day-effect" :style="styleColor"></span>
-          <span class="timepicker-day-text">{{m}}</span>
+      <div class="flex align-center justify-content-center time-label text-muted">{{ minuteType }}</div>
+      <div
+        ref="minutes"
+        class="h-100 mh-100 numbers-container">
+        <button
+          v-for="m in minutes"
+          :key="m"
+          :class="[{active: (minute === m) && value}, m]"
+          type="button"
+          tabindex="-1"
+          class="item flex align-center justify-content-center"
+          @click.stop="select('minute', m)">
+          <span
+            :style="styleColor"
+            class="timepicker-day-effect"/>
+          <span class="timepicker-day-text">{{ m }}</span>
         </button>
       </div>
     </div>
-    <div class="time-container apms-container flex flex-1 flex-direction-column h-100 mh-100 w-100" v-if="apmType">
-      <div class="flex align-center justify-content-center time-label text-muted">{{apmType}}</div>
+    <div
+      v-if="apmType"
+      class="time-container apms-container flex flex-1 flex-direction-column h-100 mh-100 w-100">
+      <div class="flex align-center justify-content-center time-label text-muted">{{ apmType }}</div>
       <div class="h-100 mh-100 numbers-container">
-        <button type="button" tabindex="-1" v-for="a in apms" :key="a"
-             :class="[{active: (apm === a)  && value}, a]"
-             @click.stop="select('apm', a)"
-             class="item flex align-center justify-content-center">
-          <span class="timepicker-day-effect" :style="styleColor"></span>
-          <span class="timepicker-day-text">{{a}}</span>
+        <button
+          v-for="a in apms"
+          :key="a"
+          :class="[{active: (apm === a) && value}, a]"
+          type="button"
+          tabindex="-1"
+          class="item flex align-center justify-content-center"
+          @click.stop="select('apm', a)">
+          <span
+            :style="styleColor"
+            class="timepicker-day-effect"/>
+          <span class="timepicker-day-text">{{ a }}</span>
         </button>
       </div>
     </div>
   </div>
 </template>
 <script>
-import moment from 'moment'
-const CONFIG = {
-  HOUR_TOKENS: ['HH', 'H', 'hh', 'h', 'kk', 'k'],
-  MINUTE_TOKENS: ['mm', 'm'],
-  APM_TOKENS: ['A', 'a']
-}
-export default {
-  name: 'CtkTimePicker',
-  props: {
-    format: {type: String},
-    minuteInterval: {type: Number},
-    month: {},
-    dateTime: {type: Object},
-    color: { type: String },
-    withoutInput: { type: Boolean },
-    visible: { type: Boolean },
-    value: {}
-  },
-  data () {
-    return {
-      hours: [],
-      minutes: [],
-      apms: [],
-      muteWatch: false,
-      hourType: 'HH',
-      minuteType: 'mm',
-      apmType: '',
-      hour: '',
-      minute: '',
-      apm: '',
-      fullValues: undefined
-    }
-  },
-  computed: {
-    styleColor: function () {
+  import moment from 'moment'
+
+  const CONFIG = {
+    HOUR_TOKENS: ['HH', 'H', 'hh', 'h', 'kk', 'k'],
+    MINUTE_TOKENS: ['mm', 'm'],
+    APM_TOKENS: ['A', 'a']
+  }
+  export default {
+    name: 'CtkTimePicker',
+    props: {
+      format: {type: String, default: String},
+      minuteInterval: {type: Number, default: Number},
+      month: {type: Object, default: Object},
+      dateTime: {type: Object, default: Object},
+      color: {type: String, default: String},
+      withoutInput: {type: Boolean, default: Boolean},
+      visible: {type: Boolean, default: Boolean},
+      value: {type: String, default: String}
+    },
+    data () {
       return {
-        backgroundColor: this.color
+        hours: [],
+        minutes: [],
+        apms: [],
+        muteWatch: false,
+        hourType: 'HH',
+        minuteType: 'mm',
+        apmType: '',
+        hour: '',
+        minute: '',
+        apm: '',
+        fullValues: undefined
       }
     },
-    monthDays: function () {
-      return this.month.getMonthDays()
+    computed: {
+      styleColor () {
+        return {
+          backgroundColor: this.color
+        }
+      },
+      monthDays () {
+        return this.month.getMonthDays()
+      },
+      weekDay () {
+        return this.month.getWeekStart()
+      }
     },
-    weekDay: function () {
-      return this.month.getWeekStart()
-    }
-  },
-  watch: {
-    'format': 'renderFormat',
-    minuteInterval (newInteval) {
-      this.renderList('minute', newInteval)
-    },
-    'displayTime': 'fillValues',
-    visible (v) {
-      if (v) {
-        this.$nextTick(() => {
-          const containers = ['hours', 'minutes']
-          containers.forEach((container) => {
-            const elem = this.$refs[`${container}`]
-            const selected = this.$refs[`${container}`].querySelector('.item.active')
-            if (selected) {
-              elem.scrollTop = 0
-              const boundsSelected = selected.getBoundingClientRect()
-              const boundsElem = elem.getBoundingClientRect()
-              if (elem && boundsSelected && boundsElem) {
-                elem.scrollTop = boundsSelected.top - boundsElem.top - 40
+    watch: {
+      'format': 'renderFormat',
+      minuteInterval (newInteval) {
+        this.renderList('minute', newInteval)
+      },
+      'displayTime': 'fillValues',
+      visible (v) {
+        if (v) {
+          this.$nextTick(() => {
+            const containers = ['hours', 'minutes']
+            containers.forEach((container) => {
+              const elem = this.$refs[`${container}`]
+              const selected = this.$refs[`${container}`].querySelector('.item.active')
+              if (selected) {
+                elem.scrollTop = 0
+                const boundsSelected = selected.getBoundingClientRect()
+                const boundsElem = elem.getBoundingClientRect()
+                if (elem && boundsSelected && boundsElem) {
+                  elem.scrollTop = boundsSelected.top - boundsElem.top - 40
+                }
               }
-            }
+            })
           })
-        })
+        }
       }
-    }
-  },
-  methods: {
-    formatValue: function (type, i) {
-      switch (type) {
+    },
+    mounted () {
+      this.renderFormat()
+    },
+    methods: {
+      formatValue: function (type, i) {
+        switch (type) {
         case 'H':
         case 'm':
           return String(i)
@@ -132,89 +160,93 @@ export default {
           return (i + 1) < 10 ? `0${i + 1}` : String(i + 1)
         default:
           return ''
-      }
-    },
-    checkAcceptingType: function (validValues, formatString, fallbackValue) {
-      if (!validValues || !formatString || !formatString.length) { return '' }
-      for (let i = 0; i < validValues.length; i++) {
-        if (formatString.indexOf(validValues[i]) > -1) {
-          return validValues[i]
         }
-      }
-      return fallbackValue || ''
-    },
-    renderFormat: function (newFormat) {
-      newFormat = newFormat || this.format
-      this.hourType = this.checkAcceptingType(CONFIG.HOUR_TOKENS, newFormat, 'HH')
-      this.minuteType = this.checkAcceptingType(CONFIG.MINUTE_TOKENS, newFormat, 'mm')
-      this.apmType = this.checkAcceptingType(CONFIG.APM_TOKENS, newFormat)
-      this.renderHoursList()
-      this.renderList('minute')
-      if (this.apmType) {
-        this.renderApmList()
-      }
-      const self = this
-      this.$nextTick(() => {
-        self.readValues()
-      })
-    },
-    renderHoursList: function () {
-      const hoursCount = (this.hourType === 'h' || this.hourType === 'hh') ? 12 : 24
-      this.hours = []
-      for (let i = 0; i < hoursCount; i++) {
-        this.hours.push(this.formatValue(this.hourType, i))
-      }
-    },
-    renderList: function (listType, interval) {
-      if (listType === 'minute') {
-        interval = interval || this.minuteInterval
-      } else {
-        return
-      }
-      if (interval === 0) {
-        interval = 60
-      } else if (interval > 60) {
-        window.console.warn('`' + listType + '-interval` should be less than 60. Current value is', interval)
-        interval = 1
-      } else if (interval < 1) {
-        window.console.warn('`' + listType + '-interval` should be NO less than 1. Current value is', interval)
-        interval = 1
-      } else if (!interval) {
-        interval = 1
-      }
-      this.minutes = []
-      for (let i = 0; i < 60; i += interval) {
-        this.minutes.push(this.formatValue(this.minuteType, i))
-      }
-    },
-    renderApmList: function () {
-      this.apms = []
-      if (!this.apmType) { return }
-      this.apms = this.apmType === 'A' ? ['AM', 'PM'] : ['am', 'pm']
-    },
-    readValues: function () {
-      this.hour = this.dateTime.format(this.hourType)
-      this.minute = this.dateTime.format(this.minuteType)
-      if (this.apmType) {
-        this.apm = this.dateTime.format('HH') >= 12 ? this.apms[1] : this.apms[0]
-      }
-      this.fillValues()
-    },
-    fillValues: function () {
-      let fullValues = {}
-      const baseHour = this.hour
-      const baseHourType = this.hourType
-      const hourValue = baseHour || baseHour === 0 ? Number(baseHour) : ''
-      const baseOnTwelveHours = this.isTwelveHours(baseHourType)
-      const apmValue = (baseOnTwelveHours && this.apm) ? String(this.apm).toLowerCase() : false
-      CONFIG.HOUR_TOKENS.forEach((token) => {
-        if (token === baseHourType) {
-          fullValues[token] = baseHour
+      },
+      checkAcceptingType: function (validValues, formatString, fallbackValue) {
+        if (!validValues || !formatString || !formatString.length) {
+          return ''
+        }
+        for (let i = 0; i < validValues.length; i++) {
+          if (formatString.indexOf(validValues[i]) > -1) {
+            return validValues[i]
+          }
+        }
+        return fallbackValue || ''
+      },
+      renderFormat: function (newFormat) {
+        newFormat = newFormat || this.format
+        this.hourType = this.checkAcceptingType(CONFIG.HOUR_TOKENS, newFormat, 'HH')
+        this.minuteType = this.checkAcceptingType(CONFIG.MINUTE_TOKENS, newFormat, 'mm')
+        this.apmType = this.checkAcceptingType(CONFIG.APM_TOKENS, newFormat)
+        this.renderHoursList()
+        this.renderList('minute')
+        if (this.apmType) {
+          this.renderApmList()
+        }
+        const self = this
+        this.$nextTick(() => {
+          self.readValues()
+        })
+      },
+      renderHoursList: function () {
+        const hoursCount = (this.hourType === 'h' || this.hourType === 'hh') ? 12 : 24
+        this.hours = []
+        for (let i = 0; i < hoursCount; i++) {
+          this.hours.push(this.formatValue(this.hourType, i))
+        }
+      },
+      renderList: function (listType, interval) {
+        if (listType === 'minute') {
+          interval = interval || this.minuteInterval
+        } else {
           return
         }
-        let value
-        let apm
-        switch (token) {
+        if (interval === 0) {
+          interval = 60
+        } else if (interval > 60) {
+          window.console.warn('`' + listType + '-interval` should be less than 60. Current value is', interval)
+          interval = 1
+        } else if (interval < 1) {
+          window.console.warn('`' + listType + '-interval` should be NO less than 1. Current value is', interval)
+          interval = 1
+        } else if (!interval) {
+          interval = 1
+        }
+        this.minutes = []
+        for (let i = 0; i < 60; i += interval) {
+          this.minutes.push(this.formatValue(this.minuteType, i))
+        }
+      },
+      renderApmList: function () {
+        this.apms = []
+        if (!this.apmType) {
+          return
+        }
+        this.apms = this.apmType === 'A' ? ['AM', 'PM'] : ['am', 'pm']
+      },
+      readValues: function () {
+        this.hour = this.dateTime.format(this.hourType)
+        this.minute = this.dateTime.format(this.minuteType)
+        if (this.apmType) {
+          this.apm = this.dateTime.format('HH') >= 12 ? this.apms[1] : this.apms[0]
+        }
+        this.fillValues()
+      },
+      fillValues: function () {
+        let fullValues = {}
+        const baseHour = this.hour
+        const baseHourType = this.hourType
+        const hourValue = baseHour || baseHour === 0 ? Number(baseHour) : ''
+        const baseOnTwelveHours = this.isTwelveHours(baseHourType)
+        const apmValue = (baseOnTwelveHours && this.apm) ? String(this.apm).toLowerCase() : false
+        CONFIG.HOUR_TOKENS.forEach((token) => {
+          if (token === baseHourType) {
+            fullValues[token] = baseHour
+            return
+          }
+          let value
+          let apm
+          switch (token) {
           case 'H':
           case 'HH':
             if (!String(hourValue).length) {
@@ -274,58 +306,55 @@ export default {
             fullValues.a = apm
             fullValues.A = apm.toUpperCase()
             break
+          }
+        })
+        if (this.minute || this.minute === 0) {
+          const minuteValue = Number(this.minute)
+          fullValues.m = String(minuteValue)
+          fullValues.mm = minuteValue < 10 ? `0${minuteValue}` : String(minuteValue)
+        } else {
+          fullValues.m = ''
+          fullValues.mm = ''
         }
-      })
-      if (this.minute || this.minute === 0) {
-        const minuteValue = Number(this.minute)
-        fullValues.m = String(minuteValue)
-        fullValues.mm = minuteValue < 10 ? `0${minuteValue}` : String(minuteValue)
-      } else {
-        fullValues.m = ''
-        fullValues.mm = ''
+        this.fullValues = fullValues
+        this.updateTimeValue(fullValues)
+        this.$emit('change', {data: fullValues})
+      },
+      updateTimeValue: function (fullValues) {
+        this.muteWatch = true
+        const self = this
+        const baseTimeValue = JSON.parse(JSON.stringify(this.value || {}))
+        let timeValue = {}
+        Object.keys(baseTimeValue).forEach((key) => {
+          timeValue[key] = fullValues[key]
+        })
+        this.$emit('input', timeValue)
+        this.$nextTick(() => {
+          self.muteWatch = false
+        })
+      },
+      isTwelveHours: function (token) {
+        return token === 'h' || token === 'hh'
+      },
+      select: function (type, value) {
+        if (type === 'hour') {
+          this.hour = value
+        } else if (type === 'minute') {
+          this.minute = value
+        } else if (type === 'apm') {
+          this.apm = value
+        }
+        let time
+        if (this.apm) {
+          time = moment(this.hour + ':' + this.minute + (this.apm ? this.apm : ''), 'HH:mm A').format('HH:mm')
+        } else {
+          time = moment(this.hour + ':' + this.minute + (this.apm ? this.apm : ''), 'HH:mm').format('HH:mm')
+        }
+        let dateTime = moment(this.dateTime.format('YYYY-MM-DD') + 'T' + time)
+        this.$emit('change-time', dateTime)
       }
-      this.fullValues = fullValues
-      this.updateTimeValue(fullValues)
-      this.$emit('change', {data: fullValues})
-    },
-    updateTimeValue: function (fullValues) {
-      this.muteWatch = true
-      const self = this
-      const baseTimeValue = JSON.parse(JSON.stringify(this.value || {}))
-      let timeValue = {}
-      Object.keys(baseTimeValue).forEach((key) => {
-        timeValue[key] = fullValues[key]
-      })
-      this.$emit('input', timeValue)
-      this.$nextTick(() => {
-        self.muteWatch = false
-      })
-    },
-    isTwelveHours: function (token) {
-      return token === 'h' || token === 'hh'
-    },
-    select: function (type, value) {
-      if (type === 'hour') {
-        this.hour = value
-      } else if (type === 'minute') {
-        this.minute = value
-      } else if (type === 'apm') {
-        this.apm = value
-      }
-      let time
-      if (this.apm) {
-        time = moment(this.hour + ':' + this.minute + (this.apm ? this.apm : ''), 'HH:mm A').format('HH:mm')
-      } else {
-        time = moment(this.hour + ':' + this.minute + (this.apm ? this.apm : ''), 'HH:mm').format('HH:mm')
-      }
-      let dateTime = moment(this.dateTime.format('YYYY-MM-DD') + 'T' + time)
-      this.$emit('change-time', dateTime)
     }
-  },
-  mounted () {
-    this.renderFormat()
   }
-}
 </script>
 
 <style lang="scss" scoped>
@@ -389,6 +418,7 @@ export default {
       }
     }
   }
+
   @media screen and (max-width: 412px) {
     .timepicker-container:not(.inline) {
       .time-container.hours-container {

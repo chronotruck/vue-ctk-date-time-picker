@@ -6,7 +6,8 @@
   "main": "dist/vue-ctk-date-time-picker.min.js",
   "license": "MIT",
   "scripts": {
-    "lint": "eslint src/**/*.vue",
+    "lint": "eslint --ext .js,.vue src modules",
+    "lint:fix": "eslint --ext .js,.vue src apps --fix",
     "build": "npm run build:cjs && npm run build:umd && npm run build:demo",
     "build:cjs": "poi build --format cjs --dist dist",
     "build:umd": "poi build --format umd --dist dist/umd",
