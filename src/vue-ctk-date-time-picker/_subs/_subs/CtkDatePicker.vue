@@ -135,11 +135,9 @@
         }
       },
       endEmptyDays () {
-        if ((this.monthDays.length + this.weekDay) > 35) {
-          return 42 - this.monthDays.length - this.weekDay
-        } else {
-          return 35 - this.monthDays.length - this.weekDay
-        }
+        const getDays = (this.monthDays.length + this.weekDay) > 35
+        const number = getDays ? 42 : 35
+        return number - this.monthDays.length - this.weekDay
       },
       monthDays () {
         return this.month.getMonthDays()
@@ -174,13 +172,14 @@
         this.$emit('change-date', day)
       },
       changeMonth (val) {
-        this.transitionDaysName = 'slide' + val
-        this.transitionLabelName = 'slidev' + val
+        this.transitionDaysName = `slide${val}`
+        this.transitionLabelName = `slidev${val}`
         this.$emit('change-month', val)
       }
     }
   }
 </script>
+
 <style lang="scss" scoped>
   @import "../../assets/animation.scss";
   #CtkDatePicker {

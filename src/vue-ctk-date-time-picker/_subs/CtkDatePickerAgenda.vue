@@ -222,17 +222,14 @@
         return moment(this.dateTime).locale(this.locale).format('ddd D MMM')
       },
       selectTime (dateTime) {
-        this.transitionDayName = 'slidevprev'
-        if (dateTime > this.dateTime) {
-          this.transitionDayName = 'slidevnext'
-        }
+        const isBigger = dateTime > this.dateTime
+        this.transitionDayName = isBigger ? 'slidevnext' : 'slidevprev'
         this.$emit('change-date', dateTime)
       },
       selectDate (dateTime) {
-        this.transitionDayName = 'slidevnext'
-        if (dateTime.isBefore(this.dateTime)) {
-          this.transitionDayName = 'slidevprev'
-        }
+        const isBefore = dateTime.isBefore(this.dateTime)
+        this.transitionDayName = isBefore ? 'slidevprev' : 'slidevnext'
+
         dateTime.add(this.dateTime.hour(), 'hours')
         dateTime.add(this.dateTime.minute(), 'minutes')
         this.$emit('change-date', dateTime)
@@ -250,18 +247,13 @@
         this.$emit('validate')
       },
       dateTimeWidth () {
-        let width
-        let result
-        if (this.$refs.timePickerComponent && this.$refs.timePickerComponent.$el.clientWidth) {
-          width = this.$refs.timePickerComponent.$el.clientWidth
-        } else {
-          width = 160
-        }
-        result = {
-          flex: '0 0 ' + width + 'px',
-          width: width + 'px',
-          minWidth: width + 'px',
-          maxWidth: width + 'px'
+        const timePickerComponentPresent = this.$refs.timePickerComponent && this.$refs.timePickerComponent.$el.clientWidth
+        const width = timePickerComponentPresent ? this.$refs.timePickerComponent.$el.clientWidth : 160
+        const result = {
+          flex: `0 0 ${width}px`,
+          width: `${width}px`,
+          minWidth: `${width}px`,
+          maxWidth: `${width}px`
         }
         return result
       }

@@ -232,7 +232,6 @@
     background-color: #FFF;
     color: #bd4147;
     border: 1px solid #CCC;
-    /* display: inline-block; */
     border-radius: 4px;
     outline: none;
     font-size: 85%;

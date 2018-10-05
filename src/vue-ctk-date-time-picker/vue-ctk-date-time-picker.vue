@@ -72,10 +72,12 @@
 <script>
   import moment from 'moment'
   import CtkDatePickerAgenda from './_subs/CtkDatePickerAgenda.vue'
-  function nearestMinutes (interval, someMoment, m) {
+
+  const nearestMinutes = (interval, someMoment, m) => {
     const roundedMinutes = Math.ceil(someMoment.minute() / interval) * interval
     return m(someMoment.clone().minute(roundedMinutes).second(0))
   }
+
   export default {
     name: 'VueCtkDateTimePicker',
     components: {
@@ -125,42 +127,19 @@
           borderColor: this.color
         }
       },
-      dateTime: {
-        get () {
-          if (this.disableDate) {
-            if (this.value) {
-              let date
-              if (this.disableDate) {
-                date = moment(moment().format('YYYY-MM-DD') + ' ' + this.value)
-              } else {
-                date = moment(this.value)
-              }
-              return nearestMinutes(this.minuteInterval, date, moment)
-            } else {
-              return nearestMinutes(this.minuteInterval, moment(), moment)
-            }
-          }
-          return nearestMinutes(this.minuteInterval, this.value ? moment(this.value) : moment(), moment)
-        }
+      dateTime () {
+        const date = this.disableDate
+          ? this.value ? moment(`${moment().format('YYYY-MM-DD')} ${this.value}`) : moment()
+          : this.value ? moment(this.value) : moment()
+        return nearestMinutes(this.minuteInterval, date, moment)
       },
-      dateFormatted: {
-        get () {
-          let dateFormat
-          if (this.value) {
-            if (this.disableDate) {
-              dateFormat = moment(moment().format('YYYY-MM-DD') + ' ' + this.value)
-            } else {
-              dateFormat = moment(this.value)
-            }
-          } else {
-            dateFormat = null
-          }
-          if (dateFormat) {
-            return nearestMinutes(this.minuteInterval, dateFormat, moment).locale(this.locale).format(this.formatted)
-          } else {
-            return null
-          }
-        }
+      dateFormatted () {
+        let dateFormat = this.value
+          ? this.disableDate
+            ? moment(`${moment().format('YYYY-MM-DD')} ${this.value}`)
+            : moment(this.value)
+          : null
+        return dateFormat ? nearestMinutes(this.minuteInterval, dateFormat, moment).locale(this.locale).format(this.formatted) : null
       }
     },
     created () {
@@ -177,23 +156,18 @@
         }
       },
       showDatePicker () {
-        if (this.disabled) {
-          return
-        }
+        if (this.disabled) return
+
         const rect = this.$refs.parent.getBoundingClientRect()
         const windowHeight = window.innerHeight
         let datePickerHeight = 428
-        if (!this.enableButtonValidate) {
-          datePickerHeight = datePickerHeight - 46
-        }
-        if (this.withoutHeader) {
-          datePickerHeight = datePickerHeight - 65
-        }
-        if (((windowHeight - (rect.top + rect.height)) > datePickerHeight) || ((windowHeight - rect.top) > windowHeight / 2 + rect.height)) {
-          this.agendaPosition = 'top'
-        } else {
-          this.agendaPosition = 'bottom'
-        }
+
+        datePickerHeight = !this.enableButtonValidate ? 428 - 46 : datePickerHeight
+        datePickerHeight = this.withoutHeader ? 428 - 65 : datePickerHeight
+
+        const position = ((windowHeight - (rect.top + rect.height)) > datePickerHeight) || ((windowHeight - rect.top) > windowHeight / 2 + rect.height)
+        this.agendaPosition = position ? 'top' : 'bottom'
+
         this.isVisible = true
       },
       hideDatePicker () {
