@@ -10,7 +10,6 @@ module.exports = {
   env: {
     browser: true,
   },
-  // https://github.com/standard/standard/blob/master/docs/RULES-en.md
   extends: [
     'standard',
     'plugin:vue/recommended'
