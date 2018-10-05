@@ -1,44 +1,49 @@
 <template>
   <div
     :id="id"
-    class="ctk-date-time-picker"
     :class="{'inline': withoutInput}"
+    class="ctk-date-time-picker"
   >
     <div
       ref="parent"
+      :class="{'is-focused': isFocus || isVisible, 'has-value': dateFormatted, 'has-error': errorHint, 'is-disabled': disabled}"
       class="field"
       @click="showDatePicker"
-      :class="{'is-focused': isFocus || isVisible, 'has-value': dateFormatted, 'has-error': errorHint, 'is-disabled': disabled}"
     >
       <div v-if="!withoutInput">
+
         <input
-          type="text" :id="id"
+          ref="CtkDateTimePicker"
+          :id="id"
           :value="dateFormatted"
-          class="field-input"
-          @focus="onFocus"
           :placeholder="label"
           :disabled="disabled"
           :style="isFocus && !errorHint || isVisible ? borderStyle : ''"
-          ref="CtkDateTimePicker"
+          type="text"
+          class="field-input"
           readonly
+          @focus="onFocus"
         >
+
         <label
-          :for="id"
           ref="label"
-          class="field-label"
+          :for="id"
           :class="hint ? (errorHint ? 'text-danger' : 'text-primary') : ''"
           :style="isFocus || isVisible ? colorStyle : ''"
+          class="field-label"
         >
-          {{hint || label}}
-         </label>
+          {{ hint || label }}
+        </label>
 
       </div>
     </div>
+
     <div
-      class="time-picker-overlay"
       v-if="overlay && (isVisible && !withoutInput)"
+      class="time-picker-overlay"
       @click.stop="unFocus"
-    ></div>
+    />
+
     <ctk-date-picker-agenda
       ref="agenda"
       :value="value"
@@ -65,149 +70,149 @@
 </template>
 
 <script>
-import moment from 'moment'
-import CtkDatePickerAgenda from './_subs/CtkDatePickerAgenda.vue'
-function nearestMinutes (interval, someMoment, m) {
-  const roundedMinutes = Math.ceil(someMoment.minute() / interval) * interval
-  return m(someMoment.clone().minute(roundedMinutes).second(0))
-}
-export default {
-  name: 'vue-ctk-date-time-picker',
-  components: {
-    CtkDatePickerAgenda
-  },
-  props: {
-    label: { type: String, default: 'Select date & time' },
-    hint: { type: String },
-    errorHint: { type: Boolean },
-    value: { required: false },
-    formatted: { type: String, default: 'llll' },
-    format: { type: String },
-    locale: { type: String, default: 'en' },
-    disableTime: { type: Boolean, default: false },
-    disableDate: { type: Boolean, default: false },
-    minuteInterval: { type: Number, default: 1 },
-    color: { type: String },
-    timeFormat: { type: String, default: 'h:mm a' },
-    withoutHeader: { type: Boolean, default: false },
-    id: { type: String, default: 'CtkDateTimePicker' },
-    minDate: { type: String },
-    maxDate: { type: String },
-    withoutInput: { type: Boolean, default: false },
-    noWeekendsDays: {type: Boolean, default: false},
-    autoClose: {type: Boolean, default: false},
-    disabled: {type: Boolean, default: false},
-    overlay: {type: Boolean, default: true},
-    enableButtonValidate: {type: Boolean, default: false}
-  },
-  data: function () {
-    return {
-      isVisible: false,
-      isFocus: false,
-      agendaPosition: 'top',
-      oldValue: this.value,
-      clientWidth: null
-    }
-  },
-  computed: {
-    colorStyle: function () {
+  import moment from 'moment'
+  import CtkDatePickerAgenda from './_subs/CtkDatePickerAgenda.vue'
+  function nearestMinutes (interval, someMoment, m) {
+    const roundedMinutes = Math.ceil(someMoment.minute() / interval) * interval
+    return m(someMoment.clone().minute(roundedMinutes).second(0))
+  }
+  export default {
+    name: 'VueCtkDateTimePicker',
+    components: {
+      CtkDatePickerAgenda
+    },
+    props: {
+      label: { type: String, default: 'Select date & time' },
+      hint: { type: String, default: String },
+      errorHint: { type: Boolean, default: Boolean },
+      value: { type: String, required: false, default: null },
+      formatted: { type: String, default: 'llll' },
+      format: { type: String, default: String },
+      locale: { type: String, default: 'en' },
+      disableTime: { type: Boolean, default: false },
+      disableDate: { type: Boolean, default: false },
+      minuteInterval: { type: Number, default: 1 },
+      color: { type: String, default: String },
+      timeFormat: { type: String, default: 'h:mm a' },
+      withoutHeader: { type: Boolean, default: false },
+      id: { type: String, default: 'CtkDateTimePicker' },
+      minDate: { type: String, default: String },
+      maxDate: { type: String, default: String },
+      withoutInput: { type: Boolean, default: false },
+      noWeekendsDays: {type: Boolean, default: false},
+      autoClose: {type: Boolean, default: false},
+      disabled: {type: Boolean, default: false},
+      overlay: {type: Boolean, default: true},
+      enableButtonValidate: {type: Boolean, default: false}
+    },
+    data: function () {
       return {
-        color: this.color
+        isVisible: false,
+        isFocus: false,
+        agendaPosition: 'top',
+        oldValue: this.value,
+        clientWidth: null
       }
     },
-    borderStyle: function () {
-      return {
-        borderColor: this.color
-      }
-    },
-    dateTime: {
-      get () {
-        if (this.disableDate) {
-          if (this.value) {
-            let date
-            if (this.disableDate) {
-              date = moment(moment().format('YYYY-MM-DD') + ' ' + this.value)
-            } else {
-              date = moment(this.value)
-            }
-            return nearestMinutes(this.minuteInterval, date, moment)
-          } else {
-            return nearestMinutes(this.minuteInterval, moment(), moment)
-          }
+    computed: {
+      colorStyle: function () {
+        return {
+          color: this.color
         }
-        return nearestMinutes(this.minuteInterval, this.value ? moment(this.value) : moment(), moment)
-      }
-    },
-    dateFormatted: {
-      get () {
-        let dateFormat
-        if (this.value) {
+      },
+      borderStyle: function () {
+        return {
+          borderColor: this.color
+        }
+      },
+      dateTime: {
+        get () {
           if (this.disableDate) {
-            dateFormat = moment(moment().format('YYYY-MM-DD') + ' ' + this.value)
-          } else {
-            dateFormat = moment(this.value)
+            if (this.value) {
+              let date
+              if (this.disableDate) {
+                date = moment(moment().format('YYYY-MM-DD') + ' ' + this.value)
+              } else {
+                date = moment(this.value)
+              }
+              return nearestMinutes(this.minuteInterval, date, moment)
+            } else {
+              return nearestMinutes(this.minuteInterval, moment(), moment)
+            }
           }
-        } else {
-          dateFormat = null
+          return nearestMinutes(this.minuteInterval, this.value ? moment(this.value) : moment(), moment)
         }
-        if (dateFormat) {
-          return nearestMinutes(this.minuteInterval, dateFormat, moment).locale(this.locale).format(this.formatted)
-        } else {
-          return null
+      },
+      dateFormatted: {
+        get () {
+          let dateFormat
+          if (this.value) {
+            if (this.disableDate) {
+              dateFormat = moment(moment().format('YYYY-MM-DD') + ' ' + this.value)
+            } else {
+              dateFormat = moment(this.value)
+            }
+          } else {
+            dateFormat = null
+          }
+          if (dateFormat) {
+            return nearestMinutes(this.minuteInterval, dateFormat, moment).locale(this.locale).format(this.formatted)
+          } else {
+            return null
+          }
         }
       }
-    }
-  },
-  created () {
-    if (this.value) {
-      this.$emit('input', this.dateTime.format(this.format))
-    }
-    moment.locale(this.locale)
-  },
-  methods: {
-    changeDate (day) {
-      this.$emit('input', moment(day).format(this.format))
-      if (this.autoClose) {
+    },
+    created () {
+      if (this.value) {
+        this.$emit('input', this.dateTime.format(this.format))
+      }
+      moment.locale(this.locale)
+    },
+    methods: {
+      changeDate (day) {
+        this.$emit('input', moment(day).format(this.format))
+        if (this.autoClose) {
+          this.hideDatePicker()
+        }
+      },
+      showDatePicker () {
+        if (this.disabled) {
+          return
+        }
+        const rect = this.$refs.parent.getBoundingClientRect()
+        const windowHeight = window.innerHeight
+        let datePickerHeight = 428
+        if (!this.enableButtonValidate) {
+          datePickerHeight = datePickerHeight - 46
+        }
+        if (this.withoutHeader) {
+          datePickerHeight = datePickerHeight - 65
+        }
+        if (((windowHeight - (rect.top + rect.height)) > datePickerHeight) || ((windowHeight - rect.top) > windowHeight / 2 + rect.height)) {
+          this.agendaPosition = 'top'
+        } else {
+          this.agendaPosition = 'bottom'
+        }
+        this.isVisible = true
+      },
+      hideDatePicker () {
+        this.isVisible = false
+      },
+      onFocus () {
+        this.isFocus = true
+        this.showDatePicker()
+      },
+      unFocus () {
+        this.hideDatePicker()
+        this.isFocus = false
+      },
+      validate: function () {
+        this.unFocus()
         this.hideDatePicker()
       }
-    },
-    showDatePicker () {
-      if (this.disabled) {
-        return
-      }
-      const rect = this.$refs.parent.getBoundingClientRect()
-      const windowHeight = window.innerHeight
-      let datePickerHeight = 428
-      if (!this.enableButtonValidate) {
-        datePickerHeight = datePickerHeight - 46
-      }
-      if (this.withoutHeader) {
-        datePickerHeight = datePickerHeight - 65
-      }
-      if (((windowHeight - (rect.top + rect.height)) > datePickerHeight) || ((windowHeight - rect.top) > windowHeight / 2 + rect.height)) {
-        this.agendaPosition = 'top'
-      } else {
-        this.agendaPosition = 'bottom'
-      }
-      this.isVisible = true
-    },
-    hideDatePicker () {
-      this.isVisible = false
-    },
-    onFocus () {
-      this.isFocus = true
-      this.showDatePicker()
-    },
-    unFocus () {
-      this.hideDatePicker()
-      this.isFocus = false
-    },
-    validate: function () {
-      this.unFocus()
-      this.hideDatePicker()
     }
   }
-}
 </script>
 
 <style lang="scss">
