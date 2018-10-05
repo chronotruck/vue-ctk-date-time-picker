@@ -126,7 +126,7 @@
             const containers = ['hours', 'minutes']
             containers.forEach((container) => {
               const elem = this.$refs[`${container}`]
-              const selected = this.$refs[`${container}`].querySelector('.item.active')
+              const selected = this.$refs[`${container}`].querySelector(`.item.active`)
               if (selected) {
                 elem.scrollTop = 0
                 const boundsSelected = selected.getBoundingClientRect()
@@ -146,17 +146,13 @@
     methods: {
       formatValue: function (type, i) {
         switch (type) {
-        case 'H':
-        case 'm':
+        case 'H': case 'm':
           return String(i)
-        case 'HH':
-        case 'mm':
+          case 'HH': case 'mm':
           return i < 10 ? `0${i}` : String(i)
-        case 'h':
-        case 'k':
+        case 'h': case 'k':
           return String(i + 1)
-        case 'hh':
-        case 'kk':
+        case 'hh': case 'kk':
           return (i + 1) < 10 ? `0${i + 1}` : String(i + 1)
         default:
           return ''
