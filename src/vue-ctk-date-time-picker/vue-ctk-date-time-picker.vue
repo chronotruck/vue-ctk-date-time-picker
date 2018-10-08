@@ -63,6 +63,7 @@
       :no-weekends-days="noWeekendsDays"
       :enable-button-validate="enableButtonValidate"
       :auto-close="autoClose"
+      :disabled-dates="disabledDates"
       @change-date="changeDate"
       @validate="validate"
     />
@@ -105,7 +106,8 @@
       autoClose: {type: Boolean, default: false},
       disabled: {type: Boolean, default: false},
       overlay: {type: Boolean, default: true},
-      enableButtonValidate: {type: Boolean, default: false}
+      enableButtonValidate: {type: Boolean, default: false},
+      disabledDates: { type: Array, default: Array }
     },
     data: function () {
       return {

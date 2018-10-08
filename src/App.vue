@@ -56,9 +56,9 @@
             tabindex="-1"
             style="height: 110px;">
             <ctk-date-time-picker
+            v-model="value2"
             format="YYYY-MM-DD"
             formatted="ddd D MMM YYYY"
-            v-model="value2"
             label="Choose date"
             disable-time
             />
@@ -131,10 +131,11 @@
       </div>
       <div class="components-container flex">
         <div class="component-container flex-1">
-          <h3>Inline DateTimePicker</h3>
+          <h3>Inline DateTimePicker && disabled dates</h3>
           <p>v-model = {{ value || 'null' }}</p>
           <ctk-date-time-picker
             v-model="value"
+            :disabled-dates="['2018-04-03', '2018-04-07', '2018-04-09', '2018-04-11', '2018-04-13', '2018-04-15', '2018-04-17', '2018-04-19']"
             label="Choose date time"
             no-weekends-days
             without-input
@@ -146,6 +147,7 @@
             style="height: 100px;">
             <ctk-date-time-picker
             v-model="value"
+            :disabled-dates="['2018-04-03', '2018-04-07', '2018-04-09', '2018-04-11', '2018-04-13', '2018-04-15', '2018-04-17', '2018-04-19']"
             label="Choose date time"
             no-weekends-days
             without-input
