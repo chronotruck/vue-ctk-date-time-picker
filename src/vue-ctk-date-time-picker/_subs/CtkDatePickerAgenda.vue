@@ -83,6 +83,7 @@
             :color="color"
             :min-date="minDate"
             :max-date="maxDate"
+            :disabled-dates="disabledDates"
             :value="value"
             @change-date="selectDate"
             @change-month="changeMonth"
@@ -155,7 +156,8 @@
       noWeekendsDays: { type: Boolean, default: Boolean },
       autoClose: { type: Boolean, default: Boolean },
       enableButtonValidate: { type: Boolean, default: Boolean },
-      value: { type: String, default: String }
+      value: { type: String, default: String },
+      disabledDates: { type: Array, default: Array }
     },
     data () {
       return {
@@ -262,7 +264,6 @@
 </script>
 
 <style lang="scss" scoped>
-  @import url('https://fonts.googleapis.com/css?family=Roboto:400,500,700');
   @import "../assets/animation.scss";
   .datetimepicker {
     position: absolute;

@@ -60,7 +60,7 @@ Vue.component('vue-ctk-date-time-picker', VueCtkDateTimePicker);
 | color***     | String (hex) | no    | dodgerblue |
 | minute-interval | Int | no    | 1    |
 | formatted   | string | no    | 'llll' (momentjs format) |
-| format   | string | no      | 'YYYY-MM-DDTHH:mm' |
+| format   | string | no      | - |
 | time-format   | string | no  | 'H:mm a' |
 | locale   | string | no     | en |
 | disable-time   | Boolean | no     | false |
@@ -74,6 +74,7 @@ Vue.component('vue-ctk-date-time-picker', VueCtkDateTimePicker);
 | no-weekends-days | Boolean | no | false |
 | auto-close | Boolean | no | false |
 | without-input | Boolean | no | false |
+| disabled-dates***** | Boolean | no | [] |
 
 *hint : Is a text that replaces the label/placeholder
 
@@ -82,6 +83,8 @@ Vue.component('vue-ctk-date-time-picker', VueCtkDateTimePicker);
 ***color: Replace color for the hint, the borders & time selected in dropdown
 
 ****min-date & max-date : Must be 'YYYY-MM-DD' format
+
+*****Disabled-Dates is an Array of dates in 'YYYY-MM-DD' format (ex: `['2018-04-03', '2018-04-07', '2018-04-09'])
 
 
 ## Contribution

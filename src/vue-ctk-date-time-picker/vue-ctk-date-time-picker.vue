@@ -5,41 +5,38 @@
     class="ctk-date-time-picker"
   >
     <div
+      v-if="!withoutInput"
       ref="parent"
       :class="{'is-focused': isFocus || isVisible, 'has-value': dateFormatted, 'has-error': errorHint, 'is-disabled': disabled}"
       class="field"
       @click="showDatePicker"
     >
-      <div v-if="!withoutInput">
+      <input
+        ref="CtkDateTimePicker"
+        :id="id"
+        :value="dateFormatted"
+        :placeholder="label"
+        :disabled="disabled"
+        :style="getBorderStyle"
+        type="text"
+        class="field-input"
+        readonly
+        @focus="onFocus"
+      >
 
-        <input
-          ref="CtkDateTimePicker"
-          :id="id"
-          :value="dateFormatted"
-          :placeholder="label"
-          :disabled="disabled"
-          :style="isFocus && !errorHint || isVisible ? borderStyle : ''"
-          type="text"
-          class="field-input"
-          readonly
-          @focus="onFocus"
-        >
-
-        <label
-          ref="label"
-          :for="id"
-          :class="hint ? (errorHint ? 'text-danger' : 'text-primary') : ''"
-          :style="isFocus || isVisible ? colorStyle : ''"
-          class="field-label"
-        >
-          {{ hint || label }}
-        </label>
-
-      </div>
+      <label
+        ref="label"
+        :for="id"
+        :class="hint ? (errorHint ? 'text-danger' : 'text-primary') : null"
+        :style="getColorStyle"
+        class="field-label"
+      >
+        {{ hint || label }}
+      </label>
     </div>
 
     <div
-      v-if="overlay && (isVisible && !withoutInput)"
+      v-if="overlay && isVisible && !withoutInput"
       class="time-picker-overlay"
       @click.stop="unFocus"
     />
@@ -63,6 +60,7 @@
       :no-weekends-days="noWeekendsDays"
       :enable-button-validate="enableButtonValidate"
       :auto-close="autoClose"
+      :disabled-dates="disabledDates"
       @change-date="changeDate"
       @validate="validate"
     />
@@ -105,7 +103,8 @@
       autoClose: {type: Boolean, default: false},
       disabled: {type: Boolean, default: false},
       overlay: {type: Boolean, default: true},
-      enableButtonValidate: {type: Boolean, default: false}
+      enableButtonValidate: {type: Boolean, default: false},
+      disabledDates: { type: Array, default: Array }
     },
     data: function () {
       return {
@@ -117,15 +116,17 @@
       }
     },
     computed: {
-      colorStyle: function () {
-        return {
-          color: this.color
-        }
+      getColorStyle: function () {
+        const cond = this.isFocus || this.isVisible
+        return cond
+          ? { color: this.color }
+          : null
       },
-      borderStyle: function () {
-        return {
-          borderColor: this.color
-        }
+      getBorderStyle: function () {
+        const cond = (this.isFocus && !this.errorHint) || this.isVisible
+        return cond
+          ? { borderColor: this.color }
+          : null
       },
       dateTime () {
         const date = this.disableDate
@@ -190,6 +191,7 @@
 </script>
 
 <style lang="scss">
+  @import url('https://fonts.googleapis.com/css?family=Roboto:400,500,700');
   @import "./assets/main.scss";
   .ctk-date-time-picker {
     width: 100%;
