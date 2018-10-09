@@ -2,6 +2,7 @@
   <div id="app">
     <div
       id="vueCtkDateTimePicker"
+      class="ctk-date-time-picker"
       style="width: 90%; margin: 0 auto;">
       <header>
         <img
