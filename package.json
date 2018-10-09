@@ -8,7 +8,7 @@
   "scripts": {
     "lint": "eslint --ext .js,.vue src modules",
     "lint:fix": "eslint --ext .js,.vue src apps --fix",
-    "build": "npm run build:cjs && npm run build:umd && npm run build:demo",
+    "build": "npm run lint && npm run build:cjs && npm run build:umd && npm run build:demo",
     "build:cjs": "poi build --format cjs --dist dist",
     "build:umd": "poi build --format umd --dist dist/umd",
     "build:demo": "node build-config/build.js",
