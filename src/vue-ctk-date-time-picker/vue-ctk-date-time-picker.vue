@@ -5,13 +5,13 @@
     class="ctk-date-time-picker"
   >
     <div
+      v-if="!withoutInput"
       ref="parent"
       :class="{'is-focused': isFocus || isVisible, 'has-value': dateFormatted, 'has-error': errorHint, 'is-disabled': disabled}"
       class="field"
       @click="showDatePicker"
     >
-      <div v-if="!withoutInput">
-
+      <div >
         <input
           ref="CtkDateTimePicker"
           :id="id"
@@ -40,18 +40,18 @@
 
     <div
       v-if="overlay && (isVisible && !withoutInput)"
+      :class="{'has-background': overlayBackground}"
       class="time-picker-overlay"
       @click.stop="unFocus"
     />
-
     <ctk-date-picker-agenda
       ref="agenda"
       :value="value"
       :date-time="dateTime"
       :color="color"
       :visible="isVisible"
-      :without-header="!withoutHeader"
-      :disable-time="disableTime"
+      :without-header="hasHeader"
+      :disable-time="hasDisabledTime"
       :disable-date="disableDate"
       :minute-interval="minuteInterval"
       :time-format="timeFormat"
@@ -63,6 +63,7 @@
       :no-weekends-days="noWeekendsDays"
       :enable-button-validate="enableButtonValidate"
       :auto-close="autoClose"
+      :range-mode="rangeMode"
       @change-date="changeDate"
       @validate="validate"
     />
@@ -87,7 +88,7 @@
       label: { type: String, default: 'Select date & time' },
       hint: { type: String, default: String },
       errorHint: { type: Boolean, default: Boolean },
-      value: { type: String, required: false, default: null },
+      value: { type: [String, Object], required: false, default: null },
       formatted: { type: String, default: 'llll' },
       format: { type: String, default: String },
       locale: { type: String, default: 'en' },
@@ -105,7 +106,9 @@
       autoClose: {type: Boolean, default: false},
       disabled: {type: Boolean, default: false},
       overlay: {type: Boolean, default: true},
-      enableButtonValidate: {type: Boolean, default: false}
+      enableButtonValidate: {type: Boolean, default: false},
+      rangeMode: {type: Boolean, default: false},
+      overlayBackground: {type: Boolean, default: false}
     },
     data: function () {
       return {
@@ -128,29 +131,63 @@
         }
       },
       dateTime () {
+        return this.rangeMode ? this.getRangeDatesTime() : this.getDateTime()
+      },
+      dateFormatted () {
+        return this.rangeMode ? this.getRangeDatesFormatted() : this.getDateFormatted()
+      },
+      hasDisabledTime () {
+        return this.disableTime || this.rangeMode
+      },
+      hasHeader () {
+        return !this.withoutHeader && !this.rangeMode
+      }
+    },
+    created () {
+      if (this.value) {
+        this.$emit('input', (this.rangeMode ? this.getRangeDatesTimeFormat() : this.getDateTimeFormat()))
+      }
+      moment.locale(this.locale)
+    },
+    methods: {
+      getRangeDatesTime () {
+        return {
+          start: moment(this.value.start),
+          end: moment(this.value.end)
+        }
+      },
+      getDateTime () {
         const date = this.disableDate
           ? this.value ? moment(`${moment().format('YYYY-MM-DD')} ${this.value}`) : moment()
           : this.value ? moment(this.value) : moment()
         return nearestMinutes(this.minuteInterval, date, moment)
       },
-      dateFormatted () {
-        let dateFormat = this.value
+      getRangeDatesTimeFormat (day) {
+        return {
+          start: moment(this.value.start).format(this.format),
+          end: moment(this.value.end).format(this.format)
+        }
+      },
+      getDateTimeFormat (day) {
+        const date = this.disableDate
+          ? this.value ? moment(`${moment().format('YYYY-MM-DD')} ${this.value}`) : moment()
+          : this.value ? moment(this.value) : moment()
+        return nearestMinutes(this.minuteInterval, date, moment).format(this.format)
+      },
+      getDateFormatted () {
+        const date = this.value
           ? this.disableDate
             ? moment(`${moment().format('YYYY-MM-DD')} ${this.value}`)
             : moment(this.value)
           : null
-        return dateFormat ? nearestMinutes(this.minuteInterval, dateFormat, moment).locale(this.locale).format(this.formatted) : null
-      }
-    },
-    created () {
-      if (this.value) {
-        this.$emit('input', this.dateTime.format(this.format))
-      }
-      moment.locale(this.locale)
-    },
-    methods: {
+        return date ? nearestMinutes(this.minuteInterval, date, moment).locale(this.locale).format(this.formatted) : null
+      },
+      getRangeDatesFormatted () {
+        return this.value ? `${moment(this.value.start).format(this.formatted)} - ${moment(this.value.end).format(this.formatted)}` : null
+      },
       changeDate (day) {
-        this.$emit('input', moment(day).format(this.format))
+        console.log('day', day)
+        this.$emit('input', (this.rangeMode ? this.getRangeDatesTimeFormat(day) : this.getDateTimeFormat(day)))
         if (this.autoClose) {
           this.hideDatePicker()
         }
@@ -183,7 +220,6 @@
       },
       validate: function () {
         this.unFocus()
-        this.hideDatePicker()
       }
     }
   }
@@ -191,6 +227,7 @@
 
 <style lang="scss">
   @import "./assets/main.scss";
+  @import url('https://fonts.googleapis.com/css?family=Roboto:400,500,700');
   .ctk-date-time-picker {
     width: 100%;
     margin: 0 auto;
@@ -208,6 +245,9 @@
       left: 0;
       right: 0;
       bottom: 0;
+      &.has-background {
+        background: rgba(0, 0, 0, 0.4);
+      }
     }
     .field{
       position: relative;

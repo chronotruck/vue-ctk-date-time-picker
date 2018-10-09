@@ -56,11 +56,41 @@
             tabindex="-1"
             style="height: 110px;">
             <ctk-date-time-picker
+            v-model="value2"
             format="YYYY-MM-DD"
             formatted="ddd D MMM YYYY"
-            v-model="value2"
             label="Choose date"
             disable-time
+            />
+          </textarea>
+        </div>
+        <div class="component-container flex-1">
+          <h3>Range Date Picker</h3>
+          <p>Inititale value : {start: '2018-04-05', end: '2018-04-09'}</p>
+          <p>v-model = {{ rangeValues || 'null' }}</p>
+          <ctk-date-time-picker
+            v-model="rangeValues"
+            range-mode
+            overlay-background
+            color="#ff9966"
+            format="YYYY-MM-DD"
+            formatted="ddd D MMM YYYY"
+            label="Choose date"
+            disable-time
+          />
+          <br>
+          <textarea
+            readonly
+            tabindex="-1"
+            style="height: 110px;">
+            <ctk-date-time-picker
+              v-model="rangeValues"
+              range-mode
+              overlay-background
+              format="YYYY-MM-DD"
+              formatted="ddd D MMM YYYY"
+              label="Choose date"
+              disable-time
             />
           </textarea>
         </div>
@@ -186,6 +216,10 @@
         value: '2018-04-05T04:26',
         value2: null,
         value3: '2018-04-05T14:26',
+        rangeValues: {
+          start: '2018-04-05',
+          end: '2018-04-09'
+        },
         timePickerValue: '14:26',
         minuteInterval: 5,
         minuteInterval2: 10,

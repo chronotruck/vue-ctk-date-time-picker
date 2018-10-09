@@ -84,42 +84,16 @@
   export default {
     name: 'CtkDatePicker',
     props: {
-      month: {
-        type: Object,
-        default: Object
-      },
-      dateTime: {
-        type: Object,
-        default: Object
-      },
-      color: {
-        type: String,
-        default: String
-      },
-      minDate: {
-        type: String,
-        default: String
-      },
-      maxDate: {
-        type: String,
-        default: String
-      },
-      locale: {
-        type: String,
-        default: String
-      },
-      withoutInput: {
-        type: Boolean,
-        default: Boolean
-      },
-      noWeekendsDays: {
-        type: Boolean,
-        default: Boolean
-      },
-      value: {
-        type: String,
-        default: String
-      }
+      month: {type: Object, default: Object},
+      dateTime: {type: Object, default: Object},
+      color: {type: String, default: String},
+      minDate: {type: String, default: String},
+      maxDate: {type: String, default: String},
+      locale: {type: String, default: String},
+      withoutInput: {type: Boolean, default: Boolean},
+      noWeekendsDays: {type: Boolean, default: Boolean},
+      value: {type: [String, Object], default: String},
+      rangeMode: {type: Boolean, default: false}
     },
     data () {
       return {

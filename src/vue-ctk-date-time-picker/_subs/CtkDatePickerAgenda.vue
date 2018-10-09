@@ -84,6 +84,7 @@
             :min-date="minDate"
             :max-date="maxDate"
             :value="value"
+            :range-mode="rangeMode"
             @change-date="selectDate"
             @change-month="changeMonth"
           />
@@ -155,37 +156,24 @@
       noWeekendsDays: { type: Boolean, default: Boolean },
       autoClose: { type: Boolean, default: Boolean },
       enableButtonValidate: { type: Boolean, default: Boolean },
-      value: { type: String, default: String }
+      value: { type: [String, Object], default: String },
+      rangeMode: {type: Boolean, default: false}
     },
     data () {
       return {
-        month: new Month(this.dateTime.month(), this.dateTime.year()),
+        month: this.getMonth(),
         transitionDayName: 'slidevnext',
-        timeWidth: !this.disableTime ? this.dateTimeWidth() : null
+        timeWidth: !this.disableTime ? this.getTimePickerWidth() : null
       }
     },
     computed: {
       position () {
-        if (window.innerWidth < 412) {
-          return null
-        } else if (this.agendaPosition === 'top') {
-          return {
-            top: '100%',
-            marginBottom: '10px'
-          }
-        } else {
-          return {
-            bottom: '100%',
-            marginTop: '10px'
-          }
-        }
+        return window.innerWidth < 412
+          ? null : this.agendaPosition === 'top'
+            ? {top: '100%', marginBottom: '10px'} : {bottom: '100%', marginTop: '10px'}
       },
       isFormatTwelve () {
-        if (this.timeFormat) {
-          return (this.timeFormat.indexOf('a') > -1) || (this.timeFormat.indexOf('A') > -1)
-        } else {
-          return false
-        }
+        return this.timeFormat ? (this.timeFormat.indexOf('a') > -1) || (this.timeFormat.indexOf('A') > -1) : false
       },
       bgStyle () {
         return {
@@ -194,30 +182,35 @@
         }
       },
       year () {
-        return this.dateTime.format('YYYY')
+        const date = this.rangeMode ? this.dateTime.start : this.dateTime
+        return date.format('YYYY')
       }
     },
     watch: {
       dateTime: {
         handler () {
-          this.month = new Month(this.dateTime.month(), this.dateTime.year())
+          this.month = this.getMonth()
           this.getDateFormatted()
         },
         deep: true
       },
       locale () {
-        this.month = new Month(this.dateTime.month(), this.dateTime.year())
+        this.month = this.getMonth()
         this.getDateFormatted()
       },
       visible (val) {
         if (val && !this.disableTime) {
           this.$nextTick(() => {
-            this.timeWidth = this.dateTimeWidth()
+            this.timeWidth = this.getTimePickerWidth()
           })
         }
       }
     },
     methods: {
+      getMonth () {
+        const date = this.rangeMode ? this.dateTime.start : this.dateTime
+        return new Month(date.month(), date.year())
+      },
       getDateFormatted () {
         return moment(this.dateTime).locale(this.locale).format('ddd D MMM')
       },
@@ -229,9 +222,9 @@
       selectDate (dateTime) {
         const isBefore = dateTime.isBefore(this.dateTime)
         this.transitionDayName = isBefore ? 'slidevprev' : 'slidevnext'
-
-        dateTime.add(this.dateTime.hour(), 'hours')
-        dateTime.add(this.dateTime.minute(), 'minutes')
+        const date = this.rangeMode ? this.dateTime.start : this.dateTime
+        dateTime.add(date.hour(), 'hours')
+        dateTime.add(date.minute(), 'minutes')
         this.$emit('change-date', dateTime)
       },
       changeMonth (val) {
@@ -246,7 +239,7 @@
       validate () {
         this.$emit('validate')
       },
-      dateTimeWidth () {
+      getTimePickerWidth () {
         const timePickerComponentPresent = this.$refs.timePickerComponent && this.$refs.timePickerComponent.$el.clientWidth
         const width = timePickerComponentPresent ? this.$refs.timePickerComponent.$el.clientWidth : 160
         const result = {
@@ -262,7 +255,6 @@
 </script>
 
 <style lang="scss" scoped>
-  @import url('https://fonts.googleapis.com/css?family=Roboto:400,500,700');
   @import "../assets/animation.scss";
   .datetimepicker {
     position: absolute;
