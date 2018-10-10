@@ -61,6 +61,7 @@
               v-model="rangeValues"
               range-mode
               overlay-background
+              color="#F50057"
               format="YYYY-MM-DD"
               formatted="ddd D MMM YYYY"
               label="Choose date"
@@ -86,11 +87,11 @@
               tabindex="-1"
               style="height: 120px;">
               <ctk-date-time-picker
-                v-model="value2"
-                format="YYYY-MM-DD"
-                formatted="ddd D MMM YYYY"
-                label="Choose date"
-                disable-time
+              v-model="value2"
+              format="YYYY-MM-DD"
+              formatted="ddd D MMM YYYY"
+              label="Choose date"
+              disable-time
               />
             </textarea>
           </div>
