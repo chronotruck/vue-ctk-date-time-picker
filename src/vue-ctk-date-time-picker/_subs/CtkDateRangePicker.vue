@@ -96,7 +96,7 @@
         }
       },
       year () {
-        const date = this.dateTime.start
+        const date = this.dateTime.end ? this.dateTime.end : this.dateTime.start
         return date.format('YYYY')
       }
     },
