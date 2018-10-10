@@ -195,7 +195,6 @@
           start: moment(day.start).format(this.format),
           end: day.end ? moment(day.end).format(this.format) : null
         }
-        console.log('dates.end', dates.end, dates.start)
         return dates
       },
       getDateTimeFormat (day) {
