@@ -45,12 +45,37 @@
       @click.stop="unFocus"
     />
     <ctk-date-picker-agenda
+      v-if="!rangeMode"
       ref="agenda"
       :value="value"
       :date-time="dateTime"
       :color="color"
       :visible="isVisible"
-      :without-header="hasHeader"
+      :without-header="!withoutHeader"
+      :disable-time="hasDisabledTime"
+      :disable-date="disableDate"
+      :minute-interval="minuteInterval"
+      :time-format="timeFormat"
+      :locale="locale"
+      :min-date="minDate"
+      :max-date="maxDate"
+      :agenda-position="agendaPosition"
+      :without-input="withoutInput"
+      :no-weekends-days="noWeekendsDays"
+      :enable-button-validate="enableButtonValidate"
+      :auto-close="autoClose"
+      :range-mode="rangeMode"
+      @change-date="changeDate"
+      @validate="validate"
+    />
+    <ctk-date-range-picker
+      v-else
+      ref="range"
+      :value="value"
+      :date-time="dateTime"
+      :color="color"
+      :visible="isVisible"
+      :without-header="!withoutHeader"
       :disable-time="hasDisabledTime"
       :disable-date="disableDate"
       :minute-interval="minuteInterval"
@@ -72,7 +97,8 @@
 
 <script>
   import moment from 'moment'
-  import CtkDatePickerAgenda from './_subs/CtkDatePickerAgenda.vue'
+  import CtkDatePickerAgenda from './_subs/CtkDatePickerAgenda'
+  import CtkDateRangePicker from './_subs/CtkDateRangePicker'
 
   const nearestMinutes = (interval, someMoment, m) => {
     const roundedMinutes = Math.ceil(someMoment.minute() / interval) * interval
@@ -82,7 +108,8 @@
   export default {
     name: 'VueCtkDateTimePicker',
     components: {
-      CtkDatePickerAgenda
+      CtkDatePickerAgenda,
+      CtkDateRangePicker
     },
     props: {
       label: { type: String, default: 'Select date & time' },
@@ -138,9 +165,6 @@
       },
       hasDisabledTime () {
         return this.disableTime || this.rangeMode
-      },
-      hasHeader () {
-        return !this.withoutHeader && !this.rangeMode
       }
     },
     created () {

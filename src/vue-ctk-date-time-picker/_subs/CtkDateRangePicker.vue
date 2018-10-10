@@ -18,7 +18,6 @@
           class="datepicker-header">
 
           <div
-            v-if="!disableDate"
             class="datepicker-year">
             <transition-group :name="transitionDayName" >
               <div
@@ -29,52 +28,18 @@
 
           <div class="flex justify-content-between">
             <transition-group
-              v-if="!disableDate"
               :name="transitionDayName"
               class="datepicker-date dots-text flex-1">
               <span
                 v-for="dateFormatted in [getDateFormatted()]"
                 :key="dateFormatted">{{ getDateFormatted() }}</span>
             </transition-group>
-            <div
-              v-if="!disableTime && !isFormatTwelve"
-              :style="timeWidth"
-              class="datepicker-time flex justify-content-center">
-              <transition-group
-                :name="transitionDayName"
-                class="dots-text datepicker-hour flex-1 flex justify-content-right">
-                <span
-                  v-for="hour in [dateTime.format('HH')]"
-                  :key="hour">{{ hour }}</span>
-              </transition-group>
-              <span>:</span>
-              <transition-group
-                :name="transitionDayName"
-                class="dots-text datepicker-minute flex-1 flex justify-content-left">
-                <span
-                  v-for="min in [dateTime.format('mm')]"
-                  :key="min">{{ min }}</span>
-              </transition-group>
-            </div>
-            <div
-              v-else-if="!disableTime"
-              :style="timeWidth"
-              class="datepicker-time flex justify-content-center">
-              <transition-group
-                :name="transitionDayName"
-                class="dots-text datepicker-hour flex-1 flex justify-content-center">
-                <span
-                  v-for="hour in [dateTime.format(timeFormat)]"
-                  :key="hour">{{ hour }}</span>
-              </transition-group>
-            </div>
           </div>
 
         </div>
         <div class="datetimepicker-container flex">
 
           <ctk-date-picker
-            v-if="!disableDate"
             :without-input="withoutInput"
             :no-weekends-days="noWeekendsDays"
             :month="month"
@@ -84,21 +49,9 @@
             :min-date="minDate"
             :max-date="maxDate"
             :value="value"
+            :range-mode="rangeMode"
             @change-date="selectDate"
             @change-month="changeMonth"
-          />
-
-          <ctk-time-picker
-            v-if="!disableTime"
-            ref="timePickerComponent"
-            :month="month"
-            :date-time="dateTime"
-            :color="color"
-            :format="timeFormat"
-            :minute-interval="minuteInterval"
-            :visible="visible"
-            :value="value"
-            @change-time="selectTime"
           />
 
         </div>
@@ -112,26 +65,20 @@
 </template>
 
 <script>
-  import CtkTimePicker from './_subs/CtkTimePicker.vue'
-  import CtkDatePicker from './_subs/CtkDatePicker.vue'
+  import CtkDatePicker from './_subs/CtkDatePicker'
   import CtkButtonValidate from './_subs/CtkButtonValidate'
   import Month from './../modules/month'
   import moment from 'moment'
   export default {
-    name: 'CtkDatePickerAgenda',
+    name: 'CtkDateRangePicker',
     components: {
-      CtkTimePicker,
       CtkDatePicker,
       CtkButtonValidate
     },
     props: {
       dateTime: { type: Object, default: Object },
       visible: { type: Boolean, required: true, default: true },
-      disableTime: { type: Boolean, default: Boolean },
-      disableDate: { type: Boolean, default: Boolean },
-      minuteInterval: { type: Number, default: Number },
       color: { type: String, default: String },
-      timeFormat: { type: String, default: String },
       withoutHeader: { type: Boolean, default: Boolean },
       locale: { type: String, default: String },
       maxDate: { type: String, default: String },
@@ -141,7 +88,8 @@
       noWeekendsDays: { type: Boolean, default: Boolean },
       autoClose: { type: Boolean, default: Boolean },
       enableButtonValidate: { type: Boolean, default: Boolean },
-      value: { type: [String, Object], default: String }
+      value: { type: [String, Object], default: String },
+      rangeMode: {type: Boolean, default: false}
     },
     data () {
       return {
@@ -162,11 +110,12 @@
       bgStyle () {
         return {
           backgroundColor: this.color,
-          padding: this.disableDate ? '10px 0' : '10px 0 10px 10px'
+          padding: '10px 0 10px 10px'
         }
       },
       year () {
-        return this.dateTime.format('YYYY')
+        const date = this.rangeMode ? this.dateTime.start : this.dateTime
+        return date.format('YYYY')
       }
     },
     watch: {
@@ -180,18 +129,11 @@
       locale () {
         this.month = this.getMonth()
         this.getDateFormatted()
-      },
-      visible (val) {
-        if (val && !this.disableTime) {
-          this.$nextTick(() => {
-            this.timeWidth = this.getTimePickerWidth()
-          })
-        }
       }
     },
     methods: {
       getMonth () {
-        const date = this.dateTime
+        const date = this.rangeMode ? this.dateTime.start : this.dateTime
         return new Month(date.month(), date.year())
       },
       getDateFormatted () {
@@ -205,7 +147,7 @@
       selectDate (dateTime) {
         const isBefore = dateTime.isBefore(this.dateTime)
         this.transitionDayName = isBefore ? 'slidevprev' : 'slidevnext'
-        const date = this.dateTime
+        const date = this.rangeMode ? this.dateTime.start : this.dateTime
         dateTime.add(date.hour(), 'hours')
         dateTime.add(date.minute(), 'minutes')
         this.$emit('change-date', dateTime)
@@ -281,6 +223,56 @@
       }
       .datepicker-date {
         text-transform: capitalize;
+      }
+    }
+    .datepicker-buttons-container {
+      padding: 5px 10px;
+      border-top: 1px solid #EAEAEA;
+      .datepicker-button {
+        cursor: pointer;
+        height: 35px;
+        width: 35px;
+        border: none;
+        outline: none;
+        appearance: none;
+        border-radius: 50%;
+        padding: 0;
+        position: relative;
+        svg {
+          position: relative;
+          -webkit-transition: all 450s cubic-bezier(0.23, 1, 0.32, 1) 0ms;
+          transition: all 450s cubic-bezier(0.23, 1, 0.32, 1) 0ms;
+        }
+        .datepicker-button-effect {
+          position: absolute;
+          opacity: 0.6;
+          height: 30px;
+          width: 30px;
+          top: 2px;
+          left: 2px;
+          border-radius: 50%;
+          -webkit-transition: all 450ms cubic-bezier(0.23, 1, 0.32, 1) 0ms;
+          transition: all 450ms cubic-bezier(0.23, 1, 0.32, 1) 0ms;
+          transform: scale(0);
+        }
+        &.validation {
+          svg {
+            fill: green;
+            position: relative;
+          }
+          .datepicker-button-effect {
+            background: green;
+          }
+          &:hover {
+            .datepicker-button-effect {
+              transform: scale(1);
+              opacity: 0.6;
+            }
+            svg {
+              fill: white !important;
+            }
+          }
+        }
       }
     }
   }
