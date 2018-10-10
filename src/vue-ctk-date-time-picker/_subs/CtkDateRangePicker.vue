@@ -17,25 +17,13 @@
           :style="bgStyle"
           class="datepicker-header">
 
-          <div
-            class="datepicker-year">
-            <transition-group :name="transitionDayName" >
-              <div
-                v-for="year in [year]"
-                :key="year">{{ year }}</div>
-            </transition-group>
+          <div class="datepicker-year">
+            <div>{{ year }}</div>
           </div>
 
           <div class="flex justify-content-between">
-            <transition-group
-              :name="transitionDayName"
-              class="datepicker-date dots-text flex-1">
-              <span
-                v-for="dateFormatted in [getDateFormatted()]"
-                :key="dateFormatted">{{ getDateFormatted() }}</span>
-            </transition-group>
+            <span class="datepicker-date dots-text flex-1">{{ getDateFormatted() }}</span>
           </div>
-
         </div>
         <div class="datetimepicker-container flex">
 
@@ -49,7 +37,7 @@
             :min-date="minDate"
             :max-date="maxDate"
             :value="value"
-            :range-mode="rangeMode"
+            range-mode
             @change-date="selectDate"
             @change-month="changeMonth"
           />
@@ -88,14 +76,11 @@
       noWeekendsDays: { type: Boolean, default: Boolean },
       autoClose: { type: Boolean, default: Boolean },
       enableButtonValidate: { type: Boolean, default: Boolean },
-      value: { type: [String, Object], default: String },
-      rangeMode: {type: Boolean, default: false}
+      value: { type: [String, Object], default: String }
     },
     data () {
       return {
-        month: this.getMonth(),
-        transitionDayName: 'slidevnext',
-        timeWidth: !this.disableTime ? this.getTimePickerWidth() : null
+        month: this.getMonth()
       }
     },
     computed: {
@@ -104,9 +89,6 @@
           ? null : this.agendaPosition === 'top'
             ? {top: '100%', marginBottom: '10px'} : {bottom: '100%', marginTop: '10px'}
       },
-      isFormatTwelve () {
-        return this.timeFormat ? (this.timeFormat.indexOf('a') > -1) || (this.timeFormat.indexOf('A') > -1) : false
-      },
       bgStyle () {
         return {
           backgroundColor: this.color,
@@ -114,7 +96,7 @@
         }
       },
       year () {
-        const date = this.rangeMode ? this.dateTime.start : this.dateTime
+        const date = this.dateTime.start
         return date.format('YYYY')
       }
     },
@@ -133,23 +115,14 @@
     },
     methods: {
       getMonth () {
-        const date = this.rangeMode ? this.dateTime.start : this.dateTime
+        const date = this.dateTime.end ? this.dateTime.end : this.dateTime.start
         return new Month(date.month(), date.year())
       },
       getDateFormatted () {
-        return moment(this.dateTime).locale(this.locale).format('ddd D MMM')
-      },
-      selectTime (dateTime) {
-        const isBigger = dateTime > this.dateTime
-        this.transitionDayName = isBigger ? 'slidevnext' : 'slidevprev'
-        this.$emit('change-date', dateTime)
+        const datesFormatted = `${moment(this.dateTime.start).locale(this.locale).format('ddd D MMM')}`
+        return this.dateTime.end ? `${datesFormatted} - ${moment(this.dateTime.end).locale(this.locale).format('ddd D MMM')}` : `${datesFormatted} - ?`
       },
       selectDate (dateTime) {
-        const isBefore = dateTime.isBefore(this.dateTime)
-        this.transitionDayName = isBefore ? 'slidevprev' : 'slidevnext'
-        const date = this.rangeMode ? this.dateTime.start : this.dateTime
-        dateTime.add(date.hour(), 'hours')
-        dateTime.add(date.minute(), 'minutes')
         this.$emit('change-date', dateTime)
       },
       changeMonth (val) {
@@ -163,17 +136,6 @@
       },
       validate () {
         this.$emit('validate')
-      },
-      getTimePickerWidth () {
-        const timePickerComponentPresent = this.$refs.timePickerComponent && this.$refs.timePickerComponent.$el.clientWidth
-        const width = timePickerComponentPresent ? this.$refs.timePickerComponent.$el.clientWidth : 160
-        const result = {
-          flex: `0 0 ${width}px`,
-          width: `${width}px`,
-          minWidth: `${width}px`,
-          maxWidth: `${width}px`
-        }
-        return result
       }
     }
   }

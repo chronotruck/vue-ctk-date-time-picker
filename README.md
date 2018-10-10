@@ -74,6 +74,7 @@ Vue.component('vue-ctk-date-time-picker', VueCtkDateTimePicker);
 | no-weekends-days | Boolean | no | false |
 | auto-close | Boolean | no | false |
 | without-input | Boolean | no | false |
+| overlay-background | Boolean | no | false |
 | disabled-dates***** | Boolean | no | [] |
 
 *hint : Is a text that replaces the label/placeholder

@@ -45,7 +45,7 @@
     <ctk-date-picker-agenda
       v-if="!rangeMode"
       ref="agenda"
-      :value="value"
+      v-model="value"
       :date-time="dateTime"
       :color="color"
       :visible="isVisible"
@@ -70,7 +70,7 @@
     <ctk-date-range-picker
       v-else
       ref="range"
-      :value="value"
+      v-model="value"
       :date-time="dateTime"
       :color="color"
       :visible="isVisible"
@@ -138,7 +138,7 @@
       rangeMode: {type: Boolean, default: false},
       overlayBackground: {type: Boolean, default: false}
     },
-    data: function () {
+    data () {
       return {
         isVisible: false,
         isFocus: false,
@@ -172,16 +172,17 @@
     },
     created () {
       if (this.value) {
-        this.$emit('input', (this.rangeMode ? this.getRangeDatesTimeFormat() : this.getDateTimeFormat()))
+        this.$emit('input', (this.rangeMode ? this.getRangeDatesTimeFormat(this.value) : this.getDateTimeFormat(this.value)))
       }
       moment.locale(this.locale)
     },
     methods: {
       getRangeDatesTime () {
-        return {
+        const dates = {
           start: moment(this.value.start),
-          end: moment(this.value.end)
+          end: this.value.end ? moment(this.value.end) : null
         }
+        return dates
       },
       getDateTime () {
         const date = this.disableDate
@@ -190,10 +191,12 @@
         return nearestMinutes(this.minuteInterval, date, moment)
       },
       getRangeDatesTimeFormat (day) {
-        return {
+        const dates = {
           start: moment(day.start).format(this.format),
-          end: moment(day.end).format(this.format)
+          end: day.end ? moment(day.end).format(this.format) : null
         }
+        console.log('dates.end', dates.end, dates.start)
+        return dates
       },
       getDateTimeFormat (day) {
         const date = this.disableDate
@@ -210,7 +213,8 @@
         return date ? nearestMinutes(this.minuteInterval, date, moment).locale(this.locale).format(this.formatted) : null
       },
       getRangeDatesFormatted () {
-        return this.value ? `${moment(this.value.start).format(this.formatted)} - ${moment(this.value.end).format(this.formatted)}` : null
+        const datesFormatted = `${moment(this.value.start).locale(this.locale).format(this.formatted)}`
+        return this.value.end ? `${datesFormatted} - ${moment(this.value.end).locale(this.locale).format(this.formatted)}` : `${datesFormatted} - ?`
       },
       changeDate (day) {
         this.$emit('input', (this.rangeMode ? this.getRangeDatesTimeFormat(day) : this.getDateTimeFormat(day)))
