@@ -34,12 +34,44 @@
               :minute-interval="10"
               color="#96bf31"
               enable-button-validate
-              :min-date="2018-04-03"
-              :max-date="2018-04-12"
+              :min-date="'2018-04-03'"
+              :max-date="'2018-04-12'"
               />
             </textarea>
-
           </div>
+          <div class="component-container flex-1">
+            <h3>Range Date Picker</h3>
+            <p>Inititale value : {start: '2018-04-05', end: '2018-04-09'}</p>
+            <p>v-model = {{ rangeValues || 'null' }}</p>
+            <ctk-date-time-picker
+              v-model="rangeValues"
+              range-mode
+              overlay-background
+              color="#F50057"
+              enable-button-validate
+              format="YYYY-MM-DD"
+              formatted="ddd D MMM YYYY"
+              label="Choose date"
+            />
+            <br>
+            <textarea
+              readonly
+              tabindex="-1"
+              style="height: 110px;">
+              <ctk-date-time-picker
+              v-model="rangeValues"
+              range-mode
+              overlay-background
+              color="#F50057"
+              enable-button-validate
+              format="YYYY-MM-DD"
+              formatted="ddd D MMM YYYY"
+              label="Choose date"
+              />
+            </textarea>
+          </div>
+        </div>
+        <div class="components-container flex">
           <div class="component-container flex-1">
             <h3>DatePicker</h3>
             <p>Inititale value : null</p>
@@ -55,7 +87,7 @@
             <textarea
               readonly
               tabindex="-1"
-              style="height: 110px;">
+              style="height: 120px;">
               <ctk-date-time-picker
               v-model="value2"
               format="YYYY-MM-DD"
@@ -65,8 +97,6 @@
               />
             </textarea>
           </div>
-        </div>
-        <div class="components-container flex">
           <div class="component-container flex-1">
             <h3>TimePicker</h3>
             <p>Inititale value : '14:26'</p>
@@ -190,6 +220,10 @@
         value: '2018-04-05T04:26',
         value2: null,
         value3: '2018-04-05T14:26',
+        rangeValues: {
+          start: '2018-04-05',
+          end: '2018-04-20'
+        },
         timePickerValue: '14:26',
         minuteInterval: 5,
         minuteInterval2: 10,
