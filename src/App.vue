@@ -2,7 +2,7 @@
   <div id="app">
     <div
       id="vueCtkDateTimePicker"
-      style="width: 90%; margin: 0 auto;">
+      class="ctk-date-time-picker">
       <header>
         <img
           src="./assets/logo.png"
@@ -10,80 +10,80 @@
         <h1>CtkDatetimePicker</h1>
         <h3>A VueJs component for select date & time</h3>
       </header>
-      <div class="components-container flex">
-        <div class="component-container flex-1">
-          <h3>DateTimePicker</h3>
-          <p>Inititale value : '2018-04-05T04:26'</p>
-          <p>v-model = {{ value || 'null' }}</p>
-          <ctk-date-time-picker
-            v-model="value"
-            :minute-interval="10"
-            :min-date="minDate"
-            :max-date="maxDate"
-            color="#96bf31"
-            enable-button-validate
-          />
-          <br>
-          <textarea
-            readonly
-            tabindex="-1"
-            style="height: 120px;">
+      <div class="container">
+        <div class="components-container flex">
+          <div class="component-container flex-1">
+            <h3>DateTimePicker</h3>
+            <p>Inititale value : '2018-04-05T04:26'</p>
+            <p>v-model = {{ value || 'null' }}</p>
             <ctk-date-time-picker
-            v-model="value"
-            :minute-interval="10"
-            color="#96bf31"
-            enable-button-validate
-            :min-date="2018-04-03"
-            :max-date="2018-04-12"
+              v-model="value"
+              :minute-interval="10"
+              :min-date="minDate"
+              :max-date="maxDate"
+              color="#96bf31"
+              enable-button-validate
             />
-          </textarea>
-
-        </div>
-        <div class="component-container flex-1">
-          <h3>DatePicker</h3>
-          <p>Inititale value : null</p>
-          <p>v-model = {{ value2 || 'null' }}</p>
-          <ctk-date-time-picker
-            v-model="value2"
-            format="YYYY-MM-DD"
-            formatted="ddd D MMM YYYY"
-            label="Choose date"
-            disable-time
-          />
-          <br>
-          <textarea
-            readonly
-            tabindex="-1"
-            style="height: 110px;">
+            <br>
+            <textarea
+              readonly
+              tabindex="-1"
+              style="height: 120px;">
+              <ctk-date-time-picker
+              v-model="value"
+              :minute-interval="10"
+              color="#96bf31"
+              enable-button-validate
+              :min-date="2018-04-03"
+              :max-date="2018-04-12"
+              />
+            </textarea>
+          </div>
+          <div class="component-container flex-1">
+            <h3>DatePicker</h3>
+            <p>Inititale value : null</p>
+            <p>v-model = {{ value2 || 'null' }}</p>
             <ctk-date-time-picker
-            v-model="value2"
-            format="YYYY-MM-DD"
-            formatted="ddd D MMM YYYY"
-            label="Choose date"
-            disable-time
+              v-model="value2"
+              format="YYYY-MM-DD"
+              formatted="ddd D MMM YYYY"
+              label="Choose date"
+              disable-time
             />
-          </textarea>
-        </div>
-        <div class="component-container flex-1">
-          <h3>Range Date Picker</h3>
-          <p>Inititale value : {start: '2018-04-05', end: '2018-04-09'}</p>
-          <p>v-model = {{ rangeValues || 'null' }}</p>
-          <ctk-date-time-picker
-            v-model="rangeValues"
-            range-mode
-            overlay-background
-            color="#ff9966"
-            format="YYYY-MM-DD"
-            formatted="ddd D MMM YYYY"
-            label="Choose date"
-            disable-time
-          />
-          <br>
-          <textarea
-            readonly
-            tabindex="-1"
-            style="height: 110px;">
+            <br>
+            <textarea
+              readonly
+              tabindex="-1"
+              style="height: 120px;">
+              <ctk-date-time-picker
+              v-model="value2"
+              format="YYYY-MM-DD"
+              formatted="ddd D MMM YYYY"
+              label="Choose date"
+              disable-time
+              />
+            </textarea>
+          </div>
+          <div class="component-container flex-1">
+            <h3>Range Date Picker</h3>
+            <p>Inititale value : {start: '2018-04-05', end: '2018-04-09'}</p>
+            <p>v-model = {{ rangeValues || 'null' }}</p>
             <ctk-date-time-picker
+              v-model="rangeValues"
+              range-mode
+              overlay-background
+              color="#ff9966"
+              format="YYYY-MM-DD"
+              formatted="ddd D MMM YYYY"
+              label="Choose date"
+              disable-time
+            />
+            <br>
+            <textarea
+              readonly
+              tabindex="-1"
+              style="height: 110px;">
+              <ctk-date-time-picker
               v-model="rangeValues"
               range-mode
               overlay-background
@@ -91,112 +91,115 @@
               formatted="ddd D MMM YYYY"
               label="Choose date"
               disable-time
-            />
-          </textarea>
+              />
+            </textarea>
+          </div>
         </div>
-      </div>
-      <div class="components-container flex">
-        <div class="component-container flex-1">
-          <h3>TimePicker</h3>
-          <p>Inititale value : '14:26'</p>
-          <p>v-model = {{ timePickerValue || 'null' }}</p>
-          <ctk-date-time-picker
-            id="timepicker"
-            v-model="timePickerValue"
-            :minute-interval="minuteInterval2"
-            :disabled="false"
-            formatted="h:mm a"
-            format="HH:mm"
-            time-format="h:mm a"
-            label="Choose time"
-            disable-date
-          />
-          <br>
-          <textarea
-            readonly
-            tabindex="-1"
-            style="height: 130px;">
+        <div class="components-container flex">
+          <div class="component-container flex-1">
+            <h3>TimePicker</h3>
+            <p>Inititale value : '14:26'</p>
+            <p>v-model = {{ timePickerValue || 'null' }}</p>
             <ctk-date-time-picker
-            v-model="yourValue"
-            formatted="h:mm a"
-            format="HH:mm"
-            time-format="h:mm a"
-            label="Choose time"
-            :minute-interval="10"
-            disable-date
+              id="timepicker"
+              v-model="timePickerValue"
+              :minute-interval="minuteInterval2"
+              :disabled="false"
+              formatted="h:mm a"
+              format="HH:mm"
+              time-format="h:mm a"
+              label="Choose time"
+              disable-date
             />
-          </textarea>
+            <br>
+            <textarea
+              readonly
+              tabindex="-1"
+              style="height: 130px;">
+              <ctk-date-time-picker
+              v-model="yourValue"
+              formatted="h:mm a"
+              format="HH:mm"
+              time-format="h:mm a"
+              label="Choose time"
+              :minute-interval="10"
+              disable-date
+              />
+            </textarea>
+          </div>
+          <div class="component-container flex-1">
+            <h3>DateTimePicker without header & auto close</h3>
+            <p>Inititale value : '2018-04-05T14:26'</p>
+            <p>v-model = {{ value3 || 'null' }}</p>
+            <ctk-date-time-picker
+              v-model="value3"
+              :minute-interval="10"
+              :error-hint="errorHint"
+              :hint="hint"
+              without-header
+              auto-close
+              time-format="HH:mm"
+              locale="fr"
+            />
+            <br>
+            <textarea
+              readonly
+              tabindex="-1"
+              style="height: 130px;">
+              <ctk-date-time-picker
+              without-header
+              auto-close
+              v-model="yourValue"
+              time-format="HH:mm"
+              :minute-interval="10"
+              :error-hint="true"
+              hint="Error message"
+              locale="fr"
+              />
+            </textarea>
+          </div>
         </div>
-        <div class="component-container flex-1">
-          <h3>DateTimePicker without header & auto close</h3>
-          <p>Inititale value : '2018-04-05T14:26'</p>
-          <p>v-model = {{ value3 || 'null' }}</p>
-          <ctk-date-time-picker
-            v-model="value3"
-            :minute-interval="10"
-            :error-hint="errorHint"
-            :hint="hint"
-            without-header
-            auto-close
-            time-format="HH:mm"
-            locale="fr"
-          />
-          <br>
-          <textarea
-            readonly
-            tabindex="-1"
-            style="height: 130px;">
+        <div class="components-container flex">
+          <div class="component-container flex-1">
+            <h3>Inline DateTimePicker && disabled dates</h3>
+            <p>v-model = {{ value || 'null' }}</p>
             <ctk-date-time-picker
-            without-header
-            auto-close
-            v-model="yourValue"
-            time-format="HH:mm"
-            :minute-interval="10"
-            :error-hint="true"
-            hint="Error message"
-            locale="fr"
+              v-model="value"
+              :disabled-dates="['2018-04-03', '2018-04-07', '2018-04-09', '2018-04-11', '2018-04-13', '2018-04-15', '2018-04-17', '2018-04-19']"
+              label="Choose date time"
+              no-weekends-days
+              without-input
             />
-          </textarea>
-        </div>
-      </div>
-      <div class="components-container flex">
-        <div class="component-container flex-1">
-          <h3>Inline DateTimePicker</h3>
-          <p>v-model = {{ value || 'null' }}</p>
-          <ctk-date-time-picker
-            v-model="value"
-            label="Choose date time"
-            no-weekends-days
-            without-input
-          />
-          <br>
-          <textarea
-            readonly
-            tabindex="-1"
-            style="height: 100px;">
+            <br>
+            <textarea
+              readonly
+              tabindex="-1"
+              style="height: 100px;">
+              <ctk-date-time-picker
+              v-model="value"
+              :disabled-dates="['2018-04-03', '2018-04-07', '2018-04-09', '2018-04-11', '2018-04-13', '2018-04-15', '2018-04-17', '2018-04-19']"
+              label="Choose date time"
+              no-weekends-days
+              without-input
+              />
+            </textarea>
+          </div>
+          <div class="component-container flex-1">
+            <h3>DateTimePicker disabled</h3>
+            <p>Option : 'disabled'</p>
             <ctk-date-time-picker
-            v-model="value"
-            label="Choose date time"
-            no-weekends-days
-            without-input
+              disabled
             />
-          </textarea>
-        </div>
-        <div class="component-container flex-1">
-          <h3>DateTimePicker disabled</h3>
-          <p>Option : 'disabled'</p>
-          <ctk-date-time-picker
-            disabled
-          />
-          <br>
-          <textarea
-            readonly
-            tabindex="-1"
-            style="height: 60px;">
-            <ctk-date-time-picker
-            disabled
-            />
-          </textarea>
+            <br>
+            <textarea
+              readonly
+              tabindex="-1"
+              style="height: 60px;">
+              <ctk-date-time-picker
+              disabled
+              />
+            </textarea>
+          </div>
         </div>
       </div>
     </div>

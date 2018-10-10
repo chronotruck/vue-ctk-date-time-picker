@@ -11,35 +11,33 @@
       class="field"
       @click="showDatePicker"
     >
-      <div >
-        <input
-          ref="CtkDateTimePicker"
-          :id="id"
-          :value="dateFormatted"
-          :placeholder="label"
-          :disabled="disabled"
-          :style="isFocus && !errorHint || isVisible ? borderStyle : ''"
-          type="text"
-          class="field-input"
-          readonly
-          @focus="onFocus"
-        >
+      <input
+        ref="CtkDateTimePicker"
+        :id="id"
+        :value="dateFormatted"
+        :placeholder="label"
+        :disabled="disabled"
+        :style="[getBorderStyle]"
+        type="text"
+        class="field-input"
+        readonly
+        @focus="onFocus"
+      >
 
-        <label
-          ref="label"
-          :for="id"
-          :class="hint ? (errorHint ? 'text-danger' : 'text-primary') : ''"
-          :style="isFocus || isVisible ? colorStyle : ''"
-          class="field-label"
-        >
-          {{ hint || label }}
-        </label>
+      <label
+        ref="label"
+        :for="id"
+        :class="hint ? (errorHint ? 'text-danger' : 'text-primary') : ''"
+        :style="[getColorStyle]"
+        class="field-label"
+      >
+        {{ hint || label }}
+      </label>
 
-      </div>
     </div>
 
     <div
-      v-if="overlay && (isVisible && !withoutInput)"
+      v-if="overlay && isVisible && !withoutInput"
       :class="{'has-background': overlayBackground}"
       class="time-picker-overlay"
       @click.stop="unFocus"
@@ -65,6 +63,7 @@
       :enable-button-validate="enableButtonValidate"
       :auto-close="autoClose"
       :range-mode="rangeMode"
+      :disabled-dates="disabledDates"
       @change-date="changeDate"
       @validate="validate"
     />
@@ -89,6 +88,7 @@
       :enable-button-validate="enableButtonValidate"
       :auto-close="autoClose"
       :range-mode="rangeMode"
+      :disabled-dates="disabledDates"
       @change-date="changeDate"
       @validate="validate"
     />
@@ -134,6 +134,7 @@
       disabled: {type: Boolean, default: false},
       overlay: {type: Boolean, default: true},
       enableButtonValidate: {type: Boolean, default: false},
+      disabledDates: { type: Array, default: Array },
       rangeMode: {type: Boolean, default: false},
       overlayBackground: {type: Boolean, default: false}
     },
@@ -147,15 +148,17 @@
       }
     },
     computed: {
-      colorStyle: function () {
-        return {
-          color: this.color
-        }
+      getColorStyle: function () {
+        const cond = this.isFocus || this.isVisible
+        return cond
+          ? { color: this.color }
+          : null
       },
-      borderStyle: function () {
-        return {
-          borderColor: this.color
-        }
+      getBorderStyle: function () {
+        const cond = (this.isFocus && !this.errorHint) || this.isVisible
+        return cond
+          ? { borderColor: this.color }
+          : null
       },
       dateTime () {
         return this.rangeMode ? this.getRangeDatesTime() : this.getDateTime()
@@ -188,14 +191,14 @@
       },
       getRangeDatesTimeFormat (day) {
         return {
-          start: moment(this.value.start).format(this.format),
-          end: moment(this.value.end).format(this.format)
+          start: moment(day.start).format(this.format),
+          end: moment(day.end).format(this.format)
         }
       },
       getDateTimeFormat (day) {
         const date = this.disableDate
-          ? this.value ? moment(`${moment().format('YYYY-MM-DD')} ${this.value}`) : moment()
-          : this.value ? moment(this.value) : moment()
+          ? day ? moment(`${moment().format('YYYY-MM-DD')} ${day}`) : moment()
+          : day ? moment(day) : moment()
         return nearestMinutes(this.minuteInterval, date, moment).format(this.format)
       },
       getDateFormatted () {
@@ -210,7 +213,6 @@
         return this.value ? `${moment(this.value.start).format(this.formatted)} - ${moment(this.value.end).format(this.formatted)}` : null
       },
       changeDate (day) {
-        console.log('day', day)
         this.$emit('input', (this.rangeMode ? this.getRangeDatesTimeFormat(day) : this.getDateTimeFormat(day)))
         if (this.autoClose) {
           this.hideDatePicker()
@@ -250,6 +252,7 @@
 </script>
 
 <style lang="scss">
+  @import url('https://fonts.googleapis.com/css?family=Roboto:400,500,700');
   @import "./assets/main.scss";
   @import url('https://fonts.googleapis.com/css?family=Roboto:400,500,700');
   .ctk-date-time-picker {

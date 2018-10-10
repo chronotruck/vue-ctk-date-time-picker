@@ -59,10 +59,11 @@
             <div
               v-else-if="!disableTime"
               :style="timeWidth"
-              class="datepicker-time flex justify-content-center">
+              class="datepicker-time flex">
               <transition-group
                 :name="transitionDayName"
-                class="dots-text datepicker-hour flex-1 flex justify-content-center">
+                :class="{'justify-content-center': disableDate}"
+                class="dots-text datepicker-hour flex-1 flex">
                 <span
                   v-for="hour in [dateTime.format(timeFormat)]"
                   :key="hour">{{ hour }}</span>
@@ -83,6 +84,7 @@
             :color="color"
             :min-date="minDate"
             :max-date="maxDate"
+            :disabled-dates="disabledDates"
             :value="value"
             @change-date="selectDate"
             @change-month="changeMonth"
@@ -95,6 +97,7 @@
             :date-time="dateTime"
             :color="color"
             :format="timeFormat"
+            :disable-date="disableDate"
             :minute-interval="minuteInterval"
             :visible="visible"
             :value="value"
@@ -141,7 +144,8 @@
       noWeekendsDays: { type: Boolean, default: Boolean },
       autoClose: { type: Boolean, default: Boolean },
       enableButtonValidate: { type: Boolean, default: Boolean },
-      value: { type: [String, Object], default: String }
+      value: { type: [String, Object], default: String },
+      disabledDates: { type: Array, default: Array }
     },
     data () {
       return {
@@ -281,6 +285,9 @@
       }
       .datepicker-date {
         text-transform: capitalize;
+      }
+      .datepicker-hour:not(.justify-content-center) {
+        padding-left: 10px;
       }
     }
   }

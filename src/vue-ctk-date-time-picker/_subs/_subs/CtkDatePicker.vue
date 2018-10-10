@@ -57,7 +57,7 @@
           <button
             v-for="day in monthDays"
             :key="day.format('D')"
-            :class="{selected: isSelected(day) && value, disabled: (isDisabled(day) || isWeekEndDay(day)), enable: !(isDisabled(day) || isWeekEndDay(day))}"
+            :class="{selected: isSelected(day) && value && !isDisabled(day), disabled: (isDisabled(day) || isWeekEndDay(day)), enable: !(isDisabled(day) || isWeekEndDay(day))}"
             type="button"
             tabindex="-1"
             class="datepicker-day flex align-center justify-content-center"
@@ -93,7 +93,8 @@
       withoutInput: {type: Boolean, default: Boolean},
       noWeekendsDays: {type: Boolean, default: Boolean},
       value: {type: [String, Object], default: String},
-      rangeMode: {type: Boolean, default: false}
+      rangeMode: {type: Boolean, default: false},
+      disabledDates: { type: Array, default: Array }
     },
     data () {
       return {
@@ -125,14 +126,20 @@
         return this.month.getFormatted()
       },
       isDisabled (day) {
-        if (this.minDate && this.maxDate) {
-          return !moment(day).isBetween(this.minDate, this.maxDate)
-        } else if (this.minDate) {
-          return moment(day).isBefore(this.minDate)
-        } else if (this.maxDate) {
-          return moment(day).isAfter(this.maxDate)
-        }
-        return false
+        return (
+          this.isDateDisabled(day) ||
+          this.isBeforeMinDate(day) ||
+          this.isAfterEndDate(day)
+        )
+      },
+      isDateDisabled (day) {
+        return this.disabledDates.indexOf(day.format('YYYY-MM-DD')) > -1
+      },
+      isBeforeMinDate (day) {
+        return moment(day).isBefore(this.minDate)
+      },
+      isAfterEndDate (day) {
+        return moment(day).isAfter(this.maxDate)
       },
       isSelected (day) {
         return moment(moment(this.dateTime).format('YYYY-MM-DD')).isSame(day.format('YYYY-MM-DD'))

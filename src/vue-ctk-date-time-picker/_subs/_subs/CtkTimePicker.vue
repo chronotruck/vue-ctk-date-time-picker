@@ -1,7 +1,7 @@
 <template>
   <div
     :class="{'inline': withoutInput}"
-    :style="[{height: month ? (monthDays.length + weekDay) > 35 ? '347px' : '307px' : '180px' }]"
+    :style="[getHeight]"
     class="timepicker-container flex"
   >
     <div class="time-container hours-container flex flex-1 flex-direction-column h-100 mh-100 w-100">
@@ -84,7 +84,8 @@
       color: {type: String, default: String},
       withoutInput: {type: Boolean, default: Boolean},
       visible: {type: Boolean, default: Boolean},
-      value: {type: String, default: String}
+      value: {type: String, default: String},
+      disableDate: {type: Boolean, default: Boolean}
     },
     data () {
       return {
@@ -112,12 +113,21 @@
       },
       weekDay () {
         return this.month.getWeekStart()
+      },
+      getHeight () {
+        return {
+          height: !this.disableDate
+            ? this.month
+              ? (this.monthDays.length + this.weekDay) > 35 ? '347px' : '307px'
+              : '180px'
+            : '200px'
+        }
       }
     },
     watch: {
       'format': 'renderFormat',
-      minuteInterval (newInteval) {
-        this.renderList('minute', newInteval)
+      minuteInterval (interval) {
+        this.renderList('minute', interval)
       },
       'displayTime': 'fillValues',
       visible (v) {
