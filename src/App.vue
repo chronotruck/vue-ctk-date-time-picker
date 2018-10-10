@@ -48,6 +48,7 @@
               range-mode
               overlay-background
               color="#F50057"
+              enable-button-validate
               format="YYYY-MM-DD"
               formatted="ddd D MMM YYYY"
               label="Choose date"
@@ -62,6 +63,7 @@
               range-mode
               overlay-background
               color="#F50057"
+              enable-button-validate
               format="YYYY-MM-DD"
               formatted="ddd D MMM YYYY"
               label="Choose date"

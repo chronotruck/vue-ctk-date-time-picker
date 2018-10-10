@@ -217,7 +217,9 @@
       },
       changeDate (day) {
         this.$emit('input', (this.rangeMode ? this.getRangeDatesTimeFormat(day) : this.getDateTimeFormat(day)))
-        if (this.autoClose) {
+        if (this.autoClose && this.rangeMode && (day.end && day.start)) {
+          this.hideDatePicker()
+        } else if (this.autoClose && !this.rangeMode) {
           this.hideDatePicker()
         }
       },
