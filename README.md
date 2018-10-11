@@ -1,8 +1,8 @@
 # vue-ctk-date-time-picker
 
-> A vue component for select date & time (by Chronotruck)
+> A vue component for select dates (range mode available) & time
 
-![vue-ctk-date-time-picker](./assets/illu.png)
+![vue-ctk-date-time-picker](./assets/illu-animated.gif)
 
 ## Demo
 A [demo](https://htmlpreview.github.io/?https://github.com/chronotruck/vue-ctk-date-time-picker/blob/master/demo/index.html)
@@ -76,6 +76,7 @@ Vue.component('vue-ctk-date-time-picker', VueCtkDateTimePicker);
 | without-input | Boolean | no | false |
 | overlay-background | Boolean | no | false |
 | disabled-dates***** | Boolean | no | [] |
+| range-mode | Boolean | no | false |
 
 *hint : Is a text that replaces the label/placeholder
 
