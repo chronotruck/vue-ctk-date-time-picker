@@ -101,6 +101,7 @@
     "input",
     "date",
     "time",
+    "range",
     "picker",
     "ctk",
     "chronotruck",
