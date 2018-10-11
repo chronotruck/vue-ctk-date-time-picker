@@ -356,7 +356,7 @@
         } else {
           time = moment(this.hour + ':' + this.minute + (this.apm ? this.apm : ''), 'HH:mm').format('HH:mm')
         }
-        let dateTime = moment(this.dateTime.format('YYYY-MM-DD') + 'T' + time)
+        const dateTime = moment(`${this.dateTime.format('YYYY-MM-DD')} ${time}`)
         this.$emit('change-time', dateTime)
       }
     }

@@ -178,7 +178,11 @@
     },
     created () {
       if (this.value) {
-        this.$emit('input', (this.rangeMode ? this.getRangeDatesTimeFormat(this.value) : this.getDateTimeFormat(this.value)))
+        const val = this.rangeMode ? this.value : this.disableDate ? moment(`${moment().format('YYYY-MM-DD')} ${this.value}`) : moment(this.value)
+        this.$emit('input', (this.rangeMode
+          ? this.getRangeDatesTimeFormat(val)
+          : this.getDateTimeFormat(val))
+        )
       }
       moment.locale(this.locale)
     },
@@ -204,10 +208,7 @@
         return dates
       },
       getDateTimeFormat (day) {
-        const date = this.disableDate
-          ? day ? moment(`${moment().format('YYYY-MM-DD')} ${day}`) : moment()
-          : day ? moment(day) : moment()
-        return nearestMinutes(this.minuteInterval, date, moment).format(this.format)
+        return nearestMinutes(this.minuteInterval, day, moment).format(this.format)
       },
       getDateFormatted () {
         const date = this.value
