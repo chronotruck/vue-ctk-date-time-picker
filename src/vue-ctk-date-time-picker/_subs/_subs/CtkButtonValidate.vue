@@ -6,6 +6,7 @@
       tabindex="-1"
       class="datepicker-button validation flex align-center justify-content-center"
       @click="$emit('validate')">
+      <span class="datepicker-button-effect"/>
       <svg
         xmlns="http://www.w3.org/2000/svg"
         width="24"
@@ -16,7 +17,6 @@
           fill="none"/>
         <path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/>
       </svg>
-      <span class="datepicker-button-effect"/>
     </button>
   </div>
 </template>
@@ -43,8 +43,8 @@
       position: relative;
       svg {
         position: relative;
-        -webkit-transition: all 450s cubic-bezier(0.23, 1, 0.32, 1) 0ms;
-        transition: all 450s cubic-bezier(0.23, 1, 0.32, 1) 0ms;
+        -webkit-transition: all 450ms cubic-bezier(0.23, 1, 0.32, 1) 0ms;
+        transition: all 450ms cubic-bezier(0.23, 1, 0.32, 1) 0ms;
       }
       .datepicker-button-effect {
         position: absolute;

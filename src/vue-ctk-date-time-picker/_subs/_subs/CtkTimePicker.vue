@@ -1,6 +1,6 @@
 <template>
   <div
-    :class="{'inline': withoutInput}"
+    :class="{'inline': inline}"
     :style="[getHeight]"
     class="timepicker-container flex"
   >
@@ -82,7 +82,7 @@
       month: {type: Object, default: Object},
       dateTime: {type: Object, default: Object},
       color: {type: String, default: String},
-      withoutInput: {type: Boolean, default: Boolean},
+      inline: {type: Boolean, default: Boolean},
       visible: {type: Boolean, default: Boolean},
       value: {type: String, default: String},
       disableDate: {type: Boolean, default: Boolean}
@@ -154,7 +154,7 @@
       this.renderFormat()
     },
     methods: {
-      formatValue: function (type, i) {
+      formatValue (type, i) {
         switch (type) {
         case 'H': case 'm':
           return String(i)
@@ -168,7 +168,7 @@
           return ''
         }
       },
-      checkAcceptingType: function (validValues, formatString, fallbackValue) {
+      checkAcceptingType (validValues, formatString, fallbackValue) {
         if (!validValues || !formatString || !formatString.length) {
           return ''
         }
@@ -179,7 +179,7 @@
         }
         return fallbackValue || ''
       },
-      renderFormat: function (newFormat) {
+      renderFormat (newFormat) {
         newFormat = newFormat || this.format
         this.hourType = this.checkAcceptingType(CONFIG.HOUR_TOKENS, newFormat, 'HH')
         this.minuteType = this.checkAcceptingType(CONFIG.MINUTE_TOKENS, newFormat, 'mm')
@@ -194,14 +194,14 @@
           self.readValues()
         })
       },
-      renderHoursList: function () {
+      renderHoursList () {
         const hoursCount = (this.hourType === 'h' || this.hourType === 'hh') ? 12 : 24
         this.hours = []
         for (let i = 0; i < hoursCount; i++) {
           this.hours.push(this.formatValue(this.hourType, i))
         }
       },
-      renderList: function (listType, interval) {
+      renderList (listType, interval) {
         if (listType === 'minute') {
           interval = interval || this.minuteInterval
         } else {
@@ -223,14 +223,14 @@
           this.minutes.push(this.formatValue(this.minuteType, i))
         }
       },
-      renderApmList: function () {
+      renderApmList () {
         this.apms = []
         if (!this.apmType) {
           return
         }
         this.apms = this.apmType === 'A' ? ['AM', 'PM'] : ['am', 'pm']
       },
-      readValues: function () {
+      readValues () {
         this.hour = this.dateTime.format(this.hourType)
         this.minute = this.dateTime.format(this.minuteType)
         if (this.apmType) {
@@ -238,7 +238,7 @@
         }
         this.fillValues()
       },
-      fillValues: function () {
+      fillValues () {
         let fullValues = {}
         const baseHour = this.hour
         const baseHourType = this.hourType
@@ -326,7 +326,7 @@
         this.updateTimeValue(fullValues)
         this.$emit('change', {data: fullValues})
       },
-      updateTimeValue: function (fullValues) {
+      updateTimeValue (fullValues) {
         this.muteWatch = true
         const self = this
         const baseTimeValue = JSON.parse(JSON.stringify(this.value || {}))
@@ -339,10 +339,10 @@
           self.muteWatch = false
         })
       },
-      isTwelveHours: function (token) {
+      isTwelveHours (token) {
         return token === 'h' || token === 'hh'
       },
-      select: function (type, value) {
+      select (type, value) {
         if (type === 'hour') {
           this.hour = value
         } else if (type === 'minute') {

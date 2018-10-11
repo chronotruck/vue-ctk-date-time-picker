@@ -1,7 +1,7 @@
 <template>
   <div
     id="CtkDatePicker"
-    :class="{'flex-1 inline': withoutInput}"
+    :class="{'flex-1 inline': inline, 'p-0': rangeMode}"
     class="datepicker-container">
     <div class="datepicker-controls flex align-center justify-content-center">
       <div class="arrow-month h-100">
@@ -96,7 +96,7 @@
       minDate: {type: String, default: String},
       maxDate: {type: String, default: String},
       locale: {type: String, default: String},
-      withoutInput: {type: Boolean, default: Boolean},
+      inline: {type: Boolean, default: Boolean},
       noWeekendsDays: {type: Boolean, default: Boolean},
       value: {type: [String, Object], default: String},
       rangeMode: {type: Boolean, default: false},
@@ -202,6 +202,9 @@
   #CtkDatePicker {
     width: 290px;
     padding: 0 5px;
+    &.p-0 {
+      padding: 0;
+    }
     .datepicker-controls {
       height: 56px;
       .arrow-month {

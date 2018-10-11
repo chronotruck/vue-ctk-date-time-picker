@@ -3,8 +3,8 @@
     :name="agendaPosition === 'top' ? 'slide' : 'slideinvert'"
   >
     <div
-      v-show="visible || withoutInput"
-      :class="{'inline': withoutInput}"
+      v-show="visible || inline"
+      :class="{'inline': inline}"
       :style="position"
       class="datetimepicker flex"
       @click.stop
@@ -76,7 +76,7 @@
 
           <ctk-date-picker
             v-if="!disableDate"
-            :without-input="withoutInput"
+            :inline="inline"
             :no-weekends-days="noWeekendsDays"
             :month="month"
             :date-time="dateTime"
@@ -106,7 +106,7 @@
 
         </div>
         <ctk-button-validate
-          v-if="enableButtonValidate && !withoutInput && !autoClose"
+          v-if="enableButtonValidate && !inline && !autoClose"
           @validate="validate"
         />
       </div>
@@ -139,7 +139,7 @@
       locale: { type: String, default: String },
       maxDate: { type: String, default: String },
       minDate: { type: String, default: String },
-      withoutInput: { type: Boolean, default: Boolean },
+      inline: { type: Boolean, default: Boolean },
       agendaPosition: { type: String, default: String },
       noWeekendsDays: { type: Boolean, default: Boolean },
       autoClose: { type: Boolean, default: Boolean },

@@ -5,7 +5,7 @@ const directive = {
   events: isTouch ? ['touchstart', 'click'] : ['click']
 }
 
-directive.onEvent = function (event) {
+directive.onEvent = (event) => {
   directive.instances.forEach(({ el, fn }) => {
     if (event.target !== el && !el.contains(event.target)) {
       fn && fn(event)
@@ -13,14 +13,14 @@ directive.onEvent = function (event) {
   })
 }
 
-directive.bind = function (el, binding) {
+directive.bind = (el, binding) => {
   directive.instances.push({ el, fn: binding.value })
   if (directive.instances.length === 1) {
     directive.events.forEach(e => document.addEventListener(e, directive.onEvent))
   }
 }
 
-directive.update = function (el, binding) {
+directive.update = (el, binding) => {
   if (typeof binding.value !== 'function') {
     throw new Error('Argument must be a function')
   }
@@ -28,7 +28,7 @@ directive.update = function (el, binding) {
   instance.fn = binding.value
 }
 
-directive.unbind = function (el) {
+directive.unbind = (el) => {
   const instanceIndex = directive.instances.findIndex(i => i.el === el)
   if (instanceIndex >= 0) {
     directive.instances.splice(instanceIndex, 1)
