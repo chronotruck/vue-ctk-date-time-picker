@@ -1,11 +1,11 @@
 <template>
   <div
     :id="id"
-    :class="{'inline': withoutInput}"
+    :class="{'inline': inline}"
     class="ctk-date-time-picker"
   >
     <div
-      v-if="!withoutInput"
+      v-if="!inline"
       ref="parent"
       :class="{'is-focused': isFocus || isVisible, 'has-value': dateFormatted, 'has-error': errorHint, 'is-disabled': disabled}"
       class="field"
@@ -37,7 +37,7 @@
     </div>
 
     <div
-      v-if="overlay && isVisible && !withoutInput"
+      v-if="overlay && isVisible && !inline"
       :class="{'has-background': overlayBackground}"
       class="time-picker-overlay"
       @click.stop="unFocus"
@@ -58,7 +58,7 @@
       :min-date="minDate"
       :max-date="maxDate"
       :agenda-position="agendaPosition"
-      :without-input="withoutInput"
+      :inline="inline"
       :no-weekends-days="noWeekendsDays"
       :enable-button-validate="enableButtonValidate"
       :auto-close="autoClose"
@@ -83,12 +83,13 @@
       :min-date="minDate"
       :max-date="maxDate"
       :agenda-position="agendaPosition"
-      :without-input="withoutInput"
+      :inline="isInline"
       :no-weekends-days="noWeekendsDays"
       :enable-button-validate="enableButtonValidate"
       :auto-close="autoClose"
       :range-mode="rangeMode"
       :disabled-dates="disabledDates"
+      :without-range-shortcut="withoutRangeShortcut"
       @change-date="changeDate"
       @validate="validate"
     />
@@ -129,6 +130,7 @@
       minDate: { type: String, default: String },
       maxDate: { type: String, default: String },
       withoutInput: { type: Boolean, default: false },
+      inline: { type: Boolean, default: false },
       noWeekendsDays: {type: Boolean, default: false},
       autoClose: {type: Boolean, default: false},
       disabled: {type: Boolean, default: false},
@@ -136,7 +138,8 @@
       enableButtonValidate: {type: Boolean, default: false},
       disabledDates: { type: Array, default: Array },
       rangeMode: {type: Boolean, default: false},
-      overlayBackground: {type: Boolean, default: false}
+      overlayBackground: {type: Boolean, default: false},
+      withoutRangeShortcut: {type: Boolean, default: false}
     },
     data () {
       return {
@@ -148,13 +151,16 @@
       }
     },
     computed: {
-      getColorStyle: function () {
+      isInline () {
+        return this.withoutInput || this.inline
+      },
+      getColorStyle () {
         const cond = this.isFocus || this.isVisible
         return cond
           ? { color: this.color }
           : null
       },
-      getBorderStyle: function () {
+      getBorderStyle () {
         const cond = (this.isFocus && !this.errorHint) || this.isVisible
         return cond
           ? { borderColor: this.color }
@@ -249,7 +255,7 @@
         this.hideDatePicker()
         this.isFocus = false
       },
-      validate: function () {
+      validate () {
         this.unFocus()
       }
     }

@@ -47,26 +47,26 @@
               v-model="rangeValues"
               range-mode
               overlay-background
-              color="#F50057"
+              color="purple"
               enable-button-validate
               format="YYYY-MM-DD"
               formatted="ddd D MMM YYYY"
-              label="Choose date"
+              label="Select range"
             />
             <br>
             <textarea
               readonly
               tabindex="-1"
-              style="height: 110px;">
+              style="height: 150px;">
               <ctk-date-time-picker
-              v-model="rangeValues"
+              v-model="{ start: '2018-04-05', end: '2018-04-20' }"
               range-mode
               overlay-background
-              color="#F50057"
+              color="purple"
               enable-button-validate
               format="YYYY-MM-DD"
               formatted="ddd D MMM YYYY"
-              label="Choose date"
+              label="Select range"
               />
             </textarea>
           </div>
@@ -169,7 +169,7 @@
               :disabled-dates="['2018-04-03', '2018-04-07', '2018-04-09', '2018-04-11', '2018-04-13', '2018-04-15', '2018-04-17', '2018-04-19']"
               label="Choose date time"
               no-weekends-days
-              without-input
+              inline
             />
             <br>
             <textarea
@@ -181,7 +181,7 @@
               :disabled-dates="['2018-04-03', '2018-04-07', '2018-04-09', '2018-04-11', '2018-04-13', '2018-04-15', '2018-04-17', '2018-04-19']"
               label="Choose date time"
               no-weekends-days
-              without-input
+              inline
               />
             </textarea>
           </div>

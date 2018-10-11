@@ -3,8 +3,8 @@
     :name="agendaPosition === 'top' ? 'slide' : 'slideinvert'"
   >
     <div
-      v-show="visible || withoutInput"
-      :class="{'inline': withoutInput}"
+      v-show="visible || inline"
+      :class="{'inline': inline}"
       :style="position"
       class="datetimepicker flex"
       @click.stop
@@ -26,9 +26,15 @@
           </div>
         </div>
         <div class="datetimepicker-container flex">
+          <ctk-calendar-shortcut
+            v-if="!withoutRangeShortcut"
+            :color="color"
+            :locale="locale"
+            @change-range="selectDate"
+          />
 
           <ctk-date-picker
-            :without-input="withoutInput"
+            :inline="inline"
             :no-weekends-days="noWeekendsDays"
             :month="month"
             :date-time="dateTime"
@@ -37,14 +43,14 @@
             :min-date="minDate"
             :max-date="maxDate"
             :value="value"
+            class="date-range-picker"
             range-mode
             @change-date="selectDate"
             @change-month="changeMonth"
           />
-
         </div>
         <ctk-button-validate
-          v-if="enableButtonValidate && !withoutInput && !autoClose"
+          v-if="enableButtonValidate && !inline && !autoClose"
           @validate="validate"
         />
       </div>
@@ -55,13 +61,15 @@
 <script>
   import CtkDatePicker from './_subs/CtkDatePicker'
   import CtkButtonValidate from './_subs/CtkButtonValidate'
+  import CtkCalendarShortcut from './_subs/CtkCalendarShortcut'
   import Month from './../modules/month'
   import moment from 'moment'
   export default {
     name: 'CtkDateRangePicker',
     components: {
       CtkDatePicker,
-      CtkButtonValidate
+      CtkButtonValidate,
+      CtkCalendarShortcut
     },
     props: {
       dateTime: { type: Object, default: Object },
@@ -71,12 +79,13 @@
       locale: { type: String, default: String },
       maxDate: { type: String, default: String },
       minDate: { type: String, default: String },
-      withoutInput: { type: Boolean, default: Boolean },
+      inline: { type: Boolean, default: Boolean },
       agendaPosition: { type: String, default: String },
       noWeekendsDays: { type: Boolean, default: Boolean },
       autoClose: { type: Boolean, default: Boolean },
       enableButtonValidate: { type: Boolean, default: Boolean },
-      value: { type: [String, Object], default: String }
+      value: { type: [String, Object], default: String },
+      withoutRangeShortcut: { type: Boolean, default: false }
     },
     data () {
       return {
@@ -187,55 +196,8 @@
         text-transform: capitalize;
       }
     }
-    .datepicker-buttons-container {
-      padding: 5px 10px;
-      border-top: 1px solid #EAEAEA;
-      .datepicker-button {
-        cursor: pointer;
-        height: 35px;
-        width: 35px;
-        border: none;
-        outline: none;
-        appearance: none;
-        border-radius: 50%;
-        padding: 0;
-        position: relative;
-        svg {
-          position: relative;
-          -webkit-transition: all 450s cubic-bezier(0.23, 1, 0.32, 1) 0ms;
-          transition: all 450s cubic-bezier(0.23, 1, 0.32, 1) 0ms;
-        }
-        .datepicker-button-effect {
-          position: absolute;
-          opacity: 0.6;
-          height: 30px;
-          width: 30px;
-          top: 2px;
-          left: 2px;
-          border-radius: 50%;
-          -webkit-transition: all 450ms cubic-bezier(0.23, 1, 0.32, 1) 0ms;
-          transition: all 450ms cubic-bezier(0.23, 1, 0.32, 1) 0ms;
-          transform: scale(0);
-        }
-        &.validation {
-          svg {
-            fill: green;
-            position: relative;
-          }
-          .datepicker-button-effect {
-            background: green;
-          }
-          &:hover {
-            .datepicker-button-effect {
-              transform: scale(1);
-              opacity: 0.6;
-            }
-            svg {
-              fill: white !important;
-            }
-          }
-        }
-      }
+    .date-range-picker {
+      border-left: 1px solid #EAEAEA
     }
   }
   .inline {
@@ -289,6 +251,10 @@
           -webkit-justify-content: flex-end;
           -webkit-box-align: end;
         }
+      }
+      .date-range-picker {
+        border-left: none;
+        border-bottom: 1px solid #EAEAEA
       }
     }
   }
