@@ -1,6 +1,6 @@
 <template>
   <div
-    :class="{'inline': inline}"
+    :class="{'inline': inline, 'is-dark': dark, 'only-time': disableDate}"
     :style="[getHeight]"
     class="timepicker-container flex"
   >
@@ -85,7 +85,8 @@
       inline: {type: Boolean, default: Boolean},
       visible: {type: Boolean, default: Boolean},
       value: {type: String, default: String},
-      disableDate: {type: Boolean, default: Boolean}
+      disableDate: {type: Boolean, default: Boolean},
+      dark: {type: Boolean, default: Boolean}
     },
     data () {
       return {
@@ -373,6 +374,7 @@
       }
       .time-label {
         padding: .3em 0;
+        color: #000;
       }
       .numbers-container {
         padding: 0;
@@ -381,7 +383,7 @@
         overflow: auto;
         .item {
           padding: .3em 0;
-          color: #161616;
+          color: #000;
           cursor: pointer;
           position: relative;
           border: none;
@@ -421,6 +423,24 @@
             }
           }
         }
+      }
+    }
+    &.is-dark {
+      .time-container {
+        &.hours-container {
+          border-color: lighten(#424242, 20%);
+        }
+        .numbers-container .item {
+          color: #FFF;
+        }
+        .time-label {
+          color: lighten(#424242, 40%) !important;
+        }
+      }
+    }
+    &.only-time {
+      .time-container.hours-container {
+        border: none;
       }
     }
   }

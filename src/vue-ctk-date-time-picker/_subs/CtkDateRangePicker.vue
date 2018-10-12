@@ -4,7 +4,7 @@
   >
     <div
       v-show="visible || inline"
-      :class="{'inline': inline}"
+      :class="{'inline': inline, 'is-dark': dark, 'has-validate-button': enableButtonValidate}"
       :style="position"
       class="datetimepicker flex"
       @click.stop
@@ -30,6 +30,7 @@
             v-if="!withoutRangeShortcut"
             :color="color"
             :locale="locale"
+            :dark="dark"
             @change-range="selectDate"
           />
 
@@ -43,6 +44,7 @@
             :min-date="minDate"
             :max-date="maxDate"
             :value="value"
+            :dark="dark"
             class="date-range-picker"
             range-mode
             @change-date="selectDate"
@@ -51,6 +53,7 @@
         </div>
         <ctk-button-validate
           v-if="enableButtonValidate && !inline && !autoClose"
+          :dark="dark"
           @validate="validate"
         />
       </div>
@@ -85,7 +88,8 @@
       autoClose: { type: Boolean, default: Boolean },
       enableButtonValidate: { type: Boolean, default: Boolean },
       value: { type: [String, Object], default: String },
-      withoutRangeShortcut: { type: Boolean, default: false }
+      withoutRangeShortcut: { type: Boolean, default: false },
+      dark: { type: Boolean, default: Boolean }
     },
     data () {
       return {
@@ -154,50 +158,62 @@
   @import "../assets/animation.scss";
   .datetimepicker {
     position: absolute;
-  }
-  .datepicker {
-    font-family: 'Roboto', sans-serif;
-    position: absolute;
-    z-index: 5;
-    border-radius: 4px;
-    overflow: hidden;
-    background: #FFF;
-    -webkit-box-shadow: 0 2px 1px -1px rgba(0, 0, 0, 0.2), 0 1px 1px 0 rgba(0, 0, 0, 0.14), 0 1px 3px 0 rgba(0, 0, 0, 0.12);
-    box-shadow: 0 2px 1px -1px rgba(0, 0, 0, 0.2), 0 1px 1px 0 rgba(0, 0, 0, 0.14), 0 1px 3px 0 rgba(0, 0, 0, 0.12);
-    max-width: 400px;
-    .datetimepicker-container {
+    .datepicker {
+      font-family: 'Roboto', sans-serif;
+      position: absolute;
+      z-index: 5;
+      border-radius: 4px;
+      overflow: hidden;
       background: #FFF;
-      border-bottom-left-radius: 4px;
-      border-bottom-right-radius: 4px;
-    }
-    &-header {
-      background: dodgerblue;
-      color: #FFF;
-      padding: 10px 0 10px 10px;
-      position: relative;
-      border-bottom: 1px solid #EAEAEA;
-      border-top-left-radius: 4px;
-      border-top-right-radius: 4px;
-      .datepicker-year {
-        opacity: 0.7;
-        margin-bottom: 10px;
-        font-size: 14px;
-        line-height: 14px;
+      -webkit-box-shadow: 0 2px 1px -1px rgba(0, 0, 0, 0.2), 0 1px 1px 0 rgba(0, 0, 0, 0.14), 0 1px 3px 0 rgba(0, 0, 0, 0.12);
+      box-shadow: 0 2px 1px -1px rgba(0, 0, 0, 0.2), 0 1px 1px 0 rgba(0, 0, 0, 0.14), 0 1px 3px 0 rgba(0, 0, 0, 0.12);
+      max-width: 400px;
+      .datetimepicker-container {
+        background: #FFF;
+        border-bottom-left-radius: 4px;
+        border-bottom-right-radius: 4px;
+      }
+      &-header {
+        background: dodgerblue;
+        color: #FFF;
+        padding: 10px 0 10px 10px;
         position: relative;
-        height: 14px;
+        border-top-left-radius: 4px;
+        border-top-right-radius: 4px;
+        .datepicker-year {
+          opacity: 0.7;
+          margin-bottom: 10px;
+          font-size: 14px;
+          line-height: 14px;
+          position: relative;
+          height: 14px;
+        }
+        .datepicker-date, .datepicker-time, .datepicker-minute, .datepicker-hour {
+          font-size: 20px;
+          line-height: 20px;
+          position: relative;
+          height: 20px;
+        }
+        .datepicker-date {
+          text-transform: capitalize;
+        }
       }
-      .datepicker-date, .datepicker-time, .datepicker-minute, .datepicker-hour {
-        font-size: 20px;
-        line-height: 20px;
-        position: relative;
-        height: 20px;
-      }
-      .datepicker-date {
-        text-transform: capitalize;
+      .date-range-picker {
+        border-left: 1px solid #EAEAEA
       }
     }
-    .date-range-picker {
-      border-left: 1px solid #EAEAEA
+    &.is-dark {
+      .datetimepicker-container {
+        background: #424242;
+      }
+      .date-range-picker {
+        border-left: 1px solid lighten(#424242, 20%);
+      }
+    }
+    &.has-validate-button {
+      .datetimepicker-container {
+        border-radius: 0;
+      }
     }
   }
   .inline {

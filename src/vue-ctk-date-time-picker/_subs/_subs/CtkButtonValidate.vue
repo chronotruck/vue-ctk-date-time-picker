@@ -1,10 +1,11 @@
 <template>
   <div
+    :class="{'is-dark': dark}"
     class="datepicker-buttons-container flex justify-content-right">
     <button
       type="button"
       tabindex="-1"
-      class="datepicker-button validation flex align-center justify-content-center"
+      class="datepicker-button flex align-center justify-content-center"
       @click="$emit('validate')">
       <span class="datepicker-button-effect"/>
       <svg
@@ -23,7 +24,10 @@
 
 <script>
   export default {
-    name: 'CtkButtonValidate'
+    name: 'CtkButtonValidate',
+    props: {
+      dark: { type: Boolean, default: false }
+    }
   }
 </script>
 
@@ -31,50 +35,50 @@
   .datepicker-buttons-container {
     padding: 5px 10px;
     border-top: 1px solid #EAEAEA;
+    background-color: #FFF;
     .datepicker-button {
-      cursor: pointer;
-      height: 35px;
-      width: 35px;
-      border: none;
-      outline: none;
-      appearance: none;
-      border-radius: 50%;
-      padding: 0;
+      padding: 0px 20px;
       position: relative;
+      border: 1px solid #eaeaea;
+      border-radius: 30px;
+      height: 30px;
+      font-size: 14px;
+      outline: none;
+      cursor: pointer;
+      -webkit-transition: all 0.25s cubic-bezier(0.645, 0.045, 0.355, 1);
+      color: #FFF;
+      font-weight: 500;
       svg {
         position: relative;
         -webkit-transition: all 450ms cubic-bezier(0.23, 1, 0.32, 1) 0ms;
         transition: all 450ms cubic-bezier(0.23, 1, 0.32, 1) 0ms;
+        fill: #00C853;
       }
       .datepicker-button-effect {
         position: absolute;
-        opacity: 0.6;
+        background: #00C853;
         height: 30px;
-        width: 30px;
-        top: 2px;
-        left: 2px;
-        border-radius: 50%;
+        border-radius: 30px;
+        width: 100%;
         -webkit-transition: all 450ms cubic-bezier(0.23, 1, 0.32, 1) 0ms;
         transition: all 450ms cubic-bezier(0.23, 1, 0.32, 1) 0ms;
         transform: scale(0);
       }
-      &.validation {
-        svg {
-          fill: green;
-          position: relative;
-        }
+      &:hover {
+        border: 1px solid transparent;
         .datepicker-button-effect {
-          background: green;
+          transform: scale(1);
         }
-        &:hover {
-          .datepicker-button-effect {
-            transform: scale(1);
-            opacity: 0.6;
-          }
-          svg {
-            fill: white !important;
-          }
+        svg {
+          fill: white !important;
         }
+      }
+    }
+    &.is-dark, &.is-dark .datepicker-button {
+      background-color: #424242;
+      border-color: lighten(#424242, 20%);
+      svg {
+        fill: white !important;
       }
     }
   }

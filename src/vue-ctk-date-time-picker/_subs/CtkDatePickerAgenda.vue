@@ -4,7 +4,7 @@
   >
     <div
       v-show="visible || inline"
-      :class="{'inline': inline}"
+      :class="{'inline': inline, 'is-dark': dark, 'has-validate-button': enableButtonValidate}"
       :style="position"
       class="datetimepicker flex"
       @click.stop
@@ -86,6 +86,7 @@
             :max-date="maxDate"
             :disabled-dates="disabledDates"
             :value="value"
+            :dark="dark"
             @change-date="selectDate"
             @change-month="changeMonth"
           />
@@ -101,12 +102,14 @@
             :minute-interval="minuteInterval"
             :visible="visible"
             :value="value"
+            :dark="dark"
             @change-time="selectTime"
           />
 
         </div>
         <ctk-button-validate
           v-if="enableButtonValidate && !inline && !autoClose"
+          :dark="dark"
           @validate="validate"
         />
       </div>
@@ -145,7 +148,8 @@
       autoClose: { type: Boolean, default: Boolean },
       enableButtonValidate: { type: Boolean, default: Boolean },
       value: { type: [String, Object], default: String },
-      disabledDates: { type: Array, default: Array }
+      disabledDates: { type: Array, default: Array },
+      dark: { type: Boolean, default: Boolean }
     },
     data () {
       return {
@@ -245,49 +249,58 @@
   @import "../assets/animation.scss";
   .datetimepicker {
     position: absolute;
-  }
-  .datepicker {
-    font-family: 'Roboto', sans-serif;
-    position: absolute;
-    z-index: 5;
-    border-radius: 4px;
-    overflow: hidden;
-    background: #FFF;
-    -webkit-box-shadow: 0 2px 1px -1px rgba(0, 0, 0, 0.2), 0 1px 1px 0 rgba(0, 0, 0, 0.14), 0 1px 3px 0 rgba(0, 0, 0, 0.12);
-    box-shadow: 0 2px 1px -1px rgba(0, 0, 0, 0.2), 0 1px 1px 0 rgba(0, 0, 0, 0.14), 0 1px 3px 0 rgba(0, 0, 0, 0.12);
-    max-width: 400px;
-    .datetimepicker-container {
+    .datepicker {
+      font-family: 'Roboto', sans-serif;
+      position: absolute;
+      z-index: 5;
+      border-radius: 4px;
+      overflow: hidden;
       background: #FFF;
-      border-bottom-left-radius: 4px;
-      border-bottom-right-radius: 4px;
+      -webkit-box-shadow: 0 2px 1px -1px rgba(0, 0, 0, 0.2), 0 1px 1px 0 rgba(0, 0, 0, 0.14), 0 1px 3px 0 rgba(0, 0, 0, 0.12);
+      box-shadow: 0 2px 1px -1px rgba(0, 0, 0, 0.2), 0 1px 1px 0 rgba(0, 0, 0, 0.14), 0 1px 3px 0 rgba(0, 0, 0, 0.12);
+      max-width: 400px;
+      .datetimepicker-container {
+        background: #FFF;
+        border-bottom-left-radius: 4px;
+        border-bottom-right-radius: 4px;
+      }
+      &-header {
+        background: dodgerblue;
+        color: #FFF;
+        padding: 10px 0 10px 10px;
+        position: relative;
+        border-top-left-radius: 4px;
+        border-top-right-radius: 4px;
+        .datepicker-year {
+          opacity: 0.7;
+          margin-bottom: 10px;
+          font-size: 14px;
+          line-height: 14px;
+          position: relative;
+          height: 14px;
+        }
+        .datepicker-date, .datepicker-time, .datepicker-minute, .datepicker-hour {
+          font-size: 20px;
+          line-height: 20px;
+          position: relative;
+          height: 20px;
+        }
+        .datepicker-date {
+          text-transform: capitalize;
+        }
+        .datepicker-hour:not(.justify-content-center) {
+          padding-left: 10px;
+        }
+      }
     }
-    &-header {
-      background: dodgerblue;
-      color: #FFF;
-      padding: 10px 0 10px 10px;
-      position: relative;
-      border-bottom: 1px solid #EAEAEA;
-      border-top-left-radius: 4px;
-      border-top-right-radius: 4px;
-      .datepicker-year {
-        opacity: 0.7;
-        margin-bottom: 10px;
-        font-size: 14px;
-        line-height: 14px;
-        position: relative;
-        height: 14px;
+    &.is-dark {
+      .datetimepicker-container {
+        background: #424242;
       }
-      .datepicker-date, .datepicker-time, .datepicker-minute, .datepicker-hour {
-        font-size: 20px;
-        line-height: 20px;
-        position: relative;
-        height: 20px;
-      }
-      .datepicker-date {
-        text-transform: capitalize;
-      }
-      .datepicker-hour:not(.justify-content-center) {
-        padding-left: 10px;
+    }
+    &.has-validate-button {
+      .datetimepicker-container {
+        border-radius: 0;
       }
     }
   }

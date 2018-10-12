@@ -1,7 +1,7 @@
 <template>
   <div
     :id="id"
-    :class="{'inline': inline}"
+    :class="{'inline': inline, 'is-dark': dark}"
     class="ctk-date-time-picker"
   >
     <div
@@ -64,6 +64,7 @@
       :auto-close="autoClose"
       :range-mode="rangeMode"
       :disabled-dates="disabledDates"
+      :dark="dark"
       @change-date="changeDate"
       @validate="validate"
     />
@@ -90,6 +91,7 @@
       :range-mode="rangeMode"
       :disabled-dates="disabledDates"
       :without-range-shortcut="withoutRangeShortcut"
+      :dark="dark"
       @change-date="changeDate"
       @validate="validate"
     />
@@ -139,7 +141,8 @@
       disabledDates: { type: Array, default: Array },
       rangeMode: {type: Boolean, default: false},
       overlayBackground: {type: Boolean, default: false},
-      withoutRangeShortcut: {type: Boolean, default: false}
+      withoutRangeShortcut: {type: Boolean, default: false},
+      dark: {type: Boolean, default: false}
     },
     data () {
       return {
@@ -367,7 +370,38 @@
     .text-danger {
       color: orangered !important;
     }
+    &.is-dark {
+      .field-label{
+        color: #ffffffb3;
+      }
+      .field-input{
+        background-color: #424242;
+        border-color: #ffffffb3;
+        color: #ffffffb3;
+      }
+      ::-webkit-input-placeholder { /* WebKit, Blink, Edge */
+        color: #ffffffb3;
+      }
+      :-moz-placeholder { /* Mozilla Firefox 4 to 18 */
+        color: #ffffffb3;
+        opacity:  1;
+      }
+      ::-moz-placeholder { /* Mozilla Firefox 19+ */
+        color: #ffffffb3;
+        opacity:  1;
+      }
+      :-ms-input-placeholder { /* Internet Explorer 10-11 */
+        color: #ffffffb3;
+      }
+      ::-ms-input-placeholder { /* Microsoft Edge */
+        color: #ffffffb3;
+      }
+      ::placeholder { /* Most modern browsers support this now. */
+        color: #ffffffb3;
+      }
+    }
   }
+
   @media screen and (max-width: 412px) {
     .time-picker-overlay {
       background: rgba(0, 0, 0, 0.4);

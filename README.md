@@ -3,7 +3,8 @@
 > A vue component for select dates (range mode available) & time
 
 ![vue-ctk-date-time-picker](./assets/illu-animated.gif)
-
+##### Dark mode
+![vue-ctk-date-time-picker](./assets/illu-animated-dark.gif)
 ## Demo
 A [demo](https://htmlpreview.github.io/?https://github.com/chronotruck/vue-ctk-date-time-picker/blob/master/demo/index.html)
 

@@ -1,19 +1,26 @@
 <template>
   <div
+    :class="{'is-dark': dark}"
     class="shortcuts-container"
   >
     <button
       v-for="shortcut in shortcuts"
-      :style="[shortcut.isHover || shortcut.isSelected ? getHoverStyle : getStyle]"
+      :style="[shortcut.isSelected ? getSelectedStyle : getStyle]"
       :key="shortcut.value"
-      :class="{ 'isSelected': shortcut.isSelected }"
+      :class="{ 'is-selected': shortcut.isSelected }"
       class="shortcut-button"
       tabindex="-1"
       @mouseover="shortcut.isHover = true"
       @mouseleave="shortcut.isHover = false"
       @click="select(shortcut)"
     >
-      {{ shortcut.label }}
+      <span
+        :style="[getEffectStyle]"
+        class="datepicker-button-effect"
+      />
+      <span class="shortcut-button-content">
+        {{ shortcut.label }}
+      </span>
     </button>
   </div>
 </template>
@@ -24,7 +31,8 @@
     name: 'CtkCalendarShortcur',
     props: {
       color: { type: String, default: String },
-      locale: { type: String, default: String }
+      locale: { type: String, default: String },
+      dark: { type: Boolean, default: false }
     },
     data () {
       return {
@@ -45,12 +53,15 @@
           color: this.color
         }
       },
-      getHoverStyle () {
+      getSelectedStyle () {
         return {
-          color: '#FFF',
-          border: 'transparent',
           backgroundColor: this.color,
-          opacity: 0.6
+          color: '#FFF'
+        }
+      },
+      getEffectStyle () {
+        return {
+          backgroundColor: this.color
         }
       }
     },
@@ -94,16 +105,58 @@
     padding: 10px 5px;
     button.shortcut-button {
       width: 100%;
+      position: relative;
       margin-bottom: 10px;
       border: 1px solid #eaeaea;
       height: 30px;
+      font-weight: 300;
+      line-height: 26px;
       border-radius: 30px;
       font-size: 12px;
       outline: none;
       cursor: pointer;
       -webkit-transition: all 0.25s cubic-bezier(0.645, 0.045, 0.355, 1);
-      &.isSelected {
-        opacity: 1 !important;
+      .datepicker-button-effect {
+        position: absolute;
+        background: #00C853;
+        top: 0;
+        right: 0;
+        height: 30px;
+        border-radius: 30px;
+        width: 100%;
+        -webkit-transition: all 450ms cubic-bezier(0.23, 1, 0.32, 1) 0ms;
+        transition: all 450ms cubic-bezier(0.23, 1, 0.32, 1) 0ms;
+        transform: scale(0);
+        opacity: .6;
+      }
+      .shortcut-button-content {
+        position: relative;
+      }
+      &:hover {
+        color: #FFF !important;
+        border-color: transparent;
+        .datepicker-button-effect {
+          transform: scale(1);
+        }
+      }
+      &.is-selected {
+        border-color: transparent;
+        .datepicker-button-effect {
+          opacity: 1;
+          transform: scale(1);
+        }
+      }
+    }
+    &.is-dark {
+      button.shortcut-button {
+        background: #424242;
+        border-color: lighten(#424242, 20%);
+        .shortcut-button-content {
+          color: #FFF;
+        }
+        &:hover, &.is-selected {
+          border-color: transparent;
+        }
       }
     }
   }
