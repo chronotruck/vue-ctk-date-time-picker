@@ -1,4 +1,4 @@
-![vue-ctk-date-time-picker](./src/assets/logo_sticky.png)
+![vue-ctk-date-time-picker](./assets/logo_sticky.png)
 
 # vue-ctk-date-time-picker
 
