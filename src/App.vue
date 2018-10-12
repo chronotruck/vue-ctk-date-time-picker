@@ -19,7 +19,7 @@
         <button
           class="btn"
           @click="darkMode = !darkMode">
-          Enable Dark Mode
+          {{ darkMode ? 'Disable' : 'Enable' }} Dark Mode
         </button>
       </header>
       <div class="container">
@@ -278,17 +278,15 @@
 
 <style lang="scss">
   @import "./vue-ctk-date-time-picker/assets/main.scss";
-  html, body {
+  html, body, #app {
     margin: 0;
-    height: 100%;
-    width: 100%;
+    min-height: 100%;
+    min-width: 100%;
   }
   #app {
     font-family: 'Avenir', Helvetica, Arial, sans-serif;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
-    height: 100%;
-    width: 100%;
     &.dark {
       background-color: darken(#424242, 20%);
       header {
