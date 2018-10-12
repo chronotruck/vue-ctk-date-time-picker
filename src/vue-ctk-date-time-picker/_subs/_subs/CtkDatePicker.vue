@@ -70,6 +70,10 @@
             class="datepicker-day flex align-center justify-content-center"
             @click="isDisabled(day) || isWeekEndDay(day) ? '' : selectDate(day)">
             <span
+              v-if="isToday(day)"
+              class="datepicker-today"/>
+            <span
+              v-show="!isDisabled(day) || isSelected(day)"
               :style="bgStyle"
               class="datepicker-day-effect"/>
             <span class="datepicker-day-text">{{ day.format('D') }}</span>
@@ -135,6 +139,9 @@
     methods: {
       getMonthFormatted () {
         return this.month.getFormatted()
+      },
+      isToday (day) {
+        return moment(day.format('YYYY-MM-DD')).isSame(moment().format('YYYY-MM-DD'))
       },
       isDisabled (day) {
         return (
@@ -278,6 +285,15 @@
           transition: all 450ms cubic-bezier(0.23, 1, 0.32, 1) 0ms;
           transform: scale(0);
         }
+        .datepicker-today {
+          position: absolute;
+          background-color: #eaeaea;
+          height: 30px;
+          width: 30px;
+          border-radius: 50%;
+          -webkit-transition: all 450ms cubic-bezier(0.23, 1, 0.32, 1) 0ms;
+          transition: all 450ms cubic-bezier(0.23, 1, 0.32, 1) 0ms;
+        }
         .datepicker-day-text {
           position: relative;
           color: #000;
@@ -355,6 +371,9 @@
       }
       .datepicker-label {
         color: #FFF;
+      }
+      .datepicker-today {
+        background-color: darken(#424242, 10%) !important;
       }
     }
   }

@@ -88,9 +88,9 @@ Vue.component('vue-ctk-date-time-picker', VueCtkDateTimePicker);
 
 ***color: Replace color for the hint, the borders & time selected in dropdown
 
-****min-date & max-date : Must be 'YYYY-MM-DD' format
+****min-date & max-date : Must be `'YYYY-MM-DD'` format
 
-*****Disabled-Dates is an Array of dates in 'YYYY-MM-DD' format (ex: `['2018-04-03', '2018-04-07', '2018-04-09'])
+*****Disabled-Dates is an Array of dates in 'YYYY-MM-DD' format (ex: `['2018-04-03', '2018-04-07', '2018-04-09']`)
 
 
 ## Contribution
