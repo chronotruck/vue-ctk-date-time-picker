@@ -32,7 +32,8 @@
     props: {
       color: { type: String, default: String },
       locale: { type: String, default: String },
-      dark: { type: Boolean, default: false }
+      dark: { type: Boolean, default: false },
+      dateTime: {type: Object, default: Object}
     },
     data () {
       return {
@@ -66,12 +67,15 @@
       }
     },
     methods: {
-      select (shortcut) {
-        const { value } = shortcut
-        let dates = { start: null, end: null }
+      unSelectAllShortcuts () {
         this.shortcuts.forEach(sc => {
           sc.isSelected = false
         })
+      },
+      select (shortcut) {
+        const { value } = shortcut
+        let dates = { start: null, end: null }
+        this.unSelectAllShortcuts()
         shortcut.isSelected = true
 
         switch (value) {

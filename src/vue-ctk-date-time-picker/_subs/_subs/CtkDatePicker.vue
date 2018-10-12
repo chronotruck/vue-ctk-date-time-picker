@@ -283,7 +283,9 @@
           color: #000;
         }
         &:hover {
-          color: #FFF;
+          .datepicker-day-text {
+            color: #FFF;
+          }
           .datepicker-day-effect {
             transform: scale(1);
             opacity: 0.6;

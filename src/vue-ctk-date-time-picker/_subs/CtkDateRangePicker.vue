@@ -26,12 +26,15 @@
           </div>
         </div>
         <div class="datetimepicker-container flex">
+
           <ctk-calendar-shortcut
             v-if="!withoutRangeShortcut"
+            ref="calendar-shortcut"
             :color="color"
             :locale="locale"
             :dark="dark"
-            @change-range="selectDate"
+            :date-time="dateTime"
+            @change-range="selectShortcut"
           />
 
           <ctk-date-picker
@@ -50,6 +53,7 @@
             @change-date="selectDate"
             @change-month="changeMonth"
           />
+
         </div>
         <ctk-button-validate
           v-if="enableButtonValidate && !inline && !autoClose"
@@ -136,6 +140,10 @@
         return this.dateTime.end ? `${datesFormatted} - ${moment(this.dateTime.end).locale(this.locale).format('ddd D MMM')}` : `${datesFormatted} - ?`
       },
       selectDate (dateTime) {
+        this.$emit('change-date', dateTime)
+        this.$refs['calendar-shortcut'].unSelectAllShortcuts()
+      },
+      selectShortcut (dateTime) {
         this.$emit('change-date', dateTime)
       },
       changeMonth (val) {
