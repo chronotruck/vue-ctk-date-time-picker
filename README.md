@@ -78,6 +78,7 @@ Vue.component('vue-ctk-date-time-picker', VueCtkDateTimePicker);
 | overlay-background | Boolean | no | false |
 | disabled-dates***** | Boolean | no | [] |
 | range-mode | Boolean | no | false |
+| dark | Boolean | no | false |
 
 *hint : Is a text that replaces the label/placeholder
 
