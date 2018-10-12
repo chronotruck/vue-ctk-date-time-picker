@@ -1,7 +1,7 @@
 <template>
   <div
     id="CtkDatePicker"
-    :class="{'flex-1 inline': inline, 'p-0': rangeMode}"
+    :class="{'flex-1 inline': inline, 'p-0': rangeMode, 'is-dark': dark}"
     class="datepicker-container">
     <div class="datepicker-controls flex align-center justify-content-center">
       <div class="arrow-month h-100">
@@ -100,7 +100,8 @@
       noWeekendsDays: {type: Boolean, default: Boolean},
       value: {type: [String, Object], default: String},
       rangeMode: {type: Boolean, default: false},
-      disabledDates: { type: Array, default: Array }
+      disabledDates: {type: Array, default: Array},
+      dark: {type: Boolean, default: false}
     },
     data () {
       return {
@@ -199,7 +200,7 @@
 
 <style lang="scss" scoped>
   @import "../../assets/animation.scss";
-  #CtkDatePicker {
+  #CtkDatePicker.datepicker-container {
     width: 290px;
     padding: 0 5px;
     &.p-0 {
@@ -243,7 +244,6 @@
     .datepicker-week {
       height: 41px;
       text-transform: capitalize;
-      // border-bottom: 1px solid #eaeaea;
     }
     .month-container {
       position: relative;
@@ -280,6 +280,7 @@
         }
         .datepicker-day-text {
           position: relative;
+          color: #000;
         }
         &:hover {
           color: #FFF;
@@ -290,7 +291,9 @@
         }
 
         &.between {
-          color: #FFF;
+          .datepicker-day-text {
+            color: #FFF;
+          }
           .datepicker-day-effect {
             transform: scale(1);
             opacity: 0.5;
@@ -309,14 +312,18 @@
           }
         }
         &.selected {
-          color: #FFF;
+          .datepicker-day-text {
+            color: #FFF;
+          }
           .datepicker-day-effect {
             transform: scale(1);
             opacity: 1;
           }
         }
         &.disabled {
-          color: #CCC;
+          .datepicker-day-text {
+            color: #CCC;
+          }
           &.selected {
             color: #fff;
           }
@@ -325,6 +332,27 @@
             opacity: 0;
           }
         }
+      }
+    }
+    &.is-dark {
+      .datepicker-days .datepicker-day:not(.between):not(.selected) {
+        .datepicker-day-text {
+          color: #FFF;
+        }
+        &.disabled .datepicker-day-text {
+          color: lighten(#424242, 20%);
+        }
+      }
+      .text-muted {
+        color: lighten(#424242, 40%) !important;
+      }
+      .datepicker-button {
+        svg {
+          fill: #FFF;
+        }
+      }
+      .datepicker-label {
+        color: #FFF;
       }
     }
   }
