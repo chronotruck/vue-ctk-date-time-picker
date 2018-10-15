@@ -36,6 +36,7 @@
               :min-date="minDate"
               :max-date="maxDate"
               :dark="darkMode"
+              color="#96bf31"
               enable-button-validate
             />
             <br>
@@ -100,6 +101,7 @@
               v-model="value2"
               :dark="darkMode"
               format="YYYY-MM-DD"
+              color="#287696"
               formatted="ddd D MMM YYYY"
               label="Choose date"
               disable-time
@@ -112,6 +114,7 @@
               <ctk-date-time-picker
               v-model="value2"
               :dark="darkMode"
+              color="#287696"
               format="YYYY-MM-DD"
               formatted="ddd D MMM YYYY"
               label="Choose date"
