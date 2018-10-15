@@ -1,7 +1,7 @@
 <template>
   <div
     id="CtkDatePicker"
-    :class="{'flex-1 inline': withoutInput}"
+    :class="{'flex-1 inline': inline, 'p-0': rangeMode, 'is-dark': dark}"
     class="datepicker-container">
     <div class="datepicker-controls flex align-center justify-content-center">
       <div class="arrow-month h-100">
@@ -50,18 +50,28 @@
           v-for="month in [month]"
           :key="month.month"
           class="datepicker-days flex">
-          <div
+          <button
             v-for="start in weekDay"
             :key="start + 'startEmptyDay'"
             class="datepicker-day align-center justify-content-center"/>
           <button
             v-for="day in monthDays"
             :key="day.format('D')"
-            :class="{selected: isSelected(day) && value && !isDisabled(day), disabled: (isDisabled(day) || isWeekEndDay(day)), enable: !(isDisabled(day) || isWeekEndDay(day))}"
+            :class="{
+              selected: isSelected(day) && value && !isDisabled(day),
+              disabled: (isDisabled(day) || isWeekEndDay(day)),
+              enable: !(isDisabled(day) || isWeekEndDay(day)),
+              between: isBetween(day) && rangeMode,
+              first: firstInRange(day) && rangeMode,
+              last: lastInRange(day) && !!dateTime.end && rangeMode
+            }"
             type="button"
             tabindex="-1"
             class="datepicker-day flex align-center justify-content-center"
             @click="isDisabled(day) || isWeekEndDay(day) ? '' : selectDate(day)">
+            <span
+              v-if="isToday(day)"
+              class="datepicker-today"/>
             <span
               v-show="!isDisabled(day) || isSelected(day)"
               :style="bgStyle"
@@ -84,52 +94,28 @@
   export default {
     name: 'CtkDatePicker',
     props: {
-      month: {
-        type: Object,
-        default: Object
-      },
-      dateTime: {
-        type: Object,
-        default: Object
-      },
-      color: {
-        type: String,
-        default: String
-      },
-      minDate: {
-        type: String,
-        default: String
-      },
-      maxDate: {
-        type: String,
-        default: String
-      },
-      locale: {
-        type: String,
-        default: String
-      },
-      withoutInput: {
-        type: Boolean,
-        default: Boolean
-      },
-      noWeekendsDays: {
-        type: Boolean,
-        default: Boolean
-      },
-      value: {
-        type: String,
-        default: String
-      },
-      disabledDates: {
-        type: Array,
-        default: Array
-      }
+      month: {type: Object, default: Object},
+      dateTime: {type: Object, default: Object},
+      color: {type: String, default: String},
+      minDate: {type: String, default: String},
+      maxDate: {type: String, default: String},
+      locale: {type: String, default: String},
+      inline: {type: Boolean, default: Boolean},
+      noWeekendsDays: {type: Boolean, default: Boolean},
+      value: {type: [String, Object], default: String},
+      rangeMode: {type: Boolean, default: false},
+      disabledDates: {type: Array, default: Array},
+      dark: {type: Boolean, default: false}
     },
     data () {
       return {
         transitionDaysName: 'slidenext',
         transitionLabelName: 'slidevnext',
-        weekDays: getWeekDays(this.locale)
+        weekDays: getWeekDays(this.locale),
+        days: {
+          start: null,
+          end: null
+        }
       }
     },
     computed: {
@@ -154,6 +140,9 @@
       getMonthFormatted () {
         return this.month.getFormatted()
       },
+      isToday (day) {
+        return moment(day.format('YYYY-MM-DD')).isSame(moment().format('YYYY-MM-DD'))
+      },
       isDisabled (day) {
         return (
           this.isDateDisabled(day) ||
@@ -171,7 +160,23 @@
         return moment(day).isAfter(this.maxDate)
       },
       isSelected (day) {
-        return moment(moment(this.dateTime).format('YYYY-MM-DD')).isSame(day.format('YYYY-MM-DD'))
+        const date = [
+          ...(this.dateTime.start ? [this.dateTime.start.format('YYYY-MM-DD')] : [this.dateTime.format('YYYY-MM-DD')]),
+          ...(this.dateTime.end ? [this.dateTime.end.format('YYYY-MM-DD')] : [])
+        ]
+        return date.indexOf(day.format('YYYY-MM-DD')) > -1
+      },
+      isBetween (day) {
+        const range = this.dateTime.end
+          ? moment.range(this.dateTime.start, this.dateTime.end).contains(day)
+          : false
+        return range
+      },
+      firstInRange (day) {
+        return this.dateTime.start ? moment(this.dateTime.start.format('YYYY-MM-DD')).isSame(day.format('YYYY-MM-DD')) : false
+      },
+      lastInRange (day) {
+        return this.dateTime.end ? moment(this.dateTime.end.format('YYYY-MM-DD')).isSame(day.format('YYYY-MM-DD')) : false
       },
       isWeekEndDay (day) {
         const dayConst = moment(day).day()
@@ -179,7 +184,17 @@
         return this.noWeekendsDays ? weekendsDaysNumbers.indexOf(dayConst) > -1 : false
       },
       selectDate (day) {
-        this.$emit('change-date', day)
+        if (this.rangeMode) {
+          if (!this.days.start || this.days.end || day.isBefore(this.days.start)) {
+            this.days.start = day
+            this.days.end = null
+          } else {
+            this.days.end = day
+          }
+          this.$emit('change-date', this.days)
+        } else {
+          this.$emit('change-date', day)
+        }
       },
       changeMonth (val) {
         this.transitionDaysName = `slide${val}`
@@ -192,9 +207,12 @@
 
 <style lang="scss" scoped>
   @import "../../assets/animation.scss";
-  #CtkDatePicker {
+  #CtkDatePicker.datepicker-container {
     width: 290px;
     padding: 0 5px;
+    &.p-0 {
+      padding: 0;
+    }
     .datepicker-controls {
       height: 56px;
       .arrow-month {
@@ -233,7 +251,6 @@
     .datepicker-week {
       height: 41px;
       text-transform: capitalize;
-      // border-bottom: 1px solid #eaeaea;
     }
     .month-container {
       position: relative;
@@ -268,26 +285,63 @@
           transition: all 450ms cubic-bezier(0.23, 1, 0.32, 1) 0ms;
           transform: scale(0);
         }
+        .datepicker-today {
+          position: absolute;
+          background-color: #eaeaea;
+          height: 30px;
+          width: 30px;
+          border-radius: 50%;
+          -webkit-transition: all 450ms cubic-bezier(0.23, 1, 0.32, 1) 0ms;
+          transition: all 450ms cubic-bezier(0.23, 1, 0.32, 1) 0ms;
+        }
         .datepicker-day-text {
           position: relative;
+          color: #000;
         }
         &:hover {
-          color: #FFF;
+          .datepicker-day-text {
+            color: #FFF;
+          }
           .datepicker-day-effect {
             transform: scale(1);
             opacity: 0.6;
           }
         }
 
+        &.between {
+          .datepicker-day-text {
+            color: #FFF;
+          }
+          .datepicker-day-effect {
+            transform: scale(1);
+            opacity: 0.5;
+            border-radius: 0;
+            width: 100%;
+          }
+          /*TODO*/
+          &.first .datepicker-day-effect {
+            border-top-left-radius: 30px;
+            border-bottom-left-radius: 30px;
+          }
+          /*TODO*/
+          &.last .datepicker-day-effect {
+            border-top-right-radius: 30px;
+            border-bottom-right-radius: 30px;
+          }
+        }
         &.selected {
-          color: #FFF;
+          .datepicker-day-text {
+            color: #FFF;
+          }
           .datepicker-day-effect {
             transform: scale(1);
             opacity: 1;
           }
         }
         &.disabled {
-          color: #CCC;
+          .datepicker-day-text {
+            color: #CCC;
+          }
           &.selected {
             color: #fff;
           }
@@ -296,6 +350,30 @@
             opacity: 0;
           }
         }
+      }
+    }
+    &.is-dark {
+      .datepicker-days .datepicker-day:not(.between):not(.selected) {
+        .datepicker-day-text {
+          color: #FFF;
+        }
+        &.disabled .datepicker-day-text {
+          color: lighten(#424242, 20%);
+        }
+      }
+      .text-muted {
+        color: lighten(#424242, 40%) !important;
+      }
+      .datepicker-button {
+        svg {
+          fill: #FFF;
+        }
+      }
+      .datepicker-label {
+        color: #FFF;
+      }
+      .datepicker-today {
+        background-color: darken(#424242, 10%) !important;
       }
     }
   }

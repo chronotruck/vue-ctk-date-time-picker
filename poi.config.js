@@ -6,7 +6,7 @@ module.exports = {
   entry: glob('./src/vue-ctk-date-time-picker/*.vue'),
   filename: {
     js: name + '.min.js',
-    css: name + '.min.css',
+    css: name + '.min.css'
   },
   sourceMap: true,
   html: false,

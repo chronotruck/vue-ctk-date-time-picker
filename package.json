@@ -1,6 +1,6 @@
 {
   "name": "vue-ctk-date-time-picker",
-  "version": "1.2.1",
+  "version": "1.3.0",
   "description": "A vue component for select date & time (by Chronotruck)",
   "author": "Louis Mazel <loic.mazuel@chronotruck.com>",
   "main": "dist/vue-ctk-date-time-picker.min.js",
@@ -101,6 +101,7 @@
     "input",
     "date",
     "time",
+    "range",
     "picker",
     "ctk",
     "chronotruck",
