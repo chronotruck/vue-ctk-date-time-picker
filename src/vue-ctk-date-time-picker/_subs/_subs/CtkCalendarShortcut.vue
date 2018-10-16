@@ -84,7 +84,7 @@
           dates.end = moment().locale(this.locale).endOf(value)
           break
         case 7: case 30:
-          dates.end = moment().locale(this.locale)
+          dates.end = moment().locale(this.locale).subtract(1, 'd')
           dates.start = moment().locale(this.locale).subtract(value, 'd')
           break
         case '-month':
