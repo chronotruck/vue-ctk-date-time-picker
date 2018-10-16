@@ -11,7 +11,7 @@
     >
       <div
         :style="position"
-        class="datepicker flex flex-direction-column justify-content-between">
+        class="datepicker flex flex-direction-column">
         <div
           v-if="withoutHeader"
           :style="bgStyle"
@@ -25,7 +25,7 @@
             <span class="datepicker-date dots-text flex-1">{{ getDateFormatted() }}</span>
           </div>
         </div>
-        <div class="datetimepicker-container flex flex-1">
+        <div class="datetimepicker-container flex">
 
           <ctk-calendar-shortcut
             v-if="!withoutRangeShortcut"
@@ -211,7 +211,7 @@
       }
     }
     &.is-dark {
-      .datetimepicker-container {
+      .datepicker, .datetimepicker-container {
         background: #424242;
       }
       .date-range-picker {
@@ -274,7 +274,6 @@
         }
         .date-range-picker {
           border-left: none;
-          border-bottom: 1px solid #EAEAEA;
         }
       }
       &.is-dark {

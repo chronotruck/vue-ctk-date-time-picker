@@ -11,7 +11,7 @@
     >
       <div
         :style="position"
-        class="datepicker flex flex-direction-column justify-content-between">
+        class="datepicker flex flex-direction-column">
         <div
           v-if="withoutHeader"
           :style="bgStyle"
@@ -72,7 +72,7 @@
           </div>
 
         </div>
-        <div class="datetimepicker-container flex flex-1">
+        <div class="datetimepicker-container flex">
 
           <ctk-date-picker
             v-if="!disableDate"
@@ -295,7 +295,7 @@
       }
     }
     &.is-dark {
-      .datetimepicker-container {
+      .datepicker, .datetimepicker-container {
         background: #424242;
       }
     }
@@ -315,6 +315,7 @@
       -webkit-box-shadow: none;
       width: 100%;
       max-width: 100%;
+      background-color: white;
     }
   }
   @media screen and (max-width: 415px) {
