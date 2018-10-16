@@ -252,12 +252,11 @@
       right: 0;
       left: 0;
       .datepicker {
-        top: 50px !important;
-        bottom: unset !important;
-        left: 5%;
-        width: 90%;
+        bottom: 0 !important;
+        width: 100%;
         max-width: inherit;
         position: fixed;
+        height: 100%;
         margin: 0 !important;
       }
       .datepicker-header {

@@ -383,7 +383,7 @@
     }
   }
   @media screen and (max-width: 412px) {
-    #CtkDatePicker {
+    #CtkDatePicker.datepicker-container {
       width: 100%;
       &:not(.inline) {
         .datepicker-controls {

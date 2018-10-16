@@ -112,6 +112,7 @@
       position: relative;
       margin-bottom: 10px;
       border: 1px solid #eaeaea;
+      background-color: white;
       height: 30px;
       font-weight: 300;
       line-height: 26px;
