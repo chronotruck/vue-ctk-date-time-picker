@@ -334,6 +334,9 @@
       left: 0;
       .datepicker {
         bottom: 0 !important;
+        top: 0 !important;
+        left: 0 !important;
+        right: 0 !important;
         width: 100%;
         max-width: inherit;
         position: fixed;
