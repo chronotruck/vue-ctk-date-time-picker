@@ -64,6 +64,7 @@
             <ctk-date-time-picker
               v-model="rangeValues"
               :dark="darkMode"
+              :shortcuts-translations="shortcutsTranslations"
               range-mode
               overlay-background
               color="purple"
@@ -273,7 +274,16 @@
         locale: 'fr',
         minDate: '2018-04-03',
         maxDate: '2018-04-12',
-        darkMode: false
+        darkMode: false,
+        shortcutsTranslations: {
+          'this_week': 'Cette semaine',
+          'last_7_days': '7 derniers jours',
+          'last_30_days': '30 derniers jours',
+          'this_month': 'Ce mois',
+          'last_month': 'Mois précédent',
+          'this_year': 'Cette année',
+          'last_year': 'L\'année dernière'
+        }
       }
     }
   }
