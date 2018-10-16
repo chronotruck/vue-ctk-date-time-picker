@@ -36,10 +36,12 @@
     padding: 5px 10px;
     border-top: 1px solid #EAEAEA;
     background-color: #FFF;
+    display: flex !important;
     .datepicker-button {
       padding: 0px 20px;
       position: relative;
       border: 1px solid #eaeaea;
+      background-color: white;
       border-radius: 30px;
       height: 30px;
       font-size: 14px;

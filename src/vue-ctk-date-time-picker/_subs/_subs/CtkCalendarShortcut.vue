@@ -169,12 +169,15 @@
     }
   }
 
-  @media screen and (max-width: 412px) {
+  @media screen and (max-width: 415px) {
     .shortcuts-container:not(.inline) {
       width: 100%;
       border-bottom: 1px solid #EAEAEA;
       height: 120px !important;
       overflow: auto;
+    }
+    .shortcuts-container.is-dark {
+      border-color: lighten(#424242, 20%);
     }
   }
 </style>

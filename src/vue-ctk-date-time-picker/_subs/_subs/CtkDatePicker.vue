@@ -382,7 +382,7 @@
       }
     }
   }
-  @media screen and (max-width: 412px) {
+  @media screen and (max-width: 415px) {
     #CtkDatePicker.datepicker-container {
       width: 100%;
       &:not(.inline) {

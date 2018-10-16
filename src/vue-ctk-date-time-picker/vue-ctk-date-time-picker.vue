@@ -402,9 +402,9 @@
     }
   }
 
-  @media screen and (max-width: 412px) {
+  @media screen and (max-width: 415px) {
     .time-picker-overlay {
-      background: rgba(0, 0, 0, 0.4);
+      display: none;
     }
     .ctk-date-time-picker:not(.inline) {
       position: inherit !important;

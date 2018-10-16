@@ -11,7 +11,7 @@
     >
       <div
         :style="position"
-        class="datepicker">
+        class="datepicker flex flex-direction-column justify-content-between">
         <div
           v-if="withoutHeader"
           :style="bgStyle"
@@ -72,7 +72,7 @@
           </div>
 
         </div>
-        <div class="datetimepicker-container flex">
+        <div class="datetimepicker-container flex flex-1">
 
           <ctk-date-picker
             v-if="!disableDate"
@@ -108,8 +108,9 @@
 
         </div>
         <ctk-button-validate
-          v-if="enableButtonValidate && !inline && !autoClose"
+          v-show="enableButtonValidate && !inline && !autoClose"
           :dark="dark"
+          class="button-validate"
           @validate="validate"
         />
       </div>
@@ -316,7 +317,7 @@
       max-width: 100%;
     }
   }
-  @media screen and (max-width: 412px) {
+  @media screen and (max-width: 415px) {
     .datetimepicker-container {
       -webkit-flex-direction: column;
       -ms-flex-direction: column;

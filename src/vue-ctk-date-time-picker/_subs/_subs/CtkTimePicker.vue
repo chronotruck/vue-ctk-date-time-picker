@@ -445,7 +445,7 @@
     }
   }
 
-  @media screen and (max-width: 412px) {
+  @media screen and (max-width: 415px) {
     .timepicker-container:not(.inline) {
       .time-container.hours-container {
         border: 0;
@@ -453,6 +453,9 @@
       width: 100%;
       border-top: 1px solid #EAEAEA;
       height: 120px !important;
+    }
+    .timepicker-container.is-dark {
+      border-color: lighten(#424242, 20%);
     }
   }
 </style>
