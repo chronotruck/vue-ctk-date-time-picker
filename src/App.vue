@@ -264,6 +264,10 @@
           start: '2018-04-05',
           end: '2018-04-20'
         },
+        rangeValues2: {
+          start: null,
+          end: null
+        },
         timePickerValue: '14:26',
         minuteInterval: 5,
         minuteInterval2: 10,

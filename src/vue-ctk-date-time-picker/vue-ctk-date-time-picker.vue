@@ -186,16 +186,17 @@
           ? this.getRangeDatesTimeFormat(val)
           : this.getDateTimeFormat(val))
         )
+      } else if (this.rangeMode) {
+        this.$emit('input', this.getRangeDatesTimeFormat({}))
       }
       moment.locale(this.locale)
     },
     methods: {
       getRangeDatesTime () {
-        const dates = {
-          start: moment(this.value.start),
-          end: this.value.end ? moment(this.value.end) : null
-        }
-        return dates
+        const hasStartValues = this.value && this.value.start
+        return hasStartValues
+          ? { start: moment(), end: moment() }
+          : { start: moment(), end: this.value && this.value.end ? moment(this.value.end) : null }
       },
       getDateTime () {
         const date = this.disableDate
@@ -204,11 +205,11 @@
         return nearestMinutes(this.minuteInterval, date, moment)
       },
       getRangeDatesTimeFormat (day) {
-        const dates = {
-          start: moment(day.start).format(this.format),
-          end: day.end ? moment(day.end).format(this.format) : null
+        const {start, end} = day
+        return {
+          start: start ? moment(start).format(this.format) : null,
+          end: end ? moment(end).format(this.format) : null
         }
-        return dates
       },
       getDateTimeFormat (day) {
         return nearestMinutes(this.minuteInterval, day, moment).format(this.format)
@@ -222,8 +223,13 @@
         return date ? nearestMinutes(this.minuteInterval, date, moment).locale(this.locale).format(this.formatted) : null
       },
       getRangeDatesFormatted () {
-        const datesFormatted = `${moment(this.value.start).locale(this.locale).format(this.formatted)}`
-        return this.value.end ? `${datesFormatted} - ${moment(this.value.end).locale(this.locale).format(this.formatted)}` : `${datesFormatted} - ?`
+        const hasStartValues = this.value && this.value.start
+        if (hasStartValues) {
+          const datesFormatted = `${moment(this.value.start).locale(this.locale).format(this.formatted)}`
+          return this.value.end ? `${datesFormatted} - ${moment(this.value.end).locale(this.locale).format(this.formatted)}` : `${datesFormatted} - ?`
+        } else {
+          return null
+        }
       },
       changeDate (day) {
         this.$emit('input', (this.rangeMode ? this.getRangeDatesTimeFormat(day) : this.getDateTimeFormat(day)))
