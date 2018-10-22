@@ -38,7 +38,7 @@
     },
     data () {
       return {
-        types: ['today', '-today', 'isoWeek', '-isoWeek', 'month', '-month', 'year', '-year'],
+        types: ['day', '-day', 'isoWeek', '-isoWeek', 'month', '-month', 'year', '-year'],
         shortcuts: [
           { label: 'Today', value: 'day', isHover: false, isSelected: false },
           { label: 'Yesterday', value: '-day', isHover: false, isSelected: false },
