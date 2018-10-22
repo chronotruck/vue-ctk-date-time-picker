@@ -85,7 +85,6 @@
             :min-date="minDate"
             :max-date="maxDate"
             :disabled-dates="disabledDates"
-            :value="value"
             :dark="dark"
             @change-date="selectDate"
             @change-month="changeMonth"

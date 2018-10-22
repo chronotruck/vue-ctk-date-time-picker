@@ -192,24 +192,11 @@
       moment.locale(this.locale)
     },
     methods: {
-      getRangeDatesTime () {
-        const hasStartValues = this.value && this.value.start
-        return hasStartValues
-          ? { start: moment(), end: moment() }
-          : { start: moment(), end: this.value && this.value.end ? moment(this.value.end) : null }
-      },
       getDateTime () {
         const date = this.disableDate
           ? this.value ? moment(`${moment().format('YYYY-MM-DD')} ${this.value}`) : moment()
           : this.value ? moment(this.value) : moment()
         return nearestMinutes(this.minuteInterval, date, moment)
-      },
-      getRangeDatesTimeFormat (day) {
-        const {start, end} = day
-        return {
-          start: start ? moment(start).format(this.format) : null,
-          end: end ? moment(end).format(this.format) : null
-        }
       },
       getDateTimeFormat (day) {
         return nearestMinutes(this.minuteInterval, day, moment).format(this.format)
@@ -222,11 +209,24 @@
           : null
         return date ? nearestMinutes(this.minuteInterval, date, moment).locale(this.locale).format(this.formatted) : null
       },
+      getRangeDatesTime () {
+        const hasStartValues = this.value && this.value.start
+        const hasEndValues = this.value && this.value.end
+        return { start: hasStartValues ? moment(this.value.start) : null, end: hasEndValues ? moment(this.value.end) : null }
+      },
+      getRangeDatesTimeFormat (day) {
+        const { start, end } = day
+        return {
+          start: start ? moment(start).format(this.format) : null,
+          end: end ? moment(end).format(this.format) : null
+        }
+      },
       getRangeDatesFormatted () {
         const hasStartValues = this.value && this.value.start
-        if (hasStartValues) {
-          const datesFormatted = `${moment(this.value.start).locale(this.locale).format(this.formatted)}`
-          return this.value.end ? `${datesFormatted} - ${moment(this.value.end).locale(this.locale).format(this.formatted)}` : `${datesFormatted} - ?`
+        const hasEndValues = this.value && this.value.end
+        if (hasStartValues || hasEndValues) {
+          const datesFormatted = hasStartValues ? `${moment(this.value.start).locale(this.locale).format(this.formatted)}` : '...'
+          return hasEndValues ? `${datesFormatted} - ${moment(this.value.end).locale(this.locale).format(this.formatted)}` : `${datesFormatted} - ...`
         } else {
           return null
         }
