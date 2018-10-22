@@ -58,7 +58,7 @@
             v-for="day in monthDays"
             :key="day.format('D')"
             :class="{
-              selected: isSelected(day) && value && !isDisabled(day),
+              selected: isSelected(day) && !isDisabled(day),
               disabled: (isDisabled(day) || isWeekEndDay(day)),
               enable: !(isDisabled(day) || isWeekEndDay(day)),
               between: isBetween(day) && rangeMode,
@@ -102,7 +102,6 @@
       locale: {type: String, default: String},
       inline: {type: Boolean, default: Boolean},
       noWeekendsDays: {type: Boolean, default: Boolean},
-      value: {type: [String, Object], default: String},
       rangeMode: {type: Boolean, default: false},
       disabledDates: {type: Array, default: Array},
       dark: {type: Boolean, default: false}
@@ -111,11 +110,7 @@
       return {
         transitionDaysName: 'slidenext',
         transitionLabelName: 'slidevnext',
-        weekDays: getWeekDays(this.locale),
-        days: {
-          start: null,
-          end: null
-        }
+        weekDays: getWeekDays(this.locale)
       }
     },
     computed: {
@@ -161,8 +156,12 @@
       },
       isSelected (day) {
         const date = [
-          ...(this.dateTime.start ? [this.dateTime.start.format('YYYY-MM-DD')] : [this.dateTime.format('YYYY-MM-DD')]),
-          ...(this.dateTime.end ? [this.dateTime.end.format('YYYY-MM-DD')] : [])
+          ...(this.dateTime.start
+            ? [this.dateTime.start.format('YYYY-MM-DD')]
+            : this.rangeMode ? [] : [this.dateTime.format('YYYY-MM-DD')]),
+          ...(this.dateTime.end
+            ? [this.dateTime.end.format('YYYY-MM-DD')]
+            : this.rangeMode ? [] : [this.dateTime.format('YYYY-MM-DD')])
         ]
         return date.indexOf(day.format('YYYY-MM-DD')) > -1
       },
@@ -185,13 +184,13 @@
       },
       selectDate (day) {
         if (this.rangeMode) {
-          if (!this.days.start || this.days.end || day.isBefore(this.days.start)) {
-            this.days.start = day
-            this.days.end = null
+          if (!this.dateTime.start || this.dateTime.end || day.isBefore(this.dateTime.start)) {
+            this.dateTime.start = day
+            this.dateTime.end = null
           } else {
-            this.days.end = day
+            this.dateTime.end = day
           }
-          this.$emit('change-date', this.days)
+          this.$emit('change-date', this.dateTime)
         } else {
           this.$emit('change-date', day)
         }
