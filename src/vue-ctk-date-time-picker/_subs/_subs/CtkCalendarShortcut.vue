@@ -28,17 +28,22 @@
   import moment from 'moment'
 
   export default {
-    name: 'CtkCalendarShortcur',
+    name: 'CtkCalendarShortcut',
     props: {
       color: { type: String, default: String },
       locale: { type: String, default: String },
       dark: { type: Boolean, default: false },
-      dateTime: {type: Object, default: Object}
+      dateTime: {type: Object, default: Object},
+      customShortcuts: {type: Array, default: () => []}
     },
     data () {
       return {
+        types: ['today', '-today', 'isoWeek', '-isoWeek', 'month', '-month', 'year', '-year'],
         shortcuts: [
+          { label: 'Today', value: 'day', isHover: false, isSelected: false },
+          { label: 'Yesterday', value: '-day', isHover: false, isSelected: false },
           { label: 'This week', value: 'isoWeek', isHover: false, isSelected: false },
+          { label: 'Last week', value: '-isoWeek', isHover: false, isSelected: false },
           { label: 'Last 7 days', value: 7, isHover: false, isSelected: false },
           { label: 'Last 30 days', value: 30, isHover: false, isSelected: false },
           { label: 'This month', value: 'month', isHover: false, isSelected: false },
@@ -66,6 +71,22 @@
         }
       }
     },
+    created () {
+      let customShortCuts = []
+      this.customShortcuts.forEach(customShortcut => {
+        if (this.isValidValue(customShortcut.value) && customShortcut.label) {
+          customShortCuts.push({
+            label: customShortcut.label,
+            value: customShortcut.value,
+            isHover: false,
+            isSelected: false
+          })
+        }
+      })
+      if (customShortCuts.length) {
+        this.shortcuts = customShortCuts
+      }
+    },
     methods: {
       unSelectAllShortcuts () {
         this.shortcuts.forEach(sc => {
@@ -78,26 +99,37 @@
         this.unSelectAllShortcuts()
         shortcut.isSelected = true
 
-        switch (value) {
-        case 'isoWeek': case 'month': case 'year':
+        switch (true) {
+        case value === 'isoWeek': case value === 'month': case value === 'year': case value === 'day':
           dates.start = moment().locale(this.locale).startOf(value)
           dates.end = moment().locale(this.locale).endOf(value)
           break
-        case 7: case 30:
+        case typeof value === 'number':
           dates.end = moment().locale(this.locale)
           dates.start = moment().locale(this.locale).subtract(value, 'd')
           break
-        case '-month':
+        case value === '-month':
           dates.start = moment().locale(this.locale).subtract(1, 'months').startOf('month')
           dates.end = moment().locale(this.locale).subtract(1, 'months').endOf('month')
           break
-        case '-year':
+        case value === '-year':
           dates.start = moment().locale(this.locale).subtract(1, 'years').startOf('year')
           dates.end = moment().locale(this.locale).subtract(1, 'years').endOf('year')
+          break
+        case value === '-isoWeek':
+          dates.start = moment().locale(this.locale).subtract(1, 'weeks').startOf('week')
+          dates.end = moment().locale(this.locale).subtract(1, 'weeks').endOf('week')
+          break
+        case value === '-day':
+          dates.start = moment().locale(this.locale).subtract(1, 'days').startOf('day')
+          dates.end = moment().locale(this.locale).subtract(1, 'days').endOf('day')
           break
         }
 
         this.$emit('change-range', dates)
+      },
+      isValidValue (value) {
+        return value && (this.types.indexOf(value) > -1 || (typeof value === 'number' && value > 0))
       }
     }
   }

@@ -34,6 +34,7 @@
             :locale="locale"
             :dark="dark"
             :date-time="dateTime"
+            :custom-shortcuts="customShortcuts"
             @change-range="selectShortcut"
           />
 
@@ -93,7 +94,8 @@
       enableButtonValidate: { type: Boolean, default: Boolean },
       value: { type: [String, Object], default: String },
       withoutRangeShortcut: { type: Boolean, default: false },
-      dark: { type: Boolean, default: Boolean }
+      dark: { type: Boolean, default: Boolean },
+      customShortcuts: { type: Array, default: () => [] }
     },
     data () {
       return {

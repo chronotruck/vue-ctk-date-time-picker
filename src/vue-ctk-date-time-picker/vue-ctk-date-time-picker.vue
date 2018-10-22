@@ -92,6 +92,7 @@
       :disabled-dates="disabledDates"
       :without-range-shortcut="withoutRangeShortcut"
       :dark="dark"
+      :custom-shortcuts="customShortcuts"
       @change-date="changeDate"
       @validate="validate"
     />
@@ -115,6 +116,7 @@
       CtkDateRangePicker
     },
     props: {
+      customShortcuts: { type: Array, default: () => [] },
       label: { type: String, default: 'Select date & time' },
       hint: { type: String, default: String },
       errorHint: { type: Boolean, default: Boolean },
