@@ -277,11 +277,8 @@
         darkMode: false,
         shortcutsTranslation: {
           'this_week': 'Cette semaine',
-          'last_7_days': '7 derniers jours',
           'last_30_days': '30 derniers jours',
-          'this_month': 'Ce mois',
           'last_month': 'Mois précédent',
-          'this_year': 'Cette année',
           'last_year': 'L\'année dernière'
         }
       }
