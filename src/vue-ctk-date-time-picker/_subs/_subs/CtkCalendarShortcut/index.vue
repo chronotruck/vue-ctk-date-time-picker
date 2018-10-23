@@ -26,7 +26,7 @@
 </template>
 <script>
   import moment from 'moment'
-  import shortcutsTranslations from './_subs/shortcutsTranslations'
+  import shortcutsTranslation from './_subs/shortcutsTranslation'
 
   export default {
     name: 'CtkCalendarShortcur',
@@ -35,7 +35,7 @@
       locale: { type: String, default: String },
       dark: { type: Boolean, default: false },
       dateTime: {type: Object, default: Object},
-      shortcutsTranslations: {type: Object, default: Object}
+      shortcutsTranslation: {type: Object, default: Object}
     },
     data () {
       return {
@@ -70,7 +70,7 @@
     },
     methods: {
       getTranslation (key) {
-        return this.shortcutsTranslations[key] || shortcutsTranslations[key]
+        return this.shortcutsTranslation[key] || shortcutsTranslation[key]
       },
       unSelectAllShortcuts () {
         this.shortcuts.forEach(sc => {

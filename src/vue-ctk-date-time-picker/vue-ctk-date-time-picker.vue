@@ -92,7 +92,7 @@
       :disabled-dates="disabledDates"
       :without-range-shortcut="withoutRangeShortcut"
       :dark="dark"
-      :shortcuts-translations="shortcutsTranslations"
+      :shortcuts-translation="shortcutsTranslation"
       @change-date="changeDate"
       @validate="validate"
     />
@@ -144,7 +144,7 @@
       overlayBackground: {type: Boolean, default: false},
       withoutRangeShortcut: {type: Boolean, default: false},
       dark: {type: Boolean, default: false},
-      shortcutsTranslations: {type: Object, default: Object}
+      shortcutsTranslation: {type: Object, default: Object}
     },
     data () {
       return {
