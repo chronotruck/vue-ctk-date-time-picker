@@ -152,8 +152,8 @@
       },
       select (shortcut) {
         this.selectShortcut(shortcut)
-        const { start, end } = shortcut
-        this.$emit('change-range', { start, end })
+        const { start, end, value } = shortcut
+        this.$emit('change-range', { start, end, value })
       },
       isValidValue (value) {
         return value && (this.types.indexOf(value) > -1 || (typeof value === 'number' && value > 0))

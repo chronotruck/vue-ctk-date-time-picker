@@ -64,7 +64,6 @@
             <ctk-date-time-picker
               v-model="rangeValues"
               :dark="darkMode"
-              :custom-shortcuts="[{label: 'test', value: 'day', isSelected: false},{label: 'teasdasdst', value: 7, isSelected: true}]"
               range-mode
               overlay-background
               color="purple"

@@ -206,7 +206,8 @@
       getRangeDatesTimeFormat (day) {
         const dates = {
           start: moment(day.start).format(this.format),
-          end: day.end ? moment(day.end).format(this.format) : null
+          end: day.end ? moment(day.end).format(this.format) : null,
+          shortcut: day.value
         }
         return dates
       },
