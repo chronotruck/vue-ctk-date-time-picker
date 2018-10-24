@@ -150,9 +150,7 @@
       return {
         isVisible: false,
         isFocus: false,
-        agendaPosition: 'top',
-        oldValue: this.value,
-        clientWidth: null
+        agendaPosition: 'top'
       }
     },
     computed: {

@@ -32,6 +32,7 @@
             ref="calendar-shortcut"
             :color="color"
             :locale="locale"
+            :value="value"
             :dark="dark"
             :date-time="dateTime"
             :custom-shortcuts="customShortcuts"

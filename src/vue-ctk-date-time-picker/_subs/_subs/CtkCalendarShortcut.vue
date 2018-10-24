@@ -30,6 +30,7 @@
   export default {
     name: 'CtkCalendarShortcut',
     props: {
+      value: { type: Object, required: false, default: null },
       color: { type: String, default: String },
       locale: { type: String, default: String },
       dark: { type: Boolean, default: false },
@@ -50,7 +51,8 @@
           { label: 'Last month', value: '-month', isHover: false, isSelected: false },
           { label: 'This year', value: 'year', isHover: false, isSelected: false },
           { label: 'Last year', value: '-year', isHover: false, isSelected: false }
-        ]
+        ],
+        computedTypes: {}
       }
     },
     computed: {
@@ -71,62 +73,87 @@
         }
       }
     },
-    created () {
-      let customShortCuts = []
-      this.customShortcuts.forEach(customShortcut => {
-        if (this.isValidValue(customShortcut.value) && customShortcut.label) {
-          customShortCuts.push({
-            label: customShortcut.label,
-            value: customShortcut.value,
-            isHover: false,
-            isSelected: false
-          })
+    watch: {
+      customShortcuts (newVal, oldVal) {
+        if (newVal && Array.isArray(newVal) && JSON.stringify(newVal) !== JSON.stringify(oldVal)) {
+          this.init()
         }
-      })
-      if (customShortCuts.length) {
-        this.shortcuts = customShortCuts
       }
     },
+    created () {
+      this.init()
+    },
     methods: {
+      init () {
+        this.overrideCustomShortCuts()
+        this.preparePreCalculatedTypes()
+
+        let selected = this.shortcuts.filter(shortcut => shortcut.isSelected)
+        if (selected[0]) {
+          this.select(selected[0])
+        }
+      },
+      preparePreCalculatedTypes () {
+        this.shortcuts.forEach(shortcut => {
+          const { value } = shortcut
+
+          switch (true) {
+          case value === 'isoWeek': case value === 'month': case value === 'year': case value === 'day':
+            shortcut.start = moment().locale(this.locale).startOf(value)
+            shortcut.end = moment().locale(this.locale).endOf(value)
+            break
+          case typeof value === 'number':
+            shortcut.end = moment().locale(this.locale)
+            shortcut.start = moment().locale(this.locale).subtract(value, 'd')
+            break
+          case value === '-month':
+            shortcut.start = moment().locale(this.locale).subtract(1, 'months').startOf('month')
+            shortcut.end = moment().locale(this.locale).subtract(1, 'months').endOf('month')
+            break
+          case value === '-year':
+            shortcut.start = moment().locale(this.locale).subtract(1, 'years').startOf('year')
+            shortcut.end = moment().locale(this.locale).subtract(1, 'years').endOf('year')
+            break
+          case value === '-isoWeek':
+            shortcut.start = moment().locale(this.locale).subtract(1, 'weeks').startOf('week')
+            shortcut.end = moment().locale(this.locale).subtract(1, 'weeks').endOf('week')
+            break
+          case value === '-day':
+            shortcut.start = moment().locale(this.locale).subtract(1, 'days').startOf('day')
+            shortcut.end = moment().locale(this.locale).subtract(1, 'days').endOf('day')
+            break
+          }
+        })
+      },
+      overrideCustomShortCuts () {
+        let customShortCuts = []
+        this.customShortcuts.forEach(customShortcut => {
+          if (this.isValidValue(customShortcut.value) && customShortcut.label) {
+            customShortCuts.push({
+              label: customShortcut.label,
+              value: customShortcut.value,
+              isHover: !!customShortcut.isHover,
+              isSelected: !!customShortcut.isSelected
+            })
+          }
+        })
+        if (customShortCuts.length) {
+          this.shortcuts = customShortCuts
+        }
+      },
       unSelectAllShortcuts () {
         this.shortcuts.forEach(sc => {
           sc.isSelected = false
         })
       },
-      select (shortcut) {
-        const { value } = shortcut
-        let dates = { start: null, end: null }
+      selectShortcut (shortcut) {
         this.unSelectAllShortcuts()
         shortcut.isSelected = true
-
-        switch (true) {
-        case value === 'isoWeek': case value === 'month': case value === 'year': case value === 'day':
-          dates.start = moment().locale(this.locale).startOf(value)
-          dates.end = moment().locale(this.locale).endOf(value)
-          break
-        case typeof value === 'number':
-          dates.end = moment().locale(this.locale)
-          dates.start = moment().locale(this.locale).subtract(value, 'd')
-          break
-        case value === '-month':
-          dates.start = moment().locale(this.locale).subtract(1, 'months').startOf('month')
-          dates.end = moment().locale(this.locale).subtract(1, 'months').endOf('month')
-          break
-        case value === '-year':
-          dates.start = moment().locale(this.locale).subtract(1, 'years').startOf('year')
-          dates.end = moment().locale(this.locale).subtract(1, 'years').endOf('year')
-          break
-        case value === '-isoWeek':
-          dates.start = moment().locale(this.locale).subtract(1, 'weeks').startOf('week')
-          dates.end = moment().locale(this.locale).subtract(1, 'weeks').endOf('week')
-          break
-        case value === '-day':
-          dates.start = moment().locale(this.locale).subtract(1, 'days').startOf('day')
-          dates.end = moment().locale(this.locale).subtract(1, 'days').endOf('day')
-          break
-        }
-
-        this.$emit('change-range', dates)
+      },
+      select (shortcut) {
+        this.selectShortcut(shortcut)
+        const { start, end } = shortcut
+        this.$emit('change-range', { start, end })
       },
       isValidValue (value) {
         return value && (this.types.indexOf(value) > -1 || (typeof value === 'number' && value > 0))
