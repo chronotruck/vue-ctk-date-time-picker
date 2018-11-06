@@ -273,25 +273,30 @@
         &.enable {
           cursor: pointer;
         }
-        .datepicker-day-effect {
+
+        &-effect, .datepicker-today{
           position: absolute;
-          opacity: 0.6;
-          background: dodgerblue;
+          top: 0;
+          bottom: 0;
+          left: 0;
+          right: 0;
+          margin: auto;
           height: 30px;
           width: 30px;
+
           border-radius: 50%;
           -webkit-transition: all 450ms cubic-bezier(0.23, 1, 0.32, 1) 0ms;
           transition: all 450ms cubic-bezier(0.23, 1, 0.32, 1) 0ms;
+        }
+
+        .datepicker-day-effect {
+          margin: auto;
+          opacity: 0.6;
+          background: dodgerblue;
           transform: scale(0);
         }
         .datepicker-today {
-          position: absolute;
           background-color: #eaeaea;
-          height: 30px;
-          width: 30px;
-          border-radius: 50%;
-          -webkit-transition: all 450ms cubic-bezier(0.23, 1, 0.32, 1) 0ms;
-          transition: all 450ms cubic-bezier(0.23, 1, 0.32, 1) 0ms;
         }
         .datepicker-day-text {
           position: relative;
@@ -376,8 +381,8 @@
       }
     }
   }
-  @media screen and (max-width: 412px) {
-    #CtkDatePicker {
+  @media screen and (max-width: 415px) {
+    #CtkDatePicker.datepicker-container {
       width: 100%;
       &:not(.inline) {
         .datepicker-controls {

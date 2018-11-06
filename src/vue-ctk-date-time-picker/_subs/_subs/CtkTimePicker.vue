@@ -4,7 +4,7 @@
     :style="[getHeight]"
     class="timepicker-container flex"
   >
-    <div class="time-container hours-container flex flex-1 flex-direction-column h-100 mh-100 w-100">
+    <div class="time-container hours-container flex flex-1 flex-direction-column">
       <div class="flex align-center justify-content-center time-label text-muted">{{ hourType }}</div>
       <div
         ref="hours"
@@ -24,7 +24,7 @@
         </button>
       </div>
     </div>
-    <div class="time-container minutes-container flex-1 flex flex-direction-column h-100 mh-100 w-100">
+    <div class="time-container minutes-container flex-1 flex flex-direction-column">
       <div class="flex align-center justify-content-center time-label text-muted">{{ minuteType }}</div>
       <div
         ref="minutes"
@@ -46,7 +46,7 @@
     </div>
     <div
       v-if="apmType"
-      class="time-container apms-container flex flex-1 flex-direction-column h-100 mh-100 w-100">
+      class="time-container apms-container flex flex-1 flex-direction-column">
       <div class="flex align-center justify-content-center time-label text-muted">{{ apmType }}</div>
       <div class="h-100 mh-100 numbers-container">
         <button
@@ -445,14 +445,17 @@
     }
   }
 
-  @media screen and (max-width: 412px) {
+  @media screen and (max-width: 415px) {
     .timepicker-container:not(.inline) {
       .time-container.hours-container {
         border: 0;
       }
       width: 100%;
       border-top: 1px solid #EAEAEA;
-      height: 120px !important;
+      height: unset !important;
+    }
+    .timepicker-container.is-dark {
+      border-color: lighten(#424242, 20%);
     }
   }
 </style>
