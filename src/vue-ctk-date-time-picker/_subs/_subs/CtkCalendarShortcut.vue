@@ -123,7 +123,7 @@
       -webkit-transition: all 0.25s cubic-bezier(0.645, 0.045, 0.355, 1);
       .datepicker-button-effect {
         position: absolute;
-        background: #00C853;
+        background: dodgerblue;
         top: 0;
         bottom: 0;
         right: 0;
@@ -173,7 +173,7 @@
     .shortcuts-container:not(.inline) {
       width: 100%;
       border-bottom: 1px solid #EAEAEA;
-      height: 120px !important;
+      height: unset !important;
       overflow: auto;
     }
     .shortcuts-container.is-dark {

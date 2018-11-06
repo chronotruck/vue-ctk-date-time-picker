@@ -235,7 +235,7 @@
       },
       showDatePicker () {
         if (this.disabled) return
-
+        this.setBodyOverflow(true)
         const rect = this.$refs.parent.getBoundingClientRect()
         const windowHeight = window.innerHeight
         let datePickerHeight = 428
@@ -249,7 +249,14 @@
         this.isVisible = true
       },
       hideDatePicker () {
+        this.setBodyOverflow()
         this.isVisible = false
+      },
+      setBodyOverflow (value) {
+        if (window.innerWidth < 412) {
+          const body = document.getElementsByTagName('body')[0]
+          body.style.overflow = value ? 'hidden' : null
+        }
       },
       onFocus () {
         this.isFocus = true
