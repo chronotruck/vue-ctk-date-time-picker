@@ -92,6 +92,7 @@
       :disabled-dates="disabledDates"
       :without-range-shortcut="withoutRangeShortcut"
       :dark="dark"
+      :shortcuts-translation="shortcutsTranslation"
       @change-date="changeDate"
       @validate="validate"
     />
@@ -142,7 +143,8 @@
       rangeMode: {type: Boolean, default: false},
       overlayBackground: {type: Boolean, default: false},
       withoutRangeShortcut: {type: Boolean, default: false},
-      dark: {type: Boolean, default: false}
+      dark: {type: Boolean, default: false},
+      shortcutsTranslation: {type: Object, default: Object}
     },
     data () {
       return {
@@ -276,7 +278,6 @@
 <style lang="scss">
   @import url('https://fonts.googleapis.com/css?family=Roboto:400,500,700');
   @import "./assets/main.scss";
-  @import url('https://fonts.googleapis.com/css?family=Roboto:400,500,700');
   .ctk-date-time-picker {
     width: 100%;
     margin: 0 auto;

@@ -81,6 +81,7 @@ Vue.component('vue-ctk-date-time-picker', VueCtkDateTimePicker);
 | disabled-dates***** | Boolean | no | [] |
 | range-mode | Boolean | no | false |
 | dark | Boolean | no | false |
+| shortcuts-translation****** | Object | no | - |
 
 *hint : Is a text that replaces the label/placeholder
 
@@ -92,6 +93,18 @@ Vue.component('vue-ctk-date-time-picker', VueCtkDateTimePicker);
 
 *****Disabled-Dates is an Array of dates in 'YYYY-MM-DD' format (ex: `['2018-04-03', '2018-04-07', '2018-04-09']`)
 
+******shortcuts-translation : Must be an Object like that 
+``` 
+{
+  "this_week": "This week",
+  "last_7_days": "Last 7 days",
+  "last_30_days": "Last 30 days",
+  "this_month": "This month",
+  "last_month": "Last month",
+  "this_year": "This year",
+  "last_year": "Last year"
+}
+```
 
 ## Contribution
 
