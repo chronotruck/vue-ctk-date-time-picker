@@ -122,7 +122,7 @@
       formatted: { type: String, default: 'llll' },
       format: { type: String, default: String },
       locale: { type: String, default: 'en' },
-      timeZone: { type: String, default: 'America/Santiago' },
+      timeZone: { type: String, default: moment.tz.guess() },
       disableTime: { type: Boolean, default: false },
       disableDate: { type: Boolean, default: false },
       minuteInterval: { type: Number, default: 1 },
