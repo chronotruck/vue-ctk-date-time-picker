@@ -23,7 +23,6 @@
         readonly
         @focus="onFocus"
       >
-
       <label
         ref="label"
         :for="id"

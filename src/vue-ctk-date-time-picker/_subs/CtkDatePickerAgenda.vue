@@ -70,10 +70,8 @@
               </transition-group>
             </div>
           </div>
-
         </div>
         <div class="datetimepicker-container flex">
-
           <ctk-date-picker
             v-if="!disableDate"
             :inline="inline"
