@@ -187,29 +187,17 @@
           ? this.getRangeDatesTimeFormat(val)
           : this.getDateTimeFormat(val))
         )
+      } else if (this.rangeMode) {
+        this.$emit('input', this.getRangeDatesTimeFormat({}))
       }
       moment.locale(this.locale)
     },
     methods: {
-      getRangeDatesTime () {
-        const dates = {
-          start: moment(this.value.start),
-          end: this.value.end ? moment(this.value.end) : null
-        }
-        return dates
-      },
       getDateTime () {
         const date = this.disableDate
           ? this.value ? moment(`${moment().format('YYYY-MM-DD')} ${this.value}`) : moment()
           : this.value ? moment(this.value) : moment()
         return nearestMinutes(this.minuteInterval, date, moment)
-      },
-      getRangeDatesTimeFormat (day) {
-        const dates = {
-          start: moment(day.start).format(this.format),
-          end: day.end ? moment(day.end).format(this.format) : null
-        }
-        return dates
       },
       getDateTimeFormat (day) {
         return nearestMinutes(this.minuteInterval, day, moment).format(this.format)
@@ -222,9 +210,27 @@
           : null
         return date ? nearestMinutes(this.minuteInterval, date, moment).locale(this.locale).format(this.formatted) : null
       },
+      getRangeDatesTime () {
+        const hasStartValues = this.value && this.value.start
+        const hasEndValues = this.value && this.value.end
+        return { start: hasStartValues ? moment(this.value.start) : null, end: hasEndValues ? moment(this.value.end) : null }
+      },
+      getRangeDatesTimeFormat (day) {
+        const { start, end } = day
+        return {
+          start: start ? moment(start).format(this.format) : null,
+          end: end ? moment(end).format(this.format) : null
+        }
+      },
       getRangeDatesFormatted () {
-        const datesFormatted = `${moment(this.value.start).locale(this.locale).format(this.formatted)}`
-        return this.value.end ? `${datesFormatted} - ${moment(this.value.end).locale(this.locale).format(this.formatted)}` : `${datesFormatted} - ?`
+        const hasStartValues = this.value && this.value.start
+        const hasEndValues = this.value && this.value.end
+        if (hasStartValues || hasEndValues) {
+          const datesFormatted = hasStartValues ? `${moment(this.value.start).locale(this.locale).format(this.formatted)}` : '...'
+          return hasEndValues ? `${datesFormatted} - ${moment(this.value.end).locale(this.locale).format(this.formatted)}` : `${datesFormatted} - ...`
+        } else {
+          return null
+        }
       },
       changeDate (day) {
         this.$emit('input', (this.rangeMode ? this.getRangeDatesTimeFormat(day) : this.getDateTimeFormat(day)))

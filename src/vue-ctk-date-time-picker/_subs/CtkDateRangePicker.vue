@@ -22,7 +22,7 @@
           </div>
 
           <div class="flex justify-content-between">
-            <span class="datepicker-date dots-text flex-1">{{ getDateFormatted() }}</span>
+            <span class="datepicker-date dots-text flex-1">{{ getRangeDatesFormatted }}</span>
           </div>
         </div>
         <div class="datetimepicker-container flex">
@@ -117,31 +117,41 @@
         }
       },
       year () {
-        const date = this.dateTime.end ? this.dateTime.end : this.dateTime.start
+        const date = this.dateTime.start || this.dateTime.end
+          ? this.dateTime.end ? this.dateTime.end : this.dateTime.start
+          : moment()
         return date.format('YYYY')
+      },
+      getRangeDatesFormatted () {
+        const hasStartValues = this.value && this.value.start
+        const hasEndValues = this.value && this.value.end
+        if (!hasStartValues && !hasEndValues) {
+          return '... - ...'
+        } else if (hasStartValues || hasEndValues) {
+          const datesFormatted = hasStartValues ? `${moment(this.dateTime.start).locale(this.locale).format('ddd D MMM')}` : '...'
+          return hasEndValues ? `${datesFormatted} - ${moment(this.dateTime.end).locale(this.locale).format('ddd D MMM')}` : `${datesFormatted} - ...`
+        } else {
+          return null
+        }
       }
     },
     watch: {
       dateTime: {
         handler () {
           this.month = this.getMonth()
-          this.getDateFormatted()
         },
         deep: true
       },
       locale () {
         this.month = this.getMonth()
-        this.getDateFormatted()
       }
     },
     methods: {
       getMonth () {
-        const date = this.dateTime.end ? this.dateTime.end : this.dateTime.start
+        const date = this.dateTime.start || this.dateTime.end
+          ? this.dateTime.end ? this.dateTime.end : this.dateTime.start
+          : moment()
         return new Month(date.month(), date.year())
-      },
-      getDateFormatted () {
-        const datesFormatted = `${moment(this.dateTime.start).locale(this.locale).format('ddd D MMM')}`
-        return this.dateTime.end ? `${datesFormatted} - ${moment(this.dateTime.end).locale(this.locale).format('ddd D MMM')}` : `${datesFormatted} - ?`
       },
       selectDate (dateTime) {
         this.$emit('change-date', dateTime)
