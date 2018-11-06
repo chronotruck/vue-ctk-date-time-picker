@@ -19,13 +19,14 @@
         class="datepicker-button-effect"
       />
       <span class="shortcut-button-content">
-        {{ shortcut.label }}
+        {{ getTranslation(shortcut.key) }}
       </span>
     </button>
   </div>
 </template>
 <script>
   import moment from 'moment'
+  import shortcutsTranslation from './_subs/shortcutsTranslation'
 
   export default {
     name: 'CtkCalendarShortcur',
@@ -33,18 +34,19 @@
       color: { type: String, default: String },
       locale: { type: String, default: String },
       dark: { type: Boolean, default: false },
-      dateTime: {type: Object, default: Object}
+      dateTime: {type: Object, default: Object},
+      shortcutsTranslation: {type: Object, default: Object}
     },
     data () {
       return {
         shortcuts: [
-          { label: 'This week', value: 'isoWeek', isHover: false, isSelected: false },
-          { label: 'Last 7 days', value: 7, isHover: false, isSelected: false },
-          { label: 'Last 30 days', value: 30, isHover: false, isSelected: false },
-          { label: 'This month', value: 'month', isHover: false, isSelected: false },
-          { label: 'Last month', value: '-month', isHover: false, isSelected: false },
-          { label: 'This year', value: 'year', isHover: false, isSelected: false },
-          { label: 'Last year', value: '-year', isHover: false, isSelected: false }
+          { key: 'this_week', value: 'isoWeek', isHover: false, isSelected: false },
+          { key: 'last_7_days', value: 7, isHover: false, isSelected: false },
+          { key: 'last_30_days', value: 30, isHover: false, isSelected: false },
+          { key: 'this_month', value: 'month', isHover: false, isSelected: false },
+          { key: 'last_month', value: '-month', isHover: false, isSelected: false },
+          { key: 'this_year', value: 'year', isHover: false, isSelected: false },
+          { key: 'last_year', value: '-year', isHover: false, isSelected: false }
         ]
       }
     },
@@ -67,6 +69,9 @@
       }
     },
     methods: {
+      getTranslation (key) {
+        return this.shortcutsTranslation[key] || shortcutsTranslation[key]
+      },
       unSelectAllShortcuts () {
         this.shortcuts.forEach(sc => {
           sc.isSelected = false
