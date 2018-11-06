@@ -23,9 +23,10 @@
     "dist/"
   ],
   "dependencies": {
-    "vue": "^2.5.16",
     "moment": "^2.22.1",
-    "moment-range": "^4.0.1"
+    "moment-range": "^4.0.1",
+    "moment-timezone": "^0.5.23",
+    "vue": "^2.5.16"
   },
   "devDependencies": {
     "autoprefixer": "^8.0.0",
