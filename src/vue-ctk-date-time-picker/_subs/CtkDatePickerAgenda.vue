@@ -11,7 +11,7 @@
     >
       <div
         :style="position"
-        class="datepicker">
+        class="datepicker flex flex-direction-column">
         <div
           v-if="withoutHeader"
           :style="bgStyle"
@@ -108,8 +108,9 @@
 
         </div>
         <ctk-button-validate
-          v-if="enableButtonValidate && !inline && !autoClose"
+          v-show="enableButtonValidate && !inline && !autoClose"
           :dark="dark"
+          class="button-validate flex-fixed"
           @validate="validate"
         />
       </div>
@@ -294,7 +295,7 @@
       }
     }
     &.is-dark {
-      .datetimepicker-container {
+      .datepicker, .datetimepicker-container {
         background: #424242;
       }
     }
@@ -314,9 +315,10 @@
       -webkit-box-shadow: none;
       width: 100%;
       max-width: 100%;
+      background-color: white;
     }
   }
-  @media screen and (max-width: 412px) {
+  @media screen and (max-width: 415px) {
     .datetimepicker-container {
       -webkit-flex-direction: column;
       -ms-flex-direction: column;
@@ -332,12 +334,14 @@
       right: 0;
       left: 0;
       .datepicker {
-        top: 50px !important;
-        bottom: unset !important;
-        left: 5%;
-        width: 90%;
+        bottom: 0 !important;
+        top: 0 !important;
+        left: 0 !important;
+        right: 0 !important;
+        width: 100%;
         max-width: inherit;
         position: fixed;
+        height: 100%;
         margin: 0 !important;
       }
       .datepicker-header {

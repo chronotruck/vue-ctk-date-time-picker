@@ -67,7 +67,6 @@
               :shortcuts-translation="shortcutsTranslation"
               range-mode
               overlay-background
-              color="purple"
               enable-button-validate
               format="YYYY-MM-DD"
               formatted="ddd D MMM YYYY"

@@ -117,6 +117,7 @@
       position: relative;
       margin-bottom: 10px;
       border: 1px solid #eaeaea;
+      background-color: white;
       height: 30px;
       font-weight: 300;
       line-height: 26px;
@@ -127,7 +128,7 @@
       -webkit-transition: all 0.25s cubic-bezier(0.645, 0.045, 0.355, 1);
       .datepicker-button-effect {
         position: absolute;
-        background: #00C853;
+        background: dodgerblue;
         top: 0;
         bottom: 0;
         right: 0;
@@ -173,12 +174,15 @@
     }
   }
 
-  @media screen and (max-width: 412px) {
+  @media screen and (max-width: 415px) {
     .shortcuts-container:not(.inline) {
       width: 100%;
       border-bottom: 1px solid #EAEAEA;
-      height: 120px !important;
+      height: unset !important;
       overflow: auto;
+    }
+    .shortcuts-container.is-dark {
+      border-color: lighten(#424242, 20%);
     }
   }
 </style>
