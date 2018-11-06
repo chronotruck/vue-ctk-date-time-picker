@@ -68,6 +68,7 @@
               range-mode
               overlay-background
               enable-button-validate
+              color="purple"
               format="YYYY-MM-DD"
               formatted="ddd D MMM YYYY"
               label="Select range"
@@ -201,7 +202,7 @@
             <ctk-date-time-picker
               v-model="value"
               :dark="darkMode"
-              :disabled-dates="['2018-04-03', '2018-04-07', '2018-04-09', '2018-04-11', '2018-04-13', '2018-04-15', '2018-04-17', '2018-04-19']"
+              :disabled-dates="disabledDates"
               label="Choose date time"
               no-weekends-days
               inline
@@ -279,7 +280,8 @@
           'last_30_days': '30 derniers jours',
           'last_month': 'Mois précédent',
           'last_year': 'L\'année dernière'
-        }
+        },
+        disabledDates: ['2018-04-03', '2018-04-07', '2018-04-09', '2018-04-11', '2018-04-13', '2018-04-15', '2018-04-17', '2018-04-19']
       }
     }
   }

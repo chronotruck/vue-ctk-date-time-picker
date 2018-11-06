@@ -48,6 +48,7 @@
             :min-date="minDate"
             :max-date="maxDate"
             :value="value"
+            :disabled-dates="disabledDates"
             :dark="dark"
             class="date-range-picker"
             range-mode
@@ -80,6 +81,7 @@
       CtkCalendarShortcut
     },
     props: {
+      disabledDates: {type: Array, default: Array},
       dateTime: { type: Object, default: Object },
       visible: { type: Boolean, required: true, default: true },
       color: { type: String, default: String },
