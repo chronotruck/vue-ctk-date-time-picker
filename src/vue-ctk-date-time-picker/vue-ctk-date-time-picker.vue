@@ -271,7 +271,6 @@
 <style lang="scss">
   @import url('https://fonts.googleapis.com/css?family=Roboto:400,500,700');
   @import "./assets/main.scss";
-  @import url('https://fonts.googleapis.com/css?family=Roboto:400,500,700');
   .ctk-date-time-picker {
     width: 100%;
     margin: 0 auto;
