@@ -108,6 +108,10 @@
     return m(someMoment.clone().minute(roundedMinutes).second(0))
   }
 
+  const getDefaultTZ = () => {
+    return moment.tz.guess() || 'America/Los_Angeles'
+  }
+
   export default {
     name: 'VueCtkDateTimePicker',
     components: {
@@ -122,7 +126,7 @@
       formatted: { type: String, default: 'llll' },
       format: { type: String, default: String },
       locale: { type: String, default: 'en' },
-      timeZone: { type: String, default: moment.tz.guess() },
+      timeZone: { type: String, default: getDefaultTZ() },
       disableTime: { type: Boolean, default: false },
       disableDate: { type: Boolean, default: false },
       minuteInterval: { type: Number, default: 1 },
