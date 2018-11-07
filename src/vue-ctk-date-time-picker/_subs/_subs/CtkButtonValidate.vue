@@ -36,10 +36,12 @@
     padding: 5px 10px;
     border-top: 1px solid #EAEAEA;
     background-color: #FFF;
+    display: flex !important;
     .datepicker-button {
       padding: 0px 20px;
       position: relative;
       border: 1px solid #eaeaea;
+      background-color: white;
       border-radius: 30px;
       height: 30px;
       font-size: 14px;
@@ -57,6 +59,10 @@
       .datepicker-button-effect {
         position: absolute;
         background: #00C853;
+        top: 0;
+        left: 0;
+        bottom: 0;
+        right: 0;
         height: 30px;
         border-radius: 30px;
         width: 100%;

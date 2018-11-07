@@ -11,7 +11,7 @@
     >
       <div
         :style="position"
-        class="datepicker">
+        class="datepicker flex flex-direction-column">
         <div
           v-if="withoutHeader"
           :style="bgStyle"
@@ -34,6 +34,7 @@
             :locale="locale"
             :dark="dark"
             :date-time="dateTime"
+            :shortcuts-translation="shortcutsTranslation"
             @change-range="selectShortcut"
           />
 
@@ -46,6 +47,8 @@
             :color="color"
             :min-date="minDate"
             :max-date="maxDate"
+            :value="value"
+            :disabled-dates="disabledDates"
             :dark="dark"
             class="date-range-picker"
             range-mode
@@ -78,6 +81,7 @@
       CtkCalendarShortcut
     },
     props: {
+      disabledDates: {type: Array, default: Array},
       dateTime: { type: Object, default: Object },
       visible: { type: Boolean, required: true, default: true },
       color: { type: String, default: String },
@@ -92,7 +96,8 @@
       enableButtonValidate: { type: Boolean, default: Boolean },
       value: { type: [String, Object], default: String },
       withoutRangeShortcut: { type: Boolean, default: false },
-      dark: { type: Boolean, default: Boolean }
+      dark: { type: Boolean, default: Boolean },
+      shortcutsTranslation: {type: Object, default: Object}
     },
     data () {
       return {
@@ -220,7 +225,7 @@
       }
     }
     &.is-dark {
-      .datetimepicker-container {
+      .datepicker, .datetimepicker-container {
         background: #424242;
       }
       .date-range-picker {
@@ -245,49 +250,58 @@
       max-width: 100%;
     }
   }
-  @media screen and (max-width: 412px) {
-    .datetimepicker-container {
-      -webkit-flex-direction: column;
-      -ms-flex-direction: column;
-      flex-direction: column;
-      flex-flow: column;
-      -moz-flex-direction: column;
-    }
-    .datetimepicker:not(.inline) {
-      margin: 0 !important;
-      position: absolute;
-      top: 0 !important;
-      bottom: 0;
-      right: 0;
-      left: 0;
-      .datepicker {
-        top: 50px !important;
-        bottom: unset !important;
-        left: 5%;
-        width: 90%;
-        max-width: inherit;
-        position: fixed;
+  @media screen and (max-width: 415px) {
+    .datetimepicker {
+      &:not(.inline) {
         margin: 0 !important;
-      }
-      .datepicker-header {
-        padding: 10px !important;
-        .datepicker-time {
-          min-width: 100px !important;
-          max-width: 100px !important;
+        position: absolute;
+        top: 0 !important;
+        bottom: 0;
+        right: 0;
+        left: 0;
+        .datepicker {
+          bottom: 0 !important;
+          top: 0 !important;
+          left: 0 !important;
+          right: 0 !important;
+          width: 100%;
+          max-width: inherit;
+          position: fixed;
+          height: 100%;
+          margin: 0 !important;
         }
-        .datepicker-time, .datepicker-time .flex-1 {
-          justify-content: flex-end;
-          -ms-flex-pack: end;
-          -moz-box-align: end;
-          -moz-box-pack: end;
-          -webkit-box-pack: end;
-          -webkit-justify-content: flex-end;
-          -webkit-box-align: end;
+        .datepicker-header {
+          padding: 10px !important;
+          .datepicker-time {
+            min-width: 100px !important;
+            max-width: 100px !important;
+          }
+          .datepicker-time, .datepicker-time .flex-1 {
+            justify-content: flex-end;
+            -ms-flex-pack: end;
+            -moz-box-align: end;
+            -moz-box-pack: end;
+            -webkit-box-pack: end;
+            -webkit-justify-content: flex-end;
+            -webkit-box-align: end;
+          }
+        }
+        .date-range-picker {
+          border-left: none;
         }
       }
-      .date-range-picker {
-        border-left: none;
-        border-bottom: 1px solid #EAEAEA
+      &.is-dark {
+        .date-range-picker {
+          border-left: none;
+          border-color: lighten(#424242, 20%);
+        }
+      }
+      .datetimepicker-container {
+        -webkit-flex-direction: column;
+        -ms-flex-direction: column;
+        flex-direction: column;
+        flex-flow: column;
+        -moz-flex-direction: column;
       }
     }
   }

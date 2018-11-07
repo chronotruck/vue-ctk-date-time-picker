@@ -23,7 +23,6 @@
         readonly
         @focus="onFocus"
       >
-
       <label
         ref="label"
         :for="id"
@@ -92,6 +91,7 @@
       :disabled-dates="disabledDates"
       :without-range-shortcut="withoutRangeShortcut"
       :dark="dark"
+      :shortcuts-translation="shortcutsTranslation"
       @change-date="changeDate"
       @validate="validate"
     />
@@ -147,7 +147,8 @@
       rangeMode: {type: Boolean, default: false},
       overlayBackground: {type: Boolean, default: false},
       withoutRangeShortcut: {type: Boolean, default: false},
-      dark: {type: Boolean, default: false}
+      dark: {type: Boolean, default: false},
+      shortcutsTranslation: {type: Object, default: Object}
     },
     data () {
       return {
@@ -246,7 +247,7 @@
       },
       showDatePicker () {
         if (this.disabled) return
-
+        this.setBodyOverflow(true)
         const rect = this.$refs.parent.getBoundingClientRect()
         const windowHeight = window.innerHeight
         let datePickerHeight = 428
@@ -260,7 +261,14 @@
         this.isVisible = true
       },
       hideDatePicker () {
+        this.setBodyOverflow()
         this.isVisible = false
+      },
+      setBodyOverflow (value) {
+        if (window.innerWidth < 412) {
+          const body = document.getElementsByTagName('body')[0]
+          body.style.overflow = value ? 'hidden' : null
+        }
       },
       onFocus () {
         this.isFocus = true
@@ -280,7 +288,6 @@
 <style lang="scss">
   @import url('https://fonts.googleapis.com/css?family=Roboto:400,500,700');
   @import "./assets/main.scss";
-  @import url('https://fonts.googleapis.com/css?family=Roboto:400,500,700');
   .ctk-date-time-picker {
     width: 100%;
     margin: 0 auto;
@@ -413,9 +420,9 @@
     }
   }
 
-  @media screen and (max-width: 412px) {
+  @media screen and (max-width: 415px) {
     .time-picker-overlay {
-      background: rgba(0, 0, 0, 0.4);
+      display: none;
     }
     .ctk-date-time-picker:not(.inline) {
       position: inherit !important;
