@@ -108,6 +108,10 @@
     return m(someMoment.clone().minute(roundedMinutes).second(0))
   }
 
+  const getDefaultLocale = () => {
+    return (window.navigator.userLanguage || window.navigator.language || 'en').substr(0, 2)
+  }
+
   export default {
     name: 'VueCtkDateTimePicker',
     components: {
@@ -121,7 +125,7 @@
       value: { type: [String, Object], required: false, default: null },
       formatted: { type: String, default: 'llll' },
       format: { type: String, default: String },
-      locale: { type: String, default: 'en' },
+      locale: { type: String, default: getDefaultLocale() },
       disableTime: { type: Boolean, default: false },
       disableDate: { type: Boolean, default: false },
       minuteInterval: { type: Number, default: 1 },
