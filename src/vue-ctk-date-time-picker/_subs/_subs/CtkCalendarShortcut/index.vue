@@ -19,13 +19,14 @@
         class="datepicker-button-effect"
       />
       <span class="shortcut-button-content">
-        {{ shortcut.label }}
+        {{ getTranslation(shortcut.key) }}
       </span>
     </button>
   </div>
 </template>
 <script>
   import moment from 'moment'
+  import shortcutsTranslation from './_subs/shortcutsTranslation'
 
   export default {
     name: 'CtkCalendarShortcur',
@@ -33,18 +34,19 @@
       color: { type: String, default: String },
       locale: { type: String, default: String },
       dark: { type: Boolean, default: false },
-      dateTime: {type: Object, default: Object}
+      dateTime: {type: Object, default: Object},
+      shortcutsTranslation: {type: Object, default: Object}
     },
     data () {
       return {
         shortcuts: [
-          { label: 'This week', value: 'isoWeek', isHover: false, isSelected: false },
-          { label: 'Last 7 days', value: 7, isHover: false, isSelected: false },
-          { label: 'Last 30 days', value: 30, isHover: false, isSelected: false },
-          { label: 'This month', value: 'month', isHover: false, isSelected: false },
-          { label: 'Last month', value: '-month', isHover: false, isSelected: false },
-          { label: 'This year', value: 'year', isHover: false, isSelected: false },
-          { label: 'Last year', value: '-year', isHover: false, isSelected: false }
+          { key: 'this_week', value: 'isoWeek', isHover: false, isSelected: false },
+          { key: 'last_7_days', value: 7, isHover: false, isSelected: false },
+          { key: 'last_30_days', value: 30, isHover: false, isSelected: false },
+          { key: 'this_month', value: 'month', isHover: false, isSelected: false },
+          { key: 'last_month', value: '-month', isHover: false, isSelected: false },
+          { key: 'this_year', value: 'year', isHover: false, isSelected: false },
+          { key: 'last_year', value: '-year', isHover: false, isSelected: false }
         ]
       }
     },
@@ -67,6 +69,9 @@
       }
     },
     methods: {
+      getTranslation (key) {
+        return this.shortcutsTranslation[key] || shortcutsTranslation[key]
+      },
       unSelectAllShortcuts () {
         this.shortcuts.forEach(sc => {
           sc.isSelected = false
@@ -84,7 +89,7 @@
           dates.end = moment().locale(this.locale).endOf(value)
           break
         case 7: case 30:
-          dates.end = moment().locale(this.locale)
+          dates.end = moment().locale(this.locale).subtract(1, 'd')
           dates.start = moment().locale(this.locale).subtract(value, 'd')
           break
         case '-month':
@@ -112,6 +117,7 @@
       position: relative;
       margin-bottom: 10px;
       border: 1px solid #eaeaea;
+      background-color: white;
       height: 30px;
       font-weight: 300;
       line-height: 26px;
@@ -122,9 +128,12 @@
       -webkit-transition: all 0.25s cubic-bezier(0.645, 0.045, 0.355, 1);
       .datepicker-button-effect {
         position: absolute;
-        background: #00C853;
+        background: dodgerblue;
         top: 0;
+        bottom: 0;
         right: 0;
+        left: 0;
+        margin: auto;
         height: 30px;
         border-radius: 30px;
         width: 100%;
@@ -165,12 +174,15 @@
     }
   }
 
-  @media screen and (max-width: 412px) {
+  @media screen and (max-width: 415px) {
     .shortcuts-container:not(.inline) {
       width: 100%;
       border-bottom: 1px solid #EAEAEA;
-      height: 120px !important;
+      height: unset !important;
       overflow: auto;
+    }
+    .shortcuts-container.is-dark {
+      border-color: lighten(#424242, 20%);
     }
   }
 </style>
