@@ -108,8 +108,13 @@
     return m(someMoment.clone().minute(roundedMinutes).second(0))
   }
 
+<<<<<<< HEAD
   const getDefaultTZ = () => {
     return moment.tz.guess() || 'America/Los_Angeles'
+=======
+  const getDefaultLocale = () => {
+    return (window.navigator.userLanguage || window.navigator.language || 'en').substr(0, 2)
+>>>>>>> origin/dev
   }
 
   export default {
@@ -125,7 +130,7 @@
       value: { type: [String, Object], required: false, default: null },
       formatted: { type: String, default: 'llll' },
       format: { type: String, default: String },
-      locale: { type: String, default: 'en' },
+      locale: { type: String, default: getDefaultLocale() },
       timeZone: { type: String, default: getDefaultTZ() },
       disableTime: { type: Boolean, default: false },
       disableDate: { type: Boolean, default: false },
