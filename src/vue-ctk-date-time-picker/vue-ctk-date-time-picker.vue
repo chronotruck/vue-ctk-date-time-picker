@@ -107,7 +107,7 @@
     const roundedMinutes = Math.ceil(someMoment.minute() / interval) * interval
     return m(someMoment.clone().minute(roundedMinutes).second(0))
   }
-  
+
   const getDefaultTZ = () => {
     return moment.tz.guess() || 'America/Los_Angeles'
   }
