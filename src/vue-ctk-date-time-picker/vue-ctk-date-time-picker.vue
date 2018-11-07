@@ -99,13 +99,17 @@
 </template>
 
 <script>
-  import moment from 'moment'
+  import moment from 'moment-timezone'
   import CtkDatePickerAgenda from './_subs/CtkDatePickerAgenda'
   import CtkDateRangePicker from './_subs/CtkDateRangePicker'
 
   const nearestMinutes = (interval, someMoment, m) => {
     const roundedMinutes = Math.ceil(someMoment.minute() / interval) * interval
     return m(someMoment.clone().minute(roundedMinutes).second(0))
+  }
+
+  const getDefaultTZ = () => {
+    return moment.tz.guess() || 'America/Los_Angeles'
   }
 
   const getDefaultLocale = () => {
@@ -126,6 +130,7 @@
       formatted: { type: String, default: 'llll' },
       format: { type: String, default: String },
       locale: { type: String, default: getDefaultLocale() },
+      timeZone: { type: String, default: getDefaultTZ() },
       disableTime: { type: Boolean, default: false },
       disableDate: { type: Boolean, default: false },
       minuteInterval: { type: Number, default: 1 },
@@ -186,7 +191,7 @@
     },
     created () {
       if (this.value) {
-        const val = this.rangeMode ? this.value : this.disableDate ? moment(`${moment().format('YYYY-MM-DD')} ${this.value}`) : moment(this.value)
+        const val = this.rangeMode ? this.value : this.disableDate ? moment(`${moment().format('YYYY-MM-DD')} ${this.value}`) : moment(this.value).tz(this.timeZone)
         this.$emit('input', (this.rangeMode
           ? this.getRangeDatesTimeFormat(val)
           : this.getDateTimeFormat(val))
@@ -194,44 +199,44 @@
       } else if (this.rangeMode) {
         this.$emit('input', this.getRangeDatesTimeFormat({}))
       }
-      moment.locale(this.locale)
+      moment.tz(this.timeZone).locale(this.locale)
     },
     methods: {
       getDateTime () {
         const date = this.disableDate
-          ? this.value ? moment(`${moment().format('YYYY-MM-DD')} ${this.value}`) : moment()
-          : this.value ? moment(this.value) : moment()
+          ? this.value ? moment(`${moment().tz(this.timeZone).format('YYYY-MM-DD')} ${this.value}`).tz(this.timeZone) : moment().tz(this.timeZone)
+          : this.value ? moment(this.value).tz(this.timeZone) : moment().tz(this.timeZone)
         return nearestMinutes(this.minuteInterval, date, moment)
       },
       getDateTimeFormat (day) {
-        return nearestMinutes(this.minuteInterval, day, moment).format(this.format)
+        return nearestMinutes(this.minuteInterval, day, moment).tz(this.timeZone).format(this.format)
       },
       getDateFormatted () {
         const date = this.value
           ? this.disableDate
-            ? moment(`${moment().format('YYYY-MM-DD')} ${this.value}`)
-            : moment(this.value)
+            ? moment(`${moment().tz(this.timeZone).format('YYYY-MM-DD')} ${this.value}`).tz(this.timeZone)
+            : moment(this.value).tz(this.timeZone)
           : null
-        return date ? nearestMinutes(this.minuteInterval, date, moment).locale(this.locale).format(this.formatted) : null
+        return date ? nearestMinutes(this.minuteInterval, date, moment).locale(this.locale).tz(this.timeZone).format(this.formatted) : null
       },
       getRangeDatesTime () {
         const hasStartValues = this.value && this.value.start
         const hasEndValues = this.value && this.value.end
-        return { start: hasStartValues ? moment(this.value.start) : null, end: hasEndValues ? moment(this.value.end) : null }
+        return { start: hasStartValues ? moment(this.value.start).tz(this.timeZone) : null, end: hasEndValues ? moment(this.value.end).tz(this.timeZone) : null }
       },
       getRangeDatesTimeFormat (day) {
         const { start, end } = day
         return {
-          start: start ? moment(start).format(this.format) : null,
-          end: end ? moment(end).format(this.format) : null
+          start: start ? moment(start).tz(this.timeZone).format(this.format) : null,
+          end: end ? moment(end).tz(this.timeZone).format(this.format) : null
         }
       },
       getRangeDatesFormatted () {
         const hasStartValues = this.value && this.value.start
         const hasEndValues = this.value && this.value.end
         if (hasStartValues || hasEndValues) {
-          const datesFormatted = hasStartValues ? `${moment(this.value.start).locale(this.locale).format(this.formatted)}` : '...'
-          return hasEndValues ? `${datesFormatted} - ${moment(this.value.end).locale(this.locale).format(this.formatted)}` : `${datesFormatted} - ...`
+          const datesFormatted = hasStartValues ? `${moment(this.value.start).tz(this.timeZone).locale(this.locale).format(this.formatted)}` : '...'
+          return hasEndValues ? `${datesFormatted} - ${moment(this.value.end).tz(this.timeZone).locale(this.locale).format(this.formatted)}` : `${datesFormatted} - ...`
         } else {
           return null
         }

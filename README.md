@@ -66,22 +66,23 @@ Vue.component('vue-ctk-date-time-picker', VueCtkDateTimePicker);
 | format   | string | no      | - |
 | time-format   | string | no  | 'H:mm a' |
 | locale (4)  | string | no     | Browser Locale |
+| time-zone (5)  | string | no  | Browser Time Zone |
 | disable-time   | Boolean | no     | false |
 | disable-date   | Boolean | no  | false |
 | without-header   | Boolean | no   | false |
 | id  | string | no  | CtkDateTimePicker |
 | overlay | Boolean | no | true |
 | enable-button-validate | Boolean | no | false |
-| min-date (5)  | string | no  | - |
-| max-date (5)  | string | no  | - |
+| min-date (6)  | string | no  | - |
+| max-date (6)  | string | no  | - |
 | no-weekends-days | Boolean | no | false |
 | auto-close | Boolean | no | false |
 | without-input | Boolean | no | false |
 | overlay-background | Boolean | no | false |
-| disabled-dates (6) | Boolean | no | [] |
+| disabled-dates (7) | Boolean | no | [] |
 | range-mode | Boolean | no | false |
 | dark | Boolean | no | false |
-| shortcuts-translation (7) | Object | no | - |
+| shortcuts-translation (8) | Object | no | - |
 
 (1) hint : Is a text that replaces the label/placeholder
 
@@ -89,13 +90,15 @@ Vue.component('vue-ctk-date-time-picker', VueCtkDateTimePicker);
 
 (3) color: Replace color for the hint, the borders & time selected in dropdown
 
-(4) locale : Default value is the locale of the browser
+(4) locale : Default value is the locale of the browser - Ex : Set `locale="fr"` to force to French language
 
-(5) min-date & max-date : Must be `'YYYY-MM-DD'` format
+(5) time-zone : Default value is the time-zone of the browser - Ex : Set `Europe/Paris` to force to French TZ. Do not forget to use a format like this `YYYY-MM-DDTHH:mm:ssZ` to get the TZ
+ 
+(6) min-date & max-date : Must be `'YYYY-MM-DD'` format
 
-(6) Disabled-Dates is an Array of dates in 'YYYY-MM-DD' format (ex: `['2018-04-03', '2018-04-07', '2018-04-09']`)
+(7) Disabled-Dates is an Array of dates in 'YYYY-MM-DD' format (ex: `['2018-04-03', '2018-04-07', '2018-04-09']`)
 
-(7) shortcuts-translation : Must be an Object like that 
+(8) shortcuts-translation : Must be an Object like that 
 ``` 
 {
   "this_week": "This week",
