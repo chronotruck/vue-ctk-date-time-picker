@@ -58,42 +58,44 @@ Vue.component('vue-ctk-date-time-picker', VueCtkDateTimePicker);
 |------------|------------|----------|------------|
 | v-model    | String/Int | yes     | -          |
 | label      | String     | no    | Select date & time |
-| hint*       | text       | no       | -         |
-| error-hint** | Boolean    | no      | false     |
-| color***     | String (hex) | no    | dodgerblue |
+| hint (1)       | text       | no       | -         |
+| error-hint (2) | Boolean    | no      | false     |
+| color (3)     | String (hex) | no    | dodgerblue |
 | minute-interval | Int | no    | 1    |
 | formatted   | string | no    | 'llll' (momentjs format) |
 | format   | string | no      | - |
 | time-format   | string | no  | 'H:mm a' |
-| locale   | string | no     | en |
+| locale (4)  | string | no     | Browser Locale |
 | disable-time   | Boolean | no     | false |
 | disable-date   | Boolean | no  | false |
 | without-header   | Boolean | no   | false |
 | id  | string | no  | CtkDateTimePicker |
 | overlay | Boolean | no | true |
 | enable-button-validate | Boolean | no | false |
-| min-date****  | string | no  | - |
-| max-date****  | string | no  | - |
+| min-date (5)  | string | no  | - |
+| max-date (5)  | string | no  | - |
 | no-weekends-days | Boolean | no | false |
 | auto-close | Boolean | no | false |
 | without-input | Boolean | no | false |
 | overlay-background | Boolean | no | false |
-| disabled-dates***** | Boolean | no | [] |
+| disabled-dates (6) | Boolean | no | [] |
 | range-mode | Boolean | no | false |
 | dark | Boolean | no | false |
-| shortcuts-translation****** | Object | no | - |
+| shortcuts-translation (7) | Object | no | - |
 
-*hint : Is a text that replaces the label/placeholder
+(1) hint : Is a text that replaces the label/placeholder
 
-**error-hint : When is `true` --> Input border & label are red
+(2) error-hint : When is `true` --> Input border & label are red
 
-***color: Replace color for the hint, the borders & time selected in dropdown
+(3) color: Replace color for the hint, the borders & time selected in dropdown
 
-****min-date & max-date : Must be `'YYYY-MM-DD'` format
+(4) locale : Default value is the locale of the browser
 
-*****Disabled-Dates is an Array of dates in 'YYYY-MM-DD' format (ex: `['2018-04-03', '2018-04-07', '2018-04-09']`)
+(5) min-date & max-date : Must be `'YYYY-MM-DD'` format
 
-******shortcuts-translation : Must be an Object like that 
+(6) Disabled-Dates is an Array of dates in 'YYYY-MM-DD' format (ex: `['2018-04-03', '2018-04-07', '2018-04-09']`)
+
+(7) shortcuts-translation : Must be an Object like that 
 ``` 
 {
   "this_week": "This week",
