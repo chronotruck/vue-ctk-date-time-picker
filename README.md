@@ -52,6 +52,8 @@ Vue.component('vue-ctk-date-time-picker', VueCtkDateTimePicker);
   Vue.component('vue-ctk-date-time-picker', window.VueCtkDateTimePicker.default);
 </script>
 ```
+Here is an example of UMD implementation: https://codepen.io/louismazel/pen/jQWNzQ
+
 ## Props API
 
 | Props      | Type       | Required | Default    |
