@@ -22,6 +22,7 @@ const createLintingRule = () => ({
 })
 
 module.exports = {
+  mode: 'development',
   context: path.resolve(__dirname, '../'),
   entry: {
     app: './src/main.js'
