@@ -15,7 +15,7 @@
     "test": "poi test",
     "test:watch": "poi test --watch",
     "test:cov": "poi test --coverage",
-    "dev": "cross-env NODE_ENV=development webpack-dev-server --open --hot",
+    "dev": "cross-env webpack-dev-server --open --hot --config build-config/webpack.dev.conf.js",
     "before-publish": "npm run lint && npm run build && npm i && yarn"
   },
   "files": [
@@ -43,7 +43,7 @@
     "chai": "^4.1.2",
     "chalk": "^2.0.1",
     "copy-webpack-plugin": "^4.0.1",
-    "cross-env": "^5.0.5",
+    "cross-env": "^5.2.0",
     "css-loader": "^0.28.0",
     "cssnano-cli": "^1.0.4",
     "eslint": "^4.11.0",
