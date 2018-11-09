@@ -17,5 +17,10 @@ module.exports = {
       frameworks: ['mocha', 'chai', 'phantomjs-shim']
     })
   ],
+  plugins: [
+    {
+      resolve: '@poi/plugin-vue-static'
+    }
+  ],
   moduleName: 'VueCtkDateTimePicker'
 }

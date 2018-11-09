@@ -5,3 +5,8 @@ README.md
 .gitignore
 .editorconfig
 .babelrc
+test/unit/coverage/
+/*.js
+/dist/
+/config/
+/build-config/
