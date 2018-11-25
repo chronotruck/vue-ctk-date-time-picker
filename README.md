@@ -110,7 +110,7 @@ Here is an example of UMD implementation: https://codepen.io/louismazel/pen/jQWN
 }
 ```
 
-## Incoming features (Todo)
+## Upcoming features (Todo)
 
 - Disable specific hours & minutes on TimePicker
 - Custom shortcuts on RangeDatePicker
