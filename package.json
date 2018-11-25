@@ -10,7 +10,7 @@
     "lint": "eslint --ext .js,.vue src modules",
     "lint:fix": "eslint --ext .js,.vue src apps --fix",
     "build": "npm run lint && npm run build:lib && npm run build:demo",
-    "build:lib": "vue-cli-service build --target lib --name VueCtkDateTimePicker ./src/VueCtkDateTimePicker/index.vue",
+    "build:lib": "vue-cli-service build --target lib ./src/VueCtkDateTimePicker/index.vue",
     "build:demo": "vue-cli-service build --dest demo --mode production",
     "test": "vue-cli-service test:unit /test/specs",
     "serve": "vue-cli-service serve --mode development",
