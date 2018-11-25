@@ -20,10 +20,6 @@
 
 `npm i --save vue-ctk-date-time-picker`
 
-## Docs
-
-`npm run serve`
-
 ## Usage
 
 ### ES6 Modules / CommonJS
@@ -113,6 +109,17 @@ Here is an example of UMD implementation: https://codepen.io/louismazel/pen/jQWN
   "last_year": "Last year"
 }
 ```
+
+## Incomming features (Todo)
+
+- Disable specific hours & minutes on TimePicker
+- Custom shortcuts on RangeDatePicker
+- UI Improvements for TimePicker (Issue #35)
+- Custom elements for trigger the component
+- Double Calendar on RangeDatePicker
+- Inputs Text to choose values (Issue #30)
+- Keyboard Accessibility
+- Select Year directly on DatePicker
 
 ## Contribution
 
