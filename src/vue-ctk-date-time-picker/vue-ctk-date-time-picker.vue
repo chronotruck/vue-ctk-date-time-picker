@@ -115,7 +115,7 @@
   const getDefaultLocale = () => {
     return (window.navigator.userLanguage || window.navigator.language || 'en').substr(0, 2)
   }
-  
+
   export default {
     name: 'VueCtkDateTimePicker',
     components: {
