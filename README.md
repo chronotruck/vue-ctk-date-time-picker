@@ -23,7 +23,7 @@ NPM
 
 ```js
 import VueCtkDateTimePicker from 'vue-ctk-date-time-picker';
-import 'vue-ctk-date-time-picker/dist/vue-ctk-date-time-picker.min.css';
+import 'vue-ctk-date-time-picker/dist/vue-ctk-date-time-picker.css';
 
 Vue.component('vue-ctk-date-time-picker', VueCtkDateTimePicker);
 ```
@@ -38,8 +38,8 @@ Vue.component('vue-ctk-date-time-picker', VueCtkDateTimePicker);
 <vue-ctk-date-time-picker></vue-ctk-date-time-picker>
 
 <script src="https://unpkg.com/vue" charset="utf-8"></script>
-<script src="./dist/umd/vue-ctk-date-time-picker.min.js" charset="utf-8"></script>
-<link rel="stylesheet" type="text/css" href="./dist/umd/vue-ctk-date-time-picker.min.css">
+<script src="./dist/vue-ctk-date-time-picker.umd.min.js" charset="utf-8"></script>
+<link rel="stylesheet" type="text/css" href="./dist/vue-ctk-date-time-picker.css">
 
 <script type="text/javascript">
   Vue.component('vue-ctk-date-time-picker', window.VueCtkDateTimePicker.default);
@@ -125,20 +125,16 @@ Here is an example of UMD implementation: https://codepen.io/louismazel/pen/jQWN
 npm install
 
 # serve with hot reload at localhost:8080
-npm run dev
+npm run serve
 ```
 
 ## Build
 
-Build configuration is located in the `poi.config.js` file, to build just run: `npm run build`, it will build to `cjs` and `umd` directories.
+To build just run: `npm run build:lib`
 
 ## Tests
 
-This template uses karma with chai by default, you can change test settings in poi.config.js
-
-`npm run test`
-`npm run test:watch`
-`npm run test:cov`
+Work in progress
 
 ## License
 
