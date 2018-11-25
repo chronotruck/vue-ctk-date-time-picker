@@ -12,11 +12,7 @@
 
 ## Installation
 
-### Using yarn
-
 `yarn add vue-ctk-date-time-picker`
-
-### Using npm
 
 `npm i --save vue-ctk-date-time-picker`
 
