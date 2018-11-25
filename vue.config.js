@@ -5,5 +5,6 @@ module.exports = {
     }
   },
   indexPath: 'index.html',
-  runtimeCompiler: true
+  runtimeCompiler: true,
+  baseUrl: './'
 }

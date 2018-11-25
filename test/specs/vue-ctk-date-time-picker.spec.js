@@ -1,5 +1,5 @@
 import Vue from 'vue'
-import Component from '../../src/vue-ctk-date-time-picker/vue-ctk-date-time-picker'
+import Component from '../../src/VueCtkDateTimePicker'
 
 describe('vue-ctk-date-time-picker.vue', () => {
   const Constructor = Vue.extend(Component)
@@ -7,7 +7,7 @@ describe('vue-ctk-date-time-picker.vue', () => {
 
   it('should instance the right component', () => {
     const vm = new Constructor({propsData})
-    expect(vm.$options.name).to.equal('vue-ctk-date-time-picker')
+    expect(vm.$options.name).to.equal('VueCtkDateTimePicker')
   })
 
   it('should render correct content', () => {
