@@ -8,6 +8,11 @@
     "module": "es2015",
     "moduleResolution": "node",
     "declaration": true,
-    "outDir": "dist"
-  }
+    "outDir": "dist",
+    "esModuleInterop": true
+  },
+  "exclude": [
+    "node_modules",
+    "dist"
+  ]
 }
