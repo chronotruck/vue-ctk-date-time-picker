@@ -16,7 +16,7 @@
     "test:watch": "poi test --watch",
     "test:cov": "poi test --coverage",
     "dev": "cross-env webpack-dev-server --open --hot --config build-config/webpack.dev.conf.js",
-    "before-publish": "npm run lint && npm run build && npm i && yarn"
+    "before-publish": "npm run lint && npm run build && npm i"
   },
   "files": [
     "src/",
