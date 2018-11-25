@@ -52,6 +52,8 @@ Vue.component('vue-ctk-date-time-picker', VueCtkDateTimePicker);
   Vue.component('vue-ctk-date-time-picker', window.VueCtkDateTimePicker.default);
 </script>
 ```
+Here is an example of UMD implementation: https://codepen.io/louismazel/pen/jQWNzQ
+
 ## Props API
 
 | Props      | Type       | Required | Default    |
@@ -82,6 +84,7 @@ Vue.component('vue-ctk-date-time-picker', VueCtkDateTimePicker);
 | disabled-dates (7) | Boolean | no | [] |
 | range-mode | Boolean | no | false |
 | dark | Boolean | no | false |
+| withoutRangeShortcut | Boolean | no | false |
 | shortcuts-translation (8) | Object | no | - |
 
 (1) hint : Is a text that replaces the label/placeholder
