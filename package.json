@@ -117,5 +117,8 @@
   "bugs": {
     "url": "https://github.com/chronotruck/vue-ctk-date-time-picker/issues"
   },
-  "homepage": "https://github.com/chronotruck/vue-ctk-date-time-picker#readme"
+  "homepage": "https://github.com/chronotruck/vue-ctk-date-time-picker#readme",
+  "directories": {
+    "test": "test"
+  }
 }
