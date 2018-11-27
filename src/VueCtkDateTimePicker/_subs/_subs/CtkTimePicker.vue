@@ -86,7 +86,9 @@
       visible: {type: Boolean, default: Boolean},
       value: {type: String, default: String},
       disableDate: {type: Boolean, default: Boolean},
-      dark: {type: Boolean, default: Boolean}
+      dark: {type: Boolean, default: Boolean},
+      timeRangeAllowed: { type: Object, default: Object },
+      timeDisallowed: { type: Object, default: Object }
     },
     data () {
       return {

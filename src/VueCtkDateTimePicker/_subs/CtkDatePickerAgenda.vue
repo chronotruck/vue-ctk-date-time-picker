@@ -100,6 +100,8 @@
             :visible="visible"
             :value="value"
             :dark="dark"
+            :time-range-allowed="timeRangeAllowed"
+            :time-disallowed="timeDisallowed"
             @change-time="selectTime"
           />
 
@@ -147,7 +149,9 @@
       enableButtonValidate: { type: Boolean, default: Boolean },
       value: { type: [String, Object], default: String },
       disabledDates: { type: Array, default: Array },
-      dark: { type: Boolean, default: Boolean }
+      dark: { type: Boolean, default: Boolean },
+      timeRangeAllowed: { type: Object, default: Object },
+      timeDisallowed: { type: Object, default: Object }
     },
     data () {
       return {

@@ -64,6 +64,8 @@
       :range-mode="rangeMode"
       :disabled-dates="disabledDates"
       :dark="dark"
+      :time-range-allowed="timeRangeAllowed"
+      :time-disallowed="timeDisallowed"
       @change-date="changeDate"
       @validate="validate"
     />
@@ -152,7 +154,9 @@
       overlayBackground: {type: Boolean, default: false},
       withoutRangeShortcut: {type: Boolean, default: false},
       dark: {type: Boolean, default: false},
-      shortcutsTranslation: {type: Object, default: Object}
+      shortcutsTranslation: {type: Object, default: Object},
+      timeRangeAllowed: { type: Object, default: Object },
+      timeDisallowed: { type: Object, default: Object }
     },
     data () {
       return {

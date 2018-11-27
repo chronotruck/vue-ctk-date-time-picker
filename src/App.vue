@@ -135,6 +135,14 @@
               :minute-interval="minuteInterval2"
               :disabled="false"
               :dark="darkMode"
+              :time-range-allowed="{
+                from: '11:00',
+                to: '18:00'
+              }"
+              :time-disallowed="{
+                hours: [],
+                minutes: []
+              }"
               formatted="h:mm a"
               format="HH:mm"
               time-format="h:mm a"
