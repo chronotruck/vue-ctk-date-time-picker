@@ -12,14 +12,10 @@
 
 ## Installation
 
-### Using yarn
-
+Yarn
 `yarn add vue-ctk-date-time-picker`
-
-### Using npm
-
+NPM
 `npm i --save vue-ctk-date-time-picker`
-
 
 ## Usage
 
@@ -114,6 +110,16 @@ Here is an example of UMD implementation: https://codepen.io/louismazel/pen/jQWN
 ```
 
 (9) disabled-hours : Must be an Array of hours in 24h format ('00' to '23') : `['00','01','02','03','04','05','06','07','19','20','21','22','23']`
+
+## Upcoming features (Todo)
+
+- Custom shortcuts on RangeDatePicker
+- UI Improvements for TimePicker (Issue #35)
+- Custom elements for trigger the component
+- Double Calendar on RangeDatePicker
+- Inputs Text to choose values (Issue #30)
+- Keyboard Accessibility
+- Select Year directly on DatePicker
 
 ## Contribution
 
