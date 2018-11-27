@@ -77,8 +77,9 @@ Here is an example of UMD implementation: https://codepen.io/louismazel/pen/jQWN
 | disabled-dates (7) | Boolean | no | [] |
 | range-mode | Boolean | no | false |
 | dark | Boolean | no | false |
-| withoutRangeShortcut | Boolean | no | false |
+| without-range-shortcut | Boolean | no | false |
 | shortcuts-translation (8) | Object | no | - |
+| disabled-hours (9) | Array (of String) | no | - |
 
 (1) hint : Is a text that replaces the label/placeholder
 
@@ -94,8 +95,9 @@ Here is an example of UMD implementation: https://codepen.io/louismazel/pen/jQWN
 
 (7) Disabled-Dates is an Array of dates in 'YYYY-MM-DD' format (ex: `['2018-04-03', '2018-04-07', '2018-04-09']`)
 
-(8) shortcuts-translation : Must be an Object like that 
-``` 
+(8) shortcuts-translation : Must be an Object like that
+
+```
 {
   "this_week": "This week",
   "last_7_days": "Last 7 days",
@@ -106,6 +108,8 @@ Here is an example of UMD implementation: https://codepen.io/louismazel/pen/jQWN
   "last_year": "Last year"
 }
 ```
+
+(9) disabled-hours : Must be an Array of hours in 24h format ('00' to '23') : `['00','01','02','03','04','05','06','07','19','20','21','22','23']`
 
 ## Upcoming features (Todo)
 
