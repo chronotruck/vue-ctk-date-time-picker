@@ -12,14 +12,10 @@
 
 ## Installation
 
-### Using yarn
-
+Yarn
 `yarn add vue-ctk-date-time-picker`
-
-### Using npm
-
+NPM
 `npm i --save vue-ctk-date-time-picker`
-
 
 ## Usage
 
@@ -110,6 +106,16 @@ Here is an example of UMD implementation: https://codepen.io/louismazel/pen/jQWN
   "last_year": "Last year"
 }
 ```
+
+## Upcoming features (Todo)
+
+- Custom shortcuts on RangeDatePicker
+- UI Improvements for TimePicker (Issue #35)
+- Custom elements for trigger the component
+- Double Calendar on RangeDatePicker
+- Inputs Text to choose values (Issue #30)
+- Keyboard Accessibility
+- Select Year directly on DatePicker
 
 ## Contribution
 
