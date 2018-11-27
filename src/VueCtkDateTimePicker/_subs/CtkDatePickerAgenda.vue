@@ -100,8 +100,7 @@
             :visible="visible"
             :value="value"
             :dark="dark"
-            :time-range-allowed="timeRangeAllowed"
-            :time-disallowed="timeDisallowed"
+            :disabled-hours="disabledHours"
             @change-time="selectTime"
           />
 
@@ -150,8 +149,7 @@
       value: { type: [String, Object], default: String },
       disabledDates: { type: Array, default: Array },
       dark: { type: Boolean, default: Boolean },
-      timeRangeAllowed: { type: Object, default: Object },
-      timeDisallowed: { type: Object, default: Object }
+      disabledHours: { type: Array, default: Array }
     },
     data () {
       return {

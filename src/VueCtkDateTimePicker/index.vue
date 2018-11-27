@@ -64,8 +64,7 @@
       :range-mode="rangeMode"
       :disabled-dates="disabledDates"
       :dark="dark"
-      :time-range-allowed="timeRangeAllowed"
-      :time-disallowed="timeDisallowed"
+      :disabled-hours="disabledHours"
       @change-date="changeDate"
       @validate="validate"
     />
@@ -155,8 +154,7 @@
       withoutRangeShortcut: {type: Boolean, default: false},
       dark: {type: Boolean, default: false},
       shortcutsTranslation: {type: Object, default: Object},
-      timeRangeAllowed: { type: Object, default: Object },
-      timeDisallowed: { type: Object, default: Object }
+      disabledHours: {type: Array, default: Array}
     },
     data () {
       return {

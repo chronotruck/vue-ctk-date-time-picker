@@ -11,16 +11,21 @@
         class="h-100 mh-100 numbers-container">
         <button
           v-for="hr in hours"
-          :key="hr"
-          :class="[{active: (hour === hr) && value}, hr]"
+          :key="hr.value"
+          :class="[
+            {active: (hour === hr.value) && value},
+            hr,
+            {disabled: hr.disabled}
+          ]"
+          :disabled="hr.disabled"
           type="button"
           tabindex="-1"
           class="item flex align-center justify-content-center"
-          @click.stop="select('hour', hr)">
+          @click.stop="select('hour', hr.value)">
           <span
             :style="styleColor"
             class="timepicker-day-effect"/>
-          <span class="timepicker-day-text">{{ hr }}</span>
+          <span class="timepicker-day-text">{{ hr.value }}</span>
         </button>
       </div>
     </div>
@@ -74,6 +79,7 @@
     MINUTE_TOKENS: ['mm', 'm'],
     APM_TOKENS: ['A', 'a']
   }
+
   export default {
     name: 'CtkTimePicker',
     props: {
@@ -87,12 +93,10 @@
       value: {type: String, default: String},
       disableDate: {type: Boolean, default: Boolean},
       dark: {type: Boolean, default: Boolean},
-      timeRangeAllowed: { type: Object, default: Object },
-      timeDisallowed: { type: Object, default: Object }
+      disabledHours: { type: Array, default: Array }
     },
     data () {
       return {
-        hours: [],
         minutes: [],
         apms: [],
         muteWatch: false,
@@ -125,6 +129,15 @@
               : '180px'
             : '200px'
         }
+      },
+      hours () {
+        const hoursCount = (this.hourType === 'h' || this.hourType === 'hh') ? 12 : 24
+        let hours = []
+        for (let i = 0; i < hoursCount; i++) {
+          const formattedHours = this.formatValue(this.hourType, i)
+          hours.push({ disabled: this.isHoursDisabled(formattedHours), value: formattedHours })
+        }
+        return hours
       }
     },
     watch: {
@@ -187,7 +200,6 @@
         this.hourType = this.checkAcceptingType(CONFIG.HOUR_TOKENS, newFormat, 'HH')
         this.minuteType = this.checkAcceptingType(CONFIG.MINUTE_TOKENS, newFormat, 'mm')
         this.apmType = this.checkAcceptingType(CONFIG.APM_TOKENS, newFormat)
-        this.renderHoursList()
         this.renderList('minute')
         if (this.apmType) {
           this.renderApmList()
@@ -196,13 +208,6 @@
         this.$nextTick(() => {
           self.readValues()
         })
-      },
-      renderHoursList () {
-        const hoursCount = (this.hourType === 'h' || this.hourType === 'hh') ? 12 : 24
-        this.hours = []
-        for (let i = 0; i < hoursCount; i++) {
-          this.hours.push(this.formatValue(this.hourType, i))
-        }
       },
       renderList (listType, interval) {
         if (listType === 'minute') {
@@ -345,6 +350,18 @@
       isTwelveHours (token) {
         return token === 'h' || token === 'hh'
       },
+      isHoursDisabled (h) {
+        let hourToTest = this.apmType
+          ? moment(`${h} ${this.apm}`, [`${this.hourType} ${this.apmType}`]).format('HH')
+          : h
+        return this.disabledHours.includes(hourToTest)
+      },
+      selectAvailableHour () {
+        const hourToSet = this.hours.find((element) => {
+          return element.disabled === false
+        })
+        this.select('hour', hourToSet.value)
+      },
       select (type, value) {
         if (type === 'hour') {
           this.hour = value
@@ -352,6 +369,9 @@
           this.minute = value
         } else if (type === 'apm') {
           this.apm = value
+        }
+        if (this.isHoursDisabled(this.hour)) {
+          this.selectAvailableHour()
         }
         let time
         if (this.apm) {
@@ -422,6 +442,16 @@
             .timepicker-day-effect {
               transform: scale(1);
               opacity: 1;
+            }
+          }
+          &.disabled {
+            color: #CCC;
+            &:hover {
+              color: #CCC;
+            }
+            .timepicker-day-effect {
+              transform: scale(0) !important;
+              opacity: 0 !important;
             }
           }
         }
