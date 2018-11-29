@@ -199,7 +199,8 @@
       } else if (this.rangeMode) {
         this.$emit('input', this.getRangeDatesTimeFormat({}))
       }
-      moment.tz(this.timeZone).locale(this.locale)
+      moment.tz(this.timeZone)
+      moment.locale(this.locale)
     },
     methods: {
       getDateTime () {
