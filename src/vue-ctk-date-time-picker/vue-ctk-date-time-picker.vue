@@ -263,12 +263,12 @@
         this.agendaPosition = position ? 'top' : 'bottom'
 
         this.isVisible = true
-        this.$nextTick(this.$emit('showDatePicker'))
+        this.$nextTick(() => this.$emit('showDatePicker'))
       },
       hideDatePicker () {
         this.setBodyOverflow()
         this.isVisible = false
-        this.$nextTick(this.$emit('hideDatePicker'))
+        this.$nextTick(() => this.$emit('hideDatePicker'))
       },
       setBodyOverflow (value) {
         if (window.innerWidth < 412) {
