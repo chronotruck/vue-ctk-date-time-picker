@@ -39,7 +39,7 @@
       v-if="overlay && isVisible && !inline"
       :class="{'has-background': overlayBackground}"
       class="time-picker-overlay"
-      @click.stop="unFocus"
+      @click.stop="cancel"
     />
     <ctk-date-picker-agenda
       v-if="!rangeMode"
@@ -245,8 +245,10 @@
         this.$emit('input', (this.rangeMode ? this.getRangeDatesTimeFormat(day) : this.getDateTimeFormat(day)))
         if (this.autoClose && this.rangeMode && (day.end && day.start)) {
           this.hideDatePicker()
+          this.$nextTick(() => this.$emit('finishDatePicker'))
         } else if (this.autoClose && !this.rangeMode) {
           this.hideDatePicker()
+          this.$nextTick(() => this.$emit('finishDatePicker'))
         }
       },
       showDatePicker () {
@@ -284,8 +286,13 @@
         this.hideDatePicker()
         this.isFocus = false
       },
+      cancel () {
+        this.unFocus()
+        this.$nextTick(() => this.$emit('cancelDatePicker'))
+      },
       validate () {
         this.unFocus()
+        this.$nextTick(() => this.$emit('finishDatePicker'))
       }
     }
   }
