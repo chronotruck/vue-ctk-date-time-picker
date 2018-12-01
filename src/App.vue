@@ -150,7 +150,7 @@
               :dark="darkMode"
               :disabled-hours="disabledHours"
               formatted="h:mm a"
-              format="HH:mm"
+              format="h:mm a"
               time-format="h:mm a"
               label="Choose time"
               disable-date
@@ -285,7 +285,7 @@
           start: null,
           end: null
         },
-        timePickerValue: '14:26',
+        timePickerValue: '2:26 am',
         minuteInterval: 5,
         minuteInterval2: 10,
         hint: 'Error message',
