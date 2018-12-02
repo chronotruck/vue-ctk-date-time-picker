@@ -127,7 +127,7 @@
             :class="{'dark': darkMode}"
             class="component-container flex-1">
             <h3>TimePicker</h3>
-            <p>Inititale value : '14:26'</p>
+            <p>Inititale value : '2:30 am'</p>
             <p>v-model = {{ timePickerValue || 'null' }}</p>
             <ctk-date-time-picker
               id="timepicker"
