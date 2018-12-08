@@ -126,7 +126,7 @@
           <div
             :class="{'dark': darkMode}"
             class="component-container flex-1">
-            <h3>TimePicker</h3>
+            <h3>TimePicker (with disabled-hours)</h3>
             <p>Inititale value : '14:26'</p>
             <p>v-model = {{ timePickerValue || 'null' }}</p>
             <ctk-date-time-picker
@@ -135,6 +135,7 @@
               :minute-interval="minuteInterval2"
               :disabled="false"
               :dark="darkMode"
+              :disabled-hours="disabledHours"
               formatted="h:mm a"
               format="HH:mm"
               time-format="h:mm a"
@@ -149,6 +150,7 @@
               <ctk-date-time-picker
               v-model="yourValue"
               :dark="darkMode"
+              :disabled-hours="['00','01','02','03','04','05','06','07','19','20','21','22','23']"
               formatted="h:mm a"
               format="HH:mm"
               time-format="h:mm a"
@@ -249,7 +251,7 @@
 </template>
 
 <script>
-  import CtkDateTimePicker from './vue-ctk-date-time-picker/vue-ctk-date-time-picker.vue'
+  import CtkDateTimePicker from './VueCtkDateTimePicker'
 
   export default {
     name: 'App',
@@ -285,14 +287,23 @@
           'last_month': 'Mois précédent',
           'last_year': 'L\'année dernière'
         },
-        disabledDates: ['2018-04-03', '2018-04-07', '2018-04-09', '2018-04-11', '2018-04-13', '2018-04-15', '2018-04-17', '2018-04-19']
+        disabledDates: ['2018-04-03', '2018-04-07', '2018-04-09', '2018-04-11', '2018-04-13', '2018-04-15', '2018-04-17', '2018-04-19'],
+        disabledHours: Array.from(new Array(8), (x, i) => `0${i}`).concat(
+          Array.from(new Array(23), (x, i) => {
+            if (i + 1 > 18) {
+              return `${i + 1}`
+            } else {
+              return null
+            }
+          })
+        )
       }
     }
   }
 </script>
 
 <style lang="scss">
-  @import "./vue-ctk-date-time-picker/assets/main.scss";
+  @import "./VueCtkDateTimePicker/assets/main.scss";
   html, body, #app, #vueCtkDateTimePicker {
     margin: 0;
     min-height: 100%;

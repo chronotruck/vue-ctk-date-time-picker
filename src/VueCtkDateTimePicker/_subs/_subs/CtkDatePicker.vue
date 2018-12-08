@@ -65,10 +65,11 @@
               first: firstInRange(day) && rangeMode,
               last: lastInRange(day) && !!dateTime.end && rangeMode
             }"
+            :disabled="isDisabled(day) || isWeekEndDay(day)"
             type="button"
             tabindex="-1"
             class="datepicker-day flex align-center justify-content-center"
-            @click="isDisabled(day) || isWeekEndDay(day) ? '' : selectDate(day)">
+            @click="selectDate(day)">
             <span
               v-if="isToday(day)"
               class="datepicker-today"/>

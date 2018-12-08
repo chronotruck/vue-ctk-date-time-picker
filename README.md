@@ -23,7 +23,7 @@ NPM
 
 ```js
 import VueCtkDateTimePicker from 'vue-ctk-date-time-picker';
-import 'vue-ctk-date-time-picker/dist/vue-ctk-date-time-picker.min.css';
+import 'vue-ctk-date-time-picker/dist/vue-ctk-date-time-picker.css';
 
 Vue.component('vue-ctk-date-time-picker', VueCtkDateTimePicker);
 ```
@@ -38,8 +38,8 @@ Vue.component('vue-ctk-date-time-picker', VueCtkDateTimePicker);
 <vue-ctk-date-time-picker></vue-ctk-date-time-picker>
 
 <script src="https://unpkg.com/vue" charset="utf-8"></script>
-<script src="./dist/umd/vue-ctk-date-time-picker.min.js" charset="utf-8"></script>
-<link rel="stylesheet" type="text/css" href="./dist/umd/vue-ctk-date-time-picker.min.css">
+<script src="./dist/vue-ctk-date-time-picker.umd.min.js" charset="utf-8"></script>
+<link rel="stylesheet" type="text/css" href="./dist/vue-ctk-date-time-picker.css">
 
 <script type="text/javascript">
   Vue.component('vue-ctk-date-time-picker', window.VueCtkDateTimePicker.default);
@@ -77,8 +77,9 @@ Here is an example of UMD implementation: https://codepen.io/louismazel/pen/jQWN
 | disabled-dates (7) | Boolean | no | [] |
 | range-mode | Boolean | no | false |
 | dark | Boolean | no | false |
-| withoutRangeShortcut | Boolean | no | false |
+| without-range-shortcut | Boolean | no | false |
 | shortcuts-translation (8) | Object | no | - |
+| disabled-hours (9) | Array (of String) | no | - |
 
 (1) hint : Is a text that replaces the label/placeholder
 
@@ -94,8 +95,9 @@ Here is an example of UMD implementation: https://codepen.io/louismazel/pen/jQWN
 
 (7) Disabled-Dates is an Array of dates in 'YYYY-MM-DD' format (ex: `['2018-04-03', '2018-04-07', '2018-04-09']`)
 
-(8) shortcuts-translation : Must be an Object like that 
-``` 
+(8) shortcuts-translation : Must be an Object like that
+
+```
 {
   "this_week": "This week",
   "last_7_days": "Last 7 days",
@@ -107,9 +109,10 @@ Here is an example of UMD implementation: https://codepen.io/louismazel/pen/jQWN
 }
 ```
 
+(9) disabled-hours : Must be an Array of hours in 24h format ('00' to '23') : `['00','01','02','03','04','05','06','07','19','20','21','22','23']`
+
 ## Upcoming features (Todo)
 
-- Disable specific hours & minutes on TimePicker
 - Custom shortcuts on RangeDatePicker
 - UI Improvements for TimePicker (Issue #35)
 - Custom elements for trigger the component
@@ -125,20 +128,16 @@ Here is an example of UMD implementation: https://codepen.io/louismazel/pen/jQWN
 npm install
 
 # serve with hot reload at localhost:8080
-npm run dev
+npm run serve
 ```
 
 ## Build
 
-Build configuration is located in the `poi.config.js` file, to build just run: `npm run build`, it will build to `cjs` and `umd` directories.
+To build just run: `npm run build:lib`
 
 ## Tests
 
-This template uses karma with chai by default, you can change test settings in poi.config.js
-
-`npm run test`
-`npm run test:watch`
-`npm run test:cov`
+Work in progress
 
 ## License
 
