@@ -139,14 +139,13 @@
           <div
             :class="{'dark': darkMode}"
             class="component-container flex-1">
-            <h3>TimePicker</h3>
-            <p>Inititale value : '2:30 am'</p>
+            <h3>TimePicker (with disabled-hours)</h3>
+            <p>Inititale value : '14:26'</p>
             <p>v-model = {{ timePickerValue || 'null' }}</p>
             <ctk-date-time-picker
               id="timepicker"
               v-model="timePickerValue"
               :minute-interval="minuteInterval2"
-              :disabled="false"
               :dark="darkMode"
               :disabled-hours="disabledHours"
               formatted="h:mm a"
@@ -188,7 +187,6 @@
               without-header
               auto-close
               time-format="HH:mm"
-              locale="fr"
             />
             <br>
             <textarea
@@ -203,7 +201,6 @@
               :minute-interval="10"
               :error-hint="true"
               hint="Error message"
-              locale="fr"
               />
             </textarea>
           </div>
@@ -285,13 +282,12 @@
           start: null,
           end: null
         },
-        timePickerValue: '2:26 am',
+        timePickerValue: '14:26',
         minuteInterval: 5,
         minuteInterval2: 10,
         hint: 'Error message',
         errorHint: true,
         timeFormat: 'hh:mm a',
-        locale: 'fr',
         minDate: '2018-04-03',
         maxDate: '2018-04-12',
         darkMode: false,
