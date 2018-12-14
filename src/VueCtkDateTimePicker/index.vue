@@ -147,7 +147,6 @@
       autoClose: {type: Boolean, default: false},
       disabled: {type: Boolean, default: false},
       overlay: {type: Boolean, default: true},
-      enableButtonValidate: {type: Boolean, default: false},
       disabledDates: { type: Array, default: Array },
       rangeMode: {type: Boolean, default: false},
       overlayBackground: {type: Boolean, default: false},
@@ -166,6 +165,9 @@
       }
     },
     computed: {
+      enableButtonValidate () {
+        return !this.inline && !this.autoClose
+      },
       isInline () {
         return this.withoutInput || this.inline
       },
