@@ -106,7 +106,7 @@
 
         </div>
         <ctk-button-validate
-          v-show="enableButtonValidate && !inline && !autoClose"
+          v-if="enableButtonValidate"
           :dark="dark"
           class="button-validate flex-fixed"
           @validate="validate"
