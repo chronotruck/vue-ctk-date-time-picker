@@ -33,6 +33,7 @@
           <ctk-date-time-picker
             v-model="value"
             :dark="darkMode"
+            locale="en"
             color="#96bf31"
           />
         </div>
@@ -270,7 +271,7 @@
     },
     data () {
       return {
-        devMode: false,
+        devMode: true,
         value: '2018-04-05T04:26',
         value2: null,
         value3: '2018-04-05T14:26',

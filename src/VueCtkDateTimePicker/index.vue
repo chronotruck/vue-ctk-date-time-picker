@@ -1,5 +1,6 @@
 <template>
   <div
+    v-if="isReady"
     :id="id"
     :class="{'inline': inline, 'is-dark': dark}"
     class="ctk-date-time-picker"
@@ -53,7 +54,7 @@
       :disable-date="disableDate"
       :minute-interval="minuteInterval"
       :time-format="timeFormat"
-      :locale="locale"
+      :locale="userLocale"
       :min-date="minDate"
       :max-date="maxDate"
       :agenda-position="agendaPosition"
@@ -80,7 +81,7 @@
       :disable-date="disableDate"
       :minute-interval="minuteInterval"
       :time-format="timeFormat"
-      :locale="locale"
+      :locale="userLocale"
       :min-date="minDate"
       :max-date="maxDate"
       :agenda-position="agendaPosition"
@@ -117,6 +118,21 @@
     return (window.navigator.userLanguage || window.navigator.language || 'en').substr(0, 2)
   }
 
+  const hasWindowAvailable = () => {
+    return new Promise((resolve) => {
+      if (typeof window !== 'undefined') {
+        return resolve()
+      } else {
+        const interval = setInterval(() => {
+          if (typeof window !== 'undefined') {
+            clearInterval(interval)
+            return resolve()
+          }
+        }, 300)
+      }
+    })
+  }
+
   export default {
     name: 'VueCtkDateTimePicker',
     components: {
@@ -130,7 +146,7 @@
       value: { type: [String, Object], required: false, default: null },
       formatted: { type: String, default: 'llll' },
       format: { type: String, default: String },
-      locale: { type: String, default: getDefaultLocale() },
+      locale: { type: String, default: String },
       timeZone: { type: String, default: getDefaultTZ() },
       disableTime: { type: Boolean, default: false },
       disableDate: { type: Boolean, default: false },
@@ -161,7 +177,9 @@
         isFocus: false,
         agendaPosition: 'top',
         oldValue: this.value,
-        clientWidth: null
+        clientWidth: null,
+        isReady: false,
+        userLocale: this.locale
       }
     },
     computed: {
@@ -194,19 +212,33 @@
       }
     },
     created () {
-      if (this.value) {
-        const val = this.rangeMode ? this.value : this.disableDate ? moment(`${moment().format('YYYY-MM-DD')} ${this.value}`, `YYYY-MM-DD ${this.format}`) : moment(this.value, this.format).tz(this.timeZone)
-        this.$emit('input', (this.rangeMode
-          ? this.getRangeDatesTimeFormat(val)
-          : this.getDateTimeFormat(val))
-        )
-      } else if (this.rangeMode) {
-        this.$emit('input', this.getRangeDatesTimeFormat({}))
-      }
-      moment.tz(this.timeZone)
-      moment.locale(this.locale)
+      hasWindowAvailable()
+        .then(() => {
+          if (!this.locale) {
+            this.userLocale = getDefaultLocale()
+          }
+          this.initComponent()
+        })
     },
     methods: {
+      initComponent () {
+        this.isReady = true
+        if (this.value) {
+          const val = this.rangeMode
+            ? this.value
+            : this.disableDate
+              ? moment(`${moment().format('YYYY-MM-DD')} ${this.value}`, `YYYY-MM-DD ${this.format}`)
+              : moment(this.value, this.format).tz(this.timeZone)
+          this.$emit('input', (this.rangeMode
+            ? this.getRangeDatesTimeFormat(val)
+            : this.getDateTimeFormat(val))
+          )
+        } else if (this.rangeMode) {
+          this.$emit('input', this.getRangeDatesTimeFormat({}))
+        }
+        moment.tz(this.timeZone)
+        moment.locale(this.userLocale)
+      },
       getDateTime (value = null) {
         const date = this.disableDate
           ? this.value
@@ -226,7 +258,7 @@
             ? moment(`${moment().tz(this.timeZone).format('YYYY-MM-DD')} ${this.value}`, `YYYY-MM-DD ${this.format}`).tz(this.timeZone)
             : moment(this.value, this.format).tz(this.timeZone)
           : null
-        return date ? nearestMinutes(this.minuteInterval, date, moment).locale(this.locale).tz(this.timeZone).format(this.formatted) : null
+        return date ? nearestMinutes(this.minuteInterval, date, moment).locale(this.userLocale).tz(this.timeZone).format(this.formatted) : null
       },
       getRangeDatesTime () {
         const hasStartValues = this.value && this.value.start
@@ -244,8 +276,8 @@
         const hasStartValues = this.value && this.value.start
         const hasEndValues = this.value && this.value.end
         if (hasStartValues || hasEndValues) {
-          const datesFormatted = hasStartValues ? `${moment(this.value.start).tz(this.timeZone).locale(this.locale).format(this.formatted)}` : '...'
-          return hasEndValues ? `${datesFormatted} - ${moment(this.value.end).tz(this.timeZone).locale(this.locale).format(this.formatted)}` : `${datesFormatted} - ...`
+          const datesFormatted = hasStartValues ? `${moment(this.value.start).tz(this.timeZone).locale(this.userLocale).format(this.formatted)}` : '...'
+          return hasEndValues ? `${datesFormatted} - ${moment(this.value.end).tz(this.timeZone).locale(this.userLocale).format(this.formatted)}` : `${datesFormatted} - ...`
         } else {
           return null
         }
@@ -279,7 +311,7 @@
       },
       setBodyOverflow (value) {
         if (window.innerWidth < 412) {
-          const body = document.getElementsByTagName('body')[0]
+          const body = window.document.getElementsByTagName('body')[0]
           body.style.overflow = value ? 'hidden' : null
         }
       },

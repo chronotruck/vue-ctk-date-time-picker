@@ -13,5 +13,12 @@ module.exports = {
   },
   indexPath: 'index.html',
   runtimeCompiler: true,
-  baseUrl: './'
+  baseUrl: './',
+  pages: {
+    index: {
+      entry: 'src/main.js',
+      filename: 'index.html',
+      title: 'Chronotruck'
+    }
+  }
 }

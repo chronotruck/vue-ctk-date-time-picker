@@ -110,7 +110,7 @@ Here is an example of UMD implementation: https://codepen.io/louismazel/pen/jQWN
 
 (9) disabled-hours : Must be an Array of hours in 24h format ('00' to '23') : `['00','01','02','03','04','05','06','07','19','20','21','22','23']`
 
-## Upcoming features (Todo)
+## Upcoming features
 
 - Disable specific hours & minutes on TimePicker
 - Custom shortcuts on RangeDatePicker
@@ -120,6 +120,7 @@ Here is an example of UMD implementation: https://codepen.io/louismazel/pen/jQWN
 - Inputs Text to choose values (Issue #30)
 - Keyboard Accessibility
 - Select Year directly on DatePicker
+- Option for set the first of week
 
 ## Contribution
 
