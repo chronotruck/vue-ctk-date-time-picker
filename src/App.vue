@@ -22,11 +22,12 @@
           {{ darkMode ? 'Disable' : 'Enable' }} Dark Mode
         </button>
       </header>
-      <div class="container">
+      <div
+        v-if="devMode"
+        class="container">
         <div
           :class="{'dark': darkMode}"
           class="component-container flex-1">
-          <h3>DateTimePicker</h3>
           <p>Inititale value : '2018-04-05T04:26'</p>
           <p>v-model = {{ value || 'null' }}</p>
           <ctk-date-time-picker
@@ -36,7 +37,9 @@
           />
         </div>
       </div>
-      <!-- <div class="container">
+      <div
+        v-else
+        class="container">
         <div class="components-container flex">
           <div
             :class="{'dark': darkMode}"
@@ -259,7 +262,7 @@
             </textarea>
           </div>
         </div>
-      </div> -->
+      </div>
     </div>
   </div>
 </template>
@@ -274,6 +277,7 @@
     },
     data () {
       return {
+        devMode: false,
         value: '2018-04-05T04:26',
         value2: null,
         value3: '2018-04-05T14:26',
