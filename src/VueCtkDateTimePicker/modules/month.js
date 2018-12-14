@@ -34,6 +34,5 @@ export default class Month {
 
 export const getWeekDays = function (locale) {
   const firstDay = moment.localeData(locale).firstDayOfWeek()
-  console.log('locale', locale, moment.weekdaysShort(firstDay === 1))
   return moment.weekdaysShort(firstDay === 1)
 }
