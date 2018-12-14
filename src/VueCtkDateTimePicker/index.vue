@@ -209,8 +209,12 @@
     methods: {
       getDateTime (value = null) {
         const date = this.disableDate
-          ? this.value ? moment(`${moment().tz(this.timeZone).format('YYYY-MM-DD')} ${this.value}`, `YYYY-MM-DD ${this.format}`).tz(this.timeZone) : moment().tz(this.timeZone)
-          : this.value ? moment(this.value, this.format).tz(this.timeZone) : moment().tz(this.timeZone)
+          ? this.value
+            ? moment(`${moment().tz(this.timeZone).format('YYYY-MM-DD')} ${this.value}`, `YYYY-MM-DD ${this.format}`).tz(this.timeZone)
+            : moment().tz(this.timeZone)
+          : this.value
+            ? moment(this.value, this.format).tz(this.timeZone)
+            : moment().tz(this.timeZone)
         return nearestMinutes(this.minuteInterval, date, moment)
       },
       getDateTimeFormat (day) {
