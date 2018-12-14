@@ -211,7 +211,7 @@
         return this.disableTime || this.rangeMode
       }
     },
-    created () {
+    mounted () {
       hasWindowAvailable()
         .then(() => {
           if (!this.locale) {
