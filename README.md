@@ -67,7 +67,6 @@ Here is an example of UMD implementation: https://codepen.io/louismazel/pen/jQWN
 | without-header   | Boolean | no   | false |
 | id  | string | no  | CtkDateTimePicker |
 | overlay | Boolean | no | true |
-| enable-button-validate | Boolean | no | false |
 | min-date (6)  | string | no  | - |
 | max-date (6)  | string | no  | - |
 | no-weekends-days | Boolean | no | false |
