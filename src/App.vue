@@ -33,7 +33,6 @@
           <ctk-date-time-picker
             v-model="value"
             :dark="darkMode"
-            locale="en"
             color="#96bf31"
           />
         </div>
