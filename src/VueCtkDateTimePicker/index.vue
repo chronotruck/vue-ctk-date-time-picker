@@ -64,6 +64,7 @@
       :range-mode="rangeMode"
       :disabled-dates="disabledDates"
       :dark="dark"
+      :disabled-hours="disabledHours"
       @change-date="changeDate"
       @validate="validate"
     />
@@ -146,13 +147,13 @@
       autoClose: {type: Boolean, default: false},
       disabled: {type: Boolean, default: false},
       overlay: {type: Boolean, default: true},
-      enableButtonValidate: {type: Boolean, default: false},
       disabledDates: { type: Array, default: Array },
       rangeMode: {type: Boolean, default: false},
       overlayBackground: {type: Boolean, default: false},
       withoutRangeShortcut: {type: Boolean, default: false},
       dark: {type: Boolean, default: false},
-      shortcutsTranslation: {type: Object, default: Object}
+      shortcutsTranslation: {type: Object, default: Object},
+      disabledHours: {type: Array, default: Array}
     },
     data () {
       return {
@@ -164,6 +165,9 @@
       }
     },
     computed: {
+      enableButtonValidate () {
+        return !this.inline && !this.autoClose
+      },
       isInline () {
         return this.withoutInput || this.inline
       },

@@ -22,7 +22,24 @@
           {{ darkMode ? 'Disable' : 'Enable' }} Dark Mode
         </button>
       </header>
-      <div class="container">
+      <div
+        v-if="devMode"
+        class="container">
+        <div
+          :class="{'dark': darkMode}"
+          class="component-container flex-1">
+          <p>Inititale value : '2018-04-05T04:26'</p>
+          <p>v-model = {{ value || 'null' }}</p>
+          <ctk-date-time-picker
+            v-model="value"
+            :dark="darkMode"
+            color="#96bf31"
+          />
+        </div>
+      </div>
+      <div
+        v-else
+        class="container">
         <div class="components-container flex">
           <div
             :class="{'dark': darkMode}"
@@ -37,7 +54,6 @@
               :max-date="maxDate"
               :dark="darkMode"
               color="#96bf31"
-              enable-button-validate
             />
             <br>
             <textarea
@@ -49,7 +65,6 @@
               :minute-interval="10"
               color="#96bf31"
               :dark="darkMode"
-              enable-button-validate
               :min-date="'2018-04-03'"
               :max-date="'2018-04-12'"
               />
@@ -67,7 +82,6 @@
               :shortcuts-translation="shortcutsTranslation"
               range-mode
               overlay-background
-              enable-button-validate
               color="purple"
               format="YYYY-MM-DD"
               formatted="ddd D MMM YYYY"
@@ -83,7 +97,6 @@
               range-mode
               overlay-background
               color="purple"
-              enable-button-validate
               format="YYYY-MM-DD"
               formatted="ddd D MMM YYYY"
               label="Select range"
@@ -126,7 +139,7 @@
           <div
             :class="{'dark': darkMode}"
             class="component-container flex-1">
-            <h3>TimePicker</h3>
+            <h3>TimePicker (with disabled-hours)</h3>
             <p>Inititale value : '14:26'</p>
             <p>v-model = {{ timePickerValue || 'null' }}</p>
             <ctk-date-time-picker
@@ -135,6 +148,7 @@
               :minute-interval="minuteInterval2"
               :disabled="false"
               :dark="darkMode"
+              :disabled-hours="disabledHours"
               formatted="h:mm a"
               format="HH:mm"
               time-format="h:mm a"
@@ -149,6 +163,7 @@
               <ctk-date-time-picker
               v-model="yourValue"
               :dark="darkMode"
+              :disabled-hours="['00','01','02','03','04','05','06','07','19','20','21','22','23']"
               formatted="h:mm a"
               format="HH:mm"
               time-format="h:mm a"
@@ -249,7 +264,7 @@
 </template>
 
 <script>
-  import CtkDateTimePicker from './vue-ctk-date-time-picker/vue-ctk-date-time-picker.vue'
+  import CtkDateTimePicker from './VueCtkDateTimePicker'
 
   export default {
     name: 'App',
@@ -258,6 +273,7 @@
     },
     data () {
       return {
+        devMode: false,
         value: '2018-04-05T04:26',
         value2: null,
         value3: '2018-04-05T14:26',
@@ -285,14 +301,23 @@
           'last_month': 'Mois précédent',
           'last_year': 'L\'année dernière'
         },
-        disabledDates: ['2018-04-03', '2018-04-07', '2018-04-09', '2018-04-11', '2018-04-13', '2018-04-15', '2018-04-17', '2018-04-19']
+        disabledDates: ['2018-04-03', '2018-04-07', '2018-04-09', '2018-04-11', '2018-04-13', '2018-04-15', '2018-04-17', '2018-04-19'],
+        disabledHours: Array.from(new Array(8), (x, i) => `0${i}`).concat(
+          Array.from(new Array(23), (x, i) => {
+            if (i + 1 > 18) {
+              return `${i + 1}`
+            } else {
+              return null
+            }
+          })
+        )
       }
     }
   }
 </script>
 
 <style lang="scss">
-  @import "./vue-ctk-date-time-picker/assets/main.scss";
+  @import "./VueCtkDateTimePicker/assets/main.scss";
   html, body, #app, #vueCtkDateTimePicker {
     margin: 0;
     min-height: 100%;

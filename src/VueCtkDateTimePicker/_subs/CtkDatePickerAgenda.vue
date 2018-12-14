@@ -100,12 +100,13 @@
             :visible="visible"
             :value="value"
             :dark="dark"
+            :disabled-hours="disabledHours"
             @change-time="selectTime"
           />
 
         </div>
         <ctk-button-validate
-          v-show="enableButtonValidate && !inline && !autoClose"
+          v-if="enableButtonValidate"
           :dark="dark"
           class="button-validate flex-fixed"
           @validate="validate"
@@ -147,7 +148,8 @@
       enableButtonValidate: { type: Boolean, default: Boolean },
       value: { type: [String, Object], default: String },
       disabledDates: { type: Array, default: Array },
-      dark: { type: Boolean, default: Boolean }
+      dark: { type: Boolean, default: Boolean },
+      disabledHours: { type: Array, default: Array }
     },
     data () {
       return {

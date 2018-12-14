@@ -58,7 +58,7 @@
 
         </div>
         <ctk-button-validate
-          v-if="enableButtonValidate && !inline && !autoClose"
+          v-if="enableButtonValidate"
           :dark="dark"
           @validate="validate"
         />
@@ -155,7 +155,9 @@
       },
       selectDate (dateTime) {
         this.$emit('change-date', dateTime)
-        this.$refs['calendar-shortcut'].unSelectAllShortcuts()
+        
+        if (this.$refs['calendar-shortcut'])
+          this.$refs['calendar-shortcut'].unSelectAllShortcuts()
       },
       selectShortcut (dateTime) {
         this.$emit('change-date', dateTime)
