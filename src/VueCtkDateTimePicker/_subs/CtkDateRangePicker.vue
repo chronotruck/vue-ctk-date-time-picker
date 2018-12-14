@@ -155,9 +155,10 @@
       },
       selectDate (dateTime) {
         this.$emit('change-date', dateTime)
-        
-        if (this.$refs['calendar-shortcut'])
+
+        if (!this.withoutRangeShortcut) {
           this.$refs['calendar-shortcut'].unSelectAllShortcuts()
+        }
       },
       selectShortcut (dateTime) {
         this.$emit('change-date', dateTime)
