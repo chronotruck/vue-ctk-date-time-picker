@@ -58,7 +58,7 @@
 
         </div>
         <ctk-button-validate
-          v-if="enableButtonValidate && !inline && !autoClose"
+          v-if="enableButtonValidate"
           :dark="dark"
           @validate="validate"
         />

@@ -22,7 +22,24 @@
           {{ darkMode ? 'Disable' : 'Enable' }} Dark Mode
         </button>
       </header>
-      <div class="container">
+      <div
+        v-if="devMode"
+        class="container">
+        <div
+          :class="{'dark': darkMode}"
+          class="component-container flex-1">
+          <p>Inititale value : '2018-04-05T04:26'</p>
+          <p>v-model = {{ value || 'null' }}</p>
+          <ctk-date-time-picker
+            v-model="value"
+            :dark="darkMode"
+            color="#96bf31"
+          />
+        </div>
+      </div>
+      <div
+        v-else
+        class="container">
         <div class="components-container flex">
           <div
             :class="{'dark': darkMode}"
@@ -37,7 +54,6 @@
               :max-date="maxDate"
               :dark="darkMode"
               color="#96bf31"
-              enable-button-validate
             />
             <br>
             <textarea
@@ -49,7 +65,6 @@
               :minute-interval="10"
               color="#96bf31"
               :dark="darkMode"
-              enable-button-validate
               :min-date="'2018-04-03'"
               :max-date="'2018-04-12'"
               />
@@ -67,7 +82,6 @@
               :shortcuts-translation="shortcutsTranslation"
               range-mode
               overlay-background
-              enable-button-validate
               color="purple"
               format="YYYY-MM-DD"
               formatted="ddd D MMM YYYY"
@@ -83,7 +97,6 @@
               range-mode
               overlay-background
               color="purple"
-              enable-button-validate
               format="YYYY-MM-DD"
               formatted="ddd D MMM YYYY"
               label="Select range"
@@ -260,6 +273,7 @@
     },
     data () {
       return {
+        devMode: false,
         value: '2018-04-05T04:26',
         value2: null,
         value3: '2018-04-05T14:26',
