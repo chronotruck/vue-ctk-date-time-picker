@@ -54,7 +54,6 @@
               :max-date="maxDate"
               :dark="darkMode"
               color="#96bf31"
-              enable-button-validate
             />
             <br>
             <textarea
@@ -66,7 +65,6 @@
               :minute-interval="10"
               color="#96bf31"
               :dark="darkMode"
-              enable-button-validate
               :min-date="'2018-04-03'"
               :max-date="'2018-04-12'"
               />
@@ -84,7 +82,6 @@
               :shortcuts-translation="shortcutsTranslation"
               range-mode
               overlay-background
-              enable-button-validate
               color="purple"
               format="YYYY-MM-DD"
               formatted="ddd D MMM YYYY"
@@ -100,7 +97,6 @@
               range-mode
               overlay-background
               color="purple"
-              enable-button-validate
               format="YYYY-MM-DD"
               formatted="ddd D MMM YYYY"
               label="Select range"
