@@ -245,10 +245,10 @@
         this.$emit('input', (this.rangeMode ? this.getRangeDatesTimeFormat(day) : this.getDateTimeFormat(day)))
         if (this.autoClose && this.rangeMode && (day.end && day.start)) {
           this.hideDatePicker()
-          this.$nextTick(() => this.$emit('finishDatePicker'))
+          this.$nextTick(() => this.$emit('finish-date-picker'))
         } else if (this.autoClose && !this.rangeMode) {
           this.hideDatePicker()
-          this.$nextTick(() => this.$emit('finishDatePicker'))
+          this.$nextTick(() => this.$emit('finish-date-picker'))
         }
       },
       showDatePicker () {
@@ -265,12 +265,12 @@
         this.agendaPosition = position ? 'top' : 'bottom'
 
         this.isVisible = true
-        this.$nextTick(() => this.$emit('showDatePicker'))
+        this.$nextTick(() => this.$emit('show-date-picker'))
       },
       hideDatePicker () {
         this.setBodyOverflow()
         this.isVisible = false
-        this.$nextTick(() => this.$emit('hideDatePicker'))
+        this.$nextTick(() => this.$emit('hide-date-picker'))
       },
       setBodyOverflow (value) {
         if (window.innerWidth < 412) {
@@ -288,11 +288,11 @@
       },
       cancel () {
         this.unFocus()
-        this.$nextTick(() => this.$emit('cancelDatePicker'))
+        this.$nextTick(() => this.$emit('cancel-date-picker'))
       },
       validate () {
         this.unFocus()
-        this.$nextTick(() => this.$emit('finishDatePicker'))
+        this.$nextTick(() => this.$emit('finish-date-picker'))
       }
     }
   }
