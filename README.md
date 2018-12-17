@@ -43,7 +43,7 @@ Vue.component('vue-ctk-date-time-picker', VueCtkDateTimePicker);
 <script src="${YOUR_PATH}/vue-ctk-date-time-picker.umd.min.js" charset="utf-8"></script>
 
 <script type="text/javascript">
-  Vue.component('vue-ctk-date-time-picker', window['vue-ctk-date-time-picker'].default);
+  Vue.component('vue-ctk-date-time-picker', window['vue-ctk-date-time-picker']);
 </script>
 ```
 Here is an example of UMD implementation: https://codepen.io/louismazel/pen/jQWNzQ
