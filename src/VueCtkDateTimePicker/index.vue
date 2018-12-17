@@ -1,11 +1,11 @@
 <template>
   <div
     :id="id"
-    :class="{'inline': inline, 'is-dark': dark}"
+    :class="{'inline': isInline, 'is-dark': dark}"
     class="ctk-date-time-picker"
   >
     <div
-      v-if="!inline"
+      v-if="!isInline"
       ref="parent"
       :class="{'is-focused': isFocus || isVisible, 'has-value': dateFormatted, 'has-error': errorHint, 'is-disabled': disabled}"
       class="field"
@@ -36,7 +36,7 @@
     </div>
 
     <div
-      v-if="overlay && isVisible && !inline"
+      v-if="overlay && isVisible && !isInline"
       :class="{'has-background': overlayBackground}"
       class="time-picker-overlay"
       @click.stop="unFocus"
@@ -57,7 +57,7 @@
       :min-date="minDate"
       :max-date="maxDate"
       :agenda-position="agendaPosition"
-      :inline="inline"
+      :inline="isInline"
       :no-weekends-days="noWeekendsDays"
       :enable-button-validate="enableButtonValidate"
       :auto-close="autoClose"
@@ -166,7 +166,7 @@
     },
     computed: {
       enableButtonValidate () {
-        return !this.inline && !this.autoClose
+        return !this.isInline && !this.autoClose
       },
       isInline () {
         return this.withoutInput || this.inline

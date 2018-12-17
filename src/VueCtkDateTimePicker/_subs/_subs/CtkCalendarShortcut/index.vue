@@ -40,7 +40,7 @@
     data () {
       return {
         shortcuts: [
-          { key: 'this_week', value: 'isoWeek', isHover: false, isSelected: false },
+          { key: 'this_week', value: 'week', isHover: false, isSelected: false },
           { key: 'last_7_days', value: 7, isHover: false, isSelected: false },
           { key: 'last_30_days', value: 30, isHover: false, isSelected: false },
           { key: 'this_month', value: 'month', isHover: false, isSelected: false },
@@ -82,9 +82,8 @@
         let dates = { start: null, end: null }
         this.unSelectAllShortcuts()
         shortcut.isSelected = true
-
         switch (value) {
-        case 'isoWeek': case 'month': case 'year':
+        case 'week': case 'month': case 'year':
           dates.start = moment().locale(this.locale).startOf(value)
           dates.end = moment().locale(this.locale).endOf(value)
           break

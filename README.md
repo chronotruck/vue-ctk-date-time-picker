@@ -71,7 +71,7 @@ Here is an example of UMD implementation: https://codepen.io/louismazel/pen/jQWN
 | max-date (6)  | string | no  | - |
 | no-weekends-days | Boolean | no | false |
 | auto-close | Boolean | no | false |
-| without-input | Boolean | no | false |
+| inline | Boolean | no | false |
 | overlay-background | Boolean | no | false |
 | disabled-dates (7) | Boolean | no | [] |
 | range-mode | Boolean | no | false |
@@ -112,7 +112,6 @@ Here is an example of UMD implementation: https://codepen.io/louismazel/pen/jQWN
 
 ## Upcoming features (Todo)
 
-- Disable specific hours & minutes on TimePicker
 - Custom shortcuts on RangeDatePicker
 - UI Improvements for TimePicker (Issue #35)
 - Custom elements for trigger the component
