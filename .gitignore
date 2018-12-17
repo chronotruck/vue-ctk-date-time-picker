@@ -4,6 +4,7 @@ npm-debug.log
 yarn-error.log
 dist/
 dist/**/*
+testing/
 
 # Editor directories and files
 .idea

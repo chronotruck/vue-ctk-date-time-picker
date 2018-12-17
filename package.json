@@ -10,7 +10,7 @@
     "lint": "eslint --ext .js,.vue src modules",
     "lint:fix": "eslint --ext .js,.vue src apps --fix",
     "build": "npm run lint && npm run build:lib && npm run build:demo",
-    "build:lib": "vue-cli-service build --target lib ./src/VueCtkDateTimePicker/index.vue",
+    "build:lib": "vue-cli-service build --target lib ./src/VueCtkDateTimePicker/index.vue && cp dist/vue-ctk-date-time-picker.css dist/vue-ctk-date-time-picker.min.css",
     "build:demo": "vue-cli-service build --dest demo --mode production",
     "test": "vue-cli-service test:unit /test/specs",
     "serve": "vue-cli-service serve --mode development",
@@ -29,8 +29,6 @@
     "vue": "^2.5.16"
   },
   "devDependencies": {
-    "@vue/cli": "3.1.3",
-    "@vue/cli-service": "3.1.4",
     "@babel/core": "^7.0.0",
     "@babel/plugin-proposal-class-properties": "^7.0.0",
     "@babel/plugin-proposal-decorators": "^7.0.0",
@@ -44,6 +42,8 @@
     "@babel/plugin-syntax-jsx": "^7.0.0",
     "@babel/plugin-transform-runtime": "^7.0.0",
     "@babel/preset-env": "^7.0.0",
+    "@vue/cli": "3.1.3",
+    "@vue/cli-service": "3.1.4",
     "autoprefixer": "^8.0.0",
     "babel-eslint": "^9.0.0",
     "babel-loader": "^8.0.4",
