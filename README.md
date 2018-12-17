@@ -112,7 +112,6 @@ Here is an example of UMD implementation: https://codepen.io/louismazel/pen/jQWN
 
 ## Upcoming features (Todo)
 
-- Disable specific hours & minutes on TimePicker
 - Custom shortcuts on RangeDatePicker
 - UI Improvements for TimePicker (Issue #35)
 - Custom elements for trigger the component
