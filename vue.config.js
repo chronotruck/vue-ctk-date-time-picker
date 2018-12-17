@@ -11,6 +11,5 @@ module.exports = {
     watchOptions: {
       poll: true
     }
-  },
-  css: { extract: false }
+  }
 }
