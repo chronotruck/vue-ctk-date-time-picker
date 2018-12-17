@@ -35,14 +35,15 @@ Vue.component('vue-ctk-date-time-picker', VueCtkDateTimePicker);
 ### UMD
 
 ```html
+<link rel="stylesheet" type="text/css" href="${YOUR_PATH}/vue-ctk-date-time-picker.css">
+
 <vue-ctk-date-time-picker></vue-ctk-date-time-picker>
 
 <script src="https://unpkg.com/vue" charset="utf-8"></script>
-<script src="./dist/vue-ctk-date-time-picker.umd.min.js" charset="utf-8"></script>
-<link rel="stylesheet" type="text/css" href="./dist/vue-ctk-date-time-picker.css">
+<script src="${YOUR_PATH}/vue-ctk-date-time-picker.umd.min.js" charset="utf-8"></script>
 
 <script type="text/javascript">
-  Vue.component('vue-ctk-date-time-picker', window.VueCtkDateTimePicker.default);
+  Vue.component('vue-ctk-date-time-picker', window['vue-ctk-date-time-picker'].default);
 </script>
 ```
 Here is an example of UMD implementation: https://codepen.io/louismazel/pen/jQWNzQ
