@@ -123,22 +123,20 @@ Here is an example of UMD implementation: https://codepen.io/louismazel/pen/jQWN
 
 ## Contribution
 
-``` bash
-# install dependencies
+## Project setup
+```
 npm install
+```
 
-# serve with hot reload at localhost:8080
+### Compiles and hot-reloads for development
+```
 npm run serve
 ```
 
-## Build
+### Lints and fixes files
+```
+npm run lint
+```
 
-To build just run: `npm run build:lib`
-
-## Tests
-
-Work in progress
-
-## License
-
-This project is licensed under [MIT License](http://en.wikipedia.org/wiki/MIT_License)
+### Customize configuration
+See [Configuration Reference](https://cli.vuejs.org/config/).

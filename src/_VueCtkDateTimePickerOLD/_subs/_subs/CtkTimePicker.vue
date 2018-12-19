@@ -433,7 +433,6 @@
             transition: all 450ms cubic-bezier(0.23, 1, 0.32, 1) 0ms;
             .timepicker-day-effect {
               transform: scale(1);
-              opacity: 0.6;
             }
           }
           &.active,
