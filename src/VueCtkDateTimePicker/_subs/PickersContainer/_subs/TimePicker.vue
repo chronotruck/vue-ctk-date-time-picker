@@ -14,19 +14,25 @@
     >
       <button
         v-for="item in column.items"
-        :key="item"
+        :key="item.item"
         type="button"
         tabindex="-1"
         class="time-picker-column-item flex align-center justify-content-center"
-        :class="{active: (column.type === 'hours' ? hour : column.type === 'minutes' ? minute : apm) === item}"
-        @click="selectTime(item, column.type)"
+        :class="{
+          active: (column.type === 'hours'
+            ? hour
+            : column.type === 'minutes'
+              ? minute
+              : apm ? apm : null) === item.value
+        }"
+        @click="selectTime(item.value, column.type)"
       >
         <span
           :style="styleColor"
           class="time-picker-column-item-effect"
         />
         <span class="time-picker-column-item-text">
-          {{ item }}
+          {{ item.item }}
         </span>
       </button>
     </div>
@@ -34,17 +40,24 @@
 </template>
 <script>
   import moment from 'moment-timezone'
-  const ArrayHourRange = (start, end, twoDigit) => {
-    return Array(end - start + 1).fill().map((_, idx) => { 
-      const number = start + idx
-      return (twoDigit && (number < 10) ? '0' : '') + number
+  const ArrayHourRange = (start, end, twoDigit, isAfternoon) => {
+    return Array(end - start + 1).fill().map((_, idx) => {
+      const n = start + idx
+      const number = !isAfternoon ? n : n + 12
+      return {
+        value: number,
+        item: (twoDigit && (n < 10) ? '0' : '') + n
+      }
     })
   }
   const ArrayMinuteRange = (end, twoDigit, step = 1) => {
     const len = Math.floor(end / step)
     return Array(len).fill().map((_, idx) => {
       const number = idx * step
-      return (twoDigit && (number < 10) ? '0' : '') + number
+      return {
+        value: number,
+        item: (twoDigit && (number < 10) ? '0' : '') + number
+      }
     })
   }
 
@@ -55,7 +68,6 @@
       format: { type: String, default: String },
       minuteInterval: { type: Number, default: Number },
       month: { type: Object, default: Object },
-      dateTime: { type: Object, default: Object },
       color: { type: String, default: String },
       inline: { type: Boolean, default: Boolean },
       visible: { type: Boolean, default: Boolean },
@@ -94,15 +106,27 @@
       },
       hours () {
         const twoDigit = this.format.includes('hh') || this.format.includes('HH')
-        return ArrayHourRange(this.twelveFormat ? 1 : 0, this.twelveFormat ? 12 : 24, twoDigit)
+        const isAfternoon = this.apm ? this.apm === 'pm' || this.apm === 'PM' : false
+        return ArrayHourRange(
+          this.twelveFormat
+            ? 1
+            : 0,
+          this.twelveFormat
+            ? 12
+            : 23,
+          twoDigit,
+          isAfternoon
+        )
       },
       minutes () {
         const twoDigit = this.format.includes('mm') || this.format.includes('MM')
         return ArrayMinuteRange(60, twoDigit, this.minuteInterval)
       },
       apms () {
+        const upper = [{ value: 'AM', item: 'AM' }, { value: 'PM', item: 'PM' }]
+        const lower = [{ value: 'am', item: 'am' }, { value: 'pm', item: 'pm' }]
         return this.format.includes('A') || this.format.includes('a')
-          ? this.format.includes('A') ? ['AM', 'PM'] : ['am', 'pm']
+          ? this.format.includes('A') ? upper : lower
           : null
       },
       columns () {
@@ -125,11 +149,9 @@
     },
     methods: {
       buildComponent () {
-        const formattedFormat = this.format.replace('A', '').replace('a', '').replace(' ', '')
-        const formats = formattedFormat.split(':')
-        this.hour = moment(this.dateTime).format(formats[0])
-        this.minute = moment(this.dateTime).format(formats[1])
-        this.apm = this.apms ? moment(this.dateTime).format('HH') >= 12 ? this.apms[1] : this.apms[0] : null
+        this.hour = parseInt(moment(this.value, this.format).format('HH'))
+        this.minute = parseInt(moment(this.value, this.format).format('mm'))
+        this.apm = this.apms ? parseInt(moment(this.value, this.format).format('HH')) >= 12 ? this.apms[1].value : this.apms[0].value : null
         this.initPositionView()
       },
       columnPadding () {
@@ -137,7 +159,7 @@
         return {
           paddingTop: `${pad}px`,
           paddingBottom: `${pad}px`
-        }     
+        }
       },
       initPositionView () {
         const containers = ['hours', 'minutes']
@@ -168,11 +190,15 @@
         } else if (type === 'minutes') {
           this.minute = item
         } else if (type === 'apms') {
+          const newHour = item === 'pm' || item === 'PM' ? this.hour + 12 : this.hour - 12
+          this.hour = newHour
           this.apm = item
         }
-        const time = moment(`${this.hour}:${this.minute} ${this.apm}`, this.format).format('HH:mm')
-        const dateTime = moment(`${this.dateTime.format('YYYY-MM-DD')} ${time}`)
-        this.$emit('change-time', dateTime)
+        let hour = this.hour >= 24 ? 0 : this.hour
+        hour = (hour < 10 ? '0' : '') + hour
+        const minute = (this.minute < 10 ? '0' : '') + this.minute
+        const time = `${hour}:${minute}`
+        this.$emit('input', time)
         this.initPositionView()
       }
     }

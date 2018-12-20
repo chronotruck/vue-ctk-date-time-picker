@@ -14,6 +14,7 @@ module.exports = {
     'generator-star-spacing': 0,
     'arrow-parens': 0,
     'prefer-const': 2,
+    'no-trailing-spaces': 'error',
     'no-debugger': process.env.NODE_ENV === 'production' ? 2 : 0
   },
   parserOptions: {

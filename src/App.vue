@@ -40,10 +40,10 @@
           <CtkDateTimePicker
             v-model="timePickerValue"
             position="bottom"
-            format="H:mm"
             :dark="darkMode"
-            :open="true"
+            format="hh:mm a"
             only-time
+            open
           />
         </div>
       </div>
@@ -296,7 +296,7 @@
     data () {
       return {
         devMode: true,
-        value: '2018-04-05T04:26',
+        value: '2018-04-05T14:26',
         value2: null,
         value3: '2018-04-05T14:26',
         rangeValues: {
@@ -307,7 +307,7 @@
           start: null,
           end: null
         },
-        timePickerValue: '14:26',
+        timePickerValue: '11:26 am',
         minuteInterval: 5,
         minuteInterval2: 10,
         hint: 'Error message',

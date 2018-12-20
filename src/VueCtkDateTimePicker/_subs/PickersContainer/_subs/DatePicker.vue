@@ -114,7 +114,7 @@
   export default {
     name: 'DatePicker',
     props: {
-      dateTime: {type: Object, default: Object},
+      value: {type: String, default: String},
       color: {type: String, default: String},
       minDate: {type: String, default: String},
       maxDate: {type: String, default: String},
@@ -134,6 +134,9 @@
       }
     },
     computed: {
+      dateTime () {
+        return moment(this.value)
+      },
       bgStyle () {
         return {
           backgroundColor: this.color
@@ -203,17 +206,17 @@
         return this.noWeekendsDays ? weekendsDaysNumbers.indexOf(dayConst) > -1 : false
       },
       selectDate (day) {
-        if (this.rangeMode) {
-          if (!this.dateTime.start || this.dateTime.end || day.isBefore(this.dateTime.start)) {
-            this.dateTime.start = day
-            this.dateTime.end = null
-          } else {
-            this.dateTime.end = day
-          }
-          this.$emit('change-date', this.dateTime)
-        } else {
-          this.$emit('change-date', day)
-        }
+        // if (this.rangeMode) {
+        //   if (!this.dateTime.start || this.dateTime.end || day.isBefore(this.dateTime.start)) {
+        //     this.dateTime.start = day
+        //     this.dateTime.end = null
+        //   } else {
+        //     this.dateTime.end = day
+        //   }
+        //   this.$emit('input', moment(this.dateTime).format('YYYY-MM-DD'))
+        // } else {
+        this.$emit('input', moment(day).format('YYYY-MM-DD'))
+        // }
       },
       changeMonth (val) {
         this.transitionDaysName = `slide${val}`

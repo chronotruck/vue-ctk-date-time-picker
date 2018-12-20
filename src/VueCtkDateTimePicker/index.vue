@@ -7,7 +7,7 @@
   >
     <CustomInput
       ref="custom-input"
-      :value="dateFormatted"
+      v-model="dateFormatted"
       :disabled="disabled"
       :dark="dark"
       :hint="hint"
@@ -23,13 +23,12 @@
     />
     <PickersContainer
       ref="agenda"
-      v-model="value"
+      v-model="dateTime"
       :visible="hasPickerOpen"
       :position="pickerPosition"
       :inline="inline"
       :color="color"
       :dark="dark"
-      :date-time="dateTime"
       :no-header="noHeader"
       :only-time="onlyTime"
       :only-date="hasOnlyDate"
@@ -44,7 +43,6 @@
       :range="range"
       :disabled-dates="disabledDates"
       :disabled-hours="disabledHours"
-      @change-date="changeDate"
       @validate="validate"
     />
   </div>
@@ -65,10 +63,10 @@
     return (window.navigator.userLanguage || window.navigator.language || 'en').substr(0, 2)
   }
 
-  const nearestMinutes = (interval, someMoment, m) => {
-    const roundedMinutes = Math.ceil(someMoment.minute() / interval) * interval
-    return m(someMoment.clone().minute(roundedMinutes).second(0))
-  }
+  // const nearestMinutes = (interval, someMoment, m) => {
+  //   const roundedMinutes = Math.ceil(someMoment.minute() / interval) * interval
+  //   return m(someMoment.clone().minute(roundedMinutes).second(0))
+  // }
 
   export default {
     name: 'VueCtkDateTimePicker',
@@ -94,7 +92,7 @@
       locale: { type: String, default: getDefaultLocale() },
       timeZone: { type: String, default: getDefaultTZ() },
       formatted: { type: String, default: 'llll' },
-      format: { type: String, default: 'YYYY-MM-DD H:mm a' },
+      format: { type: String, default: 'YYYY-MM-DD HH:mm' },
       minuteInterval: { type: Number, default: 1 },
       minDate: { type: String, default: String },
       maxDate: { type: String, default: String },
@@ -121,9 +119,6 @@
       hasPickerOpen () {
         return this.pickerOpen
       },
-      dateTime () {
-        return this.range ? this.getRangeDatesTime() : this.getDateTime()
-      },
       hasButtonValidate () {
         return !this.isInline && !this.autoClose
       },
@@ -139,21 +134,25 @@
           ? { borderColor: this.color }
           : null
       },
-      dateFormatted () {
-        return this.range ? this.getRangeDatesFormatted() : this.dateTimeFormatted
-      },
       hasOnlyDate () {
         return this.onlyDate || this.range
       },
-      dateTimeFormatted () {
-        const date = this.onlyTime
-          ? this.value
-            ? moment(`${moment().format('YYYY-MM-DD')} ${moment(this.value, this.format).format('HH:mm')}`).format(this.formatted)
-            : moment()
-          : this.value
-            ? moment(this.value).format(this.formatted)
-            : moment()
-        return date
+      dateFormatted () {
+        return this.onlyTime
+          ? moment(this.value, this.format).format(this.formatted)
+          : moment(this.value).format(this.formatted)
+      },
+      dateTime: {
+        get () {
+          const date = this.onlyTime
+            ? moment(this.value, this.format).format('HH:mm')
+            : moment(this.value).format('YYYY-MM-DD HH:mm')
+          return date
+        },
+        set (value) {
+          const date = moment(value).format(this.format)
+          this.$emit('input', date)
+        }
       }
     },
     watch: {
@@ -164,34 +163,9 @@
     created () {
       moment.tz(this.timeZone)
       moment.locale(this.locale)
-      this.$emit('input', moment(this.getDateTime()).format(this.format))
+      // this.$emit('input', this.dateTime)
     },
     methods: {
-      getDateTime () {
-        const date = this.onlyTime
-          ? this.value
-            ? moment(`${moment().format('YYYY-MM-DD')} ${this.value}`, `YYYY-MM-DD ${this.format}`)
-            : moment()
-          : this.value
-            ? moment(this.value, this.format)
-            : moment()
-        return nearestMinutes(this.minuteInterval, date, moment)
-      },
-      getRangeDatesTime () {
-        const hasStartValues = this.value && this.value.start
-        const hasEndValues = this.value && this.value.end
-        return { start: hasStartValues ? moment(this.value.start, this.format) : null, end: hasEndValues ? moment(this.value.end, this.format) : null }
-      },
-      getDateTimeFormat (day) {
-        return nearestMinutes(this.minuteInterval, day, moment).format(this.format)
-      },
-      getRangeDatesTimeFormat (day) {
-        const { start, end } = day
-        return {
-          start: start ? moment(start).format(this.format) : null,
-          end: end ? moment(end).format(this.format) : null
-        }
-      },
       toggleDatePicker () {
         this.getPosition()
         this.pickerOpen = !this.pickerOpen
@@ -208,15 +182,7 @@
           datePickerHeight = this.noHeader ? 428 - 65 : datePickerHeight
 
           const position = ((windowHeight - (rect.top + rect.height)) > datePickerHeight) || ((windowHeight - rect.top) > windowHeight / 2 + rect.height)
-          this.pickerPosition = position ? 'top' : 'bottom' 
-        }
-      },
-      changeDate (day) {
-        this.$emit('input', (this.rangeMode ? this.getRangeDatesTimeFormat(day) : this.getDateTimeFormat(day)))
-        if (this.autoClose && this.rangeMode && (day.end && day.start)) {
-          this.hideDatePicker()
-        } else if (this.autoClose && !this.rangeMode) {
-          this.hideDatePicker()
+          this.pickerPosition = position ? 'top' : 'bottom'
         }
       },
       validate () {

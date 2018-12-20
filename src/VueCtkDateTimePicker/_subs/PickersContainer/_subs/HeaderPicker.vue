@@ -1,5 +1,5 @@
 <template>
-  <div 
+  <div
     :style="bgStyle"
     class="header-picker"
   >
@@ -71,7 +71,7 @@
           class="dots-text header-picker-hour"
         >
           <span
-            v-for="hour in [dateTime.format(format)]"
+            v-for="hour in [dateTime.format(timeFormat)]"
             :key="hour"
           >
             {{ hour }}
@@ -88,11 +88,12 @@
   export default {
     name: 'HeaderPicker',
     props: {
+      value: { type: String, default: String },
       color: { type: String, default: String },
       onlyTime: { type: Boolean, default: Boolean },
-      dateTime: {type: Object, default: Object},
       transitionName: { type: String, default: String },
-      format: { type: String, default: String }
+      format: { type: String, default: String },
+      timeFormat: { type: String, default: String }
     },
     computed: {
       bgStyle () {
@@ -101,11 +102,17 @@
           padding: this.onlyTime ? '10px 0' : '10px 0 10px 10px'
         }
       },
+      dateTime () {
+        const date = this.onlyTime
+          ? moment(this.value, this.format)
+          : moment(this.value)
+        return date
+      },
       year () {
-        return moment(this.dateTime).format('YYYY')
+        return this.dateTime.format('YYYY')
       },
       getDateFormatted () {
-        return moment(this.dateTime).format('ddd D MMM')
+        return this.dateTime.format('ddd D MMM')
       },
       isFormatTwelve () {
         return this.format ? (this.format.indexOf('a') > -1) || (this.format.indexOf('A') > -1) : false

@@ -15,16 +15,18 @@
       >
         <HeaderPicker
           v-if="!noHeader"
+          v-model="value"
           :color="color"
-          :date-time="dateTime"
           :only-time="onlyTime"
           :format="format"
+          :time-format="timeFormat"
           :transition-name="transitionName"
         />
         <div class="pickers-container flex">
+          <!-- NEED 'YYYY-MM-DD' format -->
           <DatePicker
             v-if="!onlyTime"
-            :date-time="dateTime"
+            v-model="date"
             :dark="dark"
             :month="month"
             :inline="inline"
@@ -33,13 +35,13 @@
             :min-date="minDate"
             :max-date="maxDate"
             :disabled-dates="disabledDates"
-            @change-date="selectDate"
             @change-month="changeMonth"
           />
+          <!-- NEED 'HH:mm' format -->
           <TimePicker
+            ref="TimePicker"
             v-if="!onlyDate"
-            ref="timePickerComponent"
-            :date-time="dateTime"
+            v-model="time"
             :dark="dark"
             :month="month"
             :color="color"
@@ -48,7 +50,6 @@
             :minute-interval="minuteInterval"
             :visible="visible"
             :disabled-hours="disabledHours"
-            @change-time="selectTime"
           />
         </div>
         <ButtonValidate
@@ -63,11 +64,13 @@
 </template>
 
 <script>
+  import moment from 'moment-timezone'
+
   import DatePicker from './_subs/DatePicker'
   import TimePicker from './_subs/TimePicker'
   import HeaderPicker from './_subs/HeaderPicker'
   import ButtonValidate from './_subs/ButtonValidate'
-  
+
   import Month from '@/VueCtkDateTimePicker/modules/month'
 
   export default {
@@ -83,7 +86,6 @@
       dark: { type: Boolean, default: false },
       noHeader: { type: Boolean, default: Boolean },
       color: { type: String, default: String },
-      dateTime: { type: Object, default: Object },
       onlyDate: { type: Boolean, default: false },
       onlyTime: { type: Boolean, default: Boolean },
       minuteInterval: { type: Number, default: Number },
@@ -100,7 +102,6 @@
     data () {
       return {
         month: this.getMonth(),
-        timeWidth: !this.disableTime ? this.getTimePickerWidth() : null,
         transitionName: 'slidevnext'
       }
     },
@@ -112,36 +113,71 @@
       },
       timeFormat () {
         return this.onlyTime
-          ? this.format : this.getTimeFormat()
+          ? this.format
+          : this.getTimeFormat()
+      },
+      dateFormat () {
+        return this.onlyTime
+          ? null
+          : this.getDateFormat()
+      },
+      time: {
+        set (value) {
+          this.emitValue({
+            value: value,
+            type: 'time'
+          })
+        },
+        get () {
+          return this.onlyTime
+            ? moment(this.value, this.timeFormat).format('HH:mm')
+            : moment(this.value).format('HH:mm')
+        }
+      },
+      date: {
+        set (value) {
+          this.emitValue({
+            value: value,
+            type: 'date'
+          })
+        },
+        get () {
+          return this.onlyTime
+            ? null
+            : moment(this.value).format('YYYY-MM-DD')
+        }
       }
     },
     methods: {
+      emitValue (payload) {
+        const date = !this.onlyTime
+          ? payload.type === 'date'
+            ? `${payload.value} ${this.time}`
+            : `${this.date} ${payload.value}`
+          : `${moment().format('YYYY-MM-DD')} ${payload.value}`
+        const isBigger = moment(date) > moment(`${this.date || moment().format('YYYY-MM-DD')} ${this.time}`)
+        this.transitionName = isBigger ? 'slidevnext' : 'slidevprev'
+        this.$emit('input', date)
+      },
+      getDateFormat () {
+        const hasTime = this.format.includes('T')
+        return hasTime ? this.format.split('T')[0] : this.format.split(' ')[0]
+      },
       getTimeFormat () {
         const formatLower = this.format.toLowerCase()
         const hasTimeFormat = formatLower.includes('h')
         if (hasTimeFormat) {
           const hasTime = this.format.includes('T')
-          return hasTime ? this.format.split('T')[1] : this.format.split(' ')[1]
+          return hasTime ? this.format.split('T')[1] : this.format.split(' ').slice(1).join(' ')
         } else {
-          window.console.warn('A time format must be indicated') 
+          window.console.warn('A time format must be indicated')
         }
       },
       getMonth () {
-        const date = this.dateTime
+        const date = this.onlyTime
+          ? moment(this.value, this.format)
+          : moment(this.value)
         return new Month(date.month(), date.year())
-      },
-      selectTime (dateTime) {
-        const isBigger = dateTime > this.dateTime
-        this.transitionName = isBigger ? 'slidevnext' : 'slidevprev'
-        this.$emit('change-date', dateTime)
-      },
-      selectDate (dateTime) {
-        const isBefore = dateTime.isBefore(this.dateTime)
-        this.transitionName = isBefore ? 'slidevprev' : 'slidevnext'
-        const date = this.dateTime
-        dateTime.add(date.hour(), 'hours')
-        dateTime.add(date.minute(), 'minutes')
-        this.$emit('change-date', dateTime)
       },
       changeMonth (val) {
         let month = this.month.month + (val === 'prev' ? -1 : +1)
@@ -151,17 +187,6 @@
           month = (val === 'prev' ? 11 : 0)
         }
         this.month = new Month(month, year)
-      },
-      getTimePickerWidth () {
-        const timePickerComponentPresent = this.$refs.timePickerComponent && this.$refs.timePickerComponent.$el.clientWidth
-        const width = timePickerComponentPresent ? this.$refs.timePickerComponent.$el.clientWidth : 160
-        const result = {
-          flex: `0 0 ${width}px`,
-          width: `${width}px`,
-          minWidth: `${width}px`,
-          maxWidth: `${width}px`
-        }
-        return result
       },
       validate () {
         this.$emit('validate')

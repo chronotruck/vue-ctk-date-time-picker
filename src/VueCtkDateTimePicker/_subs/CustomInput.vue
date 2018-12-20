@@ -4,8 +4,8 @@
     :class="{
       'is-focused': isFocus,
       'has-value': value,
-      'has-error': errorHint, 
-      'is-disabled': disabled, 
+      'has-error': errorHint,
+      'is-disabled': disabled,
       'is-dark': dark
     }"
     class="field"
