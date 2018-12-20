@@ -2,16 +2,16 @@
   <div
     :id="id"
     ref="parent"
-    class="date-time-picker"
     v-click-outside="() => { pickerOpen = false }"
+    class="date-time-picker"
   >
-    <custom-input
+    <CustomInput
       ref="custom-input"
       :value="dateFormatted"
       :disabled="disabled"
       :dark="dark"
       :hint="hint"
-      :errorHint="errorHint"
+      :error-hint="errorHint"
       :is-focus="hasPickerOpen"
       :color="color"
       @click.native="toggleDatePicker"
@@ -21,7 +21,7 @@
       class="time-picker-overlay"
       @click.stop="toggleDatePicker"
     />
-    <pickers-container
+    <PickersContainer
       ref="agenda"
       v-model="value"
       :visible="hasPickerOpen"
@@ -116,11 +116,6 @@
         pickerPosition: this.position
       }
     },
-    watch: {
-      open (val) {
-        this.pickerOpen = val
-      }
-    },
     computed: {
       hasPickerOpen () {
         return this.pickerOpen
@@ -158,6 +153,11 @@
             ? moment(this.value).format(this.formatted)
             : moment()
         return date
+      }
+    },
+    watch: {
+      open (val) {
+        this.pickerOpen = val
       }
     },
     created () {

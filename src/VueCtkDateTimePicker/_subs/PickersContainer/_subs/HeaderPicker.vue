@@ -1,57 +1,80 @@
 <template>
   <div 
     :style="bgStyle"
-    class="header-picker">
+    class="header-picker"
+  >
     <div
       v-if="!onlyTime"
-      class="header-picker-year">
-      <transition-group :name="transitionName" >
+      class="header-picker-year"
+    >
+      <TransitionGroup :name="transitionName">
         <div
           v-for="year in [year]"
-          :key="year">{{ year }}</div>
-      </transition-group>
+          :key="year"
+        >
+          {{ year }}
+        </div>
+      </TransitionGroup>
     </div>
 
     <div class="flex justify-content-between">
-      <transition-group
+      <TransitionGroup
         v-if="!onlyTime"
         :name="transitionName"
-        class="header-picker-date dots-text flex-1">
+        class="header-picker-date dots-text flex-1"
+      >
         <span
           v-for="dateFormatted in [getDateFormatted]"
-          :key="dateFormatted">{{ getDateFormatted }}</span>
-      </transition-group>
+          :key="dateFormatted"
+        >
+          {{ getDateFormatted }}
+        </span>
+      </TransitionGroup>
       <div
         v-if="!isFormatTwelve"
         class="header-picker-time flex justify-content-center"
-        :class="{'flex-1': onlyTime}">
-        <transition-group
+        :class="{'flex-1': onlyTime}"
+      >
+        <TransitionGroup
           :name="transitionName"
-          class="dots-text header-picker-hour flex-1 flex justify-content-right">
+          class="dots-text header-picker-hour flex-1 flex justify-content-right"
+        >
           <span
             v-for="hour in [dateTime.format('HH')]"
-            :key="hour">{{ hour }}</span>
-        </transition-group>
+            :key="hour"
+          >
+            {{ hour }}
+          </span>
+        </TransitionGroup>
         <span>:</span>
-        <transition-group
+        <TransitionGroup
           :name="transitionName"
-          class="dots-text header-picker-minute flex-1 flex justify-content-left">
+          class="dots-text header-picker-minute flex-1 flex justify-content-left"
+        >
           <span
             v-for="min in [dateTime.format('mm')]"
-            :key="min">{{ min }}</span>
-        </transition-group>
+            :key="min"
+          >
+            {{ min }}
+          </span>
+        </TransitionGroup>
       </div>
       <div
         v-else
         class="header-picker-time flex justify-content-center"
-        :class="{'flex-1': onlyTime}">
-        <transition-group
+        :class="{'flex-1': onlyTime}"
+      >
+        <TransitionGroup
           :name="transitionName"
-          class="dots-text header-picker-hour flex-1 flex justify-content-center">
+          class="dots-text header-picker-hour flex-1 flex justify-content-center"
+        >
           <span
             v-for="hour in [dateTime.format(format)]"
-            :key="hour">{{ hour }}</span>
-        </transition-group>
+            :key="hour"
+          >
+            {{ hour }}
+          </span>
+        </TransitionGroup>
       </div>
     </div>
   </div>

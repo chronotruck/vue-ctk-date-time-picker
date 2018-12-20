@@ -12,8 +12,8 @@
       @click="showDatePicker"
     >
       <input
-        ref="CtkDateTimePicker"
         :id="id"
+        ref="CtkDateTimePicker"
         :value="dateFormatted"
         :placeholder="label"
         :disabled="disabled"
@@ -32,7 +32,6 @@
       >
         {{ hint || label }}
       </label>
-
     </div>
 
     <div
@@ -41,7 +40,7 @@
       class="time-picker-overlay"
       @click.stop="unFocus"
     />
-    <ctk-date-picker-agenda
+    <CtkDatePickerAgenda
       v-if="!rangeMode"
       ref="agenda"
       v-model="value"
@@ -68,7 +67,7 @@
       @change-date="changeDate"
       @validate="validate"
     />
-    <ctk-date-range-picker
+    <CtkDateRangePicker
       v-else
       ref="range"
       v-model="value"

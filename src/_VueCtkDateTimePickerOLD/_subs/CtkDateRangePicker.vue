@@ -1,5 +1,5 @@
 <template>
-  <transition
+  <Transition
     :name="agendaPosition === 'top' ? 'slide' : 'slideinvert'"
   >
     <div
@@ -11,23 +11,25 @@
     >
       <div
         :style="position"
-        class="datepicker flex flex-direction-column">
+        class="datepicker flex flex-direction-column"
+      >
         <div
           v-if="withoutHeader"
           :style="bgStyle"
-          class="datepicker-header">
-
+          class="datepicker-header"
+        >
           <div class="datepicker-year">
             <div>{{ year }}</div>
           </div>
 
           <div class="flex justify-content-between">
-            <span class="datepicker-date dots-text flex-1">{{ getRangeDatesFormatted }}</span>
+            <span class="datepicker-date dots-text flex-1">
+              {{ getRangeDatesFormatted }}
+            </span>
           </div>
         </div>
         <div class="datetimepicker-container flex">
-
-          <ctk-calendar-shortcut
+          <CtkCalendarShortcut
             v-if="!withoutRangeShortcut"
             ref="calendar-shortcut"
             :color="color"
@@ -38,7 +40,7 @@
             @change-range="selectShortcut"
           />
 
-          <ctk-date-picker
+          <CtkDatePicker
             :inline="inline"
             :no-weekends-days="noWeekendsDays"
             :month="month"
@@ -55,16 +57,15 @@
             @change-date="selectDate"
             @change-month="changeMonth"
           />
-
         </div>
-        <ctk-button-validate
+        <CtkButtonValidate
           v-if="enableButtonValidate"
           :dark="dark"
           @validate="validate"
         />
       </div>
     </div>
-  </transition>
+  </Transition>
 </template>
 
 <script>

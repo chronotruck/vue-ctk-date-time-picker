@@ -1,5 +1,5 @@
 <template>
-  <transition
+  <Transition
     :name="agendaPosition === 'top' ? 'slide' : 'slideinvert'"
   >
     <div
@@ -11,68 +11,91 @@
     >
       <div
         :style="position"
-        class="datepicker flex flex-direction-column">
+        class="datepicker flex flex-direction-column"
+      >
         <div
           v-if="withoutHeader"
           :style="bgStyle"
-          class="datepicker-header">
-
+          class="datepicker-header"
+        >
           <div
             v-if="!disableDate"
-            class="datepicker-year">
-            <transition-group :name="transitionDayName" >
+            class="datepicker-year"
+          >
+            <TransitionGroup :name="transitionDayName">
               <div
                 v-for="year in [year]"
-                :key="year">{{ year }}</div>
-            </transition-group>
+                :key="year"
+              >
+                {{ year }}
+              </div>
+            </TransitionGroup>
           </div>
 
           <div class="flex justify-content-between">
-            <transition-group
+            <TransitionGroup
               v-if="!disableDate"
               :name="transitionDayName"
-              class="datepicker-date dots-text flex-1">
+              class="datepicker-date dots-text flex-1"
+            >
               <span
                 v-for="dateFormatted in [getDateFormatted()]"
-                :key="dateFormatted">{{ getDateFormatted() }}</span>
-            </transition-group>
+                :key="dateFormatted"
+              >
+                {{ getDateFormatted() }}
+              </span>
+            </TransitionGroup>
             <div
               v-if="!disableTime && !isFormatTwelve"
               :style="timeWidth"
-              class="datepicker-time flex justify-content-center">
-              <transition-group
+              class="datepicker-time flex justify-content-center"
+            >
+              <TransitionGroup
                 :name="transitionDayName"
-                class="dots-text datepicker-hour flex-1 flex justify-content-right">
+                class="dots-text datepicker-hour flex-1 flex justify-content-right"
+              >
                 <span
                   v-for="hour in [dateTime.format('HH')]"
-                  :key="hour">{{ hour }}</span>
-              </transition-group>
+                  :key="hour"
+                >
+                  {{ hour }}
+                </span>
+              </TransitionGroup>
               <span>:</span>
-              <transition-group
+              <TransitionGroup
                 :name="transitionDayName"
-                class="dots-text datepicker-minute flex-1 flex justify-content-left">
+                class="dots-text datepicker-minute flex-1 flex justify-content-left"
+              >
                 <span
                   v-for="min in [dateTime.format('mm')]"
-                  :key="min">{{ min }}</span>
-              </transition-group>
+                  :key="min"
+                >
+                  {{ min }}
+                </span>
+              </TransitionGroup>
             </div>
             <div
               v-else-if="!disableTime"
               :style="timeWidth"
-              class="datepicker-time flex">
-              <transition-group
+              class="datepicker-time flex"
+            >
+              <TransitionGroup
                 :name="transitionDayName"
                 :class="{'justify-content-center': disableDate}"
-                class="dots-text datepicker-hour flex-1 flex">
+                class="dots-text datepicker-hour flex-1 flex"
+              >
                 <span
                   v-for="hour in [dateTime.format(timeFormat)]"
-                  :key="hour">{{ hour }}</span>
-              </transition-group>
+                  :key="hour"
+                >
+                  {{ hour }}
+                </span>
+              </TransitionGroup>
             </div>
           </div>
         </div>
         <div class="datetimepicker-container flex">
-          <ctk-date-picker
+          <CtkDatePicker
             v-if="!disableDate"
             :inline="inline"
             :no-weekends-days="noWeekendsDays"
@@ -88,7 +111,7 @@
             @change-month="changeMonth"
           />
 
-          <ctk-time-picker
+          <CtkTimePicker
             v-if="!disableTime"
             ref="timePickerComponent"
             :month="month"
@@ -103,9 +126,8 @@
             :disabled-hours="disabledHours"
             @change-time="selectTime"
           />
-
         </div>
-        <ctk-button-validate
+        <CtkButtonValidate
           v-if="enableButtonValidate"
           :dark="dark"
           class="button-validate flex-fixed"
@@ -113,7 +135,7 @@
         />
       </div>
     </div>
-  </transition>
+  </Transition>
 </template>
 
 <script>

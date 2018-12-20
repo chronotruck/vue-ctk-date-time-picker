@@ -5,8 +5,8 @@
   >
     <button
       v-for="shortcut in shortcuts"
-      :style="[shortcut.isSelected ? getSelectedStyle : getStyle]"
       :key="shortcut.value"
+      :style="[shortcut.isSelected ? getSelectedStyle : getStyle]"
       :class="{ 'is-selected': shortcut.isSelected }"
       class="shortcut-button"
       tabindex="-1"

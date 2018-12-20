@@ -1,8 +1,8 @@
 <template>
   <div
+    ref="time-picker"
     :class="{'inline': inline, 'is-dark': dark }"
     :style="[{height: `${getHeight}px`}]"
-    ref="time-picker"
     class="time-picker flex"
   >
     <div
@@ -10,7 +10,8 @@
       :key="column.type"
       :ref="column.type"
       :style="[columnPadding()]"
-      class="time-picker-column flex-1 flex flex-direction-column text-center">
+      class="time-picker-column flex-1 flex flex-direction-column text-center"
+    >
       <button
         v-for="item in column.items"
         :key="item"
@@ -18,11 +19,15 @@
         tabindex="-1"
         class="time-picker-column-item flex align-center justify-content-center"
         :class="{active: (column.type === 'hours' ? hour : column.type === 'minutes' ? minute : apm) === item}"
-        @click="selectTime(item, column.type)">
+        @click="selectTime(item, column.type)"
+      >
         <span
-            :style="styleColor"
-            class="time-picker-column-item-effect"/>
-        <span class="time-picker-column-item-text">{{ item }}</span>
+          :style="styleColor"
+          class="time-picker-column-item-effect"
+        />
+        <span class="time-picker-column-item-text">
+          {{ item }}
+        </span>
       </button>
     </div>
   </div>

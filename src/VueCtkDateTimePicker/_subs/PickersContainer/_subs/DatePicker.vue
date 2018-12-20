@@ -2,35 +2,44 @@
   <div
     id="CtkDatePicker"
     :class="{'flex-1 inline': inline, 'p-0': rangeMode, 'is-dark': dark}"
-    class="datepicker-container">
+    class="datepicker-container"
+  >
     <div class="datepicker-controls flex align-center justify-content-center">
       <div class="arrow-month h-100">
         <button
           type="button"
           tabindex="-1"
           class="datepicker-button datepicker-prev text-center h-100 flex align-center"
-          @click="changeMonth('prev')">
-          <svg viewBox="0 0 1000 1000"><path d="M336.2 274.5l-210.1 210h805.4c13 0 23 10 23 23s-10 23-23 23H126.1l210.1 210.1c11 11 11 21 0 32-5 5-10 7-16 7s-11-2-16-7l-249.1-249c-11-11-11-21 0-32l249.1-249.1c21-21.1 53 10.9 32 32z"/></svg>
+          @click="changeMonth('prev')"
+        >
+          <svg viewBox="0 0 1000 1000">
+            <path d="M336.2 274.5l-210.1 210h805.4c13 0 23 10 23 23s-10 23-23 23H126.1l210.1 210.1c11 11 11 21 0 32-5 5-10 7-16 7s-11-2-16-7l-249.1-249c-11-11-11-21 0-32l249.1-249.1c21-21.1 53 10.9 32 32z" />
+          </svg>
         </button>
       </div>
       <div class="datepicker-container-label flex-1">
-        <transition-group
+        <TransitionGroup
           :name="transitionLabelName"
-          class="h-100 flex align-center justify-content-center">
+          class="h-100 flex align-center justify-content-center"
+        >
           <div
             v-for="month in [month]"
             :key="month.month"
             class="datepicker-label fs-16"
-            v-text="getMonthFormatted()"/>
-        </transition-group>
+            v-text="getMonthFormatted()"
+          />
+        </TransitionGroup>
       </div>
       <div class="arrow-month h-100 text-right">
         <button
           type="button"
           tabindex="-1"
           class="datepicker-button datepicker-next text-center h-100 flex align-center justify-content-right"
-          @click="changeMonth('next')">
-          <svg viewBox="0 0 1000 1000"><path d="M694.4 242.4l249.1 249.1c11 11 11 21 0 32L694.4 772.7c-5 5-10 7-16 7s-11-2-16-7c-11-11-11-21 0-32l210.1-210.1H67.1c-13 0-23-10-23-23s10-23 23-23h805.4L662.4 274.5c-21-21.1 11-53.1 32-32.1z"/></svg>
+          @click="changeMonth('next')"
+        >
+          <svg viewBox="0 0 1000 1000">
+            <path d="M694.4 242.4l249.1 249.1c11 11 11 21 0 32L694.4 772.7c-5 5-10 7-16 7s-11-2-16-7c-11-11-11-21 0-32l210.1-210.1H67.1c-13 0-23-10-23-23s10-23 23-23h805.4L662.4 274.5c-21-21.1 11-53.1 32-32.1z" />
+          </svg>
         </button>
       </div>
     </div>
@@ -38,22 +47,26 @@
       <div
         v-for="(weekDay, index) in weekDays"
         :key="index"
-        class="flex-1 text-muted fs-12 flex justify-content-center align-center">
+        class="flex-1 text-muted fs-12 flex justify-content-center align-center"
+      >
         {{ weekDay }}
       </div>
     </div>
     <div
       :style="{height: (monthDays.length + weekDay) > 35 ? '250px' : '210px'}"
-      class="month-container">
-      <transition-group :name="transitionDaysName">
+      class="month-container"
+    >
+      <TransitionGroup :name="transitionDaysName">
         <div
           v-for="month in [month]"
           :key="month.month"
-          class="datepicker-days flex">
+          class="datepicker-days flex"
+        >
           <button
             v-for="start in weekDay"
             :key="start + 'startEmptyDay'"
-            class="datepicker-day align-center justify-content-center"/>
+            class="datepicker-day align-center justify-content-center"
+          />
           <button
             v-for="day in monthDays"
             :key="day.format('D')"
@@ -69,22 +82,28 @@
             type="button"
             tabindex="-1"
             class="datepicker-day flex align-center justify-content-center"
-            @click="selectDate(day)">
+            @click="selectDate(day)"
+          >
             <span
               v-if="isToday(day)"
-              class="datepicker-today"/>
+              class="datepicker-today"
+            />
             <span
               v-show="!isDisabled(day) || isSelected(day)"
               :style="bgStyle"
-              class="datepicker-day-effect"/>
-            <span class="datepicker-day-text">{{ day.format('D') }}</span>
+              class="datepicker-day-effect"
+            />
+            <span class="datepicker-day-text">
+              {{ day.format('D') }}
+            </span>
           </button>
           <div
             v-for="end in endEmptyDays"
             :key="end + 'endEmptyDay'"
-            class="datepicker-day flex align-center justify-content-center"/>
+            class="datepicker-day flex align-center justify-content-center"
+          />
         </div>
-      </transition-group>
+      </TransitionGroup>
     </div>
   </div>
 </template>

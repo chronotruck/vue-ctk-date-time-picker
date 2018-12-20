@@ -5,10 +5,13 @@
     class="timepicker-container flex"
   >
     <div class="time-container hours-container flex flex-1 flex-direction-column">
-      <div class="flex align-center justify-content-center time-label text-muted">{{ hourType }}</div>
+      <div class="flex align-center justify-content-center time-label text-muted">
+        {{ hourType }}
+      </div>
       <div
         ref="hours"
-        class="h-100 mh-100 numbers-container">
+        class="h-100 mh-100 numbers-container"
+      >
         <button
           v-for="hr in hours"
           :key="hr.value"
@@ -21,19 +24,26 @@
           type="button"
           tabindex="-1"
           class="item flex align-center justify-content-center"
-          @click.stop="select('hour', hr.value)">
+          @click.stop="select('hour', hr.value)"
+        >
           <span
             :style="styleColor"
-            class="timepicker-day-effect"/>
-          <span class="timepicker-day-text">{{ hr.value }}</span>
+            class="timepicker-day-effect"
+          />
+          <span class="timepicker-day-text">
+            {{ hr.value }}
+          </span>
         </button>
       </div>
     </div>
     <div class="time-container minutes-container flex-1 flex flex-direction-column">
-      <div class="flex align-center justify-content-center time-label text-muted">{{ minuteType }}</div>
+      <div class="flex align-center justify-content-center time-label text-muted">
+        {{ minuteType }}
+      </div>
       <div
         ref="minutes"
-        class="h-100 mh-100 numbers-container">
+        class="h-100 mh-100 numbers-container"
+      >
         <button
           v-for="m in minutes"
           :key="m"
@@ -41,18 +51,25 @@
           type="button"
           tabindex="-1"
           class="item flex align-center justify-content-center"
-          @click.stop="select('minute', m)">
+          @click.stop="select('minute', m)"
+        >
           <span
             :style="styleColor"
-            class="timepicker-day-effect"/>
-          <span class="timepicker-day-text">{{ m }}</span>
+            class="timepicker-day-effect"
+          />
+          <span class="timepicker-day-text">
+            {{ m }}
+          </span>
         </button>
       </div>
     </div>
     <div
       v-if="apmType"
-      class="time-container apms-container flex flex-1 flex-direction-column">
-      <div class="flex align-center justify-content-center time-label text-muted">{{ apmType }}</div>
+      class="time-container apms-container flex flex-1 flex-direction-column"
+    >
+      <div class="flex align-center justify-content-center time-label text-muted">
+        {{ apmType }}
+      </div>
       <div class="h-100 mh-100 numbers-container">
         <button
           v-for="a in apms"
@@ -61,11 +78,15 @@
           type="button"
           tabindex="-1"
           class="item flex align-center justify-content-center"
-          @click.stop="select('apm', a)">
+          @click.stop="select('apm', a)"
+        >
           <span
             :style="styleColor"
-            class="timepicker-day-effect"/>
-          <span class="timepicker-day-text">{{ a }}</span>
+            class="timepicker-day-effect"
+          />
+          <span class="timepicker-day-text">
+            {{ a }}
+          </span>
         </button>
       </div>
     </div>

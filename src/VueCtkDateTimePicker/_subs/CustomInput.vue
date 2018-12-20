@@ -1,37 +1,36 @@
 <template>
   <div
-      ref="parent"
-      :class="{
-        'is-focused': isFocus,
-        'has-value': value,
-        'has-error': errorHint, 
-        'is-disabled': disabled, 
-        'is-dark': dark
-      }"
-      class="field"
+    ref="parent"
+    :class="{
+      'is-focused': isFocus,
+      'has-value': value,
+      'has-error': errorHint, 
+      'is-disabled': disabled, 
+      'is-dark': dark
+    }"
+    class="field"
+  >
+    <input
+      :id="id"
+      ref="CtkDateTimePicker"
+      :value="value"
+      :placeholder="label"
+      :disabled="disabled"
+      :style="[getBorderStyle]"
+      type="text"
+      class="field-input"
+      readonly
     >
-      <input
-        ref="CtkDateTimePicker"
-        :id="id"
-        :value="value"
-        :placeholder="label"
-        :disabled="disabled"
-        :style="[getBorderStyle]"
-        type="text"
-        class="field-input"
-        readonly
-      >
-      <label
-        ref="label"
-        :for="id"
-        :class="hint ? (errorHint ? 'text-danger' : 'text-primary') : ''"
-        :style="[getColorStyle]"
-        class="field-label"
-      >
-        {{ hint || label }}
-      </label>
-
-    </div>
+    <label
+      ref="label"
+      :for="id"
+      :class="hint ? (errorHint ? 'text-danger' : 'text-primary') : ''"
+      :style="[getColorStyle]"
+      class="field-label"
+    >
+      {{ hint || label }}
+    </label>
+  </div>
 </template>
 
 <script>

@@ -1,5 +1,5 @@
 <template>
-  <transition
+  <Transition
     :name="position === 'bottom' ? 'slide' : 'slideinvert'"
   >
     <div
@@ -11,17 +11,18 @@
     >
       <div
         :style="responsivePosition"
-        class="datepicker flex flex-direction-column">
-        <header-picker
+        class="datepicker flex flex-direction-column"
+      >
+        <HeaderPicker
           v-if="!noHeader"
           :color="color"
           :date-time="dateTime"
           :only-time="onlyTime"
           :format="format"
-          :transitionName="transitionName"
+          :transition-name="transitionName"
         />
         <div class="pickers-container flex">
-          <date-picker
+          <DatePicker
             v-if="!onlyTime"
             :date-time="dateTime"
             :dark="dark"
@@ -35,7 +36,7 @@
             @change-date="selectDate"
             @change-month="changeMonth"
           />
-          <time-picker
+          <TimePicker
             v-if="!onlyDate"
             ref="timePickerComponent"
             :date-time="dateTime"
@@ -52,7 +53,7 @@
         </div>
       </div>
     </div>
-  </transition>
+  </Transition>
 </template>
 
 <script>
@@ -64,6 +65,9 @@
 
   export default {
     name: 'PickersContainer',
+    components: {
+      DatePicker, TimePicker, HeaderPicker
+    },
     props: {
       value: { type: [String, Object], default: String },
       visible: { type: Boolean, required: true, default: false },
@@ -85,9 +89,6 @@
       noWeekendsDays: { type: Boolean, default: false },
       disabledDates: { type: Array, default: Array },
       disabledHours: { type: Array, default: Array }
-    },
-    components: {
-      DatePicker, TimePicker, HeaderPicker
     },
     data () {
       return {

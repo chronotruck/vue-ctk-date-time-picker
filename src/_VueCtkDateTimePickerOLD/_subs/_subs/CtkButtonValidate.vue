@@ -1,22 +1,26 @@
 <template>
   <div
     :class="{'is-dark': dark}"
-    class="datepicker-buttons-container flex justify-content-right">
+    class="datepicker-buttons-container flex justify-content-right"
+  >
     <button
       type="button"
       tabindex="-1"
       class="datepicker-button flex align-center justify-content-center"
-      @click="$emit('validate')">
-      <span class="datepicker-button-effect"/>
+      @click="$emit('validate')"
+    >
+      <span class="datepicker-button-effect" />
       <svg
         xmlns="http://www.w3.org/2000/svg"
         width="24"
         height="24"
-        viewBox="0 0 24 24">
+        viewBox="0 0 24 24"
+      >
         <path
           d="M0 0h24v24H0z"
-          fill="none"/>
-        <path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/>
+          fill="none"
+        />
+        <path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z" />
       </svg>
     </button>
   </div>
