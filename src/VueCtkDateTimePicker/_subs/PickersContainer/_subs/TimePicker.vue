@@ -1,9 +1,9 @@
 <template>
   <div
     ref="time-picker"
-    :class="{'inline': inline, 'is-dark': dark }"
+    :class="{'inline': inline, 'is-dark': dark, 'with-border': !onlyTime }"
     :style="[{height: `${getHeight}px`}]"
-    class="time-picker flex"
+    class="time-picker flex flex-fixed"
   >
     <div
       v-for="column in columns"
@@ -34,12 +34,17 @@
 </template>
 <script>
   import moment from 'moment-timezone'
-
-  const ArrayRange = (end, twoDigit, step = 1) => {
+  const ArrayHourRange = (start, end, twoDigit) => {
+    return Array(end - start + 1).fill().map((_, idx) => { 
+      const number = start + idx
+      return (twoDigit && (number < 10) ? '0' : '') + number
+    })
+  }
+  const ArrayMinuteRange = (end, twoDigit, step = 1) => {
     const len = Math.floor(end / step)
     return Array(len).fill().map((_, idx) => {
       const number = idx * step
-      return (twoDigit && number < 10 ? '0' : '') + number
+      return (twoDigit && (number < 10) ? '0' : '') + number
     })
   }
 
@@ -66,11 +71,6 @@
       }
     },
     computed: {
-      timeFormat () {
-        return this.format
-          ? this.getTimeFormat()
-          : 'h:mm a'
-      },
       monthDays () {
         return this.month.getMonthDays()
       },
@@ -89,18 +89,20 @@
           backgroundColor: this.color
         }
       },
+      twelveFormat () {
+        return this.format.includes('h') // && (this.format.includes('a') || this.format.includes('A'))
+      },
       hours () {
-        const twoDigit = this.timeFormat.includes('hh') || this.timeFormat.includes('HH')
-        const twelve = this.timeFormat.includes('hh') || this.timeFormat.includes('h')
-        return ArrayRange(twelve ? 12 : 24, twoDigit)
+        const twoDigit = this.format.includes('hh') || this.format.includes('HH')
+        return ArrayHourRange(this.twelveFormat ? 1 : 0, this.twelveFormat ? 12 : 24, twoDigit)
       },
       minutes () {
-        const twoDigit = this.timeFormat.includes('mm') || this.timeFormat.includes('MM')
-        return ArrayRange(60, twoDigit, this.minuteInterval)
+        const twoDigit = this.format.includes('mm') || this.format.includes('MM')
+        return ArrayMinuteRange(60, twoDigit, this.minuteInterval)
       },
       apms () {
-        return this.timeFormat.includes('A') || this.timeFormat.includes('a')
-          ? this.timeFormat.includes('A') ? ['AM', 'PM'] : ['am', 'pm']
+        return this.format.includes('A') || this.format.includes('a')
+          ? this.format.includes('A') ? ['AM', 'PM'] : ['am', 'pm']
           : null
       },
       columns () {
@@ -111,24 +113,21 @@
         ]
       }
     },
+    watch: {
+      visible (val) {
+        if (val) {
+          this.initPositionView()
+        }
+      }
+    },
     mounted () {
       this.buildComponent()
     },
     methods: {
-      getTimeFormat () {
-        const formatLower = this.format.toLowerCase()
-        const hasTimeFormat = formatLower.includes('h')
-        if (hasTimeFormat) {
-          const hasTime = this.format.includes('T')
-          return hasTime ? this.format.split('T')[1] : this.format.split(' ')[1]
-        } else {
-          window.console.warn('A time format must be indicated') 
-        }
-      },
       buildComponent () {
-        const formattedFormat = this.timeFormat.replace('A', '').replace('a', '').replace(' ', '')
+        const formattedFormat = this.format.replace('A', '').replace('a', '').replace(' ', '')
         const formats = formattedFormat.split(':')
-        this.hour = moment(this.dateTime).format(formats[0]),
+        this.hour = moment(this.dateTime).format(formats[0])
         this.minute = moment(this.dateTime).format(formats[1])
         this.apm = this.apms ? moment(this.dateTime).format('HH') >= 12 ? this.apms[1] : this.apms[0] : null
         this.initPositionView()
@@ -171,12 +170,7 @@
         } else if (type === 'apms') {
           this.apm = item
         }
-        let time  
-        if (this.apm) {
-          time = moment(`${this.hour}:${this.minute} ${this.apm}`, 'HH:mm A').format('HH:mm')
-        } else {
-          time = moment(`${this.hour}:${this.minute}`, 'HH:mm').format('HH:mm')
-        }
+        const time = moment(`${this.hour}:${this.minute} ${this.apm}`, this.format).format('HH:mm')
         const dateTime = moment(`${this.dateTime.format('YYYY-MM-DD')} ${time}`)
         this.$emit('change-time', dateTime)
         this.initPositionView()
@@ -187,7 +181,7 @@
 
 <style lang="scss" scoped>
   .time-picker {
-    width: 160px;
+    width: 140px;
     &-column {
       overflow-y: auto;
       padding: 5px 0;
@@ -238,6 +232,14 @@
           }
         }
       }
+    }
+    &.is-dark {
+      .time-picker-column-item-text {
+        color: #FFF;
+      }
+    }
+    &.with-border {
+      border-left: 1px solid #EAEAEA;
     }
   }
 </style>

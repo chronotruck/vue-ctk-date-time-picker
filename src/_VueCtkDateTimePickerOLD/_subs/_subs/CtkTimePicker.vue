@@ -153,7 +153,7 @@
       },
       hours () {
         const hoursCount = (this.hourType === 'h' || this.hourType === 'hh') ? 12 : 24
-        let hours = []
+        const hours = []
         for (let i = 0; i < hoursCount; i++) {
           const formattedHours = this.formatValue(this.hourType, i)
           hours.push({ disabled: this.isHoursDisabled(formattedHours), value: formattedHours })
@@ -268,7 +268,7 @@
         this.fillValues()
       },
       fillValues () {
-        let fullValues = {}
+        const fullValues = {}
         const baseHour = this.hour
         const baseHourType = this.hourType
         const hourValue = baseHour || baseHour === 0 ? Number(baseHour) : ''
@@ -359,7 +359,7 @@
         this.muteWatch = true
         const self = this
         const baseTimeValue = JSON.parse(JSON.stringify(this.value || {}))
-        let timeValue = {}
+        const timeValue = {}
         Object.keys(baseTimeValue).forEach((key) => {
           timeValue[key] = fullValues[key]
         })
@@ -372,7 +372,7 @@
         return token === 'h' || token === 'hh'
       },
       isHoursDisabled (h) {
-        let hourToTest = this.apmType
+        const hourToTest = this.apmType
           ? moment(`${h} ${this.apm}`, [`${this.hourType} ${this.apmType}`]).format('HH')
           : h
         return this.disabledHours.includes(hourToTest)

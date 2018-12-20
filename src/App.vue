@@ -36,13 +36,14 @@
           class="component-container flex-1"
         >
           <p>Inititale value : '2018-04-05T04:26'</p>
-          <p>v-model = {{ value || 'null' }}</p>
+          <p>v-model = {{ timePickerValue || 'null' }}</p>
           <CtkDateTimePicker
-            v-model="value"
+            v-model="timePickerValue"
             position="bottom"
-            format="YYYY-MM-DD HH:mm"
+            format="H:mm"
             :dark="darkMode"
             :open="true"
+            only-time
           />
         </div>
       </div>

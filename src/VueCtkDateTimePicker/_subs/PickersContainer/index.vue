@@ -43,7 +43,7 @@
             :dark="dark"
             :month="month"
             :color="color"
-            :format="format"
+            :format="timeFormat"
             :only-time="onlyTime"
             :minute-interval="minuteInterval"
             :visible="visible"
@@ -51,6 +51,12 @@
             @change-time="selectTime"
           />
         </div>
+        <ButtonValidate
+          v-if="hasButtonValidate"
+          :dark="dark"
+          class="button-validate flex-fixed"
+          @validate="validate"
+        />
       </div>
     </div>
   </Transition>
@@ -60,13 +66,14 @@
   import DatePicker from './_subs/DatePicker'
   import TimePicker from './_subs/TimePicker'
   import HeaderPicker from './_subs/HeaderPicker'
+  import ButtonValidate from './_subs/ButtonValidate'
   
   import Month from '@/VueCtkDateTimePicker/modules/month'
 
   export default {
     name: 'PickersContainer',
     components: {
-      DatePicker, TimePicker, HeaderPicker
+      DatePicker, TimePicker, HeaderPicker, ButtonValidate
     },
     props: {
       value: { type: [String, Object], default: String },
@@ -85,7 +92,7 @@
       maxDate: { type: String, default: String },
       minDate: { type: String, default: String },
       autoClose: { type: Boolean, default: Boolean },
-      enableButtonValidate: { type: Boolean, default: Boolean },
+      hasButtonValidate: { type: Boolean, default: Boolean },
       noWeekendsDays: { type: Boolean, default: false },
       disabledDates: { type: Array, default: Array },
       disabledHours: { type: Array, default: Array }
@@ -102,9 +109,23 @@
         return window.innerWidth < 412
           ? null : this.position === 'bottom'
             ? {top: '100%', marginBottom: '10px'} : {bottom: '100%', marginTop: '10px'}
+      },
+      timeFormat () {
+        return this.onlyTime
+          ? this.format : this.getTimeFormat()
       }
     },
     methods: {
+      getTimeFormat () {
+        const formatLower = this.format.toLowerCase()
+        const hasTimeFormat = formatLower.includes('h')
+        if (hasTimeFormat) {
+          const hasTime = this.format.includes('T')
+          return hasTime ? this.format.split('T')[1] : this.format.split(' ')[1]
+        } else {
+          window.console.warn('A time format must be indicated') 
+        }
+      },
       getMonth () {
         const date = this.dateTime
         return new Month(date.month(), date.year())
@@ -141,6 +162,9 @@
           maxWidth: `${width}px`
         }
         return result
+      },
+      validate () {
+        this.$emit('validate')
       }
     }
   }

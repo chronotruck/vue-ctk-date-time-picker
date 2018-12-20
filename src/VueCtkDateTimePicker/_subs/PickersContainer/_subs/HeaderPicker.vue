@@ -32,12 +32,13 @@
       </TransitionGroup>
       <div
         v-if="!isFormatTwelve"
-        class="header-picker-time flex justify-content-center"
-        :class="{'flex-1': onlyTime}"
+        class="header-picker-time flex"
+        :style="getTimePickerWidth()"
+        :class="[!onlyTime ? 'pl-10' : 'flex-1']"
       >
         <TransitionGroup
           :name="transitionName"
-          class="dots-text header-picker-hour flex-1 flex justify-content-right"
+          class="dots-text flex-1 header-picker-hour flex justify-content-right"
         >
           <span
             v-for="hour in [dateTime.format('HH')]"
@@ -49,7 +50,7 @@
         <span>:</span>
         <TransitionGroup
           :name="transitionName"
-          class="dots-text header-picker-minute flex-1 flex justify-content-left"
+          class="dots-text flex-1 header-picker-minute flex justify-content-left"
         >
           <span
             v-for="min in [dateTime.format('mm')]"
@@ -61,12 +62,13 @@
       </div>
       <div
         v-else
-        class="header-picker-time flex justify-content-center"
-        :class="{'flex-1': onlyTime}"
+        :style="getTimePickerWidth()"
+        class="header-picker-time flex justify-content-center flex-fixed"
+        :class="[!onlyTime ? 'pl-10' : 'flex-1']"
       >
         <TransitionGroup
           :name="transitionName"
-          class="dots-text header-picker-hour flex-1 flex justify-content-center"
+          class="dots-text header-picker-hour"
         >
           <span
             v-for="hour in [dateTime.format(format)]"
@@ -108,6 +110,18 @@
       isFormatTwelve () {
         return this.format ? (this.format.indexOf('a') > -1) || (this.format.indexOf('A') > -1) : false
       }
+    },
+    methods: {
+      getTimePickerWidth () {
+        const width = 140
+        const result = {
+          flex: `0 0 ${width}px`,
+          width: `${width}px`,
+          minWidth: `${width}px`,
+          maxWidth: `${width}px`
+        }
+        return result
+      }
     }
   }
 </script>
@@ -137,6 +151,9 @@
     }
     &-date {
       text-transform: capitalize;
+    }
+    .pl-10 {
+      padding-left: 10px;
     }
   }
 </style>

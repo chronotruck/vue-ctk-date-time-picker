@@ -6,13 +6,14 @@ module.exports = {
     node: true
   },
   extends: [
-    'plugin:vue/recommended',
+    'plugin:vue/strongly-recommended',
     'eslint:recommended'
   ],
   rules: {
     // 'no-console': 'off',
     'generator-star-spacing': 0,
     'arrow-parens': 0,
+    'prefer-const': 2,
     'no-debugger': process.env.NODE_ENV === 'production' ? 2 : 0
   },
   parserOptions: {

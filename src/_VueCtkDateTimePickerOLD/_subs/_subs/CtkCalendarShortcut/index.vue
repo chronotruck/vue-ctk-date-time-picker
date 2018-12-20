@@ -79,7 +79,7 @@
       },
       select (shortcut) {
         const { value } = shortcut
-        let dates = { start: null, end: null }
+        const dates = { start: null, end: null }
         this.unSelectAllShortcuts()
         shortcut.isSelected = true
         switch (value) {

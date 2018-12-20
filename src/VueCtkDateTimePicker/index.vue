@@ -30,7 +30,7 @@
       :color="color"
       :dark="dark"
       :date-time="dateTime"
-      :without-header="!noHeader"
+      :no-header="noHeader"
       :only-time="onlyTime"
       :only-date="hasOnlyDate"
       :minute-interval="minuteInterval"
@@ -39,12 +39,13 @@
       :max-date="maxDate"
       :format="format"
       :no-weekends-days="noWeekendsDays"
-      :enable-button-validate="enableButtonValidate"
+      :has-button-validate="hasButtonValidate"
       :auto-close="autoClose"
       :range="range"
       :disabled-dates="disabledDates"
       :disabled-hours="disabledHours"
       @change-date="changeDate"
+      @validate="validate"
     />
   </div>
 </template>
@@ -93,17 +94,17 @@
       locale: { type: String, default: getDefaultLocale() },
       timeZone: { type: String, default: getDefaultTZ() },
       formatted: { type: String, default: 'llll' },
-      format: { type: String, default: String },
+      format: { type: String, default: 'YYYY-MM-DD H:mm a' },
       minuteInterval: { type: Number, default: 1 },
-      noHeader: { type: Boolean, default: false },
       minDate: { type: String, default: String },
       maxDate: { type: String, default: String },
-      withoutInput: { type: Boolean, default: false },
-      noWeekendsDays: {type: Boolean, default: false},
       autoClose: {type: Boolean, default: false},
       onlyTime: { type: Boolean, default: false },
       onlyDate: { type: Boolean, default: false },
+      noHeader: { type: Boolean, default: false },
       range: {type: Boolean, default: false},
+      noInput: { type: Boolean, default: false },
+      noWeekendsDays: {type: Boolean, default: false},
       noShortcuts: {type: Boolean, default: false},
       shortcutsTranslation: {type: Object, default: Object},
       disabledDates: { type: Array, default: Array },
@@ -123,7 +124,7 @@
       dateTime () {
         return this.range ? this.getRangeDatesTime() : this.getDateTime()
       },
-      enableButtonValidate () {
+      hasButtonValidate () {
         return !this.isInline && !this.autoClose
       },
       getColorStyle () {
@@ -217,6 +218,9 @@
         } else if (this.autoClose && !this.rangeMode) {
           this.hideDatePicker()
         }
+      },
+      validate () {
+        this.toggleDatePicker()
       }
     }
   }
