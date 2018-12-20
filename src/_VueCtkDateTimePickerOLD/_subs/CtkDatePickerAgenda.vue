@@ -24,10 +24,10 @@
           >
             <TransitionGroup :name="transitionDayName">
               <div
-                v-for="year in [year]"
-                :key="year"
+                v-for="y in [year]"
+                :key="y"
               >
-                {{ year }}
+                {{ y }}
               </div>
             </TransitionGroup>
           </div>

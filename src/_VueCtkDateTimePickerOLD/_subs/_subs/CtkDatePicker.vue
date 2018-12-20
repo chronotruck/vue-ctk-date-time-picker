@@ -23,8 +23,8 @@
           class="h-100 flex align-center justify-content-center"
         >
           <div
-            v-for="month in [month]"
-            :key="month.month"
+            v-for="m in [month]"
+            :key="m.month"
             class="datepicker-label fs-16"
             v-text="getMonthFormatted()"
           />
@@ -53,17 +53,17 @@
       </div>
     </div>
     <div
-      :style="{height: (monthDays.length + weekDay) > 35 ? '250px' : '210px'}"
+      :style="{height: (monthDays.length + weekStart) > 35 ? '250px' : '210px'}"
       class="month-container"
     >
       <TransitionGroup :name="transitionDaysName">
         <div
-          v-for="month in [month]"
-          :key="month.month"
+          v-for="m in [month]"
+          :key="m.month"
           class="datepicker-days flex"
         >
           <button
-            v-for="start in weekDay"
+            v-for="start in weekStart"
             :key="start + 'startEmptyDay'"
             class="datepicker-day align-center justify-content-center"
           />
@@ -140,14 +140,14 @@
         }
       },
       endEmptyDays () {
-        const getDays = (this.monthDays.length + this.weekDay) > 35
+        const getDays = (this.monthDays.length + this.weekStart) > 35
         const number = getDays ? 42 : 35
-        return number - this.monthDays.length - this.weekDay
+        return number - this.monthDays.length - this.weekStart
       },
       monthDays () {
         return this.month.getMonthDays()
       },
-      weekDay () {
+      weekStart () {
         return this.month.getWeekStart()
       }
     },
