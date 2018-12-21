@@ -21,6 +21,8 @@
           :format="format"
           :time-format="timeFormat"
           :transition-name="transitionName"
+          :no-time="onlyDate"
+          :range="range"
         />
         <div class="pickers-container flex">
           <!-- NEED 'YYYY-MM-DD' format -->
@@ -31,10 +33,13 @@
             :month="month"
             :inline="inline"
             :no-weekends-days="noWeekendsDays"
+            :shortcuts-translations="shortcutsTranslations"
             :color="color"
             :min-date="minDate"
             :max-date="maxDate"
             :disabled-dates="disabledDates"
+            :range="range"
+            :no-shortcuts="noShortcuts"
             @change-month="changeMonth"
           />
           <!-- NEED 'HH:mm' format -->
@@ -55,6 +60,7 @@
         <ButtonValidate
           v-if="hasButtonValidate"
           :dark="dark"
+          :button-color="buttonColor"
           class="button-validate flex-fixed"
           @validate="validate"
         />
@@ -93,11 +99,14 @@
       locale: { type: String, default: String },
       maxDate: { type: String, default: String },
       minDate: { type: String, default: String },
-      autoClose: { type: Boolean, default: Boolean },
       hasButtonValidate: { type: Boolean, default: Boolean },
-      noWeekendsDays: { type: Boolean, default: false },
+      noWeekendsDays: { type: Boolean, default: Boolean },
       disabledDates: { type: Array, default: Array },
-      disabledHours: { type: Array, default: Array }
+      disabledHours: { type: Array, default: Array },
+      range: { type: Boolean, default: Boolean },
+      shortcutsTranslations: { type: Object, default: Object },
+      noShortcuts: { type: Boolean, default: Boolean },
+      buttonColor: { type: String, default: String }
     },
     data () {
       return {
@@ -140,24 +149,37 @@
             value: value,
             type: 'date'
           })
+          this.month = this.getMonth(value)
         },
         get () {
+          const { start, end } = this.value
           return this.onlyTime
             ? null
-            : moment(this.value).format('YYYY-MM-DD')
+            : this.range
+              ? { start: start ? moment(start).format('YYYY-MM-DD') : null,
+                  end: end ? moment(end).format('YYYY-MM-DD') : null }
+              : moment(this.value, this.format).format('YYYY-MM-DD')
         }
       }
     },
     methods: {
       emitValue (payload) {
-        const date = !this.onlyTime
-          ? payload.type === 'date'
-            ? `${payload.value} ${this.time}`
-            : `${this.date} ${payload.value}`
-          : `${moment().format('YYYY-MM-DD')} ${payload.value}`
+        const date = this.range ? payload.value : this.getDateTime(payload)
+        if (!this.range) {
+          this.getTransitionName(date)
+        }
+        this.$emit('input', date)
+      },
+      getDateTime ({ value, type }) {
+        return !this.onlyTime
+          ? type === 'date'
+            ? `${value} ${this.time}`
+            : `${this.date} ${value}`
+          : `${moment().format('YYYY-MM-DD')} ${value}`
+      },
+      getTransitionName (date) {
         const isBigger = moment(date) > moment(`${this.date || moment().format('YYYY-MM-DD')} ${this.time}`)
         this.transitionName = isBigger ? 'slidevnext' : 'slidevprev'
-        this.$emit('input', date)
       },
       getDateFormat () {
         const hasTime = this.format.includes('T')
@@ -173,10 +195,11 @@
           window.console.warn('A time format must be indicated')
         }
       },
-      getMonth () {
-        const date = this.onlyTime
-          ? moment(this.value, this.format)
-          : moment(this.value)
+      getMonth (payload) {
+        const { start, end } = payload || this.value
+        const date = this.range
+          ? end || start ? moment(end ? end : start) : moment()
+          : moment(this.value, this.format)
         return new Month(date.month(), date.year())
       },
       changeMonth (val) {

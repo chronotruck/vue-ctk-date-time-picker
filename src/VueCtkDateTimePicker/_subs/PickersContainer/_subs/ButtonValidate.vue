@@ -9,12 +9,16 @@
       class="datepicker-button flex align-center justify-content-center"
       @click="$emit('validate')"
     >
-      <span class="datepicker-button-effect" />
+      <span
+        class="datepicker-button-effect"
+        :style="[bgStyle]"
+      />
       <svg
         xmlns="http://www.w3.org/2000/svg"
         width="24"
         height="24"
         viewBox="0 0 24 24"
+        :style="[colorStyle]"
       >
         <path
           d="M0 0h24v24H0z"
@@ -30,7 +34,21 @@
   export default {
     name: 'CtkButtonValidate',
     props: {
-      dark: { type: Boolean, default: false }
+      dark: { type: Boolean, default: false },
+      buttonColor: { type: String, default: String }
+    },
+    computed: {
+      colorStyle () {
+        return {
+          color: this.buttonColor,
+          fill: this.buttonColor
+        }
+      },
+      bgStyle () {
+        return {
+          backgroundColor: this.buttonColor
+        }
+      }
     }
   }
 </script>

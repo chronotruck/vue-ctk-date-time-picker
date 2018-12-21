@@ -40,8 +40,16 @@
           <CtkDateTimePicker
             v-model="value"
             position="bottom"
+            color="purple"
+            button-color="purple"
             :dark="darkMode"
+            :minute-interval="10"
+            locale="fr"
+            no-weekends-days
+            :disabled-dates="['2018-04-03', '2018-04-26', '2018-04-09']"
+            :disabled-hours="['00','01','02','03','04','05','06','07','19','20','21','22','23']"
             open
+            auto-close
           />
         </div>
       </div>
@@ -294,7 +302,7 @@
     data () {
       return {
         devMode: true,
-        value: '2018-04-05T14:26',
+        value: '2018-04-05 20:26',
         value2: null,
         value3: '2018-04-05T14:26',
         rangeValues: {

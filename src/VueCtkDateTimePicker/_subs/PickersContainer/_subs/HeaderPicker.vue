@@ -17,7 +17,10 @@
       </TransitionGroup>
     </div>
 
-    <div class="flex justify-content-between">
+    <div
+      v-if="!range"
+      class="flex justify-content-between"
+    >
       <TransitionGroup
         v-if="!onlyTime"
         :name="transitionName"
@@ -31,14 +34,14 @@
         </span>
       </TransitionGroup>
       <div
-        v-if="!isFormatTwelve"
+        v-if="!isFormatTwelve && !noTime"
         class="header-picker-time flex"
         :style="getTimePickerWidth()"
         :class="[!onlyTime ? 'pl-10' : 'flex-1']"
       >
         <TransitionGroup
           :name="transitionName"
-          class="dots-text flex-1 header-picker-hour flex justify-content-right"
+          class="dots-text time-number header-picker-hour flex justify-content-right"
         >
           <span
             v-for="hour in [dateTime.format('HH')]"
@@ -50,7 +53,7 @@
         <span>:</span>
         <TransitionGroup
           :name="transitionName"
-          class="dots-text flex-1 header-picker-minute flex justify-content-left"
+          class="dots-text time-number header-picker-minute flex justify-content-left"
         >
           <span
             v-for="min in [dateTime.format('mm')]"
@@ -61,10 +64,10 @@
         </TransitionGroup>
       </div>
       <div
-        v-else
+        v-else-if="!noTime"
         :style="getTimePickerWidth()"
-        class="header-picker-time flex justify-content-center flex-fixed"
-        :class="[!onlyTime ? 'pl-10' : 'flex-1']"
+        class="header-picker-time flex flex-fixed"
+        :class="[!onlyTime ? 'pl-10' : 'flex-1 justify-content-center']"
       >
         <TransitionGroup
           :name="transitionName"
@@ -79,6 +82,16 @@
         </TransitionGroup>
       </div>
     </div>
+    <div
+      v-else
+      class="flex justify-content-between"
+    >
+      <div class="flex justify-content-between">
+        <span class="header-picker-range dots-text flex-1">
+          {{ getRangeDatesFormatted }}
+        </span>
+      </div>
+    </div>
   </div>
 </template>
 
@@ -88,12 +101,14 @@
   export default {
     name: 'HeaderPicker',
     props: {
-      value: { type: String, default: String },
+      value: { type: [String, Object], default: String },
       color: { type: String, default: String },
       onlyTime: { type: Boolean, default: Boolean },
       transitionName: { type: String, default: String },
       format: { type: String, default: String },
-      timeFormat: { type: String, default: String }
+      timeFormat: { type: String, default: String },
+      noTime: { type: Boolean, default: Boolean },
+      range: { type: Boolean, default: Boolean }
     },
     computed: {
       bgStyle () {
@@ -116,6 +131,18 @@
       },
       isFormatTwelve () {
         return this.format ? (this.format.indexOf('a') > -1) || (this.format.indexOf('A') > -1) : false
+      },
+      getRangeDatesFormatted () {
+        const hasStartValues = this.value && this.value.start
+        const hasEndValues = this.value && this.value.end
+        if (!hasStartValues && !hasEndValues) {
+          return '... - ...'
+        } else if (hasStartValues || hasEndValues) {
+          const datesFormatted = hasStartValues ? `${moment(this.value.start).format('ddd D MMM')}` : '...'
+          return hasEndValues ? `${datesFormatted} - ${moment(this.value.end).format('ddd D MMM')}` : `${datesFormatted} - ...`
+        } else {
+          return null
+        }
       }
     },
     methods: {
@@ -150,7 +177,7 @@
       position: relative;
       height: 14px;
     }
-    &-date, &-time, &-minute, &-hour {
+    &-date, &-time, &-minute, &-hour, &-range {
       font-size: 20px;
       line-height: 20px;
       position: relative;
@@ -161,6 +188,9 @@
     }
     .pl-10 {
       padding-left: 10px;
+    }
+    .time-number {
+      width: 22px;
     }
   }
 </style>

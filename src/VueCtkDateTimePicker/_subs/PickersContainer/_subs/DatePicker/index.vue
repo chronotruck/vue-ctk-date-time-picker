@@ -1,109 +1,120 @@
 <template>
   <div
-    id="CtkDatePicker"
-    :class="{'flex-1 inline': inline, 'p-0': rangeMode, 'is-dark': dark}"
-    class="datepicker-container"
+    id="DatePicker"
+    :class="{'flex-1 inline': inline, 'p-0 range': range, 'is-dark': dark, 'has-shortcuts': !noShortcuts}"
+    class="datepicker-container flex"
   >
-    <div class="datepicker-controls flex align-center justify-content-center">
-      <div class="arrow-month h-100">
-        <button
-          type="button"
-          tabindex="-1"
-          class="datepicker-button datepicker-prev text-center h-100 flex align-center"
-          @click="changeMonth('prev')"
-        >
-          <svg viewBox="0 0 1000 1000">
-            <path d="M336.2 274.5l-210.1 210h805.4c13 0 23 10 23 23s-10 23-23 23H126.1l210.1 210.1c11 11 11 21 0 32-5 5-10 7-16 7s-11-2-16-7l-249.1-249c-11-11-11-21 0-32l249.1-249.1c21-21.1 53 10.9 32 32z" />
-          </svg>
-        </button>
+    <RangeShortcuts
+      v-if="range && !noShortcuts"
+      ref="range-shortcuts"
+      :color="color"
+      :dark="dark"
+      :shortcuts-translations="shortcutsTranslations"
+      @change-range="$emit('input', $event)"
+      class="flex-fixed"
+    />
+    <div class="calendar w-100">
+      <div class="datepicker-controls flex align-center justify-content-center">
+        <div class="arrow-month h-100">
+          <button
+            type="button"
+            tabindex="-1"
+            class="datepicker-button datepicker-prev text-center h-100 flex align-center"
+            @click="changeMonth('prev')"
+          >
+            <svg viewBox="0 0 1000 1000">
+              <path d="M336.2 274.5l-210.1 210h805.4c13 0 23 10 23 23s-10 23-23 23H126.1l210.1 210.1c11 11 11 21 0 32-5 5-10 7-16 7s-11-2-16-7l-249.1-249c-11-11-11-21 0-32l249.1-249.1c21-21.1 53 10.9 32 32z" />
+            </svg>
+          </button>
+        </div>
+        <div class="datepicker-container-label flex-1">
+          <TransitionGroup
+            :name="transitionLabelName"
+            class="h-100 flex align-center justify-content-center"
+          >
+            <div
+              v-for="m in [month]"
+              :key="m.month"
+              class="datepicker-label fs-16"
+              v-text="getMonthFormatted()"
+            />
+          </TransitionGroup>
+        </div>
+        <div class="arrow-month h-100 text-right">
+          <button
+            type="button"
+            tabindex="-1"
+            class="datepicker-button datepicker-next text-center h-100 flex align-center justify-content-right"
+            @click="changeMonth('next')"
+          >
+            <svg viewBox="0 0 1000 1000">
+              <path d="M694.4 242.4l249.1 249.1c11 11 11 21 0 32L694.4 772.7c-5 5-10 7-16 7s-11-2-16-7c-11-11-11-21 0-32l210.1-210.1H67.1c-13 0-23-10-23-23s10-23 23-23h805.4L662.4 274.5c-21-21.1 11-53.1 32-32.1z" />
+            </svg>
+          </button>
+        </div>
       </div>
-      <div class="datepicker-container-label flex-1">
-        <TransitionGroup
-          :name="transitionLabelName"
-          class="h-100 flex align-center justify-content-center"
+      <div class="datepicker-week flex">
+        <div
+          v-for="(weekDay, index) in weekDays"
+          :key="index"
+          class="flex-1 text-muted fs-12 flex justify-content-center align-center"
         >
+          {{ weekDay }}
+        </div>
+      </div>
+      <div
+        :style="{height: (monthDays.length + weekStart) > 35 ? '250px' : '210px'}"
+        class="month-container"
+      >
+        <TransitionGroup :name="transitionDaysName">
           <div
             v-for="m in [month]"
             :key="m.month"
-            class="datepicker-label fs-16"
-            v-text="getMonthFormatted()"
-          />
+            class="datepicker-days flex"
+          >
+            <button
+              v-for="start in weekStart"
+              :key="start + 'startEmptyDay'"
+              class="datepicker-day align-center justify-content-center"
+            />
+            <button
+              v-for="day in monthDays"
+              :key="day.format('D')"
+              :class="{
+                selected: isSelected(day) && !isDisabled(day),
+                disabled: (isDisabled(day) || isWeekEndDay(day)),
+                enable: !(isDisabled(day) || isWeekEndDay(day)),
+                between: isBetween(day) && range,
+                first: firstInRange(day) && range,
+                last: lastInRange(day) && !!value.end && range
+              }"
+              :disabled="isDisabled(day) || isWeekEndDay(day)"
+              type="button"
+              tabindex="-1"
+              class="datepicker-day flex align-center justify-content-center"
+              @click="selectDate(day)"
+            >
+              <span
+                v-if="isToday(day)"
+                class="datepicker-today"
+              />
+              <span
+                v-show="!isDisabled(day) || isSelected(day)"
+                :style="bgStyle"
+                class="datepicker-day-effect"
+              />
+              <span class="datepicker-day-text">
+                {{ day.format('D') }}
+              </span>
+            </button>
+            <div
+              v-for="end in endEmptyDays"
+              :key="end + 'endEmptyDay'"
+              class="datepicker-day flex align-center justify-content-center"
+            />
+          </div>
         </TransitionGroup>
       </div>
-      <div class="arrow-month h-100 text-right">
-        <button
-          type="button"
-          tabindex="-1"
-          class="datepicker-button datepicker-next text-center h-100 flex align-center justify-content-right"
-          @click="changeMonth('next')"
-        >
-          <svg viewBox="0 0 1000 1000">
-            <path d="M694.4 242.4l249.1 249.1c11 11 11 21 0 32L694.4 772.7c-5 5-10 7-16 7s-11-2-16-7c-11-11-11-21 0-32l210.1-210.1H67.1c-13 0-23-10-23-23s10-23 23-23h805.4L662.4 274.5c-21-21.1 11-53.1 32-32.1z" />
-          </svg>
-        </button>
-      </div>
-    </div>
-    <div class="datepicker-week flex">
-      <div
-        v-for="(weekDay, index) in weekDays"
-        :key="index"
-        class="flex-1 text-muted fs-12 flex justify-content-center align-center"
-      >
-        {{ weekDay }}
-      </div>
-    </div>
-    <div
-      :style="{height: (monthDays.length + weekStart) > 35 ? '250px' : '210px'}"
-      class="month-container"
-    >
-      <TransitionGroup :name="transitionDaysName">
-        <div
-          v-for="m in [month]"
-          :key="m.month"
-          class="datepicker-days flex"
-        >
-          <button
-            v-for="start in weekStart"
-            :key="start + 'startEmptyDay'"
-            class="datepicker-day align-center justify-content-center"
-          />
-          <button
-            v-for="day in monthDays"
-            :key="day.format('D')"
-            :class="{
-              selected: isSelected(day) && !isDisabled(day),
-              disabled: (isDisabled(day) || isWeekEndDay(day)),
-              enable: !(isDisabled(day) || isWeekEndDay(day)),
-              between: isBetween(day) && rangeMode,
-              first: firstInRange(day) && rangeMode,
-              last: lastInRange(day) && !!dateTime.end && rangeMode
-            }"
-            :disabled="isDisabled(day) || isWeekEndDay(day)"
-            type="button"
-            tabindex="-1"
-            class="datepicker-day flex align-center justify-content-center"
-            @click="selectDate(day)"
-          >
-            <span
-              v-if="isToday(day)"
-              class="datepicker-today"
-            />
-            <span
-              v-show="!isDisabled(day) || isSelected(day)"
-              :style="bgStyle"
-              class="datepicker-day-effect"
-            />
-            <span class="datepicker-day-text">
-              {{ day.format('D') }}
-            </span>
-          </button>
-          <div
-            v-for="end in endEmptyDays"
-            :key="end + 'endEmptyDay'"
-            class="datepicker-day flex align-center justify-content-center"
-          />
-        </div>
-      </TransitionGroup>
     </div>
   </div>
 </template>
@@ -111,20 +122,26 @@
 <script>
   import moment from 'moment-timezone'
   import { getWeekDays } from '@/VueCtkDateTimePicker/modules/month'
+  import RangeShortcuts from './_subs/RangeShortcuts'
   export default {
     name: 'DatePicker',
     props: {
-      value: {type: String, default: String},
+      value: {type: [String, Object], default: String},
       color: {type: String, default: String},
       minDate: {type: String, default: String},
       maxDate: {type: String, default: String},
       locale: {type: String, default: String},
       inline: {type: Boolean, default: Boolean},
       noWeekendsDays: {type: Boolean, default: Boolean},
-      rangeMode: {type: Boolean, default: false},
+      range: {type: Boolean, default: false},
       disabledDates: {type: Array, default: Array},
       dark: {type: Boolean, default: false},
-      month: {type: Object, default: Object}
+      month: {type: Object, default: Object},
+      shortcutsTranslations: { type: Object, default: Object },
+      noShortcuts: { type: Boolean, default: Boolean }
+    },
+    components: {
+      RangeShortcuts
     },
     data () {
       return {
@@ -172,33 +189,33 @@
         return this.disabledDates.indexOf(day.format('YYYY-MM-DD')) > -1
       },
       isBeforeMinDate (day) {
-        return moment(day).isBefore(this.minDate)
+        return day.isBefore(moment(this.minDate))
       },
       isAfterEndDate (day) {
         return moment(day).isAfter(this.maxDate)
       },
       isSelected (day) {
         const date = [
-          ...(this.dateTime.start
-            ? [this.dateTime.start.format('YYYY-MM-DD')]
-            : this.rangeMode ? [] : [this.dateTime.format('YYYY-MM-DD')]),
-          ...(this.dateTime.end
-            ? [this.dateTime.end.format('YYYY-MM-DD')]
-            : this.rangeMode ? [] : [this.dateTime.format('YYYY-MM-DD')])
+          ...(this.value.start
+            ? [moment(this.value.start).format('YYYY-MM-DD')]
+            : this.range ? [] : [moment(this.value).format('YYYY-MM-DD')]),
+          ...(this.value.end
+            ? [moment(this.value.end).format('YYYY-MM-DD')]
+            : this.range ? [] : [moment(this.value).format('YYYY-MM-DD')])
         ]
         return date.indexOf(day.format('YYYY-MM-DD')) > -1
       },
       isBetween (day) {
-        const range = this.dateTime.end
-          ? moment.range(this.dateTime.start, this.dateTime.end).contains(day)
+        const range = this.value.end
+          ? moment.range(moment(this.value.start), moment(this.value.end)).contains(day)
           : false
         return range
       },
       firstInRange (day) {
-        return this.dateTime.start ? moment(this.dateTime.start.format('YYYY-MM-DD')).isSame(day.format('YYYY-MM-DD')) : false
+        return this.value.start ? moment(moment(this.value.start).format('YYYY-MM-DD')).isSame(day.format('YYYY-MM-DD')) : false
       },
       lastInRange (day) {
-        return this.dateTime.end ? moment(this.dateTime.end.format('YYYY-MM-DD')).isSame(day.format('YYYY-MM-DD')) : false
+        return this.value.end ? moment(moment(this.value.end).format('YYYY-MM-DD')).isSame(day.format('YYYY-MM-DD')) : false
       },
       isWeekEndDay (day) {
         const dayConst = moment(day).day()
@@ -206,17 +223,20 @@
         return this.noWeekendsDays ? weekendsDaysNumbers.indexOf(dayConst) > -1 : false
       },
       selectDate (day) {
-        // if (this.rangeMode) {
-        //   if (!this.dateTime.start || this.dateTime.end || day.isBefore(this.dateTime.start)) {
-        //     this.dateTime.start = day
-        //     this.dateTime.end = null
-        //   } else {
-        //     this.dateTime.end = day
-        //   }
-        //   this.$emit('input', moment(this.dateTime).format('YYYY-MM-DD'))
-        // } else {
-        this.$emit('input', moment(day).format('YYYY-MM-DD'))
-        // }
+        if (this.range && !this.noShortcuts) {
+          this.$refs['range-shortcuts'].unSelectAllShortcuts()
+        }
+        if (this.range) {
+          if (!this.value.start || this.value.end || day.isBefore(moment(this.value.start))) {
+            this.value.start = day.format('YYYY-MM-DD')
+            this.value.end = null
+          } else {
+            this.value.end = day.format('YYYY-MM-DD')
+          }
+          this.$emit('input', this.value)
+        } else {
+          this.$emit('input', moment(day).format('YYYY-MM-DD'))
+        }
       },
       changeMonth (val) {
         this.transitionDaysName = `slide${val}`
@@ -229,9 +249,12 @@
 
 <style lang="scss" scoped>
   @import "@/VueCtkDateTimePicker/assets/animation.scss";
-  #CtkDatePicker.datepicker-container {
+  #DatePicker.datepicker-container {
     width: 290px;
     padding: 0 5px;
+    &.range.has-shortcuts {
+      width: 400px;
+    }
     &.p-0 {
       padding: 0;
     }
@@ -405,7 +428,7 @@
     }
   }
   @media screen and (max-width: 415px) {
-    #CtkDatePicker.datepicker-container {
+    #DatePicker.datepicker-container {
       width: 100%;
       &:not(.inline) {
         .datepicker-controls {

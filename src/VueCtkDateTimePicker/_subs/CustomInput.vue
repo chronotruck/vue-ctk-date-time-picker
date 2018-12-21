@@ -12,11 +12,11 @@
   >
     <input
       :id="id"
-      ref="CtkDateTimePicker"
+      ref="CustomInput"
       :value="value"
       :placeholder="label"
       :disabled="disabled"
-      :style="[getBorderStyle]"
+      :style="[borderStyle]"
       type="text"
       class="field-input"
       readonly
@@ -25,7 +25,7 @@
       ref="label"
       :for="id"
       :class="hint ? (errorHint ? 'text-danger' : 'text-primary') : ''"
-      :style="[getColorStyle]"
+      :style="[colorStyle]"
       class="field-label"
     >
       {{ hint || label }}
@@ -47,14 +47,14 @@
       dark: { type: Boolean, default: false },
       id: { type: String, default: 'CustomInput' }
     },
-    methods: {
-      getBorderStyle () {
+    computed: {
+      borderStyle () {
         const cond = (this.isFocus && !this.errorHint)
         return cond
-          ? { borderColor: `${this.color} !important` }
+          ? { border: `1px solid ${this.color} !important` }
           : null
       },
-      getColorStyle () {
+      colorStyle () {
         const cond = this.isFocus
         return cond
           ? { color: `${this.color} !important` }

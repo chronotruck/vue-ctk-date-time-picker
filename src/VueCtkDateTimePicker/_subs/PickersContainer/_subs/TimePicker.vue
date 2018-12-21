@@ -148,6 +148,12 @@
       this.buildComponent()
     },
     methods: {
+      isHoursDisabled (h) {
+        const hourToTest = this.apmType
+          ? moment(`${h} ${this.apm}`, [`${this.hourType} ${this.apmType}`]).format('HH')
+          : h
+        return this.disabledHours.includes(hourToTest)
+      },
       buildComponent () {
         this.hour = parseInt(moment(this.value, this.format).format('HH'))
         this.minute = parseInt(moment(this.value, this.format).format('mm'))
