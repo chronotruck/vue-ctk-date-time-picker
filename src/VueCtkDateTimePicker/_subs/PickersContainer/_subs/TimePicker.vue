@@ -18,12 +18,14 @@
         type="button"
         tabindex="-1"
         class="time-picker-column-item flex align-center justify-content-center"
+        :disabled="item.disabled"
         :class="{
           active: (column.type === 'hours'
             ? hour
             : column.type === 'minutes'
               ? minute
-              : apm ? apm : null) === item.value
+              : apm ? apm : null) === item.value,
+          disabled: item.disabled
         }"
         @click="selectTime(item.value, column.type)"
       >
@@ -40,13 +42,15 @@
 </template>
 <script>
   import moment from 'moment-timezone'
-  const ArrayHourRange = (start, end, twoDigit, isAfternoon) => {
+  const ArrayHourRange = (start, end, twoDigit, isAfternoon, disabledHours) => {
     return Array(end - start + 1).fill().map((_, idx) => {
       const n = start + idx
       const number = !isAfternoon ? n : n + 12
+      const item = (twoDigit && (n < 10) ? '0' : '') + n
       return {
         value: number,
-        item: (twoDigit && (n < 10) ? '0' : '') + n
+        item: item,
+        disabled: disabledHours.includes(item)
       }
     })
   }
@@ -114,8 +118,7 @@
           this.twelveFormat
             ? 12
             : 23,
-          twoDigit,
-          isAfternoon
+          twoDigit, isAfternoon, this.disabledHours
         )
       },
       minutes () {
@@ -142,6 +145,9 @@
         if (val) {
           this.initPositionView()
         }
+      },
+      value (value) {
+        this.buildComponent()
       }
     },
     mounted () {
@@ -149,15 +155,19 @@
     },
     methods: {
       isHoursDisabled (h) {
-        const hourToTest = this.apmType
-          ? moment(`${h} ${this.apm}`, [`${this.hourType} ${this.apmType}`]).format('HH')
-          : h
-        return this.disabledHours.includes(hourToTest)
+        if (Number.isInteger(h)) {
+          h = (h < 10 ? '0' : '') + h
+        }
+        return h ? this.disabledHours.includes(h) : false
       },
       buildComponent () {
-        this.hour = parseInt(moment(this.value, this.format).format('HH'))
-        this.minute = parseInt(moment(this.value, this.format).format('mm'))
-        this.apm = this.apms ? parseInt(moment(this.value, this.format).format('HH')) >= 12 ? this.apms[1].value : this.apms[0].value : null
+        if (!this.isHoursDisabled(moment(this.value, 'HH:mm').format('HH'))) {
+          this.hour = this.value ? parseInt(moment(this.value, 'HH:mm').format('HH')) : null
+        } else {
+          this.hour = this.getAvailableHour()
+        }
+        this.minute = parseInt(moment(this.value, 'HH:mm').format('mm'))
+        this.apm = this.apms ? parseInt(moment(this.value, 'HH:mm').format('HH')) >= 12 ? this.apms[1].value : this.apms[0].value : null
         this.initPositionView()
       },
       columnPadding () {
@@ -190,6 +200,11 @@
           })
         })
       },
+      getAvailableHour () {
+        return this.hours.find((element) => {
+          return element.disabled === false
+        }).value
+      },
       selectTime (item, type) {
         if (type === 'hours') {
           this.hour = item
@@ -200,9 +215,11 @@
           this.hour = newHour
           this.apm = item
         }
-        let hour = this.hour >= 24 ? 0 : this.hour
+        let hour = this.hour 
+          ? this.hour >= 24 ? 0 : this.hour
+          : this.getAvailableHour()
         hour = (hour < 10 ? '0' : '') + hour
-        const minute = (this.minute < 10 ? '0' : '') + this.minute
+        const minute = this.minute ? (this.minute < 10 ? '0' : '') + this.minute : moment().format('mm')
         const time = `${hour}:${minute}`
         this.$emit('input', time)
         this.initPositionView()
@@ -261,6 +278,16 @@
           .time-picker-column-item-effect {
             transform: scale(1);
             opacity: 1;
+          }
+        }
+        &.disabled {
+          color: #CCC;
+          &:hover .time-picker-column-item-text {
+            color: #CCC;
+          }
+          .time-picker-column-item-effect {
+            transform: scale(0) !important;
+            opacity: 0 !important;
           }
         }
       }

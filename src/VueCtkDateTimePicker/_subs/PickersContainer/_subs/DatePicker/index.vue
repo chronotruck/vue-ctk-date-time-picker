@@ -3,7 +3,7 @@
     id="DatePicker"
     :class="{'flex-1 inline': inline, 'p-0 range': range, 'is-dark': dark, 'has-shortcuts': !noShortcuts}"
     class="datepicker-container flex"
-  >
+  > 
     <RangeShortcuts
       v-if="range && !noShortcuts"
       ref="range-shortcuts"
@@ -152,7 +152,7 @@
     },
     computed: {
       dateTime () {
-        return moment(this.value)
+        return this.value ? moment(this.value) : moment()
       },
       bgStyle () {
         return {
@@ -196,26 +196,26 @@
       },
       isSelected (day) {
         const date = [
-          ...(this.value.start
+          ...(this.value && this.value.start
             ? [moment(this.value.start).format('YYYY-MM-DD')]
             : this.range ? [] : [moment(this.value).format('YYYY-MM-DD')]),
-          ...(this.value.end
+          ...(this.value && this.value.end
             ? [moment(this.value.end).format('YYYY-MM-DD')]
             : this.range ? [] : [moment(this.value).format('YYYY-MM-DD')])
         ]
         return date.indexOf(day.format('YYYY-MM-DD')) > -1
       },
       isBetween (day) {
-        const range = this.value.end
+        const range = this.value && this.value.end
           ? moment.range(moment(this.value.start), moment(this.value.end)).contains(day)
           : false
         return range
       },
       firstInRange (day) {
-        return this.value.start ? moment(moment(this.value.start).format('YYYY-MM-DD')).isSame(day.format('YYYY-MM-DD')) : false
+        return this.value && this.value.start ? moment(moment(this.value.start).format('YYYY-MM-DD')).isSame(day.format('YYYY-MM-DD')) : false
       },
       lastInRange (day) {
-        return this.value.end ? moment(moment(this.value.end).format('YYYY-MM-DD')).isSame(day.format('YYYY-MM-DD')) : false
+        return this.value && this.value.end ? moment(moment(this.value.end).format('YYYY-MM-DD')).isSame(day.format('YYYY-MM-DD')) : false
       },
       isWeekEndDay (day) {
         const dayConst = moment(day).day()

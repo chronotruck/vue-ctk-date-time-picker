@@ -37,7 +37,7 @@
         v-if="!isFormatTwelve && !noTime"
         class="header-picker-time flex"
         :style="getTimePickerWidth()"
-        :class="[!onlyTime ? 'pl-10' : 'flex-1']"
+        :class="[!onlyTime ? 'pl-10' : 'flex-1 justify-content-center']"
       >
         <TransitionGroup
           :name="transitionName"
@@ -118,9 +118,11 @@
         }
       },
       dateTime () {
-        const date = this.onlyTime
-          ? moment(this.value, this.format)
-          : moment(this.value)
+        const date = this.value ?
+          this.onlyTime
+            ? moment(this.value, this.format)
+            : moment(this.value)
+          : moment()
         return date
       },
       year () {

@@ -11,7 +11,7 @@
       :disabled="disabled"
       :dark="dark"
       :hint="hint"
-      :error-hint="errorHint"
+      :error-hint="error"
       :is-focus="hasPickerOpen"
       :color="color"
       @click.native="toggleDatePicker"
@@ -66,8 +66,8 @@
   }
 
   const nearestMinutes = (interval, date) => {
-    const roundedMinutes = Math.ceil(moment(date).minute() / interval) * interval
-    return moment(moment(date).clone().minute(roundedMinutes).second(0))
+    const roundedMinutes = Math.ceil(date.minute() / interval) * interval
+    return moment(date.clone().minute(roundedMinutes).second(0))
   }
 
   export default {
@@ -83,7 +83,7 @@
       value: { type: [String, Object], default: null },
       label: { type: String, default: 'Select date & time' },
       hint: { type: String, default: String },
-      errorHint: { type: Boolean, default: Boolean },
+      error: { type: Boolean, default: Boolean },
       color: { type: String, default: String },
       buttonColor: { type: String, default: String },
       id: { type: String, default: 'DateTimePicker' },
@@ -146,7 +146,7 @@
           } else if (this.autoClose && !this.range) {
             this.toggleDatePicker()
           }
-          this.$emit('input', this.range ? this.getRangeDateToSend(value) :  this.getDateTimeToSend(value))
+          this.$emit('input', this.range ? this.getRangeDateToSend(value) : this.getDateTimeToSend(value))
         }
       }
     },
@@ -174,7 +174,7 @@
       getDateFormatted () {
         const date = this.value
           ? moment(this.value, this.format).format(this.formatted)
-          : moment().format(this.formatted)
+          : null
         return date
       },
       getRangeDateToSend (payload) {
@@ -188,19 +188,15 @@
       getDateTimeToSend (value) {
         const date = value || this.value
         const dateToSend = date
-          ? moment(date, 'YYYY-MM-DD HH:mm').format(this.format)
-          : moment().format(this.format)
-        return nearestMinutes(this.minuteInterval, dateToSend).format(this.format)
+          ? moment(date, 'YYYY-MM-DD HH:mm')
+          : null
+        return dateToSend ? nearestMinutes(this.minuteInterval, dateToSend).format(this.format) : null
       },
       getDateTime () {
         const date = this.value
-          ? this.onlyTime
-            ? moment(this.value, this.format).format('HH:mm')
-            : moment(this.value, this.format).format('YYYY-MM-DD HH:mm')
-          : this.onlyTime
-            ? moment().format('HH:mm')
-            : moment().format('YYYY-MM-DD HH:mm')
-        return nearestMinutes(this.minuteInterval, date).format('YYYY-MM-DD HH:mm')
+          ? moment(this.value, this.format)
+          : null
+        return date ? nearestMinutes(this.minuteInterval, date).format('YYYY-MM-DD HH:mm') : null
       },
       toggleDatePicker () {
         this.pickerOpen = !this.pickerOpen

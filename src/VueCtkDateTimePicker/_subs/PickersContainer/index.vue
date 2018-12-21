@@ -138,9 +138,11 @@
           })
         },
         get () {
-          return this.onlyTime
-            ? moment(this.value, this.timeFormat).format('HH:mm')
-            : moment(this.value).format('HH:mm')
+          return this.value 
+            ? this.onlyTime
+              ? moment(this.value, this.timeFormat).format('HH:mm')
+              : moment(this.value).format('HH:mm')
+            : null
         }
       },
       date: {
@@ -152,33 +154,35 @@
           this.month = this.getMonth(value)
         },
         get () {
-          const { start, end } = this.value
-          return this.onlyTime
-            ? null
-            : this.range
-              ? { start: start ? moment(start).format('YYYY-MM-DD') : null,
-                  end: end ? moment(end).format('YYYY-MM-DD') : null }
-              : moment(this.value, this.format).format('YYYY-MM-DD')
+          const date = this.value
+            ? this.onlyTime
+                ? null
+                : this.range
+                  ? { start: this.value.start ? moment(this.value.start).format('YYYY-MM-DD') : null,
+                      end: this.value.end ? moment(this.value.end).format('YYYY-MM-DD') : null }
+                  : moment(this.value, this.format).format('YYYY-MM-DD')
+            : null
+          return date
         }
       }
     },
     methods: {
       emitValue (payload) {
-        const date = this.range ? payload.value : this.getDateTime(payload)
+        const dateTime = this.range ? payload.value : this.getDateTime(payload)
+        this.$emit('input', dateTime)
         if (!this.range) {
-          this.getTransitionName(date)
+          this.getTransitionName(dateTime)
         }
-        this.$emit('input', date)
       },
       getDateTime ({ value, type }) {
-        return !this.onlyTime
-          ? type === 'date'
-            ? `${value} ${this.time}`
-            : `${this.date} ${value}`
-          : `${moment().format('YYYY-MM-DD')} ${value}`
+        return this.onlyTime
+          ? `${moment().format('YYYY-MM-DD')} ${value}`
+          : type === 'date'
+            ? this.time ? `${value} ${this.time}` : `${value} ${moment().format('HH:mm')}`
+            : this.date ? `${this.date} ${value}` : `${moment().format('YYYY-MM-DD')} ${value}`
       },
       getTransitionName (date) {
-        const isBigger = moment(date) > moment(`${this.date || moment().format('YYYY-MM-DD')} ${this.time}`)
+        const isBigger = moment(date) > moment(`${this.date || moment().format('YYYY-MM-DD')} ${this.time || moment().format('HH:mm')}`)
         this.transitionName = isBigger ? 'slidevnext' : 'slidevprev'
       },
       getDateFormat () {
@@ -196,11 +200,15 @@
         }
       },
       getMonth (payload) {
-        const { start, end } = payload || this.value
-        const date = this.range
-          ? end || start ? moment(end ? end : start) : moment()
-          : moment(this.value, this.format)
-        return new Month(date.month(), date.year())
+        if (this.range) {
+          const { start, end } = payload || this.value
+          const date = end || start ? moment(end ? end : start) : moment()
+          return new Month(date.month(), date.year())
+        } else if (this.value) {
+          return new Month(moment(this.value, this.format).month(), moment(this.value, this.format).year())
+        } else {
+          return new Month(moment().month(), moment().year())
+        }
       },
       changeMonth (val) {
         let month = this.month.month + (val === 'prev' ? -1 : +1)

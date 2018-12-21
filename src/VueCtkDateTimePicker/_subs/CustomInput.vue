@@ -24,7 +24,7 @@
     <label
       ref="label"
       :for="id"
-      :class="hint ? (errorHint ? 'text-danger' : 'text-primary') : ''"
+      :class="errorHint ? 'text-danger' : 'text-primary'"
       :style="[colorStyle]"
       class="field-label"
     >
@@ -57,7 +57,7 @@
       colorStyle () {
         const cond = this.isFocus
         return cond
-          ? { color: `${this.color} !important` }
+          ? { color: `${this.color}` }
           : null
       }
     }
