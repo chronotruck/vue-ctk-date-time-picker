@@ -71,11 +71,12 @@
       >
         <TransitionGroup
           :name="transitionName"
-          class="dots-text header-picker-hour"
+          class="dots-text header-picker-hour twelve"
         >
           <span
             v-for="hour in [dateTime.format(timeFormat)]"
             :key="hour"
+            class="flex-fixed"
           >
             {{ hour }}
           </span>
@@ -118,10 +119,8 @@
         }
       },
       dateTime () {
-        const date = this.value ?
-          this.onlyTime
-            ? moment(this.value, this.format)
-            : moment(this.value)
+        const date = this.value
+          ? moment(this.value, 'YYYY-MM-DD HH:mm')
           : moment()
         return date
       },
@@ -187,6 +186,9 @@
     }
     &-date {
       text-transform: capitalize;
+    }
+    &-hour.twelve {
+      min-width: 82px;
     }
     .pl-10 {
       padding-left: 10px;

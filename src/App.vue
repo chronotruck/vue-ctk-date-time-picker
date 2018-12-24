@@ -36,23 +36,24 @@
           class="component-container flex-1"
         >
           <p>Inititale value : '2018-04-05T04:26'</p>
-          <p>v-model = {{ value2 || 'null' }}</p>
+          <p>v-model = {{ value || 'null' }}</p>
           <CtkDateTimePicker
-            v-model="value2"
-            position="bottom"
+            v-model="value"
             color="purple"
             button-color="purple"
             :dark="darkMode"
             :minute-interval="10"
-            locale="fr"
             open
-            only-time
-            format="h:mm a"
-            no-weekends-days
-            :disabled-dates="['2018-04-03', '2018-04-26', '2018-04-09']"
-            :disabled-hours="['00','01','02','03','04','05','06','07','19','20','21','22','23']"
-            :shortcuts-translations="shortcutsTranslation"
-          />
+          >
+            <button
+              type="button"
+              id="input-id"
+              class="btn"
+              style="margin: 0;"
+            >
+              {{ value }}
+            </button>
+          </CtkDateTimePicker>
         </div>
       </div>
       <div

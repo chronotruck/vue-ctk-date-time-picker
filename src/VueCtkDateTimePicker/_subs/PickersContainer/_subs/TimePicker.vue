@@ -18,16 +18,11 @@
         type="button"
         tabindex="-1"
         class="time-picker-column-item flex align-center justify-content-center"
-        :disabled="item.disabled"
         :class="{
-          active: (column.type === 'hours'
-            ? hour
-            : column.type === 'minutes'
-              ? minute
-              : apm ? apm : null) === item.value,
+          active: isActive(column.type, item.value),
           disabled: item.disabled
         }"
-        @click="selectTime(item.value, column.type)"
+        @click="isActive(column.type, item.value) ? null : selectTime(item.value, column.type)"
       >
         <span
           :style="styleColor"
@@ -46,11 +41,11 @@
     return Array(end - start + 1).fill().map((_, idx) => {
       const n = start + idx
       const number = !isAfternoon ? n : n + 12
-      const item = (twoDigit && (n < 10) ? '0' : '') + n
+      const numberToTest = (n < 10 ? '0' : '') + n
       return {
         value: number,
-        item: item,
-        disabled: disabledHours.includes(item)
+        item: (twoDigit && (n < 10) ? '0' : '') + n,
+        disabled: disabledHours.includes(numberToTest)
       }
     })
   }
@@ -83,7 +78,8 @@
       return {
         hour: null,
         minute: null,
-        apm: null
+        apm: null,
+        oldvalue: this.value
       }
     },
     computed: {
@@ -118,7 +114,9 @@
           this.twelveFormat
             ? 12
             : 23,
-          twoDigit, isAfternoon, this.disabledHours
+          twoDigit,
+          isAfternoon,
+          this.disabledHours
         )
       },
       minutes () {
@@ -146,28 +144,36 @@
           this.initPositionView()
         }
       },
-      value (value) {
-        this.buildComponent()
+      value () {
+        if (!this.hour || !this.minutes) {
+          this.buildComponent()
+        }
       }
     },
     mounted () {
-      this.buildComponent()
+      if (this.value) {
+        this.buildComponent()
+      }
     },
     methods: {
+      isActive (type, value) {
+        return (type === 'hours'
+          ? this.hour
+          : type === 'minutes'
+            ? this.minute
+            : this.apm ? this.apm : null) === value
+      },
       isHoursDisabled (h) {
-        if (Number.isInteger(h)) {
-          h = (h < 10 ? '0' : '') + h
-        }
-        return h ? this.disabledHours.includes(h) : false
+        const hourToTest = this.apmType
+          ? moment(`${h} ${this.apm}`, [`${this.hourType} ${this.apmType}`]).format('HH')
+          : h
+        return this.disabledHours.includes(hourToTest)
       },
       buildComponent () {
-        if (!this.isHoursDisabled(moment(this.value, 'HH:mm').format('HH'))) {
-          this.hour = this.value ? parseInt(moment(this.value, 'HH:mm').format('HH')) : null
-        } else {
-          this.hour = this.getAvailableHour()
-        }
-        this.minute = parseInt(moment(this.value, 'HH:mm').format('mm'))
-        this.apm = this.apms ? parseInt(moment(this.value, 'HH:mm').format('HH')) >= 12 ? this.apms[1].value : this.apms[0].value : null
+        const hour = moment(this.value, this.format).format('HH')
+        this.hour = this.isHoursDisabled(hour) ? this.getAvailableHour() : parseInt(hour)
+        this.minute = parseInt(moment(this.value, this.format).format('mm'))
+        this.apm = this.apms ? parseInt(moment(this.value, this.format).format('HH')) >= 12 ? this.apms[1].value : this.apms[0].value : null
         this.initPositionView()
       },
       columnPadding () {
@@ -215,11 +221,10 @@
           this.hour = newHour
           this.apm = item
         }
-        let hour = this.hour 
-          ? this.hour >= 24 ? 0 : this.hour
-          : this.getAvailableHour()
+        const availableHour = this.hour ? this.hour : this.getAvailableHour()
+        let hour = availableHour >= 24 ? 0 : this.hour ? this.hour : availableHour
         hour = (hour < 10 ? '0' : '') + hour
-        const minute = this.minute ? (this.minute < 10 ? '0' : '') + this.minute : moment().format('mm')
+        const minute = this.minute ? (this.minute < 10 ? '0' : '') + this.minute : '00'
         const time = `${hour}:${minute}`
         this.$emit('input', time)
         this.initPositionView()
@@ -281,9 +286,11 @@
           }
         }
         &.disabled {
-          color: #CCC;
-          &:hover .time-picker-column-item-text {
+          .time-picker-column-item-text {
             color: #CCC;
+            &:hover {
+              color: #CCC !important;
+            }
           }
           .time-picker-column-item-effect {
             transform: scale(0) !important;
@@ -292,13 +299,16 @@
         }
       }
     }
+    &.with-border {
+      border-left: 1px solid #EAEAEA;
+      &.is-dark {
+        border-left: 1px solid #757575;
+      }
+    }
     &.is-dark {
       .time-picker-column-item-text {
         color: #FFF;
       }
-    }
-    &.with-border {
-      border-left: 1px solid #EAEAEA;
     }
   }
 </style>

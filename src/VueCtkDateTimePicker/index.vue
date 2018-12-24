@@ -6,6 +6,7 @@
     class="date-time-picker"
   >
     <CustomInput
+      v-if="hasInput"
       ref="custom-input"
       v-model="dateFormatted"
       :disabled="disabled"
@@ -16,6 +17,7 @@
       :color="color"
       @click.native="toggleDatePicker"
     />
+    <slot v-else />
     <div
       v-if="hasPickerOpen && overlay"
       class="time-picker-overlay"
@@ -91,11 +93,12 @@
       dark: { type: Boolean, default: false },
       overlay: { type: Boolean, default: false },
       inline: { type: Boolean, default: false },
-      position: { type: String, default: null },
+      position: { type: String, default: String },
       locale: { type: String, default: getDefaultLocale() },
       timeZone: { type: String, default: getDefaultTZ() },
       formatted: { type: String, default: 'llll' },
       format: { type: String, default: 'YYYY-MM-DD HH:mm' },
+      outputFormat: { type: String, default: String },
       minuteInterval: { type: Number, default: 1 },
       minDate: { type: String, default: String },
       maxDate: { type: String, default: String },
@@ -111,11 +114,11 @@
       shortcutsTranslations: { type: Object, default: Object },
       disabledDates: { type: Array, default: Array },
       disabledHours: {type: Array, default: Array},
-      open: {type: Boolean, default: false}
+      open: { type: Boolean, default: false }
     },
     data () {
       return {
-        pickerOpen: this.open,
+        pickerOpen: false,
         pickerPosition: this.position
       }
     },
@@ -134,6 +137,9 @@
           ? this.getRangeDatesFormatted()
           : this.getDateFormatted()
       },
+      hasInput () {
+        return !this.inline && !this.$slots.default[0]
+      },
       dateTime: {
         get () {
           return this.range
@@ -148,6 +154,9 @@
           }
           this.$emit('input', this.range ? this.getRangeDateToSend(value) : this.getDateTimeToSend(value))
         }
+      },
+      formatOutput () {
+        return this.outputFormat || this.format
       }
     },
     watch: {
@@ -155,12 +164,26 @@
         this.pickerOpen = val
       }
     },
-    created () {
+    mounted () {
       moment.tz(this.timeZone)
       moment.locale(this.locale)
-      this.$emit('input', this.range ? this.getRangeDateToSend() :  this.getDateTimeToSend())
+      this.pickerPosition = this.getPosition()
+      this.pickerOpen = this.open
+      if (this.$slots.default) {
+        this.addEventToTriggerElement()
+      }
     },
     methods: {
+      addEventToTriggerElement () {
+        const target = this.$slots.default[0].elm
+        if (target) {
+          target.addEventListener('click', () => {
+            this.toggleDatePicker()
+          })
+        } else {
+          window.console.warn(`Impossible to find custom element with id '${this.triggerId}'`)
+        }
+      },
       getRangeDatesFormatted () {
         const hasStartValues = this.value && this.value.start
         const hasEndValues = this.value && this.value.end
@@ -178,7 +201,7 @@
         return date
       },
       getRangeDateToSend (payload) {
-        const { start, end } = payload || this.value
+        const { start, end } = typeof payload !== 'undefined' ? payload : this.value
         return this.value
           ? { start: start ? moment(start).format('YYYY-MM-DD') : null,
               end: end ? moment(end).format('YYYY-MM-DD') : null }
@@ -186,11 +209,11 @@
               end: moment().format('YYYY-MM-DD') }
       },
       getDateTimeToSend (value) {
-        const date = value || this.value
-        const dateToSend = date
-          ? moment(date, 'YYYY-MM-DD HH:mm')
+        const dateTime = typeof value !== 'undefined' ? value : this.value
+        const dateToSend = dateTime
+          ? moment(dateTime)
           : null
-        return dateToSend ? nearestMinutes(this.minuteInterval, dateToSend).format(this.format) : null
+        return dateToSend ? nearestMinutes(this.minuteInterval, moment(dateToSend)).format(this.formatOutput) : null
       },
       getDateTime () {
         const date = this.value
@@ -200,13 +223,13 @@
       },
       toggleDatePicker () {
         this.pickerOpen = !this.pickerOpen
-        if (this.pickerOpen) {
-          this.getPosition()
+        if (this.pickerOpen && !this.position) {
+          this.pickerPosition = this.getPosition()
         }
       },
       getPosition () {
         if (this.position) {
-          this.pickerPosition = this.position
+          return this.position
         } else {
           const rect = this.$refs.parent.getBoundingClientRect()
           const windowHeight = window.innerHeight
@@ -216,12 +239,18 @@
           datePickerHeight = this.noHeader ? 428 - 65 : datePickerHeight
 
           const position = ((windowHeight - (rect.top + rect.height)) > datePickerHeight) || ((windowHeight - rect.top) > windowHeight / 2 + rect.height)
-          this.pickerPosition = position ? 'top' : 'bottom'
+          return position ? 'top' : 'bottom'
         }
       },
       validate () {
         this.toggleDatePicker()
       }
+    },
+    beforeDestroy () {
+      const target = this.$slots.default[0].elm
+      target.addEventListener('click', () => {
+        this.toggleDatePicker()
+      })
     }
   }
 </script>

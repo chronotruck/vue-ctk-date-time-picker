@@ -123,7 +123,7 @@
       timeFormat () {
         return this.onlyTime
           ? this.format
-          : this.getTimeFormat()
+          : this.onlyDate ? null : this.getTimeFormat()
       },
       dateFormat () {
         return this.onlyTime
@@ -138,10 +138,8 @@
           })
         },
         get () {
-          return this.value 
-            ? this.onlyTime
-              ? moment(this.value, this.timeFormat).format('HH:mm')
-              : moment(this.value).format('HH:mm')
+          return this.value
+            ? moment(this.value, 'YYYY-MM-DD HH:mm').format('HH:mm')
             : null
         }
       },
@@ -151,19 +149,23 @@
             value: value,
             type: 'date'
           })
-          this.month = this.getMonth(value)
         },
         get () {
           const date = this.value
             ? this.onlyTime
-                ? null
-                : this.range
-                  ? { start: this.value.start ? moment(this.value.start).format('YYYY-MM-DD') : null,
-                      end: this.value.end ? moment(this.value.end).format('YYYY-MM-DD') : null }
-                  : moment(this.value, this.format).format('YYYY-MM-DD')
+              ? null
+              : this.range
+                ? { start: this.value.start ? moment(this.value.start).format('YYYY-MM-DD') : null,
+                    end: this.value.end ? moment(this.value.end).format('YYYY-MM-DD') : null }
+                : moment(this.value, 'YYYY-MM-DD HH:mm').format('YYYY-MM-DD')
             : null
           return date
         }
+      }
+    },
+    watch: {
+      value (value) {
+        this.month = this.getMonth(value)
       }
     },
     methods: {
@@ -205,9 +207,9 @@
           const date = end || start ? moment(end ? end : start) : moment()
           return new Month(date.month(), date.year())
         } else if (this.value) {
-          return new Month(moment(this.value, this.format).month(), moment(this.value, this.format).year())
+          return new Month(moment(this.value, this.format).month(), moment(this.value, this.format).year(), this.locale)
         } else {
-          return new Month(moment().month(), moment().year())
+          return new Month(moment().month(), moment().year(), this.locale)
         }
       },
       changeMonth (val) {
@@ -217,7 +219,7 @@
           year += (val === 'prev' ? -1 : +1)
           month = (val === 'prev' ? 11 : 0)
         }
-        this.month = new Month(month, year)
+        this.month = new Month(month, year, this.locale)
       },
       validate () {
         this.$emit('validate')

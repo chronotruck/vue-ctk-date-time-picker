@@ -177,6 +177,17 @@
   -webkit-justify-content: space-between;
   -webkit-box-align: stretch;
 }
+
+.justify-content-around {
+  justify-content: space-around;
+  -ms-flex-pack: justify;
+  -moz-box-align: stretch;
+  -moz-box-pack: justify;
+  -webkit-box-pack: justify;
+  -webkit-justify-content: space-between;
+  -webkit-box-align: stretch;
+}
+
 .flex-fill {
   -webkit-flex: 0 1 auto;
   -moz-flex: 0 1 auto;
