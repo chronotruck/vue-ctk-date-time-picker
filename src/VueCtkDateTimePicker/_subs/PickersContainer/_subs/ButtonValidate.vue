@@ -1,12 +1,28 @@
 <template>
   <div
     :class="{'is-dark': dark}"
-    class="datepicker-buttons-container flex justify-content-right"
+    class="datepicker-buttons-container flex justify-content-between"
   >
+    <button
+      class="datepicker-button now flex align-center justify-content-center"
+      tabindex="-1"
+      @click="emitNow()"
+    >
+      <span
+        :style="[bgStyle]"
+        class="datepicker-button-effect"
+      />
+      <span
+        class="datepicker-button-content"
+        :style="[colorStyle]"
+      >
+        Now
+      </span>
+    </button>
     <button
       type="button"
       tabindex="-1"
-      class="datepicker-button flex align-center justify-content-center"
+      class="datepicker-button validate flex align-center justify-content-center"
       @click="$emit('validate')"
     >
       <span
@@ -31,6 +47,7 @@
 </template>
 
 <script>
+  import moment from 'moment-timezone'
   export default {
     name: 'CtkButtonValidate',
     props: {
@@ -49,6 +66,11 @@
           backgroundColor: this.buttonColor
         }
       }
+    },
+    methods: {
+      emitNow () {
+        this.$emit('now', moment().format('YYYY-MM-DD HH:mm'))
+      }
     }
   }
 </script>
@@ -58,12 +80,13 @@
     padding: 5px 10px;
     border-top: 1px solid #EAEAEA;
     background-color: #FFF;
+    z-index: 1;
     display: flex !important;
     .datepicker-button {
       padding: 0px 20px;
       position: relative;
-      border: 1px solid #eaeaea;
       background-color: white;
+      border: 1px solid transparent;
       border-radius: 30px;
       height: 30px;
       font-size: 14px;
@@ -72,6 +95,9 @@
       -webkit-transition: all 0.25s cubic-bezier(0.645, 0.045, 0.355, 1);
       color: #FFF;
       font-weight: 500;
+      &-content {
+        position: relative;
+      }
       svg {
         position: relative;
         -webkit-transition: all 450ms cubic-bezier(0.23, 1, 0.32, 1) 0ms;
@@ -100,6 +126,21 @@
         svg {
           fill: white !important;
         }
+        .datepicker-button-content {
+          color: #fff !important;
+        }
+      }
+      &.now {
+        margin-right: 10px;
+        .datepicker-button-content {
+          color: dodgerblue;
+        }
+        .datepicker-button-effect {
+          background: dodgerblue;
+        }
+      }
+      &.validate {
+        border: 1px solid #eaeaea;
       }
     }
     &.is-dark, &.is-dark .datepicker-button {

@@ -63,6 +63,7 @@
           :button-color="buttonColor"
           class="button-validate flex-fixed"
           @validate="validate"
+          @now="setNow"
         />
       </div>
     </div>
@@ -171,6 +172,10 @@
       }
     },
     methods: {
+      setNow (event) {
+        this.$emit('input', event)
+        this.validate()
+      },
       emitValue (payload) {
         const dateTime = this.range ? payload.value : this.getDateTime(payload)
         this.$emit('input', dateTime)

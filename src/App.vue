@@ -38,14 +38,13 @@
             class="component-container"
           >
             <p>Inititale value : '2018-04-05T04:26'</p>
-            <p>v-model = {{ value2 || 'null' }}</p>
+            <p>v-model = {{ value || 'null' }}</p>
             <CtkDateTimePicker
-              v-model="value2"
+              v-model="value"
               color="purple"
-              button-color="purple"
               :dark="darkMode"
-              range
               open
+              range
             />
           </div>
         </div>
@@ -175,21 +174,6 @@
                 style="margin: 0;"
               />
             </CtkDateTimePicker>
-            <!-- <br>
-            <textarea
-              readonly
-              tabindex="-1"
-              style="height: 120px;"
-            >
-              <ctk-date-time-picker
-              v-model="value"
-              :minute-interval="10"
-              color="#96bf31"
-              :dark="darkMode"
-              :min-date="'2018-04-03'"
-              :max-date="'2018-04-12'"
-              />
-            </textarea> -->
           </div>
         </div>
       </div>
@@ -208,7 +192,7 @@
     },
     data () {
       return {
-        devMode: false,
+        devMode: true,
         booleanOptions: [
           'noHeader', 'autoClose', 'error', 'dark', 'overlay', 'noWeekendDays', 'noShortcuts', 'noButton'
         ],
@@ -225,7 +209,7 @@
             title: 'Date Time Picker',
             description: 'Date & Time selector - With small input (input-size="sm")',
             initial: '2018-04-05 20:26',
-            value: null,
+            value: '2018-04-05 20:26',
             editOption: false,
             options: {
               inputSize: 'sm'
@@ -264,7 +248,8 @@
             options: {
               onlyDate: true,
               color: 'coral',
-              inputSize: 'lg'
+              inputSize: 'lg',
+              buttonColor: 'green'
             }
           },
           {

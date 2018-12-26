@@ -311,4 +311,18 @@
       }
     }
   }
+  @media screen and (max-width: 415px) {
+    .time-picker:not(.inline) {
+      border: 0;
+      border-top: 1px solid #EAEAEA;
+      width: 100%;
+      overflow: hidden;
+      &.dark {
+        border-top: 1px solid #757575;
+      }
+    }
+    .timepicker-container.is-dark {
+      border-color: lighten(#424242, 20%);
+    }
+  }
 </style>
