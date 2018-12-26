@@ -3,7 +3,7 @@
     id="DatePicker"
     :class="{'flex-1 inline': inline, 'p-0 range': range, 'is-dark': dark, 'has-shortcuts': !noShortcuts}"
     class="datepicker-container flex"
-  > 
+  >
     <RangeShortcuts
       v-if="range && !noShortcuts"
       ref="range-shortcuts"

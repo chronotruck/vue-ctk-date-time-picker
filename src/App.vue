@@ -23,6 +23,7 @@
         <button
           class="btn"
           @click="darkMode = !darkMode"
+          style="margin-top: 20px;"
         >
           {{ darkMode ? 'Disable' : 'Enable' }} Dark Mode
         </button>
@@ -31,52 +32,150 @@
         v-if="devMode"
         class="container"
       >
-        <div
-          :class="{'dark': darkMode}"
-          class="component-container flex-1"
-        >
-          <p>Inititale value : '2018-04-05T04:26'</p>
-          <p>v-model = {{ value || 'null' }}</p>
-          <CtkDateTimePicker
-            v-model="value"
-            color="purple"
-            button-color="purple"
-            :dark="darkMode"
-            :minute-interval="10"
-            open
+        <div class="flex flex-wrap align-center justify-content-center">
+          <div
+            :class="{'dark': darkMode}"
+            class="component-container"
           >
-            <button
-              type="button"
-              id="input-id"
-              class="btn"
-              style="margin: 0;"
-            >
-              {{ value }}
-            </button>
-          </CtkDateTimePicker>
+            <p>Inititale value : '2018-04-05T04:26'</p>
+            <p>v-model = {{ value2 || 'null' }}</p>
+            <CtkDateTimePicker
+              v-model="value2"
+              color="purple"
+              button-color="purple"
+              :dark="darkMode"
+              range
+              open
+            />
+          </div>
         </div>
       </div>
       <div
         v-else
         class="container"
       >
-        <div class="components-container flex">
+        <div class="components-container">
           <div
+            v-for="demo in demoComponents"
+            :key="demo.title"
             :class="{'dark': darkMode}"
-            class="component-container flex-1"
+            class="component-container"
           >
-            <h3>DateTimePicker</h3>
-            <p>Inititale value : '2018-04-05T04:26'</p>
-            <p>v-model = {{ value || 'null' }}</p>
+            <div class="flex flex-wrap justify-content-between">
+              <h3>{{ demo.title }}</h3>
+              <h4>{{ demo.description }}</h4>
+            </div>
+            <hr>
+            <div class="flex flex-wrap justify-content-between">
+              <p><b>Inititale value</b> : {{ demo.initial }}</p>
+              <p><b>v-model</b> = {{ demo.value || 'null' }}</p>
+            </div>
+            <hr>
+            <button
+              class="btn option"
+              @click="demo.editOption = !demo.editOption"
+            >
+              Edit options
+            </button>
+            <div
+              v-show="demo.editOption"
+              class="flex flex-wrap"
+            >
+              <div class="flex-1">
+                <h4 style="margin-bottom: 10px;">String options</h4>
+                <div
+                  v-for="str in stringOptions"
+                  :key="str"
+                  class="flex"
+                  style="margin-bottom: 10px;"
+                >
+                  <input
+                    type="text"
+                    v-model="demo.options[str]"
+                  >
+                  <span style="margin-left: 15px;">
+                    {{ str }}
+                  </span>
+                </div>
+                <hr>
+                <h4 style="margin-bottom: 10px;">Integer options</h4>
+                <div
+                  v-for="int in intOptions"
+                  :key="int"
+                  class="flex"
+                  style="margin-bottom: 10px;"
+                >
+                  <input
+                    type="number"
+                    v-model="demo.options[int]"
+                  >
+                  <span style="margin-left: 15px;">
+                    {{ int }}
+                  </span>
+                </div>
+                <hr>
+              </div>
+              <div class="flex-1">
+                <h4 style="margin-bottom: 10px;">Boolean options</h4>
+                <div
+                  v-for="opt in booleanOptions"
+                  :key="opt"
+                  class="flex"
+                  style="margin-bottom: 10px;"
+                >
+                  <CheckboxInput
+                    v-model="demo.options[opt]"
+                    :id="`${demo.id}${opt}`"
+                  />
+                  <span style="margin-left: 15px;">
+                    {{ opt }}
+                  </span>
+                </div>
+              </div>
+            </div>
             <CtkDateTimePicker
-              v-model="value"
-              :minute-interval="10"
-              :min-date="minDate"
-              :max-date="maxDate"
-              :dark="darkMode"
-              color="#96bf31"
-            />
-            <br>
+              v-model="demo.value"
+              :only-date="demo.options.onlyDate"
+              :only-time="demo.options.onlyTime"
+              :range="demo.options.range"
+              :format="demo.options.format"
+              :formatted="demo.options.formatted"
+              :output-format="demo.options.outputFormat"
+              :inline="demo.options.inline"
+              :color="demo.options.color"
+              :button-color="demo.options.buttonColor"
+              :no-header="demo.options.noHeader"
+              :auto-close="demo.options.autoClose"
+              :error="demo.options.error"
+              :hint="demo.options.hint"
+              :open="demo.options.open"
+              :dark="darkMode || demo.options.dark"
+              :overlay="demo.options.overlay"
+              :position="demo.options.position"
+              :disabled-dates="demo.options.disabledDates"
+              :disabled-hours="demo.options.disabledHours"
+              :minute-interval="demo.options.minuteInterval"
+              :min-date="demo.options.minDate"
+              :max-date="demo.options.maxDate"
+              :no-weekends-days="demo.options.noWeekendDays"
+              :no-shortcuts="demo.options.noShortcuts"
+              :no-button="demo.options.noButton"
+              :shortcuts-translations="demo.options.shortcutsTranslations"
+              :locale="demo.options.locale"
+              :input-size="demo.options.inputSize"
+            >
+              <input
+                v-if="demo.options && demo.options.slot && demo.options.slot.type === 'input'"
+                type="text"
+              >
+              <button
+                v-else-if="demo.options && demo.options.slot && demo.options.slot.type === 'button'"
+                type="button"
+                class="btn"
+                style="margin: 0;"
+              />
+            </CtkDateTimePicker>
+            <!-- <br>
             <textarea
               readonly
               tabindex="-1"
@@ -90,203 +189,7 @@
               :min-date="'2018-04-03'"
               :max-date="'2018-04-12'"
               />
-            </textarea>
-          </div>
-          <div
-            :class="{'dark': darkMode}"
-            class="component-container flex-1"
-          >
-            <h3>Range Date Picker</h3>
-            <p>Inititale value : {start: '2018-04-05', end: '2018-04-09'}</p>
-            <p>v-model = {{ rangeValues || 'null' }}</p>
-            <CtkDateTimePicker
-              v-model="rangeValues"
-              :dark="darkMode"
-              :shortcuts-translation="shortcutsTranslation"
-              range-mode
-              overlay-background
-              color="purple"
-              format="YYYY-MM-DD"
-              formatted="ddd D MMM YYYY"
-              label="Select range"
-            />
-            <br>
-            <textarea
-              readonly
-              tabindex="-1"
-              style="height: 150px;"
-            >
-              <ctk-date-time-picker
-              v-model="{ start: '2018-04-05', end: '2018-04-20' }"
-              range-mode
-              overlay-background
-              color="purple"
-              format="YYYY-MM-DD"
-              formatted="ddd D MMM YYYY"
-              label="Select range"
-              />
-            </textarea>
-          </div>
-        </div>
-        <div class="components-container flex">
-          <div
-            :class="{'dark': darkMode}"
-            class="component-container flex-1"
-          >
-            <h3>DatePicker</h3>
-            <p>Inititale value : null</p>
-            <p>v-model = {{ value2 || 'null' }}</p>
-            <CtkDateTimePicker
-              v-model="value2"
-              :dark="darkMode"
-              format="YYYY-MM-DD"
-              color="#287696"
-              formatted="ddd D MMM YYYY"
-              label="Choose date"
-              disable-time
-            />
-            <br>
-            <textarea
-              readonly
-              tabindex="-1"
-              style="height: 120px;"
-            >
-              <ctk-date-time-picker
-              v-model="value2"
-              :dark="darkMode"
-              color="#287696"
-              format="YYYY-MM-DD"
-              formatted="ddd D MMM YYYY"
-              label="Choose date"
-              disable-time
-              />
-            </textarea>
-          </div>
-          <div
-            :class="{'dark': darkMode}"
-            class="component-container flex-1"
-          >
-            <h3>TimePicker (with disabled-hours)</h3>
-            <p>Inititale value : '14:26'</p>
-            <p>v-model = {{ timePickerValue || 'null' }}</p>
-            <CtkDateTimePicker
-              id="timepicker"
-              v-model="timePickerValue"
-              :minute-interval="minuteInterval2"
-              :dark="darkMode"
-              :disabled-hours="disabledHours"
-              formatted="h:mm a"
-              format="h:mm a"
-              time-format="h:mm a"
-              label="Choose time"
-              disable-date
-            />
-            <br>
-            <textarea
-              readonly
-              tabindex="-1"
-              style="height: 130px;"
-            >
-              <ctk-date-time-picker
-              v-model="yourValue"
-              :dark="darkMode"
-              :disabled-hours="['00','01','02','03','04','05','06','07','19','20','21','22','23']"
-              formatted="h:mm a"
-              format="HH:mm"
-              time-format="h:mm a"
-              label="Choose time"
-              :minute-interval="10"
-              disable-date
-              />
-            </textarea>
-          </div>
-          <div
-            :class="{'dark': darkMode}"
-            class="component-container flex-1"
-          >
-            <h3>DateTimePicker without header & auto close</h3>
-            <p>Inititale value : '2018-04-05T14:26'</p>
-            <p>v-model = {{ value3 || 'null' }}</p>
-            <CtkDateTimePicker
-              v-model="value3"
-              :minute-interval="10"
-              :error-hint="errorHint"
-              :hint="hint"
-              :dark="darkMode"
-              without-header
-              auto-close
-              time-format="HH:mm"
-            />
-            <br>
-            <textarea
-              readonly
-              tabindex="-1"
-              style="height: 130px;"
-            >
-              <ctk-date-time-picker
-              without-header
-              auto-close
-              v-model="yourValue"
-              time-format="HH:mm"
-              :minute-interval="10"
-              :error-hint="true"
-              hint="Error message"
-              />
-            </textarea>
-          </div>
-        </div>
-        <div class="components-container flex">
-          <div
-            :class="{'dark': darkMode}"
-            class="component-container flex-1"
-          >
-            <h3>Inline DateTimePicker && disabled dates</h3>
-            <p>v-model = {{ value || 'null' }}</p>
-            <CtkDateTimePicker
-              v-model="value"
-              :dark="darkMode"
-              :disabled-dates="disabledDates"
-              label="Choose date time"
-              no-weekends-days
-              inline
-            />
-            <br>
-            <textarea
-              readonly
-              tabindex="-1"
-              style="height: 100px;"
-            >
-              <ctk-date-time-picker
-              v-model="value"
-              :dark="darkMode"
-              :disabled-dates="['2018-04-03', '2018-04-07', '2018-04-09', '2018-04-11', '2018-04-13', '2018-04-15', '2018-04-17', '2018-04-19']"
-              label="Choose date time"
-              no-weekends-days
-              inline
-              />
-            </textarea>
-          </div>
-          <div
-            :class="{'dark': darkMode}"
-            class="component-container flex-1"
-          >
-            <h3>DateTimePicker disabled</h3>
-            <p>Option : 'disabled'</p>
-            <CtkDateTimePicker
-              :dark="darkMode"
-              disabled
-            />
-            <br>
-            <textarea
-              readonly
-              tabindex="-1"
-              style="height: 60px;"
-            >
-              <ctk-date-time-picker
-              :dark="darkMode"
-              disabled
-              />
-            </textarea>
+            </textarea> -->
           </div>
         </div>
       </div>
@@ -296,15 +199,111 @@
 
 <script>
   import CtkDateTimePicker from './VueCtkDateTimePicker'
+  import CheckboxInput from './CheckboxInput'
 
   export default {
     name: 'App',
     components: {
-      CtkDateTimePicker
+      CtkDateTimePicker, CheckboxInput
     },
     data () {
       return {
-        devMode: true,
+        devMode: false,
+        booleanOptions: [
+          'noHeader', 'autoClose', 'error', 'dark', 'overlay', 'noWeekendDays', 'noShortcuts', 'noButton'
+        ],
+        stringOptions: [
+          'hint', 'color', 'buttonColor', 'position', 'format', 'formatted', 'outputFormat',
+          'minDate', 'maxDate', 'disabledDates', 'disabledHours'
+        ],
+        intOptions: [
+          'minuteInterval'
+        ],
+        demoComponents: [
+          {
+            id: "1",
+            title: 'Date Time Picker',
+            description: 'Date & Time selector - With small input (input-size="sm")',
+            initial: '2018-04-05 20:26',
+            value: null,
+            editOption: false,
+            options: {
+              inputSize: 'sm'
+            }
+          },
+          {
+            id: "2",
+            title: 'Range Date Picker',
+            description: 'Date Range selector - With custom element to trigger the component (only input or button)',
+            editOption: false,
+            initial: {
+              start: '2018-04-05',
+              end: '2018-04-20'
+            },
+            value: {
+              start: '2018-04-05',
+              end: '2018-04-20'
+            },
+            options: {
+              slot: {
+                type: 'button'
+              },
+              range: true,
+              formatted: 'll',
+              format: 'YYYY-MM-DD',
+              color: 'purple'
+            }
+          },
+          {
+            id: "3",
+            title: 'Date Picker',
+            description: 'Date selector - With large input (input-size="lg")',
+            editOption: false,
+            initial: '2018-04-05',
+            value: '2018-04-05',
+            options: {
+              onlyDate: true,
+              color: 'coral',
+              inputSize: 'lg'
+            }
+          },
+          {
+            id: "4",
+            title: 'Time Picker',
+            description: 'Time selector',
+            editOption: false,
+            initial: '11:26 am',
+            value: '11:26 am',
+            options: {
+              format: 'hh:mm a',
+              formatted: 'hh:mm a',
+              onlyTime: true,
+              color: 'firebrick',
+              minuteInterval: '10'
+            }
+          },
+          {
+            id: "5",
+            title: 'Inline Picker',
+            description: 'Inline selector (available for all pickers)',
+            editOption: false,
+            initial: {
+              start: '2018-04-05',
+              end: '2018-04-20'
+            },
+            value: {
+              start: '2018-04-05',
+              end: '2018-04-20'
+            },
+            options: {
+              onlyDate: true,
+              inline: true,
+              format: 'YYYY-MM-DD',
+              formatted: 'll',
+              range: true
+            }
+          }
+        ],
         value: '2018-04-05 20:26',
         value2: null,
         value3: '2018-04-05T14:26',
@@ -373,23 +372,13 @@
   img {
     height: 140px;
   }
-  h3, h1, p {
-    margin-top: 0;
+  h3, h4, h1, p {
+    margin: 0;
   }
-  .component-container {
-    margin: 0 10px 20px 10px;
-    padding: 20px;
-    background: #F2F2F2;
-    border-radius: 4px;
-    box-shadow: 0 2px 1px -1px rgba(0, 0, 0, 0.2), 0 1px 1px 0 rgba(0, 0, 0, 0.14), 0 1px 3px 0 rgba(0, 0, 0, 0.12);
-    &.dark {
-      background-color: darken(#424242, 10%);
-      color: #FFF;
-      textarea {
-        background: #424242;
-        color: dodgerblue;
-      }
-    }
+  hr {
+    border-top: 1px solid #CCC;
+    border-bottom: 0;
+    margin: 20px 0;
   }
   textarea {
     background-color: #FFF;
@@ -417,6 +406,34 @@
     font-weight: 500;
     &:hover {
       background-color: darken(#96bf31, 10%);
+    }
+    &.option {
+      background-color: #424242;
+      &:hover {
+        background-color: darken(#424242, 10%);
+      }
+    } 
+  }
+  .component-container {
+    margin: 0 10px 20px 10px;
+    padding: 20px;
+    background: #F2F2F2;
+    border-radius: 4px;
+    box-shadow: 0 2px 1px -1px rgba(0, 0, 0, 0.2), 0 1px 1px 0 rgba(0, 0, 0, 0.14), 0 1px 3px 0 rgba(0, 0, 0, 0.12);
+    min-width: 300px;
+    &.dark {
+      background-color: darken(#424242, 10%);
+      color: #FFF;
+      textarea {
+        background: #424242;
+        color: dodgerblue;
+      }
+      .btn.option {
+        background-color: #424242;
+        &:hover {
+          background-color: lighten(#424242, 10%);
+        }
+      }
     }
   }
   @media screen and (max-width: 1024px) {

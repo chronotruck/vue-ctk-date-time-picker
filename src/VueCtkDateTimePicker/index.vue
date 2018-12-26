@@ -15,6 +15,7 @@
       :error-hint="error"
       :is-focus="hasPickerOpen"
       :color="color"
+      :input-size="inputSize"
       @click.native="toggleDatePicker"
     />
     <slot v-else />
@@ -60,11 +61,15 @@
   import PickersContainer from './_subs/PickersContainer'
 
   const getDefaultTZ = () => {
-    return moment.tz.guess() || 'America/Los_Angeles'
+    const tz = moment.tz.guess() || 'America/Los_Angeles'
+    moment.locale(tz)
+    return tz
   }
 
   const getDefaultLocale = () => {
-    return (window.navigator.userLanguage || window.navigator.language || 'en').substr(0, 2)
+    const locale = (window.navigator.userLanguage || window.navigator.language || 'en').substr(0, 2)
+    moment.locale(locale)
+    return locale
   }
 
   const nearestMinutes = (interval, date) => {
@@ -86,7 +91,7 @@
       label: { type: String, default: 'Select date & time' },
       hint: { type: String, default: String },
       error: { type: Boolean, default: Boolean },
-      color: { type: String, default: String },
+      color: { type: String, default: 'dodgerblue' },
       buttonColor: { type: String, default: String },
       id: { type: String, default: 'DateTimePicker' },
       disabled: { type: Boolean, default: false },
@@ -97,9 +102,9 @@
       locale: { type: String, default: getDefaultLocale() },
       timeZone: { type: String, default: getDefaultTZ() },
       formatted: { type: String, default: 'llll' },
-      format: { type: String, default: 'YYYY-MM-DD HH:mm' },
+      format: { type: String, default: 'YYYY-MM-DD hh:mm a' },
       outputFormat: { type: String, default: String },
-      minuteInterval: { type: Number, default: 1 },
+      minuteInterval: { type: [String, Number], default: 1 },
       minDate: { type: String, default: String },
       maxDate: { type: String, default: String },
       autoClose: { type: Boolean, default: false },
@@ -107,14 +112,14 @@
       onlyDate: { type: Boolean, default: false },
       noHeader: { type: Boolean, default: false },
       range: {type: Boolean, default: false},
-      noInput: { type: Boolean, default: false },
       noWeekendsDays: { type: Boolean, default: false },
       noShortcuts: { type: Boolean, default: false },
       noButton: { type: Boolean, default: false },
       shortcutsTranslations: { type: Object, default: Object },
       disabledDates: { type: Array, default: Array },
       disabledHours: {type: Array, default: Array},
-      open: { type: Boolean, default: false }
+      open: { type: Boolean, default: false },
+      inputSize: { type: String, default: String }
     },
     data () {
       return {
@@ -137,14 +142,18 @@
           ? this.getRangeDatesFormatted()
           : this.getDateFormatted()
       },
+      hasCustomElem () {
+        return this.$slots.default
+      },
       hasInput () {
-        return !this.inline && !this.$slots.default[0]
+        return !this.inline && !this.$slots.default
       },
       dateTime: {
         get () {
-          return this.range
+          const dateTime = this.range
             ? this.value
             : this.getDateTime()
+          return dateTime
         },
         set (value) {
           if (this.autoClose && this.range && (value.end && value.start)) {
@@ -152,7 +161,13 @@
           } else if (this.autoClose && !this.range) {
             this.toggleDatePicker()
           }
-          this.$emit('input', this.range ? this.getRangeDateToSend(value) : this.getDateTimeToSend(value))
+          const newValue = this.range ? this.getRangeDateToSend(value) : this.getDateTimeToSend(value)
+          this.$emit('input', newValue)
+          if (this.hasCustomElem) {
+            this.$nextTick(() => {
+              this.setValueToCustomElem()
+            })
+          }
         }
       },
       formatOutput () {
@@ -165,15 +180,26 @@
       }
     },
     mounted () {
-      moment.tz(this.timeZone)
-      moment.locale(this.locale)
       this.pickerPosition = this.getPosition()
       this.pickerOpen = this.open
-      if (this.$slots.default) {
+      if (this.hasCustomElem) {
         this.addEventToTriggerElement()
+        this.setValueToCustomElem()
       }
     },
     methods: {
+      setValueToCustomElem () {
+        const target = this.$slots.default[0]
+        if (target) {
+          if (target.tag === 'button') {
+            target.elm.innerHTML = this.dateFormatted
+          } else {
+            target.elm.value = this.dateFormatted
+          }
+        } else {
+          window.console.warn(`Impossible to find custom element`)
+        }
+      },
       addEventToTriggerElement () {
         const target = this.$slots.default[0].elm
         if (target) {
@@ -181,7 +207,7 @@
             this.toggleDatePicker()
           })
         } else {
-          window.console.warn(`Impossible to find custom element with id '${this.triggerId}'`)
+          window.console.warn(`Impossible to find custom element`)
         }
       },
       getRangeDatesFormatted () {
@@ -202,7 +228,7 @@
       },
       getRangeDateToSend (payload) {
         const { start, end } = typeof payload !== 'undefined' ? payload : this.value
-        return this.value
+        return start || end
           ? { start: start ? moment(start).format('YYYY-MM-DD') : null,
               end: end ? moment(end).format('YYYY-MM-DD') : null }
           : { start: moment().format('YYYY-MM-DD'),
@@ -247,10 +273,12 @@
       }
     },
     beforeDestroy () {
-      const target = this.$slots.default[0].elm
-      target.addEventListener('click', () => {
-        this.toggleDatePicker()
-      })
+      if (this.hasCustomElem) {
+        const target = this.$slots.default[0].elm
+        target.addEventListener('click', () => {
+          this.toggleDatePicker()
+        })
+      }
     }
   }
 </script>

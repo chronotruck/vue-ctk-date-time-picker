@@ -234,5 +234,11 @@
     -ms-flex: 1;
     flex: 1;
   }
+  .flex-wrap {
+    flex-wrap: wrap;
+  }
+  .flex-grow {
+    flex-grow: 1;
+  }
   /** END FLEX HELPERS **/
 }

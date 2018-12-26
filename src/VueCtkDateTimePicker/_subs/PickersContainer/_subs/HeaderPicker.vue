@@ -120,7 +120,9 @@
       },
       dateTime () {
         const date = this.value
-          ? moment(this.value, 'YYYY-MM-DD HH:mm')
+          ? this.range
+            ? moment(this.value.end ? this.value.end : this.value.start, 'YYYY-MM-DD HH:mm')
+            : moment(this.value, 'YYYY-MM-DD HH:mm')
           : moment()
         return date
       },

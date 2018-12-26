@@ -1,10 +1,10 @@
 <template>
   <Transition
-    :name="position === 'bottom' ? 'slide' : 'slideinvert'"
+    :name="position === 'top' ? 'slide' : 'slideinvert'"
   >
     <div
-      v-show="visible"
-      :class="{'inline': inline, 'is-dark': dark}"
+      v-show="visible || inline"
+      :class="{'inline': inline, 'is-dark': dark, 'visible': visible}"
       :style="responsivePosition"
       class="datetimepicker flex"
       @click.stop
@@ -94,7 +94,7 @@
       color: { type: String, default: String },
       onlyDate: { type: Boolean, default: false },
       onlyTime: { type: Boolean, default: Boolean },
-      minuteInterval: { type: Number, default: Number },
+      minuteInterval: { type: [String, Number], default: Number },
       format: { type: String, default: String },
       locale: { type: String, default: String },
       maxDate: { type: String, default: String },
@@ -117,7 +117,7 @@
     computed: {
       responsivePosition () {
         return window.innerWidth < 412
-          ? null : this.position === 'bottom'
+          ? null : this.position === 'top'
             ? {top: '100%', marginBottom: '10px'} : {bottom: '100%', marginTop: '10px'}
       },
       timeFormat () {
@@ -158,7 +158,9 @@
                 ? { start: this.value.start ? moment(this.value.start).format('YYYY-MM-DD') : null,
                     end: this.value.end ? moment(this.value.end).format('YYYY-MM-DD') : null }
                 : moment(this.value, 'YYYY-MM-DD HH:mm').format('YYYY-MM-DD')
-            : null
+            : this.range
+              ? { start: null, end: null }
+              : null
           return date
         }
       }
@@ -203,8 +205,8 @@
       },
       getMonth (payload) {
         if (this.range) {
-          const { start, end } = payload || this.value
-          const date = end || start ? moment(end ? end : start) : moment()
+          const rangeVal = payload || this.value
+          const date = rangeVal && (rangeVal.end || rangeVal.start) ? moment(rangeVal.end ? rangeVal.end : rangeVal.start) : moment()
           return new Month(date.month(), date.year())
         } else if (this.value) {
           return new Month(moment(this.value, this.format).month(), moment(this.value, this.format).year(), this.locale)
@@ -232,6 +234,10 @@
   @import "@/VueCtkDateTimePicker/assets/animation.scss";
   .datetimepicker {
     position: absolute;
+    z-index: 9;
+    &.visible {
+      z-index: 999;
+    }
     .datepicker {
       font-family: 'Roboto', sans-serif;
       position: absolute;

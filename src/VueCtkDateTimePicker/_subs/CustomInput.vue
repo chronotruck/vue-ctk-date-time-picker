@@ -1,13 +1,13 @@
 <template>
   <div
     ref="parent"
-    :class="{
+    :class="[{
       'is-focused': isFocus,
       'has-value': value,
       'has-error': errorHint,
       'is-disabled': disabled,
       'is-dark': dark
-    }"
+    }, inputSize]"
     class="field"
   >
     <input
@@ -45,7 +45,8 @@
       color: { type: String, default: String },
       disabled: { type: Boolean, default: false },
       dark: { type: Boolean, default: false },
-      id: { type: String, default: 'CustomInput' }
+      id: { type: String, default: 'CustomInput' },
+      inputSize: { type: String, default: String }
     },
     computed: {
       borderStyle () {
@@ -173,6 +174,36 @@
       }
       ::placeholder { /* Most modern browsers support this now. */
         color: #ffffffb3;
+      }
+    }
+    &.sm {
+      .field-input {
+        height: 36px;
+        min-height: 36px;
+        font-size: 12px;
+      }
+      .field-label {
+        font-size: 10px;
+      }
+      &.has-value {
+        .field-input {
+          padding-top: 12px;
+        }
+      }
+    }
+    &.lg {
+      .field-input {
+        height: 48px;
+        min-height: 48px;
+        font-size: 16px;
+      }
+      .field-label {
+        font-size: 14px;
+      }
+      &.has-value {
+        .field-input {
+          padding-top: 16px;
+        }
       }
     }
   }

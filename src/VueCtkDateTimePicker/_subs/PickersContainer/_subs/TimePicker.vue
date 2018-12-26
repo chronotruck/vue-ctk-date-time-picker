@@ -65,7 +65,7 @@
     props: {
       value: { type: String, default: String },
       format: { type: String, default: String },
-      minuteInterval: { type: Number, default: Number },
+      minuteInterval: { type: [String, Number], default: Number },
       month: { type: Object, default: Object },
       color: { type: String, default: String },
       inline: { type: Boolean, default: Boolean },
