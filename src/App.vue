@@ -81,7 +81,9 @@
               class="flex flex-wrap"
             >
               <div class="flex-1">
-                <h4 style="margin-bottom: 10px;">String options</h4>
+                <h4 style="margin-bottom: 10px;">
+                  String options
+                </h4>
                 <div
                   v-for="str in stringOptions"
                   :key="str"
@@ -97,7 +99,9 @@
                   </span>
                 </div>
                 <hr>
-                <h4 style="margin-bottom: 10px;">Integer options</h4>
+                <h4 style="margin-bottom: 10px;">
+                  Integer options
+                </h4>
                 <div
                   v-for="int in intOptions"
                   :key="int"
@@ -115,7 +119,9 @@
                 <hr>
               </div>
               <div class="flex-1">
-                <h4 style="margin-bottom: 10px;">Boolean options</h4>
+                <h4 style="margin-bottom: 10px;">
+                  Boolean options
+                </h4>
                 <div
                   v-for="opt in booleanOptions"
                   :key="opt"
@@ -397,7 +403,7 @@
       &:hover {
         background-color: darken(#424242, 10%);
       }
-    } 
+    }
   }
   .component-container {
     margin: 0 10px 20px 10px;
