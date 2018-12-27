@@ -85,7 +85,7 @@ Here is an example of UMD implementation: https://codepen.io/louismazel/pen/jQWN
 | disabled-dates (8) | Array<string> | no | [] |
 | disabled-hours (9) | Array<string> | no | - |
 | shortcuts-translations (10) | Object | no | - |
-| input-size | String (sm|lg) | no | null |
+| input-size | String (sm or lg) | no | null |
 | buttonNowTranslation | String | no | 'Now' |
 | noButtonNow | Boolean | no | false |
 
