@@ -245,7 +245,8 @@
           this.apm = item
         }
         const availableHour = this.hour ? this.hour : this.getAvailableHour()
-        let hour = availableHour >= 24 ? 0 : this.hour
+        // TODO : 12am = 13h, 12pm : minuitn, normalement c'est l'inverse
+        let hour = availableHour === 24 && this.apm === this.apms[0].value ? 0 : this.hour
         hour = (hour < 10 ? '0' : '') + hour
         const minute = this.minute ? (this.minute < 10 ? '0' : '') + this.minute : '00'
         const time = `${hour}:${minute}`
