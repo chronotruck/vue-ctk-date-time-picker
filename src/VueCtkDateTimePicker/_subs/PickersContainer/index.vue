@@ -122,7 +122,7 @@
     },
     computed: {
       responsivePosition () {
-        return !this.inline 
+        return !this.inline
           ? window.innerWidth < 412
             ? null
             : this.position === 'top'

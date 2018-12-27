@@ -257,7 +257,7 @@
       },
       toggleDatePicker (val) {
         if (this.disabled) return
-        this.pickerOpen = val || !this.pickerOpen
+        this.pickerOpen = val || !this.pickerOpen
         if (this.pickerOpen && !this.position) {
           this.pickerPosition = this.getPosition()
         }
