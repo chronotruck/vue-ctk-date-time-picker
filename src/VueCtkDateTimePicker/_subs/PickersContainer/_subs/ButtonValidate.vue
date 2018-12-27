@@ -71,7 +71,7 @@
         }
       },
       hasButtonNow () {
-        return !this.onlyTime && !this.noButtonNow
+        return !this.onlyTime && !this.noButtonNow && !this.range
       }
     },
     methods: {

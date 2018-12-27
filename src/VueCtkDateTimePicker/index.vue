@@ -257,9 +257,17 @@
       },
       toggleDatePicker (val) {
         if (this.disabled) return
-        this.pickerOpen = val || !this.pickerOpen
+        const isOpen = val || !this.pickerOpen
+        this.setBodyOverflow(isOpen)
+        this.pickerOpen = isOpen
         if (this.pickerOpen && !this.position) {
           this.pickerPosition = this.getPosition()
+        }
+      },
+      setBodyOverflow (value) {
+        if (window.innerWidth < 412) {
+          const body = document.getElementsByTagName('body')[0]
+          body.style.overflow = value ? 'hidden' : null
         }
       },
       getPosition () {

@@ -65,6 +65,7 @@
           class="button-validate flex-fixed"
           :only-time="onlyTime"
           :no-button-now="noButtonNow"
+          :range="range"
           @validate="validate"
           @now="setNow"
         />

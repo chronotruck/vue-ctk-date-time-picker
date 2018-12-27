@@ -44,7 +44,6 @@
               color="purple"
               :dark="darkMode"
               open
-              range
             />
           </div>
         </div>
@@ -68,6 +67,12 @@
               <p><b>v-model</b> = {{ demo.value || 'null' }}</p>
             </div>
             <hr>
+            <button
+              class="btn option"
+              @click="demo.editOption = !demo.editOption"
+            >
+              Edit options
+            </button>
             <div
               v-show="demo.editOption"
               class="flex flex-wrap component options"
@@ -129,12 +134,6 @@
                 </div>
               </div>
             </div>
-            <button
-              class="btn option"
-              @click="demo.editOption = !demo.editOption"
-            >
-              Edit options
-            </button>
             <div class="component">
               <CtkDateTimePicker
                 v-model="demo.value"

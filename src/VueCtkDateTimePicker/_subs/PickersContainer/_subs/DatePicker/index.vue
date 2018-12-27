@@ -1,8 +1,8 @@
 <template>
   <div
     id="DatePicker"
-    :class="{'flex-1 inline': inline, 'p-0 range': range, 'is-dark': dark, 'has-shortcuts': !noShortcuts}"
-    class="datepicker-container flex"
+    :class="{'flex-1 inline': inline, 'p-0 range flex-1': range, 'is-dark': dark, 'has-shortcuts': range && !noShortcuts}"
+    class="datepicker-container flex flex-fixed"
   >
     <RangeShortcuts
       v-if="range && !noShortcuts"
@@ -11,7 +11,6 @@
       :dark="dark"
       :shortcuts-translations="shortcutsTranslations"
       @change-range="$emit('input', $event)"
-      class="flex-fixed"
     />
     <div class="calendar w-100">
       <div class="datepicker-controls flex align-center justify-content-center">
@@ -250,7 +249,7 @@
 <style lang="scss" scoped>
   @import "@/VueCtkDateTimePicker/assets/animation.scss";
   #DatePicker.datepicker-container {
-    width: 290px;
+    width: 260px;
     padding: 0 5px;
     &.range.has-shortcuts {
       width: 400px;
@@ -438,6 +437,14 @@
           height: 21px !important;
         }
       }
+      &.range.has-shortcuts {
+        width: 100%;
+      }
+      -webkit-flex-direction: column;
+      -ms-flex-direction: column;
+      flex-direction: column;
+      flex-flow: column;
+      -moz-flex-direction: column;
     }
   }
 </style>

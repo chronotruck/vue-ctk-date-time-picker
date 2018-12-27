@@ -3,7 +3,7 @@
     ref="time-picker"
     :class="{'inline': inline, 'is-dark': dark, 'with-border': !onlyTime }"
     :style="[{height: `${getHeight}px`}]"
-    class="time-picker flex flex-fixed"
+    class="time-picker flex flex-fixed flex-1"
   >
     <div
       v-for="column in columns"
@@ -142,6 +142,7 @@
       visible (val) {
         if (val) {
           this.initPositionView()
+          this.columnPadding()
         }
       },
       value () {
@@ -175,10 +176,14 @@
         this.initPositionView()
       },
       columnPadding () {
-        const pad = this.getHeight / 2 - 25 / 2
-        return {
-          paddingTop: `${pad}px`,
-          paddingBottom: `${pad}px`
+        if (this.$refs['time-picker'] && this.visible) {
+          const pad = this.$refs['time-picker'].clientHeight / 2 - 25 / 2
+          return {
+            paddingTop: `${pad}px`,
+            paddingBottom: `${pad}px`
+          }
+        } else {
+          return null
         }
       },
       initPositionView () {
@@ -314,6 +319,7 @@
       border: 0;
       border-top: 1px solid #EAEAEA;
       width: 100%;
+      height: unset !important;
       overflow: hidden;
       &.dark {
         border-top: 1px solid #757575;

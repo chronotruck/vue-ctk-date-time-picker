@@ -177,7 +177,6 @@
     .shortcuts-container:not(.inline) {
       width: 100%;
       border-bottom: 1px solid #EAEAEA;
-      height: unset !important;
       overflow: auto;
     }
     .shortcuts-container.is-dark {
