@@ -120,7 +120,7 @@
       height: 30px;
       font-weight: 300;
       line-height: 26px;
-      border-radius: 30px;
+      border-radius: 4px;
       font-size: 12px;
       outline: none;
       cursor: pointer;
@@ -134,7 +134,7 @@
         left: 0;
         margin: auto;
         height: 30px;
-        border-radius: 30px;
+        border-radius: 4px;
         width: 100%;
         -webkit-transition: all 450ms cubic-bezier(0.23, 1, 0.32, 1) 0ms;
         transition: all 450ms cubic-bezier(0.23, 1, 0.32, 1) 0ms;
@@ -153,6 +153,7 @@
       }
       &.is-selected {
         border-color: transparent;
+        font-weight: bold;
         .datepicker-button-effect {
           opacity: 1;
           transform: scale(1);

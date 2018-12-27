@@ -1,7 +1,7 @@
 <template>
   <div
-    :class="[{'is-dark': dark}, hasButtonNow ? 'justify-content-between' : 'justify-content-right']"
-    class="datepicker-buttons-container flex"
+    :class="[{'is-dark': dark}]"
+    class="datepicker-buttons-container flex justify-content-right"
   >
     <button
       v-if="hasButtonNow"
@@ -56,7 +56,8 @@
       buttonColor: { type: String, default: String },
       buttonNowTranslation: { type: String, default: String },
       onlyTime: { type: Boolean, default: Boolean },
-      noButtonNow: {type: Boolean, default: false}
+      noButtonNow: {type: Boolean, default: Boolean},
+      range: {type: Boolean, default: Boolean},
     },
     computed: {
       colorStyle () {
@@ -84,7 +85,7 @@
 
 <style lang="scss" scoped>
   .datepicker-buttons-container {
-    padding: 5px 10px;
+    padding: 5px;
     border-top: 1px solid #EAEAEA;
     background-color: #FFF;
     z-index: 1;
@@ -94,7 +95,7 @@
       position: relative;
       background-color: white;
       border: 1px solid transparent;
-      border-radius: 30px;
+      border-radius: 4px;
       height: 30px;
       font-size: 14px;
       outline: none;
@@ -119,7 +120,7 @@
         bottom: 0;
         right: 0;
         height: 30px;
-        border-radius: 30px;
+        border-radius: 4px;
         width: 100%;
         -webkit-transition: all 450ms cubic-bezier(0.23, 1, 0.32, 1) 0ms;
         transition: all 450ms cubic-bezier(0.23, 1, 0.32, 1) 0ms;

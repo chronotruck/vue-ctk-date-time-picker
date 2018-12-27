@@ -17,7 +17,7 @@
       :color="color"
       :label="label"
       :input-size="inputSize"
-      @click.native="toggleDatePicker(true)"
+      @click.native="toggleDatePicker()"
     />
     <slot v-else />
     <div

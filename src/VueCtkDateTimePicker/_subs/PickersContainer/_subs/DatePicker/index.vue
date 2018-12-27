@@ -329,7 +329,7 @@
           height: 30px;
           width: 30px;
 
-          border-radius: 50%;
+          border-radius: 4px;
           -webkit-transition: all 450ms cubic-bezier(0.23, 1, 0.32, 1) 0ms;
           transition: all 450ms cubic-bezier(0.23, 1, 0.32, 1) 0ms;
         }
@@ -367,20 +367,19 @@
             border-radius: 0;
             width: 100%;
           }
-          /*TODO*/
           &.first .datepicker-day-effect {
-            border-top-left-radius: 30px;
-            border-bottom-left-radius: 30px;
+            border-top-left-radius: 4px;
+            border-bottom-left-radius: 4px;
           }
-          /*TODO*/
           &.last .datepicker-day-effect {
-            border-top-right-radius: 30px;
-            border-bottom-right-radius: 30px;
+            border-top-right-radius: 4px;
+            border-bottom-right-radius: 4px;
           }
         }
         &.selected {
           .datepicker-day-text {
             color: #FFF;
+            font-weight: bold;
           }
           .datepicker-day-effect {
             transform: scale(1);

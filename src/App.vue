@@ -42,6 +42,8 @@
             <CtkDateTimePicker
               v-model="value"
               color="purple"
+              format="YYYY-MM-DDTHH:mm:ssZ"
+              time-zone="Asia/Tokyo"
               :dark="darkMode"
               open
             />
@@ -314,7 +316,7 @@
             }
           }
         ],
-        value: '2018-04-05 20:26',
+        value: '2014-06-01T05:00:00-07:00',
         value2: null,
         value3: '2018-04-05T14:26',
         rangeValues: {
@@ -410,7 +412,7 @@
     padding: 10px 20px;
     margin-bottom: 20px;
     border: none;
-    border-radius: 30px;
+    border-radius: 4px;
     font-size: 12px;
     outline: none;
     cursor: pointer;

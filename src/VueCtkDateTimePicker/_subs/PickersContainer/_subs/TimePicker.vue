@@ -9,7 +9,7 @@
       v-for="column in columns"
       :key="column.type"
       :ref="column.type"
-      :style="[columnPadding()]"
+      :style="[columnPadding]"
       class="time-picker-column flex-1 flex flex-direction-column text-center"
     >
       <button
@@ -29,7 +29,7 @@
           class="time-picker-column-item-effect"
         />
         <span class="time-picker-column-item-text">
-          {{ item.item }}
+          {{ item.item }} {{ item.value }}
         </span>
       </button>
     </div>
@@ -79,7 +79,8 @@
         hour: null,
         minute: null,
         apm: null,
-        oldvalue: this.value
+        oldvalue: this.value,
+        columnPadding: {}
       }
     },
     computed: {
@@ -101,17 +102,17 @@
           backgroundColor: this.color
         }
       },
-      twelveFormat () {
+      isTwelveFormat () {
         return this.format.includes('h') // && (this.format.includes('a') || this.format.includes('A'))
       },
       hours () {
         const twoDigit = this.format.includes('hh') || this.format.includes('HH')
         const isAfternoon = this.apm ? this.apm === 'pm' || this.apm === 'PM' : false
         return ArrayHourRange(
-          this.twelveFormat
+          this.isTwelveFormat
             ? 1
             : 0,
-          this.twelveFormat
+          this.isTwelveFormat
             ? 12
             : 23,
           twoDigit,
@@ -142,10 +143,17 @@
       visible (val) {
         if (val) {
           this.initPositionView()
-          this.columnPadding()
+          this.columnPad()
+        }
+      },
+      month (val) {
+        if (val) {
+          this.initPositionView()
+          this.columnPad()
         }
       },
       value () {
+        this.initPositionView()
         this.buildComponent()
       }
     },
@@ -170,18 +178,30 @@
       },
       buildComponent () {
         const hour = moment(this.value, this.format).format('HH')
-        this.hour = this.isHoursDisabled(hour) ? this.getAvailableHour() : parseInt(hour)
+        const hourToSet = parseInt(hour) === 0 && this.isTwelveFormat ? 24 : parseInt(hour)
+        this.hour = this.isHoursDisabled(hour) ? this.getAvailableHour() : hourToSet
         this.minute = parseInt(moment(this.value, this.format).format('mm'))
-        this.apm = this.apms ? parseInt(moment(this.value, this.format).format('HH')) >= 12 ? this.apms[1].value : this.apms[0].value : null
-        this.initPositionView()
+        if (!this.apm) {
+          this.apm = this.apms
+            ? hour >= 12
+              ? this.apms[1].value
+              : this.apms[0].value
+            : null
+        }
+        this.columnPad()
       },
-      columnPadding () {
+      columnPad () {
         if (this.$refs['time-picker'] && this.visible) {
-          const pad = this.$refs['time-picker'].clientHeight / 2 - 25 / 2
-          return {
-            paddingTop: `${pad}px`,
-            paddingBottom: `${pad}px`
+          const run = (pad) => {
+            this.columnPadding = {
+              paddingTop: `${pad}px`,
+              paddingBottom: `${pad}px`
+            }
           }
+          this.$nextTick(() => {
+            const pad = this.$refs['time-picker'].clientHeight / 2 - 28 / 2
+            run(pad)
+          })
         } else {
           return null
         }
@@ -189,7 +209,7 @@
       initPositionView () {
         const containers = ['hours', 'minutes']
         if (this.apms) containers.push('apms')
-        this.$nextTick(() => {
+        setTimeout(() => {
           containers.forEach((container) => {
             const elem = this.$refs[container][0]
             elem.style.overflow = 'hidden'
@@ -200,14 +220,14 @@
               const boundsElem = elem.getBoundingClientRect()
               const timePickerHeight = this.$refs['time-picker'].clientHeight
               if (boundsSelected && boundsElem) {
-                elem.scrollTop = (25 / 2) + boundsSelected.top - boundsElem.top - timePickerHeight / 2
+                elem.scrollTop = (28 / 2) + boundsSelected.top - boundsElem.top - timePickerHeight / 2
               }
             }
             setTimeout(() => {
               elem.style.overflow = 'auto'
             }, 300)
           })
-        })
+        }, 0)
       },
       getAvailableHour () {
         return this.hours.find((element) => {
@@ -225,10 +245,11 @@
           this.apm = item
         }
         const availableHour = this.hour ? this.hour : this.getAvailableHour()
-        let hour = availableHour >= 24 ? 0 : this.hour ? this.hour : availableHour
+        let hour = availableHour >= 24 ? 0 : this.hour
         hour = (hour < 10 ? '0' : '') + hour
         const minute = this.minute ? (this.minute < 10 ? '0' : '') + this.minute : '00'
         const time = `${hour}:${minute}`
+        console.log('time', time, this.hour, item)
         this.$emit('input', time)
         this.initPositionView()
       }
@@ -239,14 +260,33 @@
 <style lang="scss" scoped>
   .time-picker {
     width: 140px;
+    position: relative;
+    z-index: 1;
+    &::after, &::before {
+      content: "";
+      top: 50%;
+      position: absolute;
+      margin: 0 auto;
+      margin-top: -14px;
+      height: 30px;
+      z-index: -1;
+      width: 85%;
+      left: 0;
+      right: 0;
+      box-sizing: border-box;
+      text-align: left;
+      border-top: 1px solid #EAEAEA;
+      border-bottom: 1px solid #EAEAEA;
+    }
     &-column {
+      position: relative;
       overflow-y: auto;
       padding: 5px 0;
       &-item {
-        height: 25px;
-        min-height: 25px;
+        height: 28px;
+        min-height: 28px;
         padding: 0;
-        color: #000;
+        color: #252525;
         cursor: pointer;
         position: relative;
         border: none;
@@ -258,13 +298,14 @@
           position: absolute;
           opacity: 0.6;
           background: dodgerblue;
-          height: 100%;
-          width: 100%;
-          top: 0;
-          left: 0;
+          height: 85%;
+          width: 80%;
+          top: 7.5%;
+          left: 10%;
           -webkit-transition: all 450ms cubic-bezier(0.23, 1, 0.32, 1) 0ms;
           transition: all 450ms cubic-bezier(0.23, 1, 0.32, 1) 0ms;
           transform: scale(0);
+          border-radius: 4px;
           &:hover {
             transform: scale(1);
           }
@@ -283,6 +324,7 @@
         }
         &.active {
           color: #FFF;
+          font-weight: bold;
           .time-picker-column-item-effect {
             transform: scale(1);
             opacity: 1;

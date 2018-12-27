@@ -165,6 +165,7 @@
 
 <style lang="scss" scoped>
   @import "@/VueCtkDateTimePicker/assets/animation.scss";
+  $headerTextSize: 16px;
   .header-picker {
     background: dodgerblue;
     color: #FFF;
@@ -174,17 +175,17 @@
     border-top-right-radius: 4px;
     &-year {
       opacity: 0.7;
-      margin-bottom: 10px;
+      margin-bottom: 5px;
       font-size: 14px;
       line-height: 14px;
       position: relative;
       height: 14px;
     }
     &-date, &-time, &-minute, &-hour, &-range {
-      font-size: 20px;
-      line-height: 20px;
+      font-size: $headerTextSize;
+      line-height: $headerTextSize;
       position: relative;
-      height: 20px;
+      height: $headerTextSize;
     }
     &-date {
       text-transform: capitalize;
