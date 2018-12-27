@@ -307,6 +307,8 @@
             title: 'Disabled Picker',
             description: '(disabled="true")',
             editOption: false,
+            initial: 'null',
+            value: null,
             options: {
               disabled: true,
               label: 'Is Disabled'
