@@ -15,17 +15,19 @@
       :error-hint="error"
       :is-focus="hasPickerOpen"
       :color="color"
+      :label="label"
       :input-size="inputSize"
-      @click.native="toggleDatePicker"
+      @click.native="toggleDatePicker(true)"
     />
     <slot v-else />
     <div
       v-if="hasPickerOpen && overlay"
       class="time-picker-overlay"
-      @click.stop="toggleDatePicker"
+      @click.stop="toggleDatePicker(false)"
     />
     <PickersContainer
       ref="agenda"
+      v-if="!disabled"
       v-model="dateTime"
       :visible="hasPickerOpen"
       :position="pickerPosition"
@@ -48,6 +50,8 @@
       :disabled-hours="disabledHours"
       :shortcuts-translations="shortcutsTranslations"
       :no-shortcuts="noShortcuts"
+      :button-now-translation="buttonNowTranslation"
+      :no-button-now="noButtonNow"
       @validate="validate"
     />
   </div>
@@ -119,7 +123,10 @@
       disabledDates: { type: Array, default: Array },
       disabledHours: {type: Array, default: Array},
       open: { type: Boolean, default: false },
-      inputSize: { type: String, default: String }
+      persistent: { type: Boolean, default: false },
+      inputSize: { type: String, default: String },
+      buttonNowTranslation: { type: String, default: String },
+      noButtonNow: {type: Boolean, default: false}
     },
     data () {
       return {
@@ -129,7 +136,7 @@
     },
     computed: {
       hasPickerOpen () {
-        return this.pickerOpen
+        return this.persistent || this.pickerOpen
       },
       hasButtonValidate () {
         return !this.inline && !this.autoClose && !this.noButton
@@ -176,6 +183,7 @@
     },
     watch: {
       open (val) {
+        if (this.disabled) return
         this.pickerOpen = val
       }
     },
@@ -247,8 +255,9 @@
           : null
         return date ? nearestMinutes(this.minuteInterval, date).format('YYYY-MM-DD HH:mm') : null
       },
-      toggleDatePicker () {
-        this.pickerOpen = !this.pickerOpen
+      toggleDatePicker (val) {
+        if (this.disabled) return
+        this.pickerOpen = val || !this.pickerOpen
         if (this.pickerOpen && !this.position) {
           this.pickerPosition = this.getPosition()
         }

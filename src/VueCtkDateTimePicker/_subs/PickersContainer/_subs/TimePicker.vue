@@ -145,9 +145,7 @@
         }
       },
       value () {
-        if (!this.hour || !this.minutes) {
-          this.buildComponent()
-        }
+        this.buildComponent()
       }
     },
     mounted () {

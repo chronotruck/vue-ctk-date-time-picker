@@ -19,6 +19,8 @@
       :style="[borderStyle]"
       type="text"
       class="field-input"
+      @focus="$emit('focus')"
+      @blur="$emit('blur')"
       readonly
     >
     <label

@@ -53,32 +53,24 @@
         v-else
         class="container"
       >
-        <div class="components-container">
+        <div class="components-container flex flex-wrap">
           <div
             v-for="demo in demoComponents"
             :key="demo.title"
             :class="{'dark': darkMode}"
             class="component-container"
           >
-            <div class="flex flex-wrap justify-content-between">
-              <h3>{{ demo.title }}</h3>
-              <h4>{{ demo.description }}</h4>
-            </div>
+            <h3>{{ demo.title }}</h3>
+            <h4>{{ demo.description }}</h4>
             <hr>
             <div class="flex flex-wrap justify-content-between">
               <p><b>Inititale value</b> : {{ demo.initial }}</p>
               <p><b>v-model</b> = {{ demo.value || 'null' }}</p>
             </div>
             <hr>
-            <button
-              class="btn option"
-              @click="demo.editOption = !demo.editOption"
-            >
-              Edit options
-            </button>
             <div
               v-show="demo.editOption"
-              class="flex flex-wrap"
+              class="flex flex-wrap component options"
             >
               <div class="flex-1">
                 <h4 style="margin-bottom: 10px;">
@@ -98,7 +90,6 @@
                     {{ str }}
                   </span>
                 </div>
-                <hr>
                 <h4 style="margin-bottom: 10px;">
                   Integer options
                 </h4>
@@ -116,7 +107,6 @@
                     {{ int }}
                   </span>
                 </div>
-                <hr>
               </div>
               <div class="flex-1">
                 <h4 style="margin-bottom: 10px;">
@@ -131,55 +121,69 @@
                   <CheckboxInput
                     v-model="demo.options[opt]"
                     :id="`${demo.id}${opt}`"
+                    :disabled="opt === 'onlyDate' || opt === 'onlyTime' || opt === 'range'"
                   />
                   <span style="margin-left: 15px;">
-                    {{ opt }}
+                    {{ opt }} {{ opt === 'onlyDate' || opt === 'onlyTime' || opt === 'range' || opt === 'inline' ? '(disabled)' : '' }}
                   </span>
                 </div>
               </div>
             </div>
-            <CtkDateTimePicker
-              v-model="demo.value"
-              :only-date="demo.options.onlyDate"
-              :only-time="demo.options.onlyTime"
-              :range="demo.options.range"
-              :format="demo.options.format"
-              :formatted="demo.options.formatted"
-              :output-format="demo.options.outputFormat"
-              :inline="demo.options.inline"
-              :color="demo.options.color"
-              :button-color="demo.options.buttonColor"
-              :no-header="demo.options.noHeader"
-              :auto-close="demo.options.autoClose"
-              :error="demo.options.error"
-              :hint="demo.options.hint"
-              :open="demo.options.open"
-              :dark="darkMode || demo.options.dark"
-              :overlay="demo.options.overlay"
-              :position="demo.options.position"
-              :disabled-dates="demo.options.disabledDates"
-              :disabled-hours="demo.options.disabledHours"
-              :minute-interval="demo.options.minuteInterval"
-              :min-date="demo.options.minDate"
-              :max-date="demo.options.maxDate"
-              :no-weekends-days="demo.options.noWeekendDays"
-              :no-shortcuts="demo.options.noShortcuts"
-              :no-button="demo.options.noButton"
-              :shortcuts-translations="demo.options.shortcutsTranslations"
-              :locale="demo.options.locale"
-              :input-size="demo.options.inputSize"
+            <button
+              class="btn option"
+              @click="demo.editOption = !demo.editOption"
             >
-              <input
-                v-if="demo.options && demo.options.slot && demo.options.slot.type === 'input'"
-                type="text"
+              Edit options
+            </button>
+            <div class="component">
+              <CtkDateTimePicker
+                v-model="demo.value"
+                :only-date="demo.options.onlyDate"
+                :only-time="demo.options.onlyTime"
+                :range="demo.options.range"
+                :format="demo.options.format"
+                :formatted="demo.options.formatted"
+                :output-format="demo.options.outputFormat"
+                :inline="demo.options.inline"
+                :color="demo.options.color"
+                :button-color="demo.options.buttonColor"
+                :no-header="demo.options.noHeader"
+                :label="demo.options.label"
+                :auto-close="demo.options.autoClose"
+                :error="demo.options.error"
+                :hint="demo.options.hint"
+                :open="demo.options.open"
+                :dark="darkMode || demo.options.dark"
+                :overlay="demo.options.overlay"
+                :position="demo.options.position"
+                :disabled="demo.options.disabled"
+                :disabled-dates="demo.options.disabledDates"
+                :disabled-hours="demo.options.disabledHours"
+                :minute-interval="demo.options.minuteInterval"
+                :min-date="demo.options.minDate"
+                :max-date="demo.options.maxDate"
+                :no-weekends-days="demo.options.noWeekendDays"
+                :no-shortcuts="demo.options.noShortcuts"
+                :no-button="demo.options.noButton"
+                :shortcuts-translations="demo.options.shortcutsTranslations"
+                :button-now-translation="demo.options.buttonNowTranslation"
+                :no-button-now="demo.options.noButtonNow"
+                :locale="demo.options.locale"
+                :input-size="demo.options.inputSize"
+                :persistent="demo.options.persistent"
               >
-              <button
-                v-else-if="demo.options && demo.options.slot && demo.options.slot.type === 'button'"
-                type="button"
-                class="btn"
-                style="margin: 0;"
-              />
-            </CtkDateTimePicker>
+                <input
+                  v-if="demo.options && demo.options.slot && demo.options.slot.type === 'input'"
+                  type="text"
+                >
+                <button
+                  v-else-if="demo.options && demo.options.slot && demo.options.slot.type === 'button'"
+                  type="button"
+                  class="btn"
+                  style="margin: 0;"
+                />
+              </CtkDateTimePicker>
+            </div>
           </div>
         </div>
       </div>
@@ -198,13 +202,14 @@
     },
     data () {
       return {
-        devMode: true,
+        devMode: false,
         booleanOptions: [
-          'noHeader', 'autoClose', 'error', 'dark', 'overlay', 'noWeekendDays', 'noShortcuts', 'noButton'
+          'noHeader', 'autoClose', 'error', 'dark', 'overlay', 'noWeekendDays', 'noShortcuts', 
+          'noButton', 'onlyDate', 'range', 'onlyTime', 'inline', 'persistent', 'disabled', 'noButtonNow'
         ],
         stringOptions: [
           'hint', 'color', 'buttonColor', 'position', 'format', 'formatted', 'outputFormat',
-          'minDate', 'maxDate', 'disabledDates', 'disabledHours'
+          'minDate', 'maxDate', 'disabledDates', 'disabledHours', 'inputSize', 'buttonNowTranslation', 'label'
         ],
         intOptions: [
           'minuteInterval'
@@ -218,7 +223,8 @@
             value: '2018-04-05 20:26',
             editOption: false,
             options: {
-              inputSize: 'sm'
+              inputSize: 'sm',
+              noButtonNow: true
             }
           },
           {
@@ -241,7 +247,8 @@
               range: true,
               formatted: 'll',
               format: 'YYYY-MM-DD',
-              color: 'purple'
+              color: 'purple',
+              label: 'Select date range'
             }
           },
           {
@@ -255,7 +262,8 @@
               onlyDate: true,
               color: 'coral',
               inputSize: 'lg',
-              buttonColor: 'green'
+              buttonColor: 'green',
+              buttonNowTranslation: 'Maintenant'
             }
           },
           {
@@ -270,7 +278,8 @@
               formatted: 'hh:mm a',
               onlyTime: true,
               color: 'firebrick',
-              minuteInterval: '10'
+              minuteInterval: '10',
+              label: 'Select time'
             }
           },
           {
@@ -287,11 +296,20 @@
               end: '2018-04-20'
             },
             options: {
-              onlyDate: true,
               inline: true,
               format: 'YYYY-MM-DD',
               formatted: 'll',
               range: true
+            }
+          },
+          {
+            id: "6",
+            title: 'Disabled Picker',
+            description: '(disabled="true")',
+            editOption: false,
+            options: {
+              disabled: true,
+              label: 'Is Disabled'
             }
           }
         ],
@@ -342,6 +360,7 @@
     margin: 0;
     min-height: 100%;
     min-width: 100%;
+    font-size: 14px;
   }
   #app {
     font-family: 'Avenir', Helvetica, Arial, sans-serif;
@@ -366,8 +385,11 @@
   h3, h4, h1, p {
     margin: 0;
   }
+  h3 {
+    margin-bottom: 10px;
+  }
   hr {
-    border-top: 1px solid #CCC;
+    border-top: 1px solid #ebebeb;
     border-bottom: 0;
     margin: 20px 0;
   }
@@ -388,10 +410,10 @@
     margin-bottom: 20px;
     border: none;
     border-radius: 30px;
-    font-size: 14px;
+    font-size: 12px;
     outline: none;
     cursor: pointer;
-    -webkit-transition: all 0.25s cubic-bezier(0.645, 0.045, 0.355, 1);
+    transition: all 0.25s cubic-bezier(0.645, 0.045, 0.355, 1);
     background-color: #96bf31;
     color: #FFF;
     font-weight: 500;
@@ -405,13 +427,30 @@
       }
     }
   }
+  .component {
+    padding: 10px;
+    background: #FFF;
+    border-radius: 4px;
+    border: 1px solid #ebebeb;
+    &:hover {
+      box-shadow: 0 0 8px 0 rgba(232,237,250,.6), 0 2px 4px 0 rgba(232,237,250,.5);
+    }
+    &.options {
+      margin-bottom: 20px;
+    }
+  }
   .component-container {
     margin: 0 10px 20px 10px;
     padding: 20px;
-    background: #F2F2F2;
+    background: #FFF;
     border-radius: 4px;
-    box-shadow: 0 2px 1px -1px rgba(0, 0, 0, 0.2), 0 1px 1px 0 rgba(0, 0, 0, 0.14), 0 1px 3px 0 rgba(0, 0, 0, 0.12);
+    border: 1px solid #ebebeb;
     min-width: 300px;
+    transition: all 0.25s cubic-bezier(0.645, 0.045, 0.355, 1);
+    flex: 1 0 48%;
+    &:hover {
+      box-shadow: 0 0 8px 0 rgba(232,237,250,.6), 0 2px 4px 0 rgba(232,237,250,.5);
+    }
     &.dark {
       background-color: darken(#424242, 10%);
       color: #FFF;
@@ -425,6 +464,18 @@
           background-color: lighten(#424242, 10%);
         }
       }
+    }
+  }
+  .dark {
+    .component-container, .component {
+      border: 1px solid #424242;
+      background-color: darken(#424242, 10%);
+      &:hover {
+        box-shadow: 0 0 8px 0 rgba(0,0,0,.6), 0 2px 4px 0 rgba(0,0,0,.5);
+      }
+    }
+    hr {
+      border-color: #424242;
     }
   }
   @media screen and (max-width: 1024px) {

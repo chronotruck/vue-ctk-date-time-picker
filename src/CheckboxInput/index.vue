@@ -8,6 +8,7 @@
       @change="$emit('input', $event.target.checked)"
       style="display:none"
       :class="{ 'checked': value }"
+      :disabled="disabled"
       class="checkbox-input"
     >
     <label
@@ -31,6 +32,11 @@
       id: {
         type: String,
         default: String,
+        required: true
+      },
+      disabled: {
+        type: Boolean,
+        default: Boolean,
         required: true
       }
     }

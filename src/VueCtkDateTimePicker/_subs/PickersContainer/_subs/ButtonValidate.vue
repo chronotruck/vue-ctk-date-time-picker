@@ -1,9 +1,10 @@
 <template>
   <div
-    :class="{'is-dark': dark}"
-    class="datepicker-buttons-container flex justify-content-between"
+    :class="[{'is-dark': dark}, hasButtonNow ? 'justify-content-between' : 'justify-content-right']"
+    class="datepicker-buttons-container flex"
   >
     <button
+      v-if="hasButtonNow"
       class="datepicker-button now flex align-center justify-content-center"
       tabindex="-1"
       @click="emitNow()"
@@ -16,14 +17,14 @@
         class="datepicker-button-content"
         :style="[colorStyle]"
       >
-        Now
+        {{ buttonNowTranslation || 'Now' }}
       </span>
     </button>
     <button
       type="button"
       tabindex="-1"
       class="datepicker-button validate flex align-center justify-content-center"
-      @click="$emit('validate')"
+      @click.stop="$emit('validate')"
     >
       <span
         class="datepicker-button-effect"
@@ -51,8 +52,11 @@
   export default {
     name: 'CtkButtonValidate',
     props: {
-      dark: { type: Boolean, default: false },
-      buttonColor: { type: String, default: String }
+      dark: { type: Boolean, default: Boolean },
+      buttonColor: { type: String, default: String },
+      buttonNowTranslation: { type: String, default: String },
+      onlyTime: { type: Boolean, default: Boolean },
+      noButtonNow: {type: Boolean, default: false}
     },
     computed: {
       colorStyle () {
@@ -65,6 +69,9 @@
         return {
           backgroundColor: this.buttonColor
         }
+      },
+      hasButtonNow () {
+        return !this.onlyTime && !this.noButtonNow
       }
     },
     methods: {

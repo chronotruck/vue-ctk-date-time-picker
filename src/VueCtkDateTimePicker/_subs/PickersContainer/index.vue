@@ -61,7 +61,10 @@
           v-if="hasButtonValidate"
           :dark="dark"
           :button-color="buttonColor"
+          :button-now-translation="buttonNowTranslation"
           class="button-validate flex-fixed"
+          :only-time="onlyTime"
+          :no-button-now="noButtonNow"
           @validate="validate"
           @now="setNow"
         />
@@ -107,7 +110,9 @@
       range: { type: Boolean, default: Boolean },
       shortcutsTranslations: { type: Object, default: Object },
       noShortcuts: { type: Boolean, default: Boolean },
-      buttonColor: { type: String, default: String }
+      buttonColor: { type: String, default: String },
+      buttonNowTranslation: { type: String, default: String },
+      noButtonNow: {type: Boolean, default: false}
     },
     data () {
       return {
@@ -117,9 +122,13 @@
     },
     computed: {
       responsivePosition () {
-        return window.innerWidth < 412
-          ? null : this.position === 'top'
-            ? {top: '100%', marginBottom: '10px'} : {bottom: '100%', marginTop: '10px'}
+        return !this.inline 
+          ? window.innerWidth < 412
+            ? null
+            : this.position === 'top'
+              ? {top: '100%', marginBottom: '10px'}
+              : {bottom: '100%', marginTop: '10px'}
+          : null
       },
       timeFormat () {
         return this.onlyTime
