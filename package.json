@@ -22,7 +22,6 @@
     "dist/"
   ],
   "dependencies": {
-    "eslint-config-standard": "^12.0.0",
     "lodash": "^4.17.11",
     "moment": "^2.22.1",
     "moment-range": "^4.0.1",
@@ -36,9 +35,11 @@
     "@vue/cli-service": "^3.2.0",
     "babel-eslint": "^10.0.1",
     "eslint": "^5.8.0",
+    "eslint-config-standard": "^12.0.0",
     "eslint-plugin-vue": "^5.0.0-0",
     "node-sass": "^4.11.0",
     "sass-loader": "^7.1.0",
+    "vue-cli-plugin-webpack-bundle-analyzer": "^1.2.0",
     "vue-template-compiler": "^2.5.17"
   },
   "postcss": {
