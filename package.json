@@ -10,7 +10,7 @@
     "serve": "vue-cli-service serve --open",
     "serve:build": "vue-cli-service serve --mode production",
     "build": "npm run lint && npm run build:lib && npm run build:demo",
-    "build:lib": "vue-cli-service build --target lib ./src/VueCtkDateTimePicker/index.vue && cp dist/vue-ctk-date-time-picker.css dist/vue-ctk-date-time-picker.min.css",
+    "build:lib": "vue-cli-service build --target lib ./src/VueCtkDateTimePicker/index.vue",
     "build:demo": "vue-cli-service build --dest demo --mode production",
     "lint": "vue-cli-service lint",
     "before-publish": "npm run lint && npm run build && npm i",
