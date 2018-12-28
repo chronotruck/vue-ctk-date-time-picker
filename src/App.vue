@@ -226,7 +226,7 @@
             options: {
               inputSize: 'sm',
               noButtonNow: true,
-              format: 'YYYY-MM-DD H:mm',
+              format: 'YYYY-MM-DD HH:mm',
               disabledHours: Array.from(new Array(8), (x, i) => `0${i}`).concat(
                 Array.from(new Array(23), (x, i) => {
                   if (i + 1 > 18) {
@@ -432,6 +432,7 @@
     font-weight: 500;
     &:hover {
       background-color: darken(#96bf31, 10%);
+      box-shadow: 0 0 8px 0 rgba(232,237,250,.6), 0 2px 4px 0 rgba(232,237,250,.5);
     }
     &.option {
       background-color: #424242;
@@ -471,10 +472,15 @@
         background: #424242;
         color: dodgerblue;
       }
-      .btn.option {
-        background-color: #424242;
+      .btn {
         &:hover {
-          background-color: lighten(#424242, 10%);
+          box-shadow: 0 0 8px 0 rgba(0,0,0,.6), 0 2px 4px 0 rgba(0,0,0,.5);
+        }
+        &.option {
+          background-color: #424242;
+          &:hover {
+            background-color: lighten(#424242, 10%);
+          }
         }
       }
     }

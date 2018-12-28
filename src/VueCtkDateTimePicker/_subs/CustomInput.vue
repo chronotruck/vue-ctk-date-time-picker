@@ -79,6 +79,11 @@
         border-color: #ffffffb3;
         color: #ffffffb3;
       }
+      &.is-disabled {
+        .field-label, .field-input {
+          color: #000;
+        }
+      }
     }
     .field-label{
       position: absolute;
@@ -176,6 +181,28 @@
       }
       ::placeholder { /* Most modern browsers support this now. */
         color: #ffffffb3;
+      }
+      &.is-disabled {
+        ::-webkit-input-placeholder { /* WebKit, Blink, Edge */
+          color: #424242;
+        }
+        :-moz-placeholder { /* Mozilla Firefox 4 to 18 */
+          color: #424242;
+          opacity:  1;
+        }
+        ::-moz-placeholder { /* Mozilla Firefox 19+ */
+          color: #424242;
+          opacity:  1;
+        }
+        :-ms-input-placeholder { /* Internet Explorer 10-11 */
+          color: #424242;
+        }
+        ::-ms-input-placeholder { /* Microsoft Edge */
+          color: #424242;
+        }
+        ::placeholder { /* Most modern browsers support this now. */
+          color: #424242;
+        }
       }
     }
     &.sm {

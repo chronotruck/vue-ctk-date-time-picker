@@ -151,11 +151,6 @@
           this.initPositionView()
         }
       },
-      month (val) {
-        if (val) {
-          this.debouncePositionView()
-        }
-      },
       value () {
         this.buildComponent()
       }
@@ -335,9 +330,9 @@
           opacity: 0.6;
           background: dodgerblue;
           height: 85%;
-          width: 80%;
+          width: 70%;
           top: 7.5%;
-          left: 10%;
+          left: 15%;
           -webkit-transition: all 450ms cubic-bezier(0.23, 1, 0.32, 1) 0ms;
           transition: all 450ms cubic-bezier(0.23, 1, 0.32, 1) 0ms;
           transform: scale(0);

@@ -237,6 +237,9 @@
           month = (val === 'prev' ? 11 : 0)
         }
         this.month = new Month(month, year, this.locale)
+        if (this.$refs.TimePicker) {
+          this.$refs.TimePicker.initPositionView()
+        }
       },
       validate () {
         this.$emit('validate')
