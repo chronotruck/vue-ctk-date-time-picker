@@ -44,6 +44,7 @@
               color="purple"
               format="YYYY-MM-DD HH:mm"
               :dark="darkMode"
+              open
             />
           </div>
         </div>
@@ -159,6 +160,7 @@
                 :disabled-dates="demo.options.disabledDates"
                 :disabled-hours="demo.options.disabledHours"
                 :minute-interval="demo.options.minuteInterval"
+                :first-day-of-week="demo.options.firstDayOfWeek"
                 :min-date="demo.options.minDate"
                 :max-date="demo.options.maxDate"
                 :no-weekends-days="demo.options.noWeekendDays"
@@ -211,7 +213,7 @@
           'minDate', 'maxDate', 'disabledDates', 'disabledHours', 'inputSize', 'buttonNowTranslation'
         ],
         intOptions: [
-          'minuteInterval'
+          'minuteInterval', 'firstDayOfWeek'
         ],
         demoComponents: [
           {

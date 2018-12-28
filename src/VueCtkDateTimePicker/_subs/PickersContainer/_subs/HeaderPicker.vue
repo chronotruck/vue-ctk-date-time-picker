@@ -12,6 +12,7 @@
         <div
           v-for="y in [year]"
           :key="y"
+          :style="[colorStyle]"
         >
           {{ y }}
         </div>
@@ -30,7 +31,7 @@
         <span
           v-for="dateFormatted in [getDateFormatted]"
           :key="dateFormatted"
-          :style="[value ? colorStyle : null]"
+          :style="[colorStyle]"
         >
           {{ value ? getDateFormatted : '...' }}
         </span>
@@ -38,7 +39,7 @@
       <div
         v-if="!isFormatTwelve && !noTime && value"
         class="header-picker-time flex"
-        :style="getTimePickerWidth()"
+        :style="[getTimePickerWidth(), colorStyle]"
         :class="[!onlyTime ? 'pl-10' : 'flex-1 justify-content-center']"
       >
         <TransitionGroup
@@ -47,7 +48,6 @@
         >
           <span
             v-for="hour in [dateTime.format('HH')]"
-            :style="[colorStyle]"
             :key="hour"
           >
             {{ hour }}
@@ -60,7 +60,6 @@
         >
           <span
             v-for="min in [dateTime.format('mm')]"
-            :style="[colorStyle]"
             :key="min"
           >
             {{ min }}
@@ -69,7 +68,7 @@
       </div>
       <div
         v-else-if="!noTime && value"
-        :style="getTimePickerWidth()"
+        :style="[getTimePickerWidth(), colorStyle]"
         class="header-picker-time flex flex-fixed"
         :class="[!onlyTime ? 'pl-10' : 'flex-1 justify-content-center']"
       >
@@ -80,7 +79,6 @@
           <span
             v-for="hour in [dateTime.format(timeFormat)]"
             :key="hour"
-            :style="[colorStyle]"
             class="flex-fixed"
           >
             {{ hour }}
@@ -89,7 +87,7 @@
       </div>
       <div
         v-else
-        :style="getTimePickerWidth()"
+        :style="[getTimePickerWidth(), colorStyle]"
         class="header-picker-time flex flex-fixed"
         :class="[!onlyTime ? 'pl-10' : 'flex-1 justify-content-center']"
       >
@@ -129,12 +127,12 @@
       bgStyle () {
         return {
           padding: this.onlyTime ? '10px 0' : '10px 0 10px 10px',
-          backgroundColor: this.dark ? this.color : 'white'
+          backgroundColor: this.color
         }
       },
       colorStyle () {
         return {
-          color: this.dark ? 'white' : this.color
+          color: 'white'
         }
       },
       dateTime () {

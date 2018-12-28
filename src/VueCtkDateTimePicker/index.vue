@@ -26,7 +26,7 @@
       @click.stop="toggleDatePicker(false)"
     />
     <PickersContainer
-      v-if="!disabled"
+      v-if="!disabled && isMounted"
       ref="agenda"
       v-model="dateTime"
       :visible="hasPickerOpen"
@@ -52,6 +52,7 @@
       :no-shortcuts="noShortcuts"
       :button-now-translation="buttonNowTranslation"
       :no-button-now="noButtonNow"
+      :first-day-of-week="firstDayOfWeek"
       @validate="validate"
     />
   </div>
@@ -74,6 +75,18 @@
     const locale = (window.navigator.userLanguage || window.navigator.language || 'en').substr(0, 2)
     moment.locale(locale)
     return locale
+  }
+
+  const updateMomentLocale = (locale, firstDayOfWeek) => {
+    console.log('okokokok')
+    moment.locale(locale)
+    if (firstDayOfWeek) {
+      moment.updateLocale(locale, {
+        week: {
+          dow: firstDayOfWeek
+        }
+      })
+    }
   }
 
   const nearestMinutes = (interval, date) => {
@@ -126,12 +139,14 @@
       persistent: { type: Boolean, default: false },
       inputSize: { type: String, default: String },
       buttonNowTranslation: { type: String, default: String },
-      noButtonNow: {type: Boolean, default: false}
+      noButtonNow: {type: Boolean, default: false},
+      firstDayOfWeek: { type: Number, default: Number }
     },
     data () {
       return {
         pickerOpen: false,
-        pickerPosition: this.position
+        pickerPosition: this.position,
+        isMounted: false
       }
     },
     computed: {
@@ -188,12 +203,14 @@
       }
     },
     mounted () {
+      updateMomentLocale(this.locale, this.firstDayOfWeek)
       this.pickerPosition = this.getPosition()
       this.pickerOpen = this.open
       if (this.hasCustomElem) {
         this.addEventToTriggerElement()
         this.setValueToCustomElem()
       }
+      this.isMounted = true
     },
     beforeDestroy () {
       if (this.hasCustomElem) {

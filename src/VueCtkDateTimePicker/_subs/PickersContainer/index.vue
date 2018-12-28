@@ -41,6 +41,7 @@
             :disabled-dates="disabledDates"
             :range="range"
             :no-shortcuts="noShortcuts"
+            :first-day-of-week="firstDayOfWeek"
             @change-month="changeMonth"
           />
           <!-- NEED 'HH:mm' format -->
@@ -115,7 +116,8 @@
       noShortcuts: { type: Boolean, default: Boolean },
       buttonColor: { type: String, default: String },
       buttonNowTranslation: { type: String, default: String },
-      noButtonNow: {type: Boolean, default: false}
+      noButtonNow: {type: Boolean, default: false},
+      firstDayOfWeek: { type: Number, default: Number }
     },
     data () {
       return {
@@ -259,7 +261,6 @@
       z-index: 999;
     }
     .datepicker {
-      border: 1px solid #EAEAEA;
       font-family: 'Roboto', sans-serif;
       position: absolute;
       z-index: 5;

@@ -86,8 +86,9 @@ Here is an example of UMD implementation: https://codepen.io/louismazel/pen/jQWN
 | disabled-hours (9) | Array<string> | no | - |
 | shortcuts-translations (10) | Object | no | - |
 | input-size | String (sm or lg) | no | null |
-| buttonNowTranslation | String | no | 'Now' |
-| noButtonNow | Boolean | no | false |
+| button-now-translation | String | no | 'Now' |
+| no-button-now | Boolean | no | false |
+| first-day-of-week | Int (0 to 7) | no | - |
 
 (1) hint : Is a text that replaces the label/placeholder (Ex : Error designation)
 

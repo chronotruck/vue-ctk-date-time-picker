@@ -140,13 +140,14 @@
       dark: {type: Boolean, default: false},
       month: {type: Object, default: Object},
       shortcutsTranslations: { type: Object, default: Object },
-      noShortcuts: { type: Boolean, default: Boolean }
+      noShortcuts: { type: Boolean, default: Boolean },
+      firstDayOfWeek: { type: Number, default: Number }
     },
     data () {
       return {
         transitionDaysName: 'slidenext',
         transitionLabelName: 'slidevnext',
-        weekDays: getWeekDays(this.locale)
+        weekDays: getWeekDays(this.locale, this.firstDayOfWeek)
       }
     },
     computed: {

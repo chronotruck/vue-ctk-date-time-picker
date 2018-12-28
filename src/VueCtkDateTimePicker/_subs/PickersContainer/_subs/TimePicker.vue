@@ -175,7 +175,7 @@
               : (value + 1 + 12)
             : value
           if (this.isHoursDisabled(hour)) return
-          this.hour = hour === 24 ? 23 : hour
+          this.hour = hour === 24 && !this.isTwelveFormat ? 23 : hour
         } else if (type === 'minutes') {
           this.minute = value * this.minuteInterval
         } else {
