@@ -22,6 +22,7 @@
           :time-format="timeFormat"
           :transition-name="transitionName"
           :no-time="onlyDate"
+          :dark="dark"
           :range="range"
         />
         <div class="pickers-container flex">
@@ -50,6 +51,7 @@
             :dark="dark"
             :month="month"
             :color="color"
+            :inline="inline"
             :format="timeFormat"
             :only-time="onlyTime"
             :minute-interval="minuteInterval"
@@ -257,6 +259,7 @@
       z-index: 999;
     }
     .datepicker {
+      border: 1px solid #EAEAEA;
       font-family: 'Roboto', sans-serif;
       position: absolute;
       z-index: 5;
@@ -275,6 +278,7 @@
     &.is-dark {
       .datepicker, .pickers-container {
         background: #424242;
+        border: 0;
       }
     }
   }

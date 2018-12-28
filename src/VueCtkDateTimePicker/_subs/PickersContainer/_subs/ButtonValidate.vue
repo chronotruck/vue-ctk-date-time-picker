@@ -153,7 +153,9 @@
     }
     &.is-dark, &.is-dark .datepicker-button {
       background-color: #424242;
-      border-color: lighten(#424242, 20%);
+      &:not(.now) {
+        border-color: lighten(#424242, 20%);
+      }
       svg {
         fill: white !important;
       }

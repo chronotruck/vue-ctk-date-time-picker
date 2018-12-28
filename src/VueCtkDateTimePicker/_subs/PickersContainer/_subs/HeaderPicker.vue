@@ -2,6 +2,7 @@
   <div
     :style="bgStyle"
     class="header-picker"
+    :class="{'is-dark': dark}"
   >
     <div
       v-if="!onlyTime"
@@ -29,12 +30,13 @@
         <span
           v-for="dateFormatted in [getDateFormatted]"
           :key="dateFormatted"
+          :style="[value ? colorStyle : null]"
         >
-          {{ getDateFormatted }}
+          {{ value ? getDateFormatted : '...' }}
         </span>
       </TransitionGroup>
       <div
-        v-if="!isFormatTwelve && !noTime"
+        v-if="!isFormatTwelve && !noTime && value"
         class="header-picker-time flex"
         :style="getTimePickerWidth()"
         :class="[!onlyTime ? 'pl-10' : 'flex-1 justify-content-center']"
@@ -45,6 +47,7 @@
         >
           <span
             v-for="hour in [dateTime.format('HH')]"
+            :style="[colorStyle]"
             :key="hour"
           >
             {{ hour }}
@@ -57,6 +60,7 @@
         >
           <span
             v-for="min in [dateTime.format('mm')]"
+            :style="[colorStyle]"
             :key="min"
           >
             {{ min }}
@@ -64,7 +68,7 @@
         </TransitionGroup>
       </div>
       <div
-        v-else-if="!noTime"
+        v-else-if="!noTime && value"
         :style="getTimePickerWidth()"
         class="header-picker-time flex flex-fixed"
         :class="[!onlyTime ? 'pl-10' : 'flex-1 justify-content-center']"
@@ -76,11 +80,20 @@
           <span
             v-for="hour in [dateTime.format(timeFormat)]"
             :key="hour"
+            :style="[colorStyle]"
             class="flex-fixed"
           >
             {{ hour }}
           </span>
         </TransitionGroup>
+      </div>
+      <div
+        v-else
+        :style="getTimePickerWidth()"
+        class="header-picker-time flex flex-fixed"
+        :class="[!onlyTime ? 'pl-10' : 'flex-1 justify-content-center']"
+      >
+        <span>...</span>
       </div>
     </div>
     <div
@@ -109,13 +122,19 @@
       format: { type: String, default: String },
       timeFormat: { type: String, default: String },
       noTime: { type: Boolean, default: Boolean },
-      range: { type: Boolean, default: Boolean }
+      range: { type: Boolean, default: Boolean },
+      dark: { type: Boolean, default: Boolean }
     },
     computed: {
       bgStyle () {
         return {
-          backgroundColor: this.color,
-          padding: this.onlyTime ? '10px 0' : '10px 0 10px 10px'
+          padding: this.onlyTime ? '10px 0' : '10px 0 10px 10px',
+          backgroundColor: this.dark ? this.color : 'white'
+        }
+      },
+      colorStyle () {
+        return {
+          color: this.dark ? 'white' : this.color
         }
       },
       dateTime () {
@@ -165,10 +184,11 @@
 
 <style lang="scss" scoped>
   @import "@/VueCtkDateTimePicker/assets/animation.scss";
-  $headerTextSize: 16px;
+  $headerTextSize: 18px;
   .header-picker {
-    background: dodgerblue;
-    color: #FFF;
+    background: #FFF;
+    border-bottom: 1px solid #EAEAEA;
+    color: #424242;
     position: relative;
     border-top-left-radius: 4px;
     border-top-right-radius: 4px;
@@ -197,6 +217,10 @@
     }
     .time-number {
       width: 22px;
+    }
+    &.is-dark {
+      border: 0;
+      color: #FFF !important;
     }
   }
 </style>

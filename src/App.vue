@@ -38,14 +38,12 @@
             class="component-container"
           >
             <p>Inititale value : '2018-04-05T04:26'</p>
-            <p>v-model = {{ value || 'null' }}</p>
+            <p>v-model = {{ value2 || 'null' }}</p>
             <CtkDateTimePicker
-              v-model="value"
+              v-model="value2"
               color="purple"
-              format="YYYY-MM-DDTHH:mm:ssZ"
-              time-zone="Asia/Tokyo"
+              format="YYYY-MM-DD HH:mm"
               :dark="darkMode"
-              open
             />
           </div>
         </div>
@@ -203,14 +201,14 @@
     },
     data () {
       return {
-        devMode: false,
+        devMode: true,
         booleanOptions: [
           'noHeader', 'autoClose', 'error', 'dark', 'overlay', 'noWeekendDays', 'noShortcuts',
           'noButton', 'onlyDate', 'range', 'onlyTime', 'inline', 'persistent', 'disabled', 'noButtonNow'
         ],
         stringOptions: [
-          'hint', 'color', 'buttonColor', 'position', 'format', 'formatted', 'outputFormat',
-          'minDate', 'maxDate', 'disabledDates', 'disabledHours', 'inputSize', 'buttonNowTranslation', 'label'
+          'label', 'hint', 'color', 'buttonColor', 'position', 'format', 'formatted', 'outputFormat',
+          'minDate', 'maxDate', 'disabledDates', 'disabledHours', 'inputSize', 'buttonNowTranslation'
         ],
         intOptions: [
           'minuteInterval'
@@ -224,18 +222,7 @@
             value: '2018-04-05 20:26',
             editOption: false,
             options: {
-              inputSize: 'sm',
-              noButtonNow: true,
-              format: 'YYYY-MM-DD HH:mm',
-              disabledHours: Array.from(new Array(8), (x, i) => `0${i}`).concat(
-                Array.from(new Array(23), (x, i) => {
-                  if (i + 1 > 18) {
-                    return `${i + 1}`
-                  } else {
-                    return null
-                  }
-                })
-              )
+              format: 'YYYY-MM-DD HH:mm'
             }
           },
           {
@@ -279,7 +266,7 @@
           },
           {
             id: "4",
-            title: 'Time Picker',
+            title: 'Time Picker - With small input (input-size="sm") & minute-interval="10"',
             description: 'Time selector',
             editOption: false,
             initial: '11:26 am',
@@ -290,7 +277,8 @@
               onlyTime: true,
               color: 'firebrick',
               minuteInterval: '10',
-              label: 'Select time'
+              label: 'Select time',
+              inputSize: 'sm'
             }
           },
           {
@@ -337,7 +325,7 @@
           start: null,
           end: null
         },
-        timePickerValue: '11:26 am',
+        timePickerValue: '11:26',
         minuteInterval: 5,
         minuteInterval2: 10,
         hint: 'Error message',

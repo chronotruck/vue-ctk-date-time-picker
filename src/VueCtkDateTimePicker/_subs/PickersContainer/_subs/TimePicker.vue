@@ -151,18 +151,21 @@
           this.initPositionView()
         }
       },
-      value () {
-        this.buildComponent()
+      value (value, oldValue) {
+        if (value) {
+          this.buildComponent()
+          if (oldValue === null) {
+            this.initPositionView()
+          }
+        }
       }
     },
     mounted () {
-      if (this.value) {
-        this.buildComponent()
-      }
+      this.buildComponent()
     },
     methods: {
       onScroll (scroll, type) {
-        const itemHeight = document.querySelector('.time-picker-column-item').clientHeight
+        const itemHeight = 28
         const scrollTop = scroll.target.scrollTop
         const value = this.isTwelveFormat && type === 'hours' ? Math.ceil(scrollTop / itemHeight) : Math.ceil(scrollTop / itemHeight)
         if (type === 'hours') {
@@ -172,7 +175,7 @@
               : (value + 1 + 12)
             : value
           if (this.isHoursDisabled(hour)) return
-          this.hour = hour
+          this.hour = hour === 24 ? 23 : hour
         } else if (type === 'minutes') {
           this.minute = value * this.minuteInterval
         } else {
@@ -210,7 +213,7 @@
         this.columnPad()
       },
       columnPad () {
-        if (this.$refs['time-picker'] && this.visible) {
+        if (this.$refs['time-picker'] && (this.visible || this.inline)) {
           const run = (pad) => {
             this.columnPadding = {
               paddingTop: `${pad}px`,
@@ -290,7 +293,8 @@
 
 <style lang="scss" scoped>
   .time-picker {
-    width: 140px;
+    width: 160px;
+    max-width: 160px;
     position: relative;
     z-index: 1;
     &::after, &::before {
