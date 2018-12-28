@@ -124,6 +124,9 @@
   import RangeShortcuts from './_subs/RangeShortcuts'
   export default {
     name: 'DatePicker',
+    components: {
+      RangeShortcuts
+    },
     props: {
       value: {type: [String, Object], default: String},
       color: {type: String, default: String},
@@ -138,9 +141,6 @@
       month: {type: Object, default: Object},
       shortcutsTranslations: { type: Object, default: Object },
       noShortcuts: { type: Boolean, default: Boolean }
-    },
-    components: {
-      RangeShortcuts
     },
     data () {
       return {

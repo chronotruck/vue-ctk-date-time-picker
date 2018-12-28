@@ -44,8 +44,8 @@
           />
           <!-- NEED 'HH:mm' format -->
           <TimePicker
-            ref="TimePicker"
             v-if="!onlyDate"
+            ref="TimePicker"
             v-model="time"
             :dark="dark"
             :month="month"

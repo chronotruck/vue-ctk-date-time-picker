@@ -26,8 +26,8 @@
       @click.stop="toggleDatePicker(false)"
     />
     <PickersContainer
-      ref="agenda"
       v-if="!disabled"
+      ref="agenda"
       v-model="dateTime"
       :visible="hasPickerOpen"
       :position="pickerPosition"
@@ -195,6 +195,14 @@
         this.setValueToCustomElem()
       }
     },
+    beforeDestroy () {
+      if (this.hasCustomElem) {
+        const target = this.$slots.default[0].elm
+        target.addEventListener('click', () => {
+          this.toggleDatePicker()
+        })
+      }
+    },
     methods: {
       setValueToCustomElem () {
         const target = this.$slots.default[0]
@@ -287,14 +295,6 @@
       },
       validate () {
         this.toggleDatePicker()
-      }
-    },
-    beforeDestroy () {
-      if (this.hasCustomElem) {
-        const target = this.$slots.default[0].elm
-        target.addEventListener('click', () => {
-          this.toggleDatePicker()
-        })
       }
     }
   }

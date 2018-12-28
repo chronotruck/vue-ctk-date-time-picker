@@ -1,15 +1,15 @@
 <template>
   <div class="checkbox-container">
     <input
+      :id="id"
       type="checkbox"
       name="open"
-      :id="id"
       :checked="value"
-      @change="$emit('input', $event.target.checked)"
       style="display:none"
       :class="{ 'checked': value }"
       :disabled="disabled"
       class="checkbox-input"
+      @change="$emit('input', $event.target.checked)"
     >
     <label
       :for="id"

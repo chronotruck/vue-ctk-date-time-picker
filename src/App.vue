@@ -22,8 +22,8 @@
         <h3>A VueJs component for select date & time</h3>
         <button
           class="btn"
-          @click="darkMode = !darkMode"
           style="margin-top: 20px;"
+          @click="darkMode = !darkMode"
         >
           {{ darkMode ? 'Disable' : 'Enable' }} Dark Mode
         </button>
@@ -90,8 +90,8 @@
                   style="margin-bottom: 10px;"
                 >
                   <input
-                    type="text"
                     v-model="demo.options[str]"
+                    type="text"
                   >
                   <span style="margin-left: 15px;">
                     {{ str }}
@@ -107,8 +107,8 @@
                   style="margin-bottom: 10px;"
                 >
                   <input
-                    type="number"
                     v-model="demo.options[int]"
+                    type="number"
                   >
                   <span style="margin-left: 15px;">
                     {{ int }}
@@ -126,8 +126,8 @@
                   style="margin-bottom: 10px;"
                 >
                   <CheckboxInput
-                    v-model="demo.options[opt]"
                     :id="`${demo.id}${opt}`"
+                    v-model="demo.options[opt]"
                     :disabled="opt === 'onlyDate' || opt === 'onlyTime' || opt === 'range'"
                   />
                   <span style="margin-left: 15px;">
