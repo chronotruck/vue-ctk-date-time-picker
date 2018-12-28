@@ -78,7 +78,6 @@
   }
 
   const updateMomentLocale = (locale, firstDayOfWeek) => {
-    console.log('okokokok')
     moment.locale(locale)
     if (firstDayOfWeek) {
       moment.updateLocale(locale, {
