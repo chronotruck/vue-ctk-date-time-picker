@@ -169,7 +169,6 @@
   .header-picker {
     background: dodgerblue;
     color: #FFF;
-    padding: 10px 0 10px 10px;
     position: relative;
     border-top-left-radius: 4px;
     border-top-right-radius: 4px;

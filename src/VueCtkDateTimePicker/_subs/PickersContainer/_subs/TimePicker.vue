@@ -11,6 +11,7 @@
       :ref="column.type"
       :style="[columnPadding]"
       class="time-picker-column flex-1 flex flex-direction-column text-center"
+      @scroll="noScrollEvent ? null : onScroll($event, column.type)"
     >
       <button
         v-for="item in column.items"
@@ -22,14 +23,14 @@
           active: isActive(column.type, item.value),
           disabled: item.disabled
         }"
-        @click="isActive(column.type, item.value) ? null : selectTime(item.value, column.type)"
+        @click="isActive(column.type, item.value) ? null : setTime(item.value, column.type)"
       >
         <span
           :style="styleColor"
           class="time-picker-column-item-effect"
         />
         <span class="time-picker-column-item-text">
-          {{ item.item }} {{ item.value }}
+          {{ item.item }}
         </span>
       </button>
     </div>
@@ -37,6 +38,8 @@
 </template>
 <script>
   import moment from 'moment-timezone'
+  import { debounce } from 'lodash'
+
   const ArrayHourRange = (start, end, twoDigit, isAfternoon, disabledHours) => {
     return Array(end - start + 1).fill().map((_, idx) => {
       const n = start + idx
@@ -80,7 +83,9 @@
         minute: null,
         apm: null,
         oldvalue: this.value,
-        columnPadding: {}
+        columnPadding: {},
+        noScrollEvent: true,
+        delay: 0
       }
     },
     computed: {
@@ -142,18 +147,16 @@
     watch: {
       visible (val) {
         if (val) {
-          this.initPositionView()
           this.columnPad()
+          this.initPositionView()
         }
       },
       month (val) {
         if (val) {
-          this.initPositionView()
-          this.columnPad()
+          this.debouncePositionView()
         }
       },
       value () {
-        this.initPositionView()
         this.buildComponent()
       }
     },
@@ -163,6 +166,25 @@
       }
     },
     methods: {
+      onScroll (scroll, type) {
+        const itemHeight = document.querySelector('.time-picker-column-item').clientHeight
+        const scrollTop = scroll.target.scrollTop
+        const value = this.isTwelveFormat && type === 'hours' ? Math.ceil(scrollTop / itemHeight) : Math.ceil(scrollTop / itemHeight)
+        if (type === 'hours') {
+          const hour = this.isTwelveFormat
+            ? this.apm === this.apms[0].value
+              ? value + 1
+              : (value + 1 + 12)
+            : value
+          if (this.isHoursDisabled(hour)) return
+          this.hour = hour
+        } else if (type === 'minutes') {
+          this.minute = value * this.minuteInterval
+        } else {
+          this.apm = this.apms[value].value
+        }
+        this.emitValue()
+      },
       isActive (type, value) {
         return (type === 'hours'
           ? this.hour
@@ -173,17 +195,19 @@
       isHoursDisabled (h) {
         const hourToTest = this.apmType
           ? moment(`${h} ${this.apm}`, [`${this.hourType} ${this.apmType}`]).format('HH')
-          : h
+          : h < 10 ? '0' + h : '' + h
         return this.disabledHours.includes(hourToTest)
       },
       buildComponent () {
-        const hour = moment(this.value, this.format).format('HH')
-        const hourToSet = parseInt(hour) === 0 && this.isTwelveFormat ? 24 : parseInt(hour)
-        this.hour = this.isHoursDisabled(hour) ? this.getAvailableHour() : hourToSet
+        const tmpHour = parseInt(moment(this.value, this.format).format('HH'))
+        const hourToSet = this.isTwelveFormat && (tmpHour === 12 || tmpHour === 0)
+          ? tmpHour === 0 ? 12 : 24
+          : tmpHour
+        this.hour = this.isHoursDisabled(hourToSet) ? this.getAvailableHour() : hourToSet
         this.minute = parseInt(moment(this.value, this.format).format('mm'))
         if (!this.apm) {
           this.apm = this.apms
-            ? hour >= 12
+            ? this.hour >= 12
               ? this.apms[1].value
               : this.apms[0].value
             : null
@@ -206,7 +230,11 @@
           return null
         }
       },
+      debouncePositionView: debounce(function () {
+        this.initPositionView()
+      }, 750),
       initPositionView () {
+        this.noScrollEvent = true
         const containers = ['hours', 'minutes']
         if (this.apms) containers.push('apms')
         setTimeout(() => {
@@ -225,6 +253,7 @@
             }
             setTimeout(() => {
               elem.style.overflow = 'auto'
+              this.noScrollEvent = false
             }, 300)
           })
         }, 0)
@@ -234,7 +263,7 @@
           return element.disabled === false
         }).value
       },
-      selectTime (item, type) {
+      setTime (item, type) {
         if (type === 'hours') {
           this.hour = item
         } else if (type === 'minutes') {
@@ -244,15 +273,21 @@
           this.hour = newHour
           this.apm = item
         }
-        const availableHour = this.hour ? this.hour : this.getAvailableHour()
-        // TODO : 12am = 13h, 12pm : minuitn, normalement c'est l'inverse
-        let hour = availableHour === 24 && this.apm === this.apms[0].value ? 0 : this.hour
+        this.emitValue(true)
+        this.initPositionView()
+      },
+      emitValue (noInitPositionView) {
+        const tmpHour = this.hour ? this.hour : this.getAvailableHour()
+        let hour = this.isTwelveFormat && (tmpHour === 24 || tmpHour === 12)
+          ? this.apm === this.apms[0].value ? 0 : 12
+          : tmpHour
         hour = (hour < 10 ? '0' : '') + hour
         const minute = this.minute ? (this.minute < 10 ? '0' : '') + this.minute : '00'
         const time = `${hour}:${minute}`
-        console.log('time', time, this.hour, item)
         this.$emit('input', time)
-        this.initPositionView()
+        if (!noInitPositionView) {
+          this.debouncePositionView()
+        }
       }
     }
   }
@@ -276,8 +311,8 @@
       right: 0;
       box-sizing: border-box;
       text-align: left;
-      border-top: 1px solid #EAEAEA;
-      border-bottom: 1px solid #EAEAEA;
+      border-top: 1px solid #CCC;
+      border-bottom: 1px solid #CCC;
     }
     &-column {
       position: relative;

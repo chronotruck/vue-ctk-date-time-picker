@@ -225,7 +225,17 @@
             editOption: false,
             options: {
               inputSize: 'sm',
-              noButtonNow: true
+              noButtonNow: true,
+              format: 'YYYY-MM-DD H:mm',
+              disabledHours: Array.from(new Array(8), (x, i) => `0${i}`).concat(
+                Array.from(new Array(23), (x, i) => {
+                  if (i + 1 > 18) {
+                    return `${i + 1}`
+                  } else {
+                    return null
+                  }
+                })
+              )
             }
           },
           {
