@@ -84,7 +84,7 @@
         </TransitionGroup>
       </div>
       <div
-        v-else
+        v-else-if="!noTime"
         :style="[getTimePickerWidth()]"
         class="header-picker-time flex flex-fixed"
         :class="[!onlyTime ? 'pl-10' : 'flex-1 justify-content-center']"

@@ -179,8 +179,14 @@
         } else if (type === 'minutes') {
           this.minute = value * this.minuteInterval
         } else {
+          if (this.apm !== this.apms[value].value) {
+            console.log('isDifferent')
+            const newHour = this.apm === 'pm' || this.apm === 'PM' ? this.hour - 12 : this.hour + 12
+            this.hour = newHour
+          }
           this.apm = this.apms[value].value
         }
+        console.log('okok')
         this.emitValue()
       },
       isActive (type, value) {
@@ -274,7 +280,7 @@
         this.emitValue(true)
         this.initPositionView()
       },
-      emitValue (noInitPositionView) {
+      emitValue: debounce(function (noInitPositionView) {
         const tmpHour = this.hour ? this.hour : this.getAvailableHour()
         let hour = this.isTwelveFormat && (tmpHour === 24 || tmpHour === 12)
           ? this.apm === this.apms[0].value ? 0 : 12
@@ -283,10 +289,11 @@
         const minute = this.minute ? (this.minute < 10 ? '0' : '') + this.minute : '00'
         const time = `${hour}:${minute}`
         this.$emit('input', time)
+        console.log('time', time)
         if (!noInitPositionView) {
           this.debouncePositionView()
         }
-      }
+      }, 300)
     }
   }
 </script>
