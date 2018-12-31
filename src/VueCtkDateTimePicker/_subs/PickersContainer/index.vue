@@ -1,6 +1,6 @@
 <template>
   <Transition
-    :name="position === 'top' ? 'slide' : 'slideinvert'"
+    :name="position === 'bottom' ? 'slide' : 'slideinvert'"
   >
     <div
       v-show="visible || inline"
@@ -130,7 +130,7 @@
         return !this.inline
           ? window.innerWidth < 412
             ? null
-            : this.position === 'top'
+            : this.position === 'bottom'
               ? {top: '100%', marginBottom: '10px'}
               : {bottom: '100%', marginTop: '10px'}
           : null

@@ -212,6 +212,7 @@
       this.isMounted = true
     },
     beforeDestroy () {
+      this.$emit('destroy')
       if (this.hasCustomElem) {
         const target = this.$slots.default[0].elm
         target.addEventListener('click', () => {
@@ -310,6 +311,7 @@
         }
       },
       validate () {
+        this.$emit('validate')
         this.toggleDatePicker()
       }
     }
