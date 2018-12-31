@@ -299,15 +299,22 @@
         if (this.position) {
           return this.position
         } else {
-          const rect = this.$refs.parent.getBoundingClientRect()
+          const parentRect = this.$refs.parent.getBoundingClientRect()
           const windowHeight = window.innerHeight
-          let datePickerHeight = 428
+          let datePickerHeight = 445
 
-          datePickerHeight = !this.noButton ? 428 - 46 : datePickerHeight
-          datePickerHeight = this.noHeader ? 428 - 65 : datePickerHeight
-
-          const position = ((windowHeight - (rect.top + rect.height)) > datePickerHeight) || ((windowHeight - rect.top) > windowHeight / 2 + rect.height)
-          return position ? 'top' : 'bottom'
+          datePickerHeight = this.noButton ? datePickerHeight - 41 : datePickerHeight
+          datePickerHeight = this.noHeader ? datePickerHeight - 58 : datePickerHeight
+          if (parentRect.top < datePickerHeight) {
+            // No place on top --> bottom
+            return 'bottom'
+          } else if (windowHeight - (parentRect.height + datePickerHeight + parentRect.top) >= 0) {
+            // Have place on bottom --> bottom
+            return 'bottom'
+          } else {
+            // No place on bottom --> top
+            return 'top'
+          }
         }
       },
       validate () {

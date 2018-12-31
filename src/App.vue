@@ -39,6 +39,7 @@
           >
             <p>Inititale value : '2018-04-05T04:26'</p>
             <p>v-model = {{ value2 || 'null' }}</p>
+            <br>
             <CtkDateTimePicker
               v-model="value2"
               color="purple"
