@@ -12,7 +12,6 @@
         <div
           v-for="y in [year]"
           :key="y"
-          :style="[colorStyle]"
         >
           {{ y }}
         </div>
@@ -31,7 +30,6 @@
         <span
           v-for="dateFormatted in [getDateFormatted]"
           :key="dateFormatted"
-          :style="[colorStyle]"
         >
           {{ value ? getDateFormatted : '...' }}
         </span>
@@ -39,7 +37,7 @@
       <div
         v-if="!isFormatTwelve && !noTime && value"
         class="header-picker-time flex"
-        :style="[getTimePickerWidth(), colorStyle]"
+        :style="[getTimePickerWidth()]"
         :class="[!onlyTime ? 'pl-10' : 'flex-1 justify-content-center']"
       >
         <TransitionGroup
@@ -68,7 +66,7 @@
       </div>
       <div
         v-else-if="!noTime && value"
-        :style="[getTimePickerWidth(), colorStyle]"
+        :style="[getTimePickerWidth()]"
         class="header-picker-time flex flex-fixed"
         :class="[!onlyTime ? 'pl-10' : 'flex-1 justify-content-center']"
       >
@@ -87,7 +85,7 @@
       </div>
       <div
         v-else
-        :style="[getTimePickerWidth(), colorStyle]"
+        :style="[getTimePickerWidth()]"
         class="header-picker-time flex flex-fixed"
         :class="[!onlyTime ? 'pl-10' : 'flex-1 justify-content-center']"
       >
@@ -130,11 +128,6 @@
           backgroundColor: this.color
         }
       },
-      colorStyle () {
-        return {
-          color: 'white'
-        }
-      },
       dateTime () {
         const date = this.value
           ? this.range
@@ -167,12 +160,12 @@
     },
     methods: {
       getTimePickerWidth () {
-        const width = 140
+        const width = this.onlyTime ? '100%' : '140px'
         const result = {
-          flex: `0 0 ${width}px`,
-          width: `${width}px`,
-          minWidth: `${width}px`,
-          maxWidth: `${width}px`
+          flex: `0 0 ${width}`,
+          width: `${width}`,
+          minWidth: `${width}`,
+          maxWidth: `${width}`
         }
         return result
       }
@@ -186,7 +179,7 @@
   .header-picker {
     background: #FFF;
     border-bottom: 1px solid #EAEAEA;
-    color: #424242;
+    color: #FFF;
     position: relative;
     border-top-left-radius: 4px;
     border-top-right-radius: 4px;
