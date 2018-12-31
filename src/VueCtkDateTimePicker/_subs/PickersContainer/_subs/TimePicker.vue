@@ -180,13 +180,11 @@
           this.minute = value * this.minuteInterval
         } else {
           if (this.apm !== this.apms[value].value) {
-            console.log('isDifferent')
             const newHour = this.apm === 'pm' || this.apm === 'PM' ? this.hour - 12 : this.hour + 12
             this.hour = newHour
           }
           this.apm = this.apms[value].value
         }
-        console.log('okok')
         this.emitValue()
       },
       isActive (type, value) {
@@ -289,7 +287,6 @@
         const minute = this.minute ? (this.minute < 10 ? '0' : '') + this.minute : '00'
         const time = `${hour}:${minute}`
         this.$emit('input', time)
-        console.log('time', time)
         if (!noInitPositionView) {
           this.debouncePositionView()
         }
