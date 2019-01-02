@@ -43,8 +43,9 @@
             <CtkDateTimePicker
               v-model="value2"
               color="purple"
-              only-time
+              :custom-shortcuts="customShortcuts"
               :dark="darkMode"
+              locale="en"
               open
             />
           </div>
@@ -135,6 +136,17 @@
                   </span>
                 </div>
               </div>
+              <div>
+                <h4 style="margin-bottom: 10px;">
+                  Options not editable (is Array)
+                </h4>
+                <span
+                  v-for="opt in optionsNotEditable"
+                  :key="opt"
+                >
+                  {{ opt + ', ' }}
+                </span>
+              </div>
             </div>
             <div class="component">
               <CtkDateTimePicker
@@ -172,6 +184,7 @@
                 :no-button-now="demo.options.noButtonNow"
                 :locale="demo.options.locale"
                 :input-size="demo.options.inputSize"
+                :custom-shortcuts="demo.options.customShortcuts"
                 :persistent="demo.options.persistent"
               >
                 <input
@@ -204,14 +217,17 @@
     },
     data () {
       return {
-        devMode: true,
+        devMode: false,
         booleanOptions: [
           'noHeader', 'autoClose', 'error', 'dark', 'overlay', 'noWeekendDays', 'noShortcuts',
           'noButton', 'onlyDate', 'range', 'onlyTime', 'inline', 'persistent', 'disabled', 'noButtonNow'
         ],
         stringOptions: [
           'label', 'hint', 'color', 'buttonColor', 'position', 'format', 'formatted', 'outputFormat',
-          'minDate', 'maxDate', 'disabledDates', 'disabledHours', 'inputSize', 'buttonNowTranslation'
+          'minDate', 'maxDate', 'inputSize', 'buttonNowTranslation'
+        ],
+        optionsNotEditable: [
+          'customShortcuts', 'disabledDates', 'disabledHours'
         ],
         intOptions: [
           'minuteInterval', 'firstDayOfWeek'
@@ -352,7 +368,20 @@
               return null
             }
           })
-        )
+        ),
+        customShortcuts: [
+          { label: `Aujourd'hui`, value: 'day', isSelected: false },
+          { label: 'Yesterday', value: '-day', isSelected: false },
+          { label: 'This Week', value: 'week', isSelected: true },
+          { label: 'Last Week', value: '-week', isSelected: false },
+          { label: 'This iso Week', value: 'isoWeek', isSelected: true },
+          { label: 'Last iso Week', value: '-isoWeek', isSelected: false },
+          { label: 'This Month', value: 'month', isSelected: false },
+          { label: 'Last Month', value: '-month', isSelected: false },
+          { label: 'This Month', value: 'year', isSelected: false },
+          { label: 'Last Month', value: '-year', isSelected: false },
+          { label: 'Last 5 days', value: 5, isSelected: false }
+        ]
       }
     }
   }

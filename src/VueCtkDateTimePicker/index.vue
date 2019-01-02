@@ -53,6 +53,7 @@
       :button-now-translation="buttonNowTranslation"
       :no-button-now="noButtonNow"
       :first-day-of-week="firstDayOfWeek"
+      :custom-shortcuts="customShortcuts"
       @validate="validate"
     />
   </div>
@@ -139,7 +140,8 @@
       inputSize: { type: String, default: String },
       buttonNowTranslation: { type: String, default: String },
       noButtonNow: {type: Boolean, default: false},
-      firstDayOfWeek: { type: Number, default: Number }
+      firstDayOfWeek: { type: Number, default: Number },
+      customShortcuts: { type: Array, default: Array }
     },
     data () {
       return {
@@ -266,9 +268,11 @@
         const { start, end } = typeof payload !== 'undefined' ? payload : this.value
         return start || end
           ? { start: start ? moment(start).format('YYYY-MM-DD') : null,
-              end: end ? moment(end).format('YYYY-MM-DD') : null }
+              end: end ? moment(end).format('YYYY-MM-DD') : null,
+              shortcut: payload.value }
           : { start: moment().format('YYYY-MM-DD'),
-              end: moment().format('YYYY-MM-DD') }
+              end: moment().format('YYYY-MM-DD'),
+              shortcut: payload.value }
       },
       getDateTimeToSend (value) {
         const dateTime = typeof value !== 'undefined' ? value : this.value

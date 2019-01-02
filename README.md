@@ -56,14 +56,14 @@ Here is an example of UMD implementation: https://codepen.io/louismazel/pen/jQWN
 | id  | string | no  | CtkDateTimePicker |
 | label      | String     | no    | Select date & time |
 | disabled | Boolean | no | false |
-| hint (1)       | text       | no       | -         |
+| hint (1)       | String       | no       | -         |
 | error (2) | Boolean    | no      | false     |
 | color (3)     | String (hex) | no    | dodgerblue |
 | button-color (4)    | String (hex) | no    | #00C853 |
 | position     | String | no    | null |
 | locale (5)  | String | no     | Browser Locale |
 | persistent     | Boolean | no    | false |
-| minute-interval | Int | no    | 1    |
+| minute-interval | Integer | no    | 1    |
 | formatted   | String | no    | 'llll' (momentjs format) |
 | format   | String | no      | - |
 | output-format   | String | no  | null |
@@ -82,13 +82,13 @@ Here is an example of UMD implementation: https://codepen.io/louismazel/pen/jQWN
 | dark | Boolean | no | false |
 | no-shortcuts | Boolean | no | false |
 | no-button | Boolean | no | false |
-| disabled-dates (8) | Array<string> | no | [] |
-| disabled-hours (9) | Array<string> | no | - |
-| shortcuts-translations (10) | Object | no | - |
 | input-size | String (sm or lg) | no | null |
 | button-now-translation | String | no | 'Now' |
 | no-button-now | Boolean | no | false |
 | first-day-of-week | Int (0 to 7) | no | - |
+| disabled-dates (8) | Array<string> | no | [] |
+| disabled-hours (9) | Array<string> | no | - |
+| custom-shortcuts (10) | Array<object> | no | - |
 
 (1) hint : Is a text that replaces the label/placeholder (Ex : Error designation)
 
@@ -108,20 +108,26 @@ Here is an example of UMD implementation: https://codepen.io/louismazel/pen/jQWN
 
 (9) disabled-hours : Must be an Array of hours in 24h format ('00' to '23') : `['00','01','02','03','04','05','06','07','19','20','21','22','23']`
 
-(10) shortcuts-translation : Must be an Object like that
+(10) custom-shortcuts - It's an Array of Objects like this :
 
-```
-{
-  "this_week": "This week",
-  "last_7_days": "Last 7 days",
-  "last_30_days": "Last 30 days",
-  "this_month": "This month",
-  "last_month": "Last month",
-  "this_year": "This year",
-  "last_year": "Last year"
-}
-```
+```[
+  { label: `Aujourd'hui`, value: 'day', isSelected: false },
+  { label: 'Yesterday', value: '-day', isSelected: false },
+  { label: 'This Week', value: 'week', isSelected: true },
+  { label: 'Last Week', value: '-week', isSelected: false },
+  { label: 'This iso Week', value: 'isoWeek', isSelected: true },
+  { label: 'Last iso Week', value: '-isoWeek', isSelected: false },
+  { label: 'This Month', value: 'month', isSelected: false },
+  { label: 'Last Month', value: '-month', isSelected: false },
+  { label: 'This Month', value: 'year', isSelected: false },
+  { label: 'Last Month', value: '-year', isSelected: false },
+  { label: 'Last 5 days', value: 5, isSelected: false }
+]```
 
+Shortcut types allowed : `['day', '-day', 'isoWeek', '-isoWeek', 'month', '-month', 'year', '-year', 'week', '-week']`
+If the value of shortcut is a number (Integer), this number correspond to number of day (for 5 --> Last 5 days)
+You can use this feature for translate the shortcuts
+When you set `isSelected` to true, the shortcut is selected by default
 
 ## Upcoming features (Todo)
 
@@ -148,6 +154,3 @@ npm run serve
 ```
 npm run lint
 ```
-
-### Customize configuration
-See [Configuration Reference](https://cli.vuejs.org/config/).

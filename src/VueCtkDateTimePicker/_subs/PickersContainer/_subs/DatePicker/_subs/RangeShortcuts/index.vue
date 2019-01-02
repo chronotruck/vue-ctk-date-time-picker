@@ -1,6 +1,7 @@
 <template>
   <div
     :class="{'is-dark': dark}"
+    :style="[{height: `${height}px`}]"
     class="shortcuts-container"
   >
     <button
@@ -20,33 +21,39 @@
         class="datepicker-button-effect"
       />
       <span class="shortcut-button-content">
-        {{ getTranslation(shortcut.key) }}
+        {{ shortcut.label }}
       </span>
     </button>
   </div>
 </template>
 <script>
   import moment from 'moment-timezone'
-  import shortcutsTranslations from './_subs/shortcutsTranslations'
 
   export default {
-    name: 'CtkCalendarShortcur',
+    name: 'RangeShortcuts',
     props: {
+      value: { type: Object, required: false, default: null },
       color: { type: String, default: String },
       dark: { type: Boolean, default: false },
-      shortcutsTranslations: {type: Object, default: Object}
+      dateTime: {type: Object, default: Object},
+      customShortcuts: { type: Array, default: Array },
+      shortcutsTranslations: {type: Object, default: Object},
+      height: { type: Number, default: Number, required: true }
     },
     data () {
       return {
+        types: ['day', '-day', 'isoWeek', '-isoWeek', 'month', '-month', 'year', '-year', 'week', '-week'],
         shortcuts: [
-          { key: 'this_week', value: 'week', isHover: false, isSelected: false },
-          { key: 'last_7_days', value: 7, isHover: false, isSelected: false },
-          { key: 'last_30_days', value: 30, isHover: false, isSelected: false },
-          { key: 'this_month', value: 'month', isHover: false, isSelected: false },
-          { key: 'last_month', value: '-month', isHover: false, isSelected: false },
-          { key: 'this_year', value: 'year', isHover: false, isSelected: false },
-          { key: 'last_year', value: '-year', isHover: false, isSelected: false }
-        ]
+          { label: 'This week', value: 'isoWeek', isHover: false, isSelected: false },
+          { label: 'Last week', value: '-isoWeek', isHover: false, isSelected: false },
+          { label: 'Last 7 days', value: 7, isHover: false, isSelected: false },
+          { label: 'Last 30 days', value: 30, isHover: false, isSelected: false },
+          { label: 'This month', value: 'month', isHover: false, isSelected: false },
+          { label: 'Last month', value: '-month', isHover: false, isSelected: false },
+          { label: 'This year', value: 'year', isHover: false, isSelected: false },
+          { label: 'Last year', value: '-year', isHover: false, isSelected: false }
+        ],
+        computedTypes: {}
       }
     },
     computed: {
@@ -67,41 +74,94 @@
         }
       }
     },
+    watch: {
+      customShortcuts (newVal, oldVal) {
+        if (newVal && Array.isArray(newVal) && JSON.stringify(newVal) !== JSON.stringify(oldVal)) {
+          this.init()
+        }
+      }
+    },
+    mounted () {
+      this.init()
+    },
     methods: {
-      getTranslation (key) {
-        return this.shortcutsTranslations[key] || shortcutsTranslations[key]
+      init () {
+        this.overrideCustomShortCuts()
+        this.preparePreCalculatedTypes()
+
+        const selected = this.shortcuts.filter(shortcut => shortcut.isSelected)
+        if (selected[0]) {
+          this.select(selected[0])
+        }
+      },
+      preparePreCalculatedTypes () {
+        this.shortcuts.forEach(shortcut => {
+          const { value } = shortcut
+
+          switch (true) {
+          case value === 'week': case value === 'month': case value === 'year': case value === 'day':
+            shortcut.start = moment().startOf(value)
+            shortcut.end = moment().endOf(value)
+            break
+          case typeof value === 'number':
+            shortcut.end = moment()
+            shortcut.start = moment().subtract(value, 'd')
+            break
+          case value === '-month':
+            shortcut.start = moment().subtract(1, 'months').startOf('month')
+            shortcut.end = moment().subtract(1, 'months').endOf('month')
+            break
+          case value === '-year':
+            shortcut.start = moment().subtract(1, 'years').startOf('year')
+            shortcut.end = moment().subtract(1, 'years').endOf('year')
+            break
+          case value === '-week':
+            shortcut.start = moment().subtract(1, 'weeks').startOf('week')
+            shortcut.end = moment().subtract(1, 'weeks').endOf('week')
+            break
+          case value === '-day':
+            shortcut.start = moment().subtract(1, 'days').startOf('day')
+            shortcut.end = moment().subtract(1, 'days').endOf('day')
+            break
+          }
+        })
+      },
+      overrideCustomShortCuts () {
+        const customShortCuts = []
+        this.customShortcuts.forEach(customShortcut => {
+          if (this.isValidValue(customShortcut.value) && customShortcut.label) {
+            customShortCuts.push({
+              label: customShortcut.label,
+              value: customShortcut.value,
+              isHover: !!customShortcut.isHover,
+              isSelected: !!customShortcut.isSelected
+            })
+          } else if (!customShortcut.label) {
+            window.console.warn(`The label of '${customShortcut.value}' custom shortcut must be indicated`)
+          } else {
+            window.console.warn(`This '${customShortcut.value}' shortcut is not allowed. The value must be in this options : ${JSON.stringify(this.types)}`)
+          }
+        })
+        if (customShortCuts.length) {
+          this.shortcuts = customShortCuts
+        }
       },
       unSelectAllShortcuts () {
         this.shortcuts.forEach(sc => {
           sc.isSelected = false
         })
       },
-      select (shortcut) {
-        const { value } = shortcut
-        const dates = { start: null, end: null }
+      selectShortcut (shortcut) {
         this.unSelectAllShortcuts()
         shortcut.isSelected = true
-        switch (value) {
-        case 'week': case 'month': case 'year':
-          dates.start = moment().startOf(value)
-          dates.end = moment().endOf(value)
-          break
-        case 7: case 30:
-          dates.end = moment().subtract(1, 'd')
-          dates.start = moment().subtract(value, 'd')
-          break
-        case '-month':
-          dates.start = moment().subtract(1, 'months').startOf('month')
-          dates.end = moment().subtract(1, 'months').endOf('month')
-          break
-        case '-year':
-          dates.start = moment().subtract(1, 'years').startOf('year')
-          dates.end = moment().subtract(1, 'years').endOf('year')
-          break
-        }
-        dates.start = dates.start.format('YYYY-MM-DD')
-        dates.end = dates.end.format('YYYY-MM-DD')
-        this.$emit('change-range', dates)
+      },
+      select (shortcut) {
+        this.selectShortcut(shortcut)
+        const { start, end, value } = shortcut
+        this.$emit('change-range', { start, end, value })
+      },
+      isValidValue (value) {
+        return value && (this.types.indexOf(value) > -1 || (typeof value === 'number' && value > 0))
       }
     }
   }
@@ -112,6 +172,7 @@
     width: 160px;
     padding: 10px 5px;
     border-right: 1px solid #EAEAEA;
+    overflow: auto;
     button.shortcut-button {
       width: 100%;
       position: relative;
@@ -179,7 +240,6 @@
     .shortcuts-container:not(.inline) {
       width: 100%;
       border-bottom: 1px solid #EAEAEA;
-      overflow: auto;
     }
     .shortcuts-container.is-dark {
       border-color: lighten(#424242, 20%);
