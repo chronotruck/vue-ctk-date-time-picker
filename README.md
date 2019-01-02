@@ -110,7 +110,8 @@ Here is an example of UMD implementation: https://codepen.io/louismazel/pen/jQWN
 
 (10) custom-shortcuts - It's an Array of Objects like this :
 
-```[
+```js
+[
   { label: `Aujourd'hui`, value: 'day', isSelected: false },
   { label: 'Yesterday', value: '-day', isSelected: false },
   { label: 'This Week', value: 'week', isSelected: true },
@@ -122,7 +123,8 @@ Here is an example of UMD implementation: https://codepen.io/louismazel/pen/jQWN
   { label: 'This Month', value: 'year', isSelected: false },
   { label: 'Last Month', value: '-year', isSelected: false },
   { label: 'Last 5 days', value: 5, isSelected: false }
-]```
+]
+```
 
 Shortcut types allowed : `['day', '-day', 'isoWeek', '-isoWeek', 'month', '-month', 'year', '-year', 'week', '-week']`
 If the value of shortcut is a number (Integer), this number correspond to number of day (for 5 --> Last 5 days)
