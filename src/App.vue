@@ -220,7 +220,7 @@
           {
             id: "1",
             title: 'Date Time Picker',
-            description: 'Date & Time selector - With small input (input-size="sm")',
+            description: 'Date & Time selector',
             initial: '2018-04-05 20:26',
             value: '2018-04-05 20:26',
             editOption: false,
