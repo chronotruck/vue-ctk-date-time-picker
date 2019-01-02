@@ -56,14 +56,14 @@ Here is an example of UMD implementation: https://codepen.io/louismazel/pen/jQWN
 | id  | string | no  | CtkDateTimePicker |
 | label      | String     | no    | Select date & time |
 | disabled | Boolean | no | false |
-| hint (1)       | text       | no       | -         |
+| hint (1)       | String       | no       | -         |
 | error (2) | Boolean    | no      | false     |
 | color (3)     | String (hex) | no    | dodgerblue |
 | button-color (4)    | String (hex) | no    | #00C853 |
 | position     | String | no    | null |
 | locale (5)  | String | no     | Browser Locale |
 | persistent     | Boolean | no    | false |
-| minute-interval | Int | no    | 1    |
+| minute-interval | Integer | no    | 1    |
 | formatted   | String | no    | 'llll' (momentjs format) |
 | format   | String | no      | - |
 | output-format   | String | no  | null |
@@ -82,12 +82,12 @@ Here is an example of UMD implementation: https://codepen.io/louismazel/pen/jQWN
 | dark | Boolean | no | false |
 | no-shortcuts | Boolean | no | false |
 | no-button | Boolean | no | false |
-| disabled-dates (8) | Array<string> | no | [] |
-| disabled-hours (9) | Array<string> | no | - |
 | input-size | String (sm or lg) | no | null |
 | button-now-translation | String | no | 'Now' |
 | no-button-now | Boolean | no | false |
 | first-day-of-week | Int (0 to 7) | no | - |
+| disabled-dates (8) | Array<string> | no | [] |
+| disabled-hours (9) | Array<string> | no | - |
 | custom-shortcuts (10) | Array<object> | no | - |
 
 (1) hint : Is a text that replaces the label/placeholder (Ex : Error designation)

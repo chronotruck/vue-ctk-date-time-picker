@@ -136,6 +136,17 @@
                   </span>
                 </div>
               </div>
+              <div>
+                <h4 style="margin-bottom: 10px;">
+                  Options not editable (is Array)
+                </h4>
+                <span
+                  v-for="opt in optionsNotEditable"
+                  :key="opt"
+                >
+                  {{ opt + ', ' }}
+                </span>
+              </div>
             </div>
             <div class="component">
               <CtkDateTimePicker
@@ -173,6 +184,7 @@
                 :no-button-now="demo.options.noButtonNow"
                 :locale="demo.options.locale"
                 :input-size="demo.options.inputSize"
+                :custom-shortcuts="demo.options.customShortcuts"
                 :persistent="demo.options.persistent"
               >
                 <input
@@ -212,7 +224,10 @@
         ],
         stringOptions: [
           'label', 'hint', 'color', 'buttonColor', 'position', 'format', 'formatted', 'outputFormat',
-          'minDate', 'maxDate', 'disabledDates', 'disabledHours', 'inputSize', 'buttonNowTranslation'
+          'minDate', 'maxDate', 'inputSize', 'buttonNowTranslation'
+        ],
+        optionsNotEditable: [
+          'customShortcuts', 'disabledDates', 'disabledHours'
         ],
         intOptions: [
           'minuteInterval', 'firstDayOfWeek'
