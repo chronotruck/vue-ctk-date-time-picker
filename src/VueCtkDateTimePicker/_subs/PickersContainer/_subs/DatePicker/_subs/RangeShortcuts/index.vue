@@ -10,6 +10,7 @@
       :class="{ 'is-selected': shortcut.isSelected }"
       class="shortcut-button"
       tabindex="-1"
+      type="button"
       @mouseover="shortcut.isHover = true"
       @mouseleave="shortcut.isHover = false"
       @click="select(shortcut)"
