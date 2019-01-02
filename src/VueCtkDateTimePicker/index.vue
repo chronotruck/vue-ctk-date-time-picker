@@ -210,6 +210,9 @@
         this.setValueToCustomElem()
       }
       this.isMounted = true
+      if (this.format === 'YYYY-MM-DD hh:mm a' && this.onlyTime) {
+        window.console.warn(`A (time) format must be indicated/ (Ex : format="HH:mm")`)
+      }
     },
     beforeDestroy () {
       this.$emit('destroy')

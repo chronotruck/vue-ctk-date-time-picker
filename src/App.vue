@@ -43,7 +43,7 @@
             <CtkDateTimePicker
               v-model="value2"
               color="purple"
-              format="YYYY-MM-DD HH:mm"
+              only-time
               :dark="darkMode"
               open
             />
@@ -131,7 +131,7 @@
                     :disabled="opt === 'onlyDate' || opt === 'onlyTime' || opt === 'range'"
                   />
                   <span style="margin-left: 15px;">
-                    {{ opt }} {{ opt === 'onlyDate' || opt === 'onlyTime' || opt === 'range' || opt === 'inline' ? '(disabled)' : '' }}
+                    {{ opt }} {{ opt === 'onlyDate' || opt === 'onlyTime' || opt === 'range' ? '(disabled)' : '' }}
                   </span>
                 </div>
               </div>
@@ -204,7 +204,7 @@
     },
     data () {
       return {
-        devMode: false,
+        devMode: true,
         booleanOptions: [
           'noHeader', 'autoClose', 'error', 'dark', 'overlay', 'noWeekendDays', 'noShortcuts',
           'noButton', 'onlyDate', 'range', 'onlyTime', 'inline', 'persistent', 'disabled', 'noButtonNow'
