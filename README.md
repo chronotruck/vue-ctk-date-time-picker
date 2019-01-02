@@ -113,10 +113,14 @@ Here is an example of UMD implementation: https://codepen.io/louismazel/pen/jQWN
 ```[
   { label: `Aujourd'hui`, value: 'day', isSelected: false },
   { label: 'Yesterday', value: '-day', isSelected: false },
-  { label: 'This Week', value: 'week', isSelected: false },
+  { label: 'This Week', value: 'week', isSelected: true },
   { label: 'Last Week', value: '-week', isSelected: false },
+  { label: 'This iso Week', value: 'isoWeek', isSelected: true },
+  { label: 'Last iso Week', value: '-isoWeek', isSelected: false },
   { label: 'This Month', value: 'month', isSelected: false },
   { label: 'Last Month', value: '-month', isSelected: false },
+  { label: 'This Month', value: 'year', isSelected: false },
+  { label: 'Last Month', value: '-year', isSelected: false },
   { label: 'Last 5 days', value: 5, isSelected: false }
 ]```
 
