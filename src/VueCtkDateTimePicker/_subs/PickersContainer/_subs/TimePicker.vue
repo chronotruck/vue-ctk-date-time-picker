@@ -2,7 +2,7 @@
   <div
     ref="time-picker"
     :class="{'inline': inline, 'is-dark': dark, 'with-border': !onlyTime }"
-    :style="[{height: `${getHeight}px`}]"
+    :style="[{height: `${height}px`}]"
     class="time-picker flex flex-fixed flex-1"
   >
     <div
@@ -69,7 +69,7 @@
       value: { type: String, default: String },
       format: { type: String, default: String },
       minuteInterval: { type: [String, Number], default: Number },
-      month: { type: Object, default: Object },
+      height: { type: Number, default: Number, required: true },
       color: { type: String, default: String },
       inline: { type: Boolean, default: Boolean },
       visible: { type: Boolean, default: Boolean },
@@ -89,19 +89,6 @@
       }
     },
     computed: {
-      monthDays () {
-        return this.month.getMonthDays()
-      },
-      weekDay () {
-        return this.month.getWeekStart()
-      },
-      getHeight () {
-        return !this.onlyTime
-          ? this.month
-            ? (this.monthDays.length + this.weekDay) > 35 ? 347 : 307
-            : 180
-          : 200
-      },
       styleColor () {
         return {
           backgroundColor: this.color
@@ -207,13 +194,11 @@
           : tmpHour
         this.hour = this.isHoursDisabled(hourToSet) ? this.getAvailableHour() : hourToSet
         this.minute = parseInt(moment(this.value, this.format).format('mm'))
-        if (!this.apm) {
-          this.apm = this.apms
-            ? this.hour >= 12
-              ? this.apms[1].value
-              : this.apms[0].value
-            : null
-        }
+        this.apm = this.apms
+          ? this.hour >= 12
+            ? this.apms[1].value
+            : this.apms[0].value
+          : null
         this.columnPad()
       },
       columnPad () {

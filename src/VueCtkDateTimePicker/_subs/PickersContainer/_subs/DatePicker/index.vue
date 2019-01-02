@@ -11,6 +11,7 @@
       :dark="dark"
       :shortcuts-translations="shortcutsTranslations"
       :custom-shortcuts="customShortcuts"
+      :height="height"
       @change-range="$emit('input', $event)"
     />
     <div class="calendar w-100">
@@ -140,6 +141,7 @@
       disabledDates: {type: Array, default: Array},
       dark: {type: Boolean, default: false},
       month: {type: Object, default: Object},
+      height: { type: Number, default: Number },
       shortcutsTranslations: { type: Object, default: Object },
       noShortcuts: { type: Boolean, default: Boolean },
       firstDayOfWeek: { type: Number, default: Number },

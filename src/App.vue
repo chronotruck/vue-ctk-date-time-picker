@@ -43,7 +43,6 @@
             <CtkDateTimePicker
               v-model="value2"
               color="purple"
-              range
               :custom-shortcuts="customShortcuts"
               :dark="darkMode"
               locale="en"
@@ -360,8 +359,12 @@
           { label: 'Yesterday', value: '-day', isSelected: false },
           { label: 'This Week', value: 'week', isSelected: true },
           { label: 'Last Week', value: '-week', isSelected: false },
+          { label: 'This iso Week', value: 'isoWeek', isSelected: true },
+          { label: 'Last iso Week', value: '-isoWeek', isSelected: false },
           { label: 'This Month', value: 'month', isSelected: false },
           { label: 'Last Month', value: '-month', isSelected: false },
+          { label: 'This Month', value: 'year', isSelected: false },
+          { label: 'Last Month', value: '-year', isSelected: false },
           { label: 'Last 5 days', value: 5, isSelected: false }
         ]
       }

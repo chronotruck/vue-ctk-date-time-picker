@@ -41,6 +41,7 @@
             :disabled-dates="disabledDates"
             :range="range"
             :no-shortcuts="noShortcuts"
+            :height="height"
             :first-day-of-week="firstDayOfWeek"
             :custom-shortcuts="customShortcuts"
             @change-month="changeMonth"
@@ -58,6 +59,7 @@
             :only-time="onlyTime"
             :minute-interval="minuteInterval"
             :visible="visible"
+            :height="height"
             :disabled-hours="disabledHours"
           />
         </div>
@@ -146,6 +148,13 @@
         return this.onlyTime
           ? null
           : this.getDateFormat()
+      },
+      height () {
+        return !this.onlyTime
+          ? this.month
+            ? (this.month.getMonthDays().length + this.month.getWeekStart()) > 35 ? 347 : 307
+            : 180
+          : 200
       },
       time: {
         set (value) {

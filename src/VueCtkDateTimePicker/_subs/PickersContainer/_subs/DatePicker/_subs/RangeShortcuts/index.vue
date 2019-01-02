@@ -1,6 +1,7 @@
 <template>
   <div
     :class="{'is-dark': dark}"
+    :style="[{height: `${height}px`}]"
     class="shortcuts-container"
   >
     <button
@@ -29,14 +30,15 @@
   import moment from 'moment-timezone'
 
   export default {
-    name: 'CtkCalendarShortcut',
+    name: 'RangeShortcuts',
     props: {
       value: { type: Object, required: false, default: null },
       color: { type: String, default: String },
       dark: { type: Boolean, default: false },
       dateTime: {type: Object, default: Object},
       customShortcuts: { type: Array, default: Array },
-      shortcutsTranslations: {type: Object, default: Object}
+      shortcutsTranslations: {type: Object, default: Object},
+      height: { type: Number, default: Number, required: true }
     },
     data () {
       return {
@@ -170,6 +172,7 @@
     width: 160px;
     padding: 10px 5px;
     border-right: 1px solid #EAEAEA;
+    overflow: auto;
     button.shortcut-button {
       width: 100%;
       position: relative;
@@ -237,7 +240,6 @@
     .shortcuts-container:not(.inline) {
       width: 100%;
       border-bottom: 1px solid #EAEAEA;
-      overflow: auto;
     }
     .shortcuts-container.is-dark {
       border-color: lighten(#424242, 20%);
