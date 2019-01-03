@@ -52,7 +52,7 @@ Here is an example of UMD implementation: https://codepen.io/louismazel/pen/jQWN
 
 | Props      | Type       | Required | Default    |
 |------------|------------|----------|------------|
-| v-model    | String/Int | yes     | -          |
+| v-model    | String     | yes     | -          |
 | label      | String     | no    | Select date & time |
 | hint (1)       | text       | no       | -         |
 | error-hint (2) | Boolean    | no      | false     |
