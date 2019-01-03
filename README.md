@@ -4,6 +4,8 @@
 
 > A vue component for select dates (range mode available) & time
 
+This documentation is for v2.*. Find v1 documentation [here](./assets/doc-v1.md)
+
 ![vue-ctk-date-time-picker](./assets/illu-animated.gif)
 
 **Dark mode**
