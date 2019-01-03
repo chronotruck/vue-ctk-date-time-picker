@@ -151,7 +151,7 @@
       :color="color"
       :dark="dark"
       :mode="selectingYearMonth"
-      @input="selectMonth"
+      @input="selectYearMonth"
       @back="selectingYearMonth = null"
     />
   </div>
@@ -280,7 +280,6 @@
           }
           this.$emit('input', this.value)
         } else {
-          console.log('selectDate', moment(day).format('YYYY-MM-DD'))
           this.$emit('input', moment(day).format('YYYY-MM-DD'))
         }
       },
@@ -289,8 +288,9 @@
         this.transitionLabelName = `slidev${val}`
         this.$emit('change-month', val)
       },
-      selectMonth (event) {
-        console.log('selectMonth', event)
+      selectYearMonth (event) {
+        const isBefore = moment(event).isBefore(moment(this.value))
+        this.transitionLabelName = isBefore ? `slidevprev` : `slidevnext`
         this.selectingYearMonth = null
         this.$emit('input', event)
       }
