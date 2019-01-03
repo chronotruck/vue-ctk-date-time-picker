@@ -20,7 +20,11 @@ export default class Month {
   }
 
   getFormatted () {
-    return this.start.format('MMMM YYYY')
+    return this.start.format('MMMM')
+  }
+
+  getYear () {
+    return this.start.format('YYYY')
   }
 
   getWeeks () {
@@ -33,7 +37,7 @@ export default class Month {
   }
 }
 
-export const getWeekDays = function (locale, firstDay) {
+export const getWeekDays = (locale, firstDay) => {
   const first = moment.localeData(locale).firstDayOfWeek()
   let days = moment.weekdaysShort(first === 1)
   if (firstDay) {
@@ -42,4 +46,8 @@ export const getWeekDays = function (locale, firstDay) {
     days = keep.concat(stay)
   }
   return days
+}
+
+export const getMonthsShort = (locale) => {
+  return Array.apply(0, Array(12)).map(function(_,i){return moment().locale(locale).month(i).format('MMM')})
 }

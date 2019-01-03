@@ -28,8 +28,42 @@
             </svg>
           </button>
         </div>
-        <div class="datepicker-container-label flex-1">
+        <div
+          class="datepicker-container-label flex-1"
+          :class="{'flex justify-content-center': !range}"
+        >
           <TransitionGroup
+            v-if="!range"
+            :name="transitionLabelName"
+            class="h-100 flex align-center flex-1 flex justify-content-right"
+          >
+            <CustomButton
+              v-for="m in [month]"
+              :key="m.month"
+              class="date-buttons fs-16 p-5"
+              :color="color"
+              @click="selectingYearMonth = 'month'"
+            >
+              {{ monthFormatted }}
+            </CustomButton>
+          </TransitionGroup>
+          <TransitionGroup
+            v-if="!range"
+            :name="transitionLabelName"
+            class="h-100 flex align-center flex-1 flex"
+          >
+            <CustomButton
+              v-for="y in [year]"
+              :key="y"
+              class="date-buttons fs-16 p-5"
+              :color="color"
+              @click="selectingYearMonth = 'year'"
+            >
+              {{ year }}
+            </CustomButton>
+          </TransitionGroup>
+          <TransitionGroup
+            v-else
             :name="transitionLabelName"
             class="h-100 flex align-center justify-content-center"
           >
@@ -37,8 +71,9 @@
               v-for="m in [month]"
               :key="m.month"
               class="datepicker-label fs-16"
-              v-text="getMonthFormatted()"
-            />
+            >
+              {{ `${monthFormatted} ${year}` }}
+            </div>
           </TransitionGroup>
         </div>
         <div class="arrow-month h-100 text-right">
@@ -54,15 +89,7 @@
           </button>
         </div>
       </div>
-      <div class="datepicker-week flex">
-        <div
-          v-for="(weekDay, index) in weekDays"
-          :key="index"
-          class="flex-1 text-muted fs-12 flex justify-content-center align-center"
-        >
-          {{ weekDay }}
-        </div>
-      </div>
+      <WeekDays :week-days="weekDays" />
       <div
         :style="{height: (monthDays.length + weekStart) > 35 ? '250px' : '210px'}"
         class="month-container"
@@ -117,6 +144,16 @@
         </TransitionGroup>
       </div>
     </div>
+    <YearMonthSelector
+      v-if="selectingYearMonth"
+      :value="value"
+      :locale="locale"
+      :color="color"
+      :dark="dark"
+      :mode="selectingYearMonth"
+      @input="selectMonth"
+      @back="selectingYearMonth = null"
+    />
   </div>
 </template>
 
@@ -124,10 +161,13 @@
   import moment from 'moment-timezone'
   import { getWeekDays } from '@/VueCtkDateTimePicker/modules/month'
   import RangeShortcuts from './_subs/RangeShortcuts'
+  import YearMonthSelector from './_subs/YearMonthSelector'
+  import WeekDays from './_subs/WeekDays'
+  import CustomButton from '@/VueCtkDateTimePicker/_subs/CustomButton'
   export default {
     name: 'DatePicker',
     components: {
-      RangeShortcuts
+      RangeShortcuts, YearMonthSelector, WeekDays, CustomButton
     },
     props: {
       value: {type: [String, Object], default: String},
@@ -151,13 +191,11 @@
       return {
         transitionDaysName: 'slidenext',
         transitionLabelName: 'slidevnext',
-        weekDays: getWeekDays(this.locale, this.firstDayOfWeek)
+        weekDays: getWeekDays(this.locale, this.firstDayOfWeek),
+        selectingYearMonth: null
       }
     },
     computed: {
-      dateTime () {
-        return this.value ? moment(this.value) : moment()
-      },
       bgStyle () {
         return {
           backgroundColor: this.color
@@ -173,12 +211,15 @@
       },
       weekStart () {
         return this.month.getWeekStart()
+      },
+      monthFormatted () {
+        return `${this.month.getFormatted()}`
+      },
+      year () {
+        return `${this.month.getYear()}`
       }
     },
     methods: {
-      getMonthFormatted () {
-        return this.month.getFormatted()
-      },
       isToday (day) {
         return moment(day.format('YYYY-MM-DD')).isSame(moment().format('YYYY-MM-DD'))
       },
@@ -239,6 +280,7 @@
           }
           this.$emit('input', this.value)
         } else {
+          console.log('selectDate', moment(day).format('YYYY-MM-DD'))
           this.$emit('input', moment(day).format('YYYY-MM-DD'))
         }
       },
@@ -246,6 +288,11 @@
         this.transitionDaysName = `slide${val}`
         this.transitionLabelName = `slidev${val}`
         this.$emit('change-month', val)
+      },
+      selectMonth (event) {
+        console.log('selectMonth', event)
+        this.selectingYearMonth = null
+        this.$emit('input', event)
       }
     }
   }
@@ -256,11 +303,15 @@
   #DatePicker.datepicker-container {
     width: 260px;
     padding: 0 5px;
+    position: relative;
     &.range.has-shortcuts {
       width: 400px;
     }
     &.p-0 {
       padding: 0;
+    }
+    .p-5 {
+      padding: 5px 3px;
     }
     .datepicker-controls {
       height: 56px;
@@ -287,19 +338,16 @@
       }
       .datepicker-container-label {
         text-transform: capitalize;
-        font-size: 18px;
-        line-height: 18px;
+        font-size: 16px;
+        line-height: 56px;
         position: relative;
-        height: 18px;
+        height: 56px;
         overflow: hidden;
       }
-      .datepicker-label {
+      .date-buttons {
         text-transform: capitalize;
+        font-weight: 400;
       }
-    }
-    .datepicker-week {
-      height: 41px;
-      text-transform: capitalize;
     }
     .month-container {
       position: relative;
@@ -422,9 +470,6 @@
           fill: #FFF;
         }
       }
-      .datepicker-label {
-        color: #FFF;
-      }
       .datepicker-today {
         background-color: darken(#424242, 10%) !important;
       }
@@ -436,9 +481,6 @@
       &:not(.inline) {
         .datepicker-controls {
           height: 36px !important;
-        }
-        .datepicker-week {
-          height: 21px !important;
         }
       }
       &.range.has-shortcuts {

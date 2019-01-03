@@ -141,7 +141,8 @@
       buttonNowTranslation: { type: String, default: String },
       noButtonNow: {type: Boolean, default: false},
       firstDayOfWeek: { type: Number, default: Number },
-      customShortcuts: { type: Array, default: Array }
+      customShortcuts: { type: Array, default: Array },
+      noValueToCustomElem: { type: Boolean, default: false }
     },
     data () {
       return {
@@ -161,9 +162,11 @@
         return this.onlyDate || this.range
       },
       dateFormatted () {
-        return this.range
+        const dateFormatted = this.range
           ? this.getRangeDatesFormatted()
           : this.getDateFormatted()
+        this.$emit('formatted-value', dateFormatted)
+        return dateFormatted
       },
       hasCustomElem () {
         return this.$slots.default
@@ -186,7 +189,7 @@
           }
           const newValue = this.range ? this.getRangeDateToSend(value) : this.getDateTimeToSend(value)
           this.$emit('input', newValue)
-          if (this.hasCustomElem) {
+          if (this.hasCustomElem && !this.noValueToCustomElem) {
             this.$nextTick(() => {
               this.setValueToCustomElem()
             })
@@ -209,7 +212,9 @@
       this.pickerOpen = this.open
       if (this.hasCustomElem) {
         this.addEventToTriggerElement()
-        this.setValueToCustomElem()
+        if (!this.noValueToCustomElem) {
+          this.setValueToCustomElem()
+        }
       }
       this.isMounted = true
       if (this.format === 'YYYY-MM-DD hh:mm a' && this.onlyTime) {
@@ -229,10 +234,10 @@
       setValueToCustomElem () {
         const target = this.$slots.default[0]
         if (target) {
-          if (target.tag === 'button') {
-            target.elm.innerHTML = this.dateFormatted
-          } else {
+          if (target.tag === 'input') {
             target.elm.value = this.dateFormatted
+          } else {
+            target.elm.innerHTML = this.dateFormatted ? this.dateFormatted : this.label
           }
         } else {
           window.console.warn(`Impossible to find custom element`)
@@ -292,6 +297,7 @@
         const isOpen = val || !this.pickerOpen
         this.setBodyOverflow(isOpen)
         this.pickerOpen = isOpen
+        this.$emit(this.pickerOpen ? 'is-shown' : 'is-hidden')
         if (this.pickerOpen && !this.position) {
           this.pickerPosition = this.getPosition()
         }

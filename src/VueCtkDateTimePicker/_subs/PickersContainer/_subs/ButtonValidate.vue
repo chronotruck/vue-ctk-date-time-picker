@@ -7,6 +7,7 @@
       v-if="hasButtonNow"
       class="datepicker-button now flex align-center justify-content-center"
       tabindex="-1"
+      type="button"
       @click="emitNow()"
     >
       <span

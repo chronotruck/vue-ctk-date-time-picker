@@ -43,9 +43,7 @@
             <CtkDateTimePicker
               v-model="value2"
               color="purple"
-              :custom-shortcuts="customShortcuts"
               :dark="darkMode"
-              locale="en"
               open
             />
           </div>
@@ -186,6 +184,7 @@
                 :input-size="demo.options.inputSize"
                 :custom-shortcuts="demo.options.customShortcuts"
                 :persistent="demo.options.persistent"
+                :no-value-to-custom-elem="demo.options.noValueToCustomElem"
               >
                 <input
                   v-if="demo.options && demo.options.slot && demo.options.slot.type === 'input'"
@@ -217,10 +216,10 @@
     },
     data () {
       return {
-        devMode: false,
+        devMode: true,
         booleanOptions: [
           'noHeader', 'autoClose', 'error', 'dark', 'overlay', 'noWeekendDays', 'noShortcuts',
-          'noButton', 'onlyDate', 'range', 'onlyTime', 'inline', 'persistent', 'disabled', 'noButtonNow'
+          'noButton', 'onlyDate', 'range', 'onlyTime', 'inline', 'persistent', 'disabled', 'noButtonNow', 'noValueToCustomElem'
         ],
         stringOptions: [
           'label', 'hint', 'color', 'buttonColor', 'position', 'format', 'formatted', 'outputFormat',
