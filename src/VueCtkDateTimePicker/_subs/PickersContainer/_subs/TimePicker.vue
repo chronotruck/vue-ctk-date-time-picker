@@ -195,7 +195,7 @@
         this.hour = this.isHoursDisabled(hourToSet) ? this.getAvailableHour() : hourToSet
         this.minute = parseInt(moment(this.value, this.format).format('mm'))
         this.apm = this.apms
-          ? this.hour >= 12
+          ? this.hour > 12
             ? this.apms[1].value
             : this.apms[0].value
           : null

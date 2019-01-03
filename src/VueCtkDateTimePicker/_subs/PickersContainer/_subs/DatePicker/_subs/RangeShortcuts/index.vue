@@ -99,7 +99,7 @@
           const { value } = shortcut
 
           switch (true) {
-          case value === 'week': case value === 'month': case value === 'year': case value === 'day':
+          case value === 'isoWeek': case value === 'week': case value === 'month': case value === 'year': case value === 'day':
             shortcut.start = moment().startOf(value)
             shortcut.end = moment().endOf(value)
             break
@@ -118,6 +118,10 @@
           case value === '-week':
             shortcut.start = moment().subtract(1, 'weeks').startOf('week')
             shortcut.end = moment().subtract(1, 'weeks').endOf('week')
+            break
+          case value === '-isoWeek':
+            shortcut.start = moment().subtract(1, 'weeks').startOf('isoWeek')
+            shortcut.end = moment().subtract(1, 'weeks').endOf('isoWeek')
             break
           case value === '-day':
             shortcut.start = moment().subtract(1, 'days').startOf('day')
