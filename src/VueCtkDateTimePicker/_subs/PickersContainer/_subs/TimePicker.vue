@@ -145,6 +145,9 @@
             this.initPositionView()
           }
         }
+      },
+      height () {
+        this.initPositionView()
       }
     },
     mounted () {

@@ -103,13 +103,13 @@
         this.years = ArrayRange(this.currentYear - 7, this.currentYear + 7)
       },
       selectMonth (monthNumber) {
-        const arrayDate = this.currentDate ? [this.currentYear, this.currentMonth, this.currentDay] : []
-        const newDate = moment(arrayDate).month(monthNumber).format('YYYY-MM-DD')
+        const date = this.currentDate ? moment(this.currentDate, 'YYYY-MM-DD') : moment()
+        const newDate = moment(date).month(monthNumber).format('YYYY-MM-DD')
         this.$emit('input', newDate)
       },
       selectYear (year) {
-        const arrayDate = this.currentDate ? [this.currentYear, this.currentMonth, this.currentDay] : []
-        const newDate = moment(arrayDate).year(year).format('YYYY-MM-DD')
+        const date = this.currentDate ? moment(this.currentDate, 'YYYY-MM-DD') : moment()
+        const newDate = date.year(year).format('YYYY-MM-DD')
         this.$emit('input', newDate)
       }
     }
