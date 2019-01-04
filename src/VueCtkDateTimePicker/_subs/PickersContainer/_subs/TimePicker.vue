@@ -388,6 +388,7 @@
       border: 0;
       border-top: 1px solid #EAEAEA;
       width: 100%;
+      max-width: 100%;
       height: unset !important;
       overflow: hidden;
       &.dark {

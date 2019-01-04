@@ -52,7 +52,6 @@
             ref="TimePicker"
             v-model="time"
             :dark="dark"
-            :month="month"
             :color="color"
             :inline="inline"
             :format="timeFormat"

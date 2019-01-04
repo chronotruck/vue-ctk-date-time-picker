@@ -174,9 +174,8 @@ When you set `isSelected` to true, the shortcut is selected by default
 ## Upcoming features (Todo)
 
 - Double Calendar on RangeDatePicker
-- Inputs Text to choose values (Issue #30)
-- Keyboard Accessibility
-- Select Year directly on DatePicker
+- Inputs Text to choose values (issue #30)
+- Keyboard Accessibility (issue #45)
 
 ## Contribution
 
