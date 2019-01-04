@@ -37,7 +37,6 @@
       dark: { type: Boolean, default: false },
       dateTime: {type: Object, default: Object},
       customShortcuts: { type: Array, default: Array },
-      shortcutsTranslations: {type: Object, default: Object},
       height: { type: Number, default: Number, required: true }
     },
     data () {

@@ -153,6 +153,7 @@
       visible (val) {
         if (val) {
           this.columnPad()
+          this.initPositionView()
         }
       },
       value (value) {

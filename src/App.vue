@@ -179,7 +179,6 @@
                 :no-weekends-days="demo.options.noWeekendDays"
                 :no-shortcuts="demo.options.noShortcuts"
                 :no-button="demo.options.noButton"
-                :shortcuts-translations="demo.options.shortcutsTranslations"
                 :button-now-translation="demo.options.buttonNowTranslation"
                 :no-button-now="demo.options.noButtonNow"
                 :locale="demo.options.locale"

@@ -34,7 +34,6 @@
             :month="month"
             :inline="inline"
             :no-weekends-days="noWeekendsDays"
-            :shortcuts-translations="shortcutsTranslations"
             :color="color"
             :min-date="minDate"
             :max-date="maxDate"
@@ -114,7 +113,6 @@
       disabledDates: { type: Array, default: Array },
       disabledHours: { type: Array, default: Array },
       range: { type: Boolean, default: Boolean },
-      shortcutsTranslations: { type: Object, default: Object },
       noShortcuts: { type: Boolean, default: Boolean },
       buttonColor: { type: String, default: String },
       buttonNowTranslation: { type: String, default: String },

@@ -48,7 +48,6 @@
       :range="range"
       :disabled-dates="disabledDates"
       :disabled-hours="disabledHours"
-      :shortcuts-translations="shortcutsTranslations"
       :no-shortcuts="noShortcuts"
       :button-now-translation="buttonNowTranslation"
       :no-button-now="noButtonNow"
@@ -132,7 +131,6 @@
       noWeekendsDays: { type: Boolean, default: false },
       noShortcuts: { type: Boolean, default: false },
       noButton: { type: Boolean, default: false },
-      shortcutsTranslations: { type: Object, default: Object },
       disabledDates: { type: Array, default: Array },
       disabledHours: {type: Array, default: Array},
       open: { type: Boolean, default: false },
