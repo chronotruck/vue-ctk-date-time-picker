@@ -8,7 +8,7 @@
 #### Dark mode
 ![vue-ctk-date-time-picker](./assets/illu-animated-dark.gif)
 ## Demo
-[Enjoy here](https://htmlpreview.github.io/?https://github.com/chronotruck/vue-ctk-date-time-picker/blob/master/demo/index.html)
+[Enjoy here](https://chronotruck.github.io/vue-ctk-date-time-picker/)
 
 ## Installation
 
