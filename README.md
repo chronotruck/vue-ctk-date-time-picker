@@ -1,5 +1,4 @@
-![vue-ctk-date-time-picker](./assets/logo_sticky.png)
-
+<!-- ![vue-ctk-date-time-picker](./assets/logo_sticky.png) -->
 # vue-ctk-date-time-picker
 
 > A vue component for select dates (range mode available) & time
@@ -156,8 +155,11 @@ Here is an example of UMD implementation: https://codepen.io/louismazel/pen/jQWN
 ```
 
 Shortcut types allowed : `['day', '-day', 'isoWeek', '-isoWeek', 'month', '-month', 'year', '-year', 'week', '-week']`
+
 If the value of shortcut is a number (Integer), this number correspond to number of day (for 5 --> Last 5 days)
+
 You can use this feature for translate the shortcuts
+
 When you set `isSelected` to true, the shortcut is selected by default
 
 ## Events API
@@ -196,3 +198,15 @@ npm run serve
 ```bash
 npm run lint
 ```
+
+## Tests
+
+Work in progress
+
+## License
+
+This project is licensed under [MIT License](http://en.wikipedia.org/wiki/MIT_License)
+
+## Credit
+
+Open source time proudly sponsored by [Chronotruck](https://www.chronotruck.com)
