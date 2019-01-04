@@ -130,16 +130,19 @@
     },
     computed: {
       width () {
+        const size = this.inline
+          ? '100%'
+          : this.onlyTime
+            ? '160px'
+            : !this.range
+              ? this.onlyDate
+                ? '260px'
+                : '420px'
+              : '400px'
         return {
-          width: this.inline
-            ? '100%'
-            : this.onlyTime
-              ? '160px'
-              : !this.range
-                ? this.onlyDate
-                  ? '260px'
-                  : '420px'
-                : '400px'
+          width: size,
+          maxWidth: size,
+          minWidth: size
         }
       },
       responsivePosition () {
@@ -339,8 +342,9 @@
         top: 0 !important;
         left: 0 !important;
         right: 0 !important;
-        width: 100%;
-        max-width: inherit;
+        width: 100% !important;
+        max-width: inherit !important;
+        min-width: inherit !important;
         position: fixed;
         height: 100%;
         margin: 0 !important;
