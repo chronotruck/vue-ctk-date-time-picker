@@ -294,6 +294,9 @@
 </script>
 
 <style lang="scss" scoped>
+  .time-picker-column::-webkit-scrollbar {
+    display: none;
+  }
   .time-picker {
     width: 160px;
     max-width: 160px;
