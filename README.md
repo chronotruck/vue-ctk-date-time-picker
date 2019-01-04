@@ -169,7 +169,7 @@ When you set `isSelected` to true, the shortcut is selected by default
 | is-shown    | Component is shown |
 | is-hidden    | Component is hidden |
 | validate    | Click on validate button (so component is closed) |
-| destroy    | Component is destoyr |
+| destroy    | Component is destroy |
 
 ## Upcoming features (Todo)
 
