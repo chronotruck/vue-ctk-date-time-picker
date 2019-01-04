@@ -201,7 +201,7 @@
       text-transform: capitalize;
     }
     &-hour.twelve {
-      min-width: 82px;
+      min-width: 74px;
     }
     .pl-10 {
       padding-left: 10px;

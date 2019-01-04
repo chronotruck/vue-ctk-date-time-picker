@@ -44,6 +44,8 @@
               v-model="value2"
               color="purple"
               :dark="darkMode"
+              only-time
+              format="h:mm a"
               open
             />
           </div>
@@ -216,7 +218,7 @@
     },
     data () {
       return {
-        devMode: false,
+        devMode: true,
         booleanOptions: [
           'noHeader', 'autoClose', 'error', 'dark', 'overlay', 'noWeekendDays', 'noShortcuts',
           'noButton', 'onlyDate', 'range', 'onlyTime', 'inline', 'persistent', 'disabled', 'noButtonNow', 'noValueToCustomElem'

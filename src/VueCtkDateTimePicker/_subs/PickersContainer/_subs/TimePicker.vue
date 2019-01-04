@@ -9,36 +9,44 @@
       v-for="column in columns"
       :key="column.type"
       :ref="column.type"
-      :style="[columnPadding]"
       class="time-picker-column flex-1 flex flex-direction-column text-center"
       @scroll="noScrollEvent ? null : onScroll($event, column.type)"
     >
-      <button
-        v-for="item in column.items"
-        :key="item.item"
-        type="button"
-        tabindex="-1"
-        class="time-picker-column-item flex align-center justify-content-center"
-        :class="{
-          active: isActive(column.type, item.value),
-          disabled: item.disabled
-        }"
-        @click="isActive(column.type, item.value) ? null : setTime(item.value, column.type)"
-      >
-        <span
-          :style="styleColor"
-          class="time-picker-column-item-effect"
+      <div>
+        <div
+          class="before"
+          :style="[columnPadding]"
         />
-        <span class="time-picker-column-item-text">
-          {{ item.item }}
-        </span>
-      </button>
+        <button
+          v-for="item in column.items"
+          :key="item.item"
+          type="button"
+          tabindex="-1"
+          class="time-picker-column-item flex align-center justify-content-center"
+          :class="{
+            active: isActive(column.type, item.value),
+            disabled: item.disabled
+          }"
+          @click="isActive(column.type, item.value) ? null : setTime(item.value, column.type)"
+        >
+          <span
+            :style="styleColor"
+            class="time-picker-column-item-effect"
+          />
+          <span class="time-picker-column-item-text">
+            {{ item.item }}
+          </span>
+        </button>
+        <div
+          class="after"
+          :style="[columnPadding]"
+        />
+      </div>
     </div>
   </div>
 </template>
 <script>
   import moment from 'moment-timezone'
-  import { debounce } from 'lodash'
 
   const ArrayHourRange = (start, end, twoDigit, isAfternoon, disabledHours) => {
     return Array(end - start + 1).fill().map((_, idx) => {
@@ -63,6 +71,16 @@
     })
   }
 
+  const debounce = (fn, time) => {
+    let timeout
+
+    return function() {
+      const functionCall = () => fn.apply(this, arguments)
+      clearTimeout(timeout)
+      timeout = setTimeout(functionCall, time)
+    }
+  }
+
   export default {
     name: 'TimePicker',
     props: {
@@ -84,7 +102,7 @@
         apm: null,
         oldvalue: this.value,
         columnPadding: {},
-        noScrollEvent: true,
+        noScrollEvent: this.value ? true : false,
         delay: 0
       }
     },
@@ -95,7 +113,7 @@
         }
       },
       isTwelveFormat () {
-        return this.format.includes('h') // && (this.format.includes('a') || this.format.includes('A'))
+        return this.format.includes('h')
       },
       hours () {
         const twoDigit = this.format.includes('hh') || this.format.includes('HH')
@@ -135,29 +153,28 @@
       visible (val) {
         if (val) {
           this.columnPad()
+        }
+      },
+      value (value) {
+        if (value) {
+          this.buildComponent()
           this.initPositionView()
         }
       },
-      value (value, oldValue) {
-        if (value) {
-          this.buildComponent()
-          if (oldValue === null) {
-            this.initPositionView()
-          }
+      height (newValue, oldValue) {
+        if (newValue !== oldValue) {
+          this.initPositionView()
         }
-      },
-      height () {
-        this.initPositionView()
       }
     },
     mounted () {
       this.buildComponent()
     },
     methods: {
-      onScroll (scroll, type) {
+      onScroll: debounce(function (scroll, type) {
         const itemHeight = 28
         const scrollTop = scroll.target.scrollTop
-        const value = this.isTwelveFormat && type === 'hours' ? Math.ceil(scrollTop / itemHeight) : Math.ceil(scrollTop / itemHeight)
+        const value = this.isTwelveFormat && type === 'hours' ? Math.round(scrollTop / itemHeight) : Math.round(scrollTop / itemHeight)
         if (type === 'hours') {
           const hour = this.isTwelveFormat
             ? this.apm === this.apms[0].value
@@ -169,14 +186,14 @@
         } else if (type === 'minutes') {
           this.minute = value * this.minuteInterval
         } else {
-          if (this.apm !== this.apms[value].value) {
+          if (this.apms && this.apms[value] && this.apm !== this.apms[value].value) {
             const newHour = this.apm === 'pm' || this.apm === 'PM' ? this.hour - 12 : this.hour + 12
             this.hour = newHour
           }
           this.apm = this.apms[value].value
         }
         this.emitValue()
-      },
+      }, 100),
       isActive (type, value) {
         return (type === 'hours'
           ? this.hour
@@ -197,7 +214,7 @@
           : tmpHour
         this.hour = this.isHoursDisabled(hourToSet) ? this.getAvailableHour() : hourToSet
         this.minute = parseInt(moment(this.value, this.format).format('mm'))
-        this.apm = this.apms
+        this.apm = this.apms && this.value
           ? this.hour > 12
             ? this.apms[1].value
             : this.apms[0].value
@@ -208,8 +225,7 @@
         if (this.$refs['time-picker'] && (this.visible || this.inline)) {
           const run = (pad) => {
             this.columnPadding = {
-              paddingTop: `${pad}px`,
-              paddingBottom: `${pad}px`
+              height: `${pad}px`
             }
           }
           this.$nextTick(() => {
@@ -220,9 +236,6 @@
           return null
         }
       },
-      debouncePositionView: debounce(function () {
-        this.initPositionView()
-      }, 750),
       initPositionView () {
         this.noScrollEvent = true
         const containers = ['hours', 'minutes']
@@ -244,7 +257,7 @@
             setTimeout(() => {
               elem.style.overflow = 'auto'
               this.noScrollEvent = false
-            }, 300)
+            }, 500)
           })
         }, 0)
       },
@@ -263,10 +276,9 @@
           this.hour = newHour
           this.apm = item
         }
-        this.emitValue(true)
-        this.initPositionView()
+        this.emitValue()
       },
-      emitValue: debounce(function (noInitPositionView) {
+      emitValue () {
         const tmpHour = this.hour ? this.hour : this.getAvailableHour()
         let hour = this.isTwelveFormat && (tmpHour === 24 || tmpHour === 12)
           ? this.apm === this.apms[0].value ? 0 : 12
@@ -275,10 +287,7 @@
         const minute = this.minute ? (this.minute < 10 ? '0' : '') + this.minute : '00'
         const time = `${hour}:${minute}`
         this.$emit('input', time)
-        if (!noInitPositionView) {
-          this.debouncePositionView()
-        }
-      }, 300)
+      }
     }
   }
 </script>
@@ -308,7 +317,6 @@
     &-column {
       position: relative;
       overflow-y: auto;
-      padding: 5px 0;
       &-item {
         height: 28px;
         min-height: 28px;
@@ -325,9 +333,9 @@
           position: absolute;
           opacity: 0.6;
           background: dodgerblue;
-          height: 85%;
+          height: 24px;
           width: 70%;
-          top: 7.5%;
+          top: 2px;
           left: 15%;
           -webkit-transition: all 450ms cubic-bezier(0.23, 1, 0.32, 1) 0ms;
           transition: all 450ms cubic-bezier(0.23, 1, 0.32, 1) 0ms;
