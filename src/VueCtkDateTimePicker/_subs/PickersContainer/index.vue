@@ -10,7 +10,7 @@
       @click.stop
     >
       <div
-        :style="responsivePosition"
+        :style="[responsivePosition, width]"
         class="datepicker flex flex-direction-column"
       >
         <HeaderPicker
@@ -129,6 +129,19 @@
       }
     },
     computed: {
+      width () {
+        return {
+          width: this.inline
+            ? '100%'
+            : this.onlyTime
+              ? '160px'
+              : !this.range
+                ? this.onlyDate
+                  ? '260px'
+                  : '420px'
+                : '400px'
+        }
+      },
       responsivePosition () {
         return !this.inline
           ? window.innerWidth < 412

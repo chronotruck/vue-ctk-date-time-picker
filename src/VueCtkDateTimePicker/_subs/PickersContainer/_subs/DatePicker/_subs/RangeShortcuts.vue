@@ -173,7 +173,9 @@
 
 <style lang="scss" scoped>
   .shortcuts-container {
-    width: 160px;
+    width: 140px;
+    max-width: 140px;
+    min-width: 140px;
     padding: 10px 5px;
     border-right: 1px solid #EAEAEA;
     overflow: auto;
