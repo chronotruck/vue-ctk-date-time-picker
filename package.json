@@ -3,25 +3,19 @@
   "version": "2.0.0-rc6",
   "description": "A vue component for select date & time (by Chronotruck)",
   "author": "Louis Mazel <loic.mazuel@chronotruck.com>",
-  "main": "dist/vue-ctk-date-time-picker.common.js",
-  "types": "dist/index.d.ts",
-  "license": "MIT",
   "scripts": {
     "serve": "vue-cli-service serve --open",
-    "serve:build": "vue-cli-service serve --mode production",
     "build": "npm run lint && npm run build:lib && npm run build:demo",
-    "build:lib": "vue-cli-service build --target lib ./src/VueCtkDateTimePicker/index.vue",
-    "build:demo": "vue-cli-service build --dest demo --mode production",
     "lint": "vue-cli-service lint",
-    "before-publish": "npm run lint && npm run build && npm i",
-    "ui": "vue ui",
-    "test": "vue-cli-service test:unit /test/specs",
-    "publish-npm:beta": "npm publish --tag beta"
+    "before-publish": "npm run lint && npm run test:unit && npm run build && npm i",
+    "build:demo": "vue-cli-service build --dest demo --mode production",
+    "build:lib": "vue-cli-service build --target lib ./src/VueCtkDateTimePicker/index.vue",
+    "publish-npm:beta": "npm publish --tag beta",
+    "serve:build": "vue-cli-service serve --mode production",
+    "test:unit": "vue-cli-service test:unit",
+    "test:unit:watch": "vue-cli-service test:unit --watch",
+    "ui": "vue ui"
   },
-  "files": [
-    "tsconfig.json",
-    "dist/"
-  ],
   "dependencies": {
     "moment-range": "^4.0.1",
     "moment-timezone": "^0.5.23",
@@ -31,8 +25,12 @@
   "devDependencies": {
     "@vue/cli-plugin-babel": "^3.2.0",
     "@vue/cli-plugin-eslint": "^3.2.0",
+    "@vue/cli-plugin-unit-jest": "^3.2.3",
     "@vue/cli-service": "^3.2.2",
+    "@vue/test-utils": "^1.0.0-beta.20",
+    "babel-core": "7.0.0-bridge.0",
     "babel-eslint": "^10.0.1",
+    "babel-jest": "^23.6.0",
     "eslint": "^5.8.0",
     "eslint-config-standard": "^12.0.0",
     "eslint-plugin-vue": "^5.0.0-0",
@@ -51,10 +49,18 @@
     "last 2 versions",
     "not ie <= 8"
   ],
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/chronotruck/vue-ctk-date-time-picker.git"
+  "bugs": {
+    "url": "https://github.com/chronotruck/vue-ctk-date-time-picker/issues"
   },
+  "engines": {
+    "node": ">= 6.0.0",
+    "npm": ">= 3.0.0"
+  },
+  "files": [
+    "tsconfig.json",
+    "dist/"
+  ],
+  "homepage": "https://github.com/chronotruck/vue-ctk-date-time-picker#readme",
   "keywords": [
     "vue",
     "javascript",
@@ -69,12 +75,11 @@
     "datepicker",
     "timepicker"
   ],
-  "engines": {
-    "node": ">= 6.0.0",
-    "npm": ">= 3.0.0"
+  "license": "MIT",
+  "main": "dist/vue-ctk-date-time-picker.common.js",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/chronotruck/vue-ctk-date-time-picker.git"
   },
-  "bugs": {
-    "url": "https://github.com/chronotruck/vue-ctk-date-time-picker/issues"
-  },
-  "homepage": "https://github.com/chronotruck/vue-ctk-date-time-picker#readme"
+  "types": "dist/index.d.ts"
 }

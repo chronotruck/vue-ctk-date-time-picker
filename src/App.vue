@@ -297,8 +297,7 @@
               color: 'firebrick',
               minuteInterval: '10',
               label: 'Select time',
-              inputSize: 'sm',
-              inline: true
+              inputSize: 'sm'
             }
           },
           {
