@@ -102,7 +102,7 @@
         apm: null,
         oldvalue: this.value,
         columnPadding: {},
-        noScrollEvent: this.value ? true : false,
+        noScrollEvent: this.value && !this.inline ? true : false,
         delay: 0
       }
     },
@@ -170,6 +170,7 @@
     },
     mounted () {
       this.buildComponent()
+      this.initPositionView()
     },
     methods: {
       onScroll: debounce(function (scroll, type) {
@@ -302,6 +303,10 @@
     max-width: 160px;
     position: relative;
     z-index: 1;
+    &.inline {
+      width: 100%;
+      max-width: 100%;
+    }
     &::after, &::before {
       content: "";
       top: 50%;

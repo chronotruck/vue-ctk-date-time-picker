@@ -160,7 +160,7 @@
     },
     methods: {
       getTimePickerWidth () {
-        const width = this.onlyTime ? '100%' : '140px'
+        const width = this.onlyTime ? '100%' : '160px'
         const result = {
           flex: `0 0 ${width}`,
           width: `${width}`,
