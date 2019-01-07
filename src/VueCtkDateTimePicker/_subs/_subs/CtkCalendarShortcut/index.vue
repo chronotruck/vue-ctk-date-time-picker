@@ -28,6 +28,17 @@
 <script>
   import moment from 'moment'
   import shortcutsTranslation from './_subs/shortcutsTranslation'
+  import availableShortcutTypes from './_subs/availableShortcutTypes'
+
+  const defaultShortcuts = [
+    'this_week',
+    'last_7_days',
+    'last_30_days',
+    'this_month',
+    'last_month',
+    'this_year',
+    'last_year'
+  ]
 
   export default {
     name: 'CtkCalendarShortcur',
@@ -36,19 +47,17 @@
       locale: { type: String, default: String },
       dark: { type: Boolean, default: false },
       dateTime: {type: Object, default: Object},
-      shortcutsTranslation: {type: Object, default: Object}
+      shortcutsTranslation: {type: Object, default: Object},
+      rangeShortcuts: {type: Array, default: Array}
     },
     data () {
       return {
-        shortcuts: [
-          { key: 'this_week', value: 'week', isHover: false, isSelected: false },
-          { key: 'last_7_days', value: 7, isHover: false, isSelected: false },
-          { key: 'last_30_days', value: 30, isHover: false, isSelected: false },
-          { key: 'this_month', value: 'month', isHover: false, isSelected: false },
-          { key: 'last_month', value: '-month', isHover: false, isSelected: false },
-          { key: 'this_year', value: 'year', isHover: false, isSelected: false },
-          { key: 'last_year', value: '-year', isHover: false, isSelected: false }
-        ]
+        shortcuts: availableShortcutTypes.filter(sc => {
+          const selectedShortcuts = this.rangeShortcuts.length
+            ? this.rangeShortcuts
+            : defaultShortcuts
+          return selectedShortcuts.indexOf(sc.key) !== -1
+        })
       }
     },
     computed: {
@@ -87,6 +96,14 @@
         case 'week': case 'month': case 'year':
           dates.start = moment().locale(this.locale).startOf(value)
           dates.end = moment().locale(this.locale).endOf(value)
+          break
+        case -1:
+          dates.end = moment().locale(this.locale)
+          dates.start = moment().locale(this.locale).subtract(1, 'd')
+          break
+        case 1:
+          dates.end = moment().locale(this.locale).subtract(-1, 'd')
+          dates.start = moment().locale(this.locale)
           break
         case 7: case 30:
           dates.end = moment().locale(this.locale).subtract(1, 'd')

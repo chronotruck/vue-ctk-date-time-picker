@@ -93,6 +93,7 @@
       :without-range-shortcut="withoutRangeShortcut"
       :dark="dark"
       :shortcuts-translation="shortcutsTranslation"
+      :range-shortcuts="rangeShortcuts"
       @change-date="changeDate"
       @validate="validate"
     />
@@ -153,6 +154,7 @@
       withoutRangeShortcut: {type: Boolean, default: false},
       dark: {type: Boolean, default: false},
       shortcutsTranslation: {type: Object, default: Object},
+      rangeShortcuts: {type: Array, default: Array},
       disabledHours: {type: Array, default: Array}
     },
     data () {

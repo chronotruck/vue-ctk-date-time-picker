@@ -79,7 +79,9 @@ Here is an example of UMD implementation: https://codepen.io/louismazel/pen/jQWN
 | dark | Boolean | no | false |
 | without-range-shortcut | Boolean | no | false |
 | shortcuts-translation (8) | Object | no | - |
-| disabled-hours (9) | Array (of String) | no | - |
+| range-shortcuts (9) | Array | no | ['this_week', 'last_7_days','last_30_days','this_month','last_month','this_year',
+'last_year']
+| disabled-hours (10) | Array (of String) | no | - |
 
 (1) hint : Is a text that replaces the label/placeholder
 
@@ -109,7 +111,19 @@ Here is an example of UMD implementation: https://codepen.io/louismazel/pen/jQWN
 }
 ```
 
-(9) disabled-hours : Must be an Array of hours in 24h format ('00' to '23') : `['00','01','02','03','04','05','06','07','19','20','21','22','23']`
+(9) range-shortcuts : Must be an Array with ShortcutTypes string:
+
+- today
+- yesterday
+- this_week
+- last_7_days
+- last_30_days
+- this_month
+- last_month
+- this_year
+- last_year
+
+(10) disabled-hours : Must be an Array of hours in 24h format ('00' to '23') : `['00','01','02','03','04','05','06','07','19','20','21','22','23']`
 
 ## Upcoming features (Todo)
 

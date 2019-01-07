@@ -35,6 +35,7 @@
             :dark="dark"
             :date-time="dateTime"
             :shortcuts-translation="shortcutsTranslation"
+            :range-shortcuts="rangeShortcuts"
             @change-range="selectShortcut"
           />
 
@@ -97,7 +98,8 @@
       value: { type: [String, Object], default: String },
       withoutRangeShortcut: { type: Boolean, default: false },
       dark: { type: Boolean, default: Boolean },
-      shortcutsTranslation: {type: Object, default: Object}
+      shortcutsTranslation: {type: Object, default: Object},
+      rangeShortcuts: {type: Array, default: Array}
     },
     data () {
       return {

@@ -80,6 +80,7 @@
               v-model="rangeValues"
               :dark="darkMode"
               :shortcuts-translation="shortcutsTranslation"
+              :range-shortcuts="['last_30_days', 'last_month', 'last_year']"
               range-mode
               overlay-background
               color="purple"
@@ -95,6 +96,7 @@
               <ctk-date-time-picker
               v-model="{ start: '2018-04-05', end: '2018-04-20' }"
               range-mode
+              :range-shortcuts="['last_30_days', 'last_month', 'last_year']"
               overlay-background
               color="purple"
               format="YYYY-MM-DD"
