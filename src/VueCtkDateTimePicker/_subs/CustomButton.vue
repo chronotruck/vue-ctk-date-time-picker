@@ -1,6 +1,6 @@
 <template>
   <button
-    class="custom-button now flex align-center justify-content-center"
+    class="custom-button flex align-center justify-content-center"
     :class="{'is-dark': dark, 'with-border': withBorder, 'is-hover': isHover, 'is-selected': isSelected}"
     tabindex="-1"
     type="button"
