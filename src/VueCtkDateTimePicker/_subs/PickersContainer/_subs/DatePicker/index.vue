@@ -41,6 +41,7 @@
               :key="m.month"
               class="date-buttons fs-16 p-5"
               :color="color"
+              :dark="dark"
               @click="selectingYearMonth = 'month'"
             >
               {{ monthFormatted }}
@@ -56,6 +57,7 @@
               :key="y"
               class="date-buttons fs-16 p-5"
               :color="color"
+              :dark="dark"
               @click="selectingYearMonth = 'year'"
             >
               {{ year }}
@@ -88,7 +90,10 @@
           </button>
         </div>
       </div>
-      <WeekDays :week-days="weekDays" />
+      <WeekDays
+        :week-days="weekDays"
+        :dark="dark"
+      />
       <div
         :style="{height: (monthDays.length + weekStart) > 35 ? '250px' : '210px'}"
         class="month-container"
@@ -459,6 +464,9 @@
         &.disabled .datepicker-day-text {
           color: lighten(#424242, 20%);
         }
+      }
+      .datepicker-label {
+        color: white;
       }
       .text-muted {
         color: lighten(#424242, 40%) !important;

@@ -4,33 +4,29 @@
     :style="[{height: `${height}px`}]"
     class="shortcuts-container"
   >
-    <button
+    <CustomButton
       v-for="shortcut in shortcuts"
       :key="shortcut.value"
-      :style="[shortcut.isSelected ? getSelectedStyle : getStyle]"
-      :class="{ 'is-selected': shortcut.isSelected }"
+      :dark="dark"
+      :color="color"
+      :selected="shortcut.isSelected"
+      with-border
       class="shortcut-button"
-      tabindex="-1"
-      type="button"
       @mouseover="shortcut.isHover = true"
       @mouseleave="shortcut.isHover = false"
       @click="select(shortcut)"
     >
-      <span
-        :style="[getEffectStyle]"
-        class="datepicker-button-effect"
-      />
-      <span class="shortcut-button-content">
-        {{ shortcut.label }}
-      </span>
-    </button>
+      <span class="fs-12">{{ shortcut.label }}</span>
+    </CustomButton>
   </div>
 </template>
 <script>
   import moment from 'moment-timezone'
+  import CustomButton from '@/VueCtkDateTimePicker/_subs/CustomButton'
 
   export default {
     name: 'RangeShortcuts',
+    components: { CustomButton },
     props: {
       value: { type: Object, required: false, default: null },
       color: { type: String, default: String },
@@ -53,24 +49,6 @@
           { label: 'Last year', value: '-year', isHover: false, isSelected: false }
         ],
         computedTypes: {}
-      }
-    },
-    computed: {
-      getStyle () {
-        return {
-          color: this.color
-        }
-      },
-      getSelectedStyle () {
-        return {
-          backgroundColor: this.color,
-          color: '#FFF'
-        }
-      },
-      getEffectStyle () {
-        return {
-          backgroundColor: this.color
-        }
       }
     },
     watch: {
@@ -179,65 +157,11 @@
     border-right: 1px solid #EAEAEA;
     overflow: auto;
     button.shortcut-button {
-      width: 100%;
-      position: relative;
       margin-bottom: 10px;
-      border: 1px solid #eaeaea;
-      background-color: white;
-      height: 30px;
-      font-weight: 300;
-      line-height: 26px;
-      border-radius: 4px;
-      font-size: 12px;
-      outline: none;
-      cursor: pointer;
-      -webkit-transition: all 0.25s cubic-bezier(0.645, 0.045, 0.355, 1);
-      .datepicker-button-effect {
-        position: absolute;
-        background: dodgerblue;
-        top: 0;
-        bottom: 0;
-        right: 0;
-        left: 0;
-        margin: auto;
-        height: 30px;
-        border-radius: 4px;
-        width: 100%;
-        -webkit-transition: all 450ms cubic-bezier(0.23, 1, 0.32, 1) 0ms;
-        transition: all 450ms cubic-bezier(0.23, 1, 0.32, 1) 0ms;
-        transform: scale(0);
-        opacity: .6;
-      }
-      .shortcut-button-content {
-        position: relative;
-      }
-      &:hover {
-        color: #FFF !important;
-        border-color: transparent;
-        .datepicker-button-effect {
-          transform: scale(1);
-        }
-      }
-      &.is-selected {
-        border-color: transparent;
-        font-weight: bold;
-        .datepicker-button-effect {
-          opacity: 1;
-          transform: scale(1);
-        }
-      }
+      width: 100%;
     }
     &.is-dark {
-      button.shortcut-button {
-        background: #424242;
-        border-color: lighten(#424242, 20%);
-        .shortcut-button-content {
-          color: #FFF;
-        }
-        &:hover, &.is-selected {
-          border-color: transparent;
-        }
-      }
+      border-color: lighten(#424242, 20%);
     }
   }
 
