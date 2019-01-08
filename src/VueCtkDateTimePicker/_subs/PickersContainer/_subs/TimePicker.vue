@@ -335,7 +335,7 @@
         position: relative;
         border: none;
         background: transparent;
-        font-size: 14px;
+        font-size: 13px;
         width: 100%;
         outline: none;
         &-effect {

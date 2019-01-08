@@ -5,7 +5,9 @@
   >
     <div class="flex justify-content-right">
       <CustomButton
-        color="#424242"
+        :color="dark ? '#757575' : '#424242'"
+        :dark="dark"
+        with-border
         @click="$emit('back')"
       >
         <span class="fs-16">
@@ -18,7 +20,8 @@
         v-for="(month, index) in months"
         :key="index"
         :color="color"
-        :is-selected="currentMonth === index + 1"
+        :selected="currentMonth === index + 1"
+        :dark="dark"
         class="month-button"
         with-border
         @click="selectMonth(index)"
@@ -29,7 +32,8 @@
         v-for="year in years"
         :key="year"
         :color="color"
-        :is-selected="currentYear === year"
+        :dark="dark"
+        :selected="currentYear === year"
         with-border
         @click="selectYear(year)"
       >

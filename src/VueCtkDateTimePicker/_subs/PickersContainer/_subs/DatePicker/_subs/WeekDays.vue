@@ -1,9 +1,12 @@
 <template>
-  <div class="week-days flex">
+  <div
+    :class="{'is-dark': dark}"
+    class="week-days flex"
+  >
     <div
       v-for="(weekDay, index) in weekDays"
       :key="index"
-      class="flex-1 text-muted fs-12 flex justify-content-center align-center"
+      class="flex-1 text-muted fs-12 flex justify-content-center align-center week-days-container"
     >
       {{ weekDay }}
     </div>
@@ -14,15 +17,19 @@
   export default {
     name: 'WeekDays',
     props: {
-      weekDays: { type: Array, default: Array, required: true }
+      weekDays: { type: Array, default: Array, required: true },
+      dark: { type: Boolean, default: Boolean }
     }
   }
 </script>
 
 <style lang="scss" scoped>
-  .week-days{
+  .week-days {
     height: 41px;
     text-transform: capitalize;
+    &.is-dark .week-days-container {
+      color: #a8a8a8 !important;
+    }
   }
   @media screen and (max-width: 415px) {
     &:not(.inline) {
