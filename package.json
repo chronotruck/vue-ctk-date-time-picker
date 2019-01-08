@@ -4,17 +4,19 @@
   "description": "A vue component for select date & time (by Chronotruck)",
   "author": "Louis Mazel <loic.mazuel@chronotruck.com>",
   "scripts": {
-    "serve": "vue-cli-service serve --open",
-    "build": "npm run lint && npm run build:lib && npm run build:demo",
-    "lint": "vue-cli-service lint",
-    "before-publish": "npm run lint && npm run test:unit && npm run build && npm i",
-    "build:demo": "vue-cli-service build --dest demo --mode production",
-    "build:lib": "vue-cli-service build --target lib ./src/VueCtkDateTimePicker/index.vue",
-    "publish-npm:beta": "npm publish --tag beta",
+    "lint": "eslint --ext .js,.vue src",
+    "lint:fix": "eslint --ext .js,.vue src apps --fix",
+    "build": "npm run lint && npm run build:lib && npm run build:docs",
+    "build:lib": "vue-cli-service build --target lib ./src/VueCtkDateTimePicker/index.vue && cp dist/vue-ctk-date-time-picker.css dist/vue-ctk-date-time-picker.min.css",
+    "build:docs": "vue-cli-service build --dest docs --mode production",
+    "test": "vue-cli-service test:unit /test/specs",
+    "serve": "vue-cli-service serve --mode development",
     "serve:build": "vue-cli-service serve --mode production",
     "test:unit": "vue-cli-service test:unit",
     "test:unit:watch": "vue-cli-service test:unit --watch",
-    "ui": "vue ui"
+    "ui": "vue ui",
+    "before-publish": "npm i && npm run lint && npm run test:unit && npm run build",
+    "publish-npm:beta": "npm publish --tag beta"
   },
   "dependencies": {
     "moment-range": "^4.0.1",

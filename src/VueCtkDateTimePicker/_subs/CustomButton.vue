@@ -1,19 +1,21 @@
 <template>
   <button
-    class="custom-button now flex align-center justify-content-center"
-    :class="{'is-dark': dark, 'with-border': withBorder, 'is-hover': isHover, 'is-selected': isSelected}"
+    class="custom-button flex align-center justify-content-center"
+    :class="{'is-dark': dark, 'with-border': withBorder, 'is-hover': hover, 'is-selected': selected}"
     tabindex="-1"
     type="button"
     @click="$emit('click')"
     @focus="$emit('focus')"
     @blur="$emit('blur')"
+    @mouseover="$emit('mouseover')"
+    @mouseleave="$emit('mouseleave')"
   >
     <span
       :style="[bgStyle]"
       class="custom-button-effect"
     />
     <span
-      class="custom-button-content"
+      class="custom-button-content flex align-center justify-content-center"
       :style="[colorStyle]"
     >
       <slot :style="[colorStyle]" />
@@ -28,14 +30,15 @@
       color: { type: String, default: 'dodgerblue'},
       dark: { type: Boolean, default: false },
       withBorder: { type: Boolean, default: false },
-      isHover: { type: Boolean, default: false },
-      isSelected: { type: Boolean, default: false }
+      hover: { type: Boolean, default: false },
+      selected: { type: Boolean, default: false }
     },
     computed: {
       colorStyle () {
+        const color = this.dark ? 'white' : this.color
         return {
-          color: this.color,
-          fill: this.color
+          color: color,
+          fill: color
         }
       },
       bgStyle () {
@@ -55,7 +58,7 @@
     border: 1px solid transparent;
     border-radius: 4px;
     height: 30px;
-    font-size: 14px;
+    font-size: 13px;
     outline: none;
     cursor: pointer;
     -webkit-transition: all 0.25s cubic-bezier(0.645, 0.045, 0.355, 1);
@@ -88,7 +91,7 @@
       border: 1px solid #eaeaea;
     }
     &:hover, &.is-hover {
-      border: 1px solid transparent;
+      border: 1px solid transparent !important;
       .custom-button-effect {
         transform: scale(1);
         opacity: (.6);
@@ -101,7 +104,7 @@
       }
     }
     &.is-selected {
-      border: 1px solid transparent;
+      border: 1px solid transparent !important;
       .custom-button-effect {
         transform: scale(1);
         opacity: (1);
@@ -113,9 +116,9 @@
         color: #fff !important;
       }
     }
-    &.is-dark, &.is-dark .custom-button {
+    &.is-dark {
       background-color: #424242;
-      &:not(.now) {
+      &.with-border {
         border-color: lighten(#424242, 20%);
       }
       svg {
