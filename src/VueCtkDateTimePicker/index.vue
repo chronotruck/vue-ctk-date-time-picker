@@ -337,7 +337,6 @@
 </script>
 
 <style lang="scss">
-  @import url('//fonts.googleapis.com/css?family=Roboto:400,500,700');
   @import "./assets/main.scss";
   .date-time-picker {
     width: 100%;

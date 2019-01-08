@@ -185,7 +185,7 @@
       border: 1px solid #eaeaea;
       background-color: white;
       height: 30px;
-      font-weight: 300;
+      font-weight: 400;
       line-height: 26px;
       border-radius: 4px;
       font-size: 12px;

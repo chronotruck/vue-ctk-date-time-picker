@@ -108,7 +108,7 @@
       height: 42px;
       min-height: 42px;
       padding: 0 12px;
-      font-weight: 300;
+      font-weight: 400;
       -webkit-appearance: none;
       outline: none;
       border: 1px solid rgba(0, 0, 0, 0.2);

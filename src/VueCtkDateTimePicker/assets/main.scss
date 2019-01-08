@@ -1,10 +1,14 @@
 .date-time-picker {
-  font-family: 'Roboto', Helvetica, Arial, sans-serif;
+  // font-family: 'Roboto', Helvetica, Arial, sans-serif;
+  font-family: Roboto, -apple-system, BlinkMacSystemFont, Segoe UI, Oxygen,
+        Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   color: #2c3e50;
   input, label, p, span {
-    font-family: 'Roboto', Helvetica, Arial, sans-serif;
+    // font-family: 'Roboto', Helvetica, Arial, sans-serif;
+    font-family: Roboto, -apple-system, BlinkMacSystemFont, Segoe UI, Oxygen,
+        Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue, sans-serif;
   }
   *, *::before, *::after {
     box-sizing: border-box;
