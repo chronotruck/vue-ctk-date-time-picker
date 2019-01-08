@@ -16,7 +16,9 @@
       @mouseleave="shortcut.isHover = false"
       @click="select(shortcut)"
     >
-      <span class="fs-12">{{ shortcut.label }}</span>
+      <span class="fs-12">
+        {{ shortcut.label }}
+      </span>
     </CustomButton>
   </div>
 </template>
