@@ -12,6 +12,7 @@ This documentation is for v2.*. Find v1 documentation [here](./assets/doc-v1.md)
 ![vue-ctk-date-time-picker](./assets/illu-animated-dark.gif)
 
 ## Demo
+
 [Enjoy](https://chronotruck.github.io/vue-ctk-date-time-picker/)
 
 ## Installation
