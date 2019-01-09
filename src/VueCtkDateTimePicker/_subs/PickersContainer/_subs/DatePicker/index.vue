@@ -415,6 +415,21 @@
           position: relative;
           color: #000;
         }
+        .datepicker-day-keyboard-selected {
+          position: absolute;
+          top: 0;
+          bottom: 0;
+          left: 0;
+          right: 0;
+          margin: auto;
+          height: 26px;
+          width: 26px;
+          opacity: (.7);
+          border-radius: 50%;
+          -webkit-transition: all 450ms cubic-bezier(0.23, 1, 0.32, 1) 0ms;
+          transition: all 450ms cubic-bezier(0.23, 1, 0.32, 1) 0ms;
+          background-color: #afafaf;
+        }
         &:hover {
           .datepicker-day-text {
             color: #FFF;
@@ -443,6 +458,9 @@
             border-top-right-radius: 4px;
             border-bottom-right-radius: 4px;
           }
+          .datepicker-day-keyboard-selected, &.first .datepicker-day-keyboard-selected, &.last .datepicker-day-keyboard-selected {
+            background-color: rgba(0, 0, 0, 0.66);
+          }
         }
         &.selected {
           .datepicker-day-text {
@@ -452,6 +470,9 @@
           .datepicker-day-effect {
             transform: scale(1);
             opacity: 1;
+          }
+          .datepicker-day-keyboard-selected {
+            background-color: rgba(0, 0, 0, 0.66);
           }
         }
         &.disabled {
@@ -465,21 +486,6 @@
             transform: scale(0);
             opacity: 0;
           }
-        }
-        .datepicker-day-keyboard-selected {
-          position: absolute;
-          top: 0;
-          bottom: 0;
-          left: 0;
-          right: 0;
-          margin: auto;
-          height: 26px;
-          width: 26px;
-          opacity: (.7);
-          border-radius: 50%;
-          -webkit-transition: all 450ms cubic-bezier(0.23, 1, 0.32, 1) 0ms;
-          transition: all 450ms cubic-bezier(0.23, 1, 0.32, 1) 0ms;
-          background-color: grey !important;
         }
       }
     }
