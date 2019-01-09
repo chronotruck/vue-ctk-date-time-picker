@@ -114,6 +114,7 @@
               :key="day.format('D')"
               :class="{
                 selected: isSelected(day) && !isDisabled(day),
+                hover: day && newValue ? day.format('YYYY-MM-DD') === newValue.format('YYYY-MM-DD') : null,
                 disabled: (isDisabled(day) || isWeekEndDay(day)),
                 enable: !(isDisabled(day) || isWeekEndDay(day)),
                 between: isBetween(day) && range,
@@ -168,11 +169,14 @@
   import YearMonthSelector from './_subs/YearMonthSelector'
   import WeekDays from './_subs/WeekDays'
   import CustomButton from '@/VueCtkDateTimePicker/_subs/CustomButton'
+  import KeyboardAccessibility from '@/VueCtkDateTimePicker/mixins/keyboard-accessibility'
+
   export default {
     name: 'DatePicker',
     components: {
       RangeShortcuts, YearMonthSelector, WeekDays, CustomButton
     },
+    mixins: [KeyboardAccessibility],
     props: {
       value: {type: [String, Object], default: String},
       color: {type: String, default: String},
@@ -188,14 +192,16 @@
       height: { type: Number, default: Number },
       noShortcuts: { type: Boolean, default: Boolean },
       firstDayOfWeek: { type: Number, default: Number },
-      customShortcuts: { type: Array, default: Array }
+      customShortcuts: { type: Array, default: Array },
+      visible: { type: Boolean, default: Boolean }
     },
     data () {
       return {
         transitionDaysName: 'slidenext',
         transitionLabelName: 'slidevnext',
         weekDays: getWeekDays(this.locale, this.firstDayOfWeek),
-        selectingYearMonth: null
+        selectingYearMonth: null,
+        isKeyboardActive: true,
       }
     },
     computed: {
@@ -452,6 +458,18 @@
           .datepicker-day-effect {
             transform: scale(0);
             opacity: 0;
+          }
+        }
+        &.hover {
+          .datepicker-day-text {
+            color: #FFF;
+          }
+          .datepicker-day-effect {
+            transform: scale(1);
+            opacity: 0.6;
+            background-color: grey !important;
+            // border-radius: 50% !important;
+            box-shadow: 0 0 8px 0 rgba(232,237,250,.6), 0 2px 4px 0 rgba(232,237,250,.5);
           }
         }
       }
