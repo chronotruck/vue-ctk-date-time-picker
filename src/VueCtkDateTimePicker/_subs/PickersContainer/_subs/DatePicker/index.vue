@@ -114,7 +114,6 @@
               :key="day.format('D')"
               :class="{
                 selected: isSelected(day) && !isDisabled(day),
-                hover: day && newValue ? day.format('YYYY-MM-DD') === newValue.format('YYYY-MM-DD') : null,
                 disabled: (isDisabled(day) || isWeekEndDay(day)),
                 enable: !(isDisabled(day) || isWeekEndDay(day)),
                 between: isBetween(day) && range,
@@ -135,6 +134,10 @@
                 v-show="!isDisabled(day) || isSelected(day)"
                 :style="bgStyle"
                 class="datepicker-day-effect"
+              />
+              <span
+                v-if="isKeyboardSelected(day)"
+                class="datepicker-day-keyboard-selected"
               />
               <span class="datepicker-day-text">
                 {{ day.format('D') }}
@@ -229,6 +232,9 @@
       }
     },
     methods: {
+      isKeyboardSelected (day) {
+        return day && this.newValue ? day.format('YYYY-MM-DD') === this.newValue.format('YYYY-MM-DD') : null
+      },
       isToday (day) {
         return moment(day.format('YYYY-MM-DD')).isSame(moment().format('YYYY-MM-DD'))
       },
@@ -460,17 +466,20 @@
             opacity: 0;
           }
         }
-        &.hover {
-          .datepicker-day-text {
-            color: #FFF;
-          }
-          .datepicker-day-effect {
-            transform: scale(1);
-            opacity: 0.6;
-            background-color: grey !important;
-            // border-radius: 50% !important;
-            box-shadow: 0 0 8px 0 rgba(232,237,250,.6), 0 2px 4px 0 rgba(232,237,250,.5);
-          }
+        .datepicker-day-keyboard-selected {
+          position: absolute;
+          top: 0;
+          bottom: 0;
+          left: 0;
+          right: 0;
+          margin: auto;
+          height: 26px;
+          width: 26px;
+          opacity: (.7);
+          border-radius: 50%;
+          -webkit-transition: all 450ms cubic-bezier(0.23, 1, 0.32, 1) 0ms;
+          transition: all 450ms cubic-bezier(0.23, 1, 0.32, 1) 0ms;
+          background-color: grey !important;
         }
       }
     }
