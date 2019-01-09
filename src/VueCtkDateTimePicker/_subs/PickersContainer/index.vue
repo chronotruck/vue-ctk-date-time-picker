@@ -285,7 +285,6 @@
       z-index: 999;
     }
     .datepicker {
-      font-family: 'Roboto', sans-serif;
       position: absolute;
       z-index: 5;
       border-radius: 4px;

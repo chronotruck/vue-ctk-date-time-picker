@@ -85,6 +85,18 @@
                   String options
                 </h4>
                 <div
+                  class="flex"
+                  style="margin-bottom: 10px;"
+                >
+                  <input
+                    v-model="demo.value"
+                    type="text"
+                  >
+                  <span style="margin-left: 15px;">
+                    value
+                  </span>
+                </div>
+                <div
                   v-for="str in stringOptions"
                   :key="str"
                   class="flex"
@@ -388,7 +400,7 @@
 </script>
 
 <style lang="scss">
-  @import "./VueCtkDateTimePicker/assets/main.scss";
+  @import "./assets/main.css";
   html, body, #app, #vueCtkDateTimePicker {
     margin: 0;
     min-height: 100%;
