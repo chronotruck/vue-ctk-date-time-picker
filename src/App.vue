@@ -46,6 +46,7 @@
               :dark="darkMode"
               no-weekends-days
               open
+              range
             />
           </div>
         </div>
