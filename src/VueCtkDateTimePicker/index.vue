@@ -79,13 +79,14 @@
 
   const updateMomentLocale = (locale, firstDayOfWeek) => {
     moment.locale(locale)
-    if (firstDayOfWeek) {
-      moment.updateLocale(locale, {
-        week: {
-          dow: firstDayOfWeek
-        }
-      })
-    }
+    const firstDayNumber = Number.isInteger(firstDayOfWeek) && firstDayOfWeek === 0
+      ? 7
+      : firstDayOfWeek || moment.localeData(locale).firstDayOfWeek()
+    moment.updateLocale(locale, {
+      week: {
+        dow: firstDayNumber
+      }
+    })
   }
 
   const nearestMinutes = (interval, date) => {
@@ -138,7 +139,7 @@
       inputSize: { type: String, default: String },
       buttonNowTranslation: { type: String, default: String },
       noButtonNow: {type: Boolean, default: false},
-      firstDayOfWeek: { type: Number, default: Number },
+      firstDayOfWeek: { type: Number, default: null },
       customShortcuts: { type: Array, default: Array },
       noValueToCustomElem: { type: Boolean, default: false }
     },

@@ -38,13 +38,13 @@ export default class Month {
 }
 
 export const getWeekDays = (locale, firstDay) => {
-  const first = moment.localeData(locale).firstDayOfWeek()
-  let days = moment.weekdaysShort(first === 1)
-  if (firstDay) {
-    const keep = days.splice(firstDay)
-    const stay = days
-    days = keep.concat(stay)
-  }
+  const firstDayNumber = firstDay === 0
+    ? 7
+    : firstDay || moment.localeData(locale).firstDayOfWeek()
+  let days = moment.weekdaysShort()
+  const keep = days.splice(firstDayNumber)
+  const stay = days
+  days = keep.concat(stay)
   return days
 }
 

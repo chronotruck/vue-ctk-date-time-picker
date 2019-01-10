@@ -44,6 +44,7 @@
               v-model="value2"
               color="purple"
               :dark="darkMode"
+              no-weekends-days
               open
               range
             />
