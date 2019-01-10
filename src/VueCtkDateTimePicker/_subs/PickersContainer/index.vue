@@ -42,6 +42,7 @@
             :no-shortcuts="noShortcuts"
             :height="height"
             :first-day-of-week="firstDayOfWeek"
+            :visible="visible"
             :custom-shortcuts="customShortcuts"
             @change-month="changeMonth"
           />

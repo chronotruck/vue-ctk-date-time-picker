@@ -44,9 +44,8 @@
               v-model="value2"
               color="purple"
               :dark="darkMode"
-              only-time
-              format="h:mm a"
               open
+              range
             />
           </div>
         </div>

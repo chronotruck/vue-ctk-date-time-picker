@@ -135,6 +135,10 @@
                 :style="bgStyle"
                 class="datepicker-day-effect"
               />
+              <span
+                v-if="isKeyboardSelected(day)"
+                class="datepicker-day-keyboard-selected"
+              />
               <span class="datepicker-day-text">
                 {{ day.format('D') }}
               </span>
@@ -168,11 +172,14 @@
   import YearMonthSelector from './_subs/YearMonthSelector'
   import WeekDays from './_subs/WeekDays'
   import CustomButton from '@/VueCtkDateTimePicker/_subs/CustomButton'
+  import KeyboardAccessibility from '@/VueCtkDateTimePicker/mixins/keyboard-accessibility'
+
   export default {
     name: 'DatePicker',
     components: {
       RangeShortcuts, YearMonthSelector, WeekDays, CustomButton
     },
+    mixins: [KeyboardAccessibility],
     props: {
       value: {type: [String, Object], default: String},
       color: {type: String, default: String},
@@ -188,14 +195,16 @@
       height: { type: Number, default: Number },
       noShortcuts: { type: Boolean, default: Boolean },
       firstDayOfWeek: { type: Number, default: Number },
-      customShortcuts: { type: Array, default: Array }
+      customShortcuts: { type: Array, default: Array },
+      visible: { type: Boolean, default: Boolean }
     },
     data () {
       return {
         transitionDaysName: 'slidenext',
         transitionLabelName: 'slidevnext',
         weekDays: getWeekDays(this.locale, this.firstDayOfWeek),
-        selectingYearMonth: null
+        selectingYearMonth: null,
+        isKeyboardActive: true,
       }
     },
     computed: {
@@ -223,6 +232,9 @@
       }
     },
     methods: {
+      isKeyboardSelected (day) {
+        return day && this.newValue ? day.format('YYYY-MM-DD') === this.newValue.format('YYYY-MM-DD') : null
+      },
       isToday (day) {
         return moment(day.format('YYYY-MM-DD')).isSame(moment().format('YYYY-MM-DD'))
       },
@@ -403,6 +415,21 @@
           position: relative;
           color: #000;
         }
+        .datepicker-day-keyboard-selected {
+          position: absolute;
+          top: 0;
+          bottom: 0;
+          left: 0;
+          right: 0;
+          margin: auto;
+          height: 26px;
+          width: 26px;
+          opacity: (.7);
+          border-radius: 50%;
+          -webkit-transition: all 450ms cubic-bezier(0.23, 1, 0.32, 1) 0ms;
+          transition: all 450ms cubic-bezier(0.23, 1, 0.32, 1) 0ms;
+          background-color: #afafaf;
+        }
         &:hover {
           .datepicker-day-text {
             color: #FFF;
@@ -431,6 +458,9 @@
             border-top-right-radius: 4px;
             border-bottom-right-radius: 4px;
           }
+          .datepicker-day-keyboard-selected, &.first .datepicker-day-keyboard-selected, &.last .datepicker-day-keyboard-selected {
+            background-color: rgba(0, 0, 0, 0.66);
+          }
         }
         &.selected {
           .datepicker-day-text {
@@ -440,6 +470,9 @@
           .datepicker-day-effect {
             transform: scale(1);
             opacity: 1;
+          }
+          .datepicker-day-keyboard-selected {
+            background-color: rgba(0, 0, 0, 0.66);
           }
         }
         &.disabled {
