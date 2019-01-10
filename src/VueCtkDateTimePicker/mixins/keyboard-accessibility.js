@@ -94,7 +94,7 @@ export default {
     }
   },
   mounted () {
-    if (this.inline) {
+    if (this.inline || this.visible) {
       window.addEventListener('keydown', this.keyPressed)
     }
   },
