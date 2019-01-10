@@ -94,7 +94,9 @@ export default {
     }
   },
   mounted () {
-    window.addEventListener('keydown', this.keyPressed)
+    if (this.inline) {
+      window.addEventListener('keydown', this.keyPressed)
+    }
   },
   beforeDestroy () {
     window.removeEventListener('keydown', this.keyPressed)
