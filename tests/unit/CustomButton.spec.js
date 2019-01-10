@@ -25,13 +25,13 @@ describe('CustomButton.vue', () => {
   it('has is-hover class when have dark prop', () => {
     const wrapper = shallowMount(CustomButton)
     expect(wrapper.classes('is-hover')).toBe(false)
-    wrapper.setProps({ isHover: true })
+    wrapper.setProps({ hover: true })
     expect(wrapper.classes('is-hover')).toBe(true)
   })
   it('has is-selected class when have dark prop', () => {
     const wrapper = shallowMount(CustomButton)
     expect(wrapper.classes('is-selected')).toBe(false)
-    wrapper.setProps({ isSelected: true })
+    wrapper.setProps({ selected: true })
     expect(wrapper.classes('is-selected')).toBe(true)
   })
 })
