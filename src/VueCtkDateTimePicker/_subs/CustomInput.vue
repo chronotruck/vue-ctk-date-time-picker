@@ -72,12 +72,12 @@
     position: relative;
     &.is-dark {
       .field-label{
-        color: #ffffffb3;
+        color: rgba(255, 255, 255, 0.70);
       }
       .field-input{
         background-color: #424242;
-        border-color: #ffffffb3;
-        color: #ffffffb3;
+        border-color: rgba(255, 255, 255, 0.70);
+        color: rgba(255, 255, 255, 0.70);
       }
       &.is-disabled {
         .field-label, .field-input {
@@ -163,24 +163,24 @@
     }
     &.is-dark {
       ::-webkit-input-placeholder { /* WebKit, Blink, Edge */
-        color: #ffffffb3;
+        color: rgba(255, 255, 255, 0.70);
       }
       :-moz-placeholder { /* Mozilla Firefox 4 to 18 */
-        color: #ffffffb3;
+        color: rgba(255, 255, 255, 0.70);
         opacity:  1;
       }
       ::-moz-placeholder { /* Mozilla Firefox 19+ */
-        color: #ffffffb3;
+        color: rgba(255, 255, 255, 0.70);
         opacity:  1;
       }
       :-ms-input-placeholder { /* Internet Explorer 10-11 */
-        color: #ffffffb3;
+        color: rgba(255, 255, 255, 0.70);
       }
       ::-ms-input-placeholder { /* Microsoft Edge */
-        color: #ffffffb3;
+        color: rgba(255, 255, 255, 0.70);
       }
       ::placeholder { /* Most modern browsers support this now. */
-        color: #ffffffb3;
+        color: rgba(255, 255, 255, 0.70);
       }
       &.is-disabled {
         ::-webkit-input-placeholder { /* WebKit, Blink, Edge */
