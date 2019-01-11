@@ -35,7 +35,7 @@ export default {
       }
       if (this.isKeyboardActive) {
         try {
-          if (e.key === 38) {
+          if (e.keyCode === 38) {
             this.previousWeek()
           } else if (e.keyCode === 37) {
             this.previousDay()
