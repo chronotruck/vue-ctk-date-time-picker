@@ -414,7 +414,7 @@
     &.dark {
       background-color: darken(#424242, 20%);
       header {
-        color: #ffffffb3;
+        color: rgba(255, 255, 255, 0.70);
       }
     }
   }

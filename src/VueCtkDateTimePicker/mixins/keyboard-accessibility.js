@@ -19,24 +19,35 @@ export default {
   },
   methods: {
     keyPressed (e) {
-      if (e.key === 'ArrowUp' || e.key === 'ArrowDown' || e.key === 'Home' || e.key === 'End') {
+      /*
+        13 : Enter
+        32 : Space
+        35 : Page Down
+        36 : Page Up
+        37 : Left
+        38 : Up
+        39 : Right
+        40 : Down
+        40 : Right
+      */
+      if (e.keyCode === 38 || e.keyCode === 40 || e.keyCode === 35 || e.keyCode === 36) {
         e.view.event.preventDefault()
       }
       if (this.isKeyboardActive) {
         try {
-          if (e.key === 'ArrowUp') {
+          if (e.key === 38) {
             this.previousWeek()
-          } else if (e.key === 'ArrowLeft') {
+          } else if (e.keyCode === 37) {
             this.previousDay()
-          } else if (e.key === 'ArrowRight') {
+          } else if (e.keyCode === 39) {
             this.nextDay()
-          } else if (e.key === 'ArrowDown') {
+          } else if (e.keyCode === 40) {
             this.nextWeek()
-          } else if (e.code === 'Space' || e.key === 'Enter') {
+          } else if (e.keyCode === 32 || e.keyCode === 13) {
             this.selectThisDay()
-          } else if (e.key === 'Home') {
+          } else if (e.keyCode === 36) {
             this.previousMonth()
-          } else if (e.key === 'End') {
+          } else if (e.keyCode === 35) {
             this.nextMonth()
           }
           if ('activeElement' in document) document.activeElement.blur()
