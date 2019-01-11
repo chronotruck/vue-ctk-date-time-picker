@@ -162,6 +162,7 @@
             </div>
             <div class="component">
               <CtkDateTimePicker
+                :id="demo.options.id"
                 v-model="demo.value"
                 :only-date="demo.options.onlyDate"
                 :only-time="demo.options.onlyTime"
@@ -235,7 +236,7 @@
           'noButton', 'onlyDate', 'range', 'onlyTime', 'inline', 'persistent', 'disabled', 'noButtonNow', 'noValueToCustomElem'
         ],
         stringOptions: [
-          'label', 'hint', 'color', 'buttonColor', 'position', 'format', 'formatted', 'outputFormat',
+          'id', 'label', 'hint', 'color', 'buttonColor', 'position', 'format', 'formatted', 'outputFormat',
           'minDate', 'maxDate', 'inputSize', 'buttonNowTranslation'
         ],
         optionsNotEditable: [
@@ -253,7 +254,8 @@
             value: '2018-04-05 20:26',
             editOption: false,
             options: {
-              format: 'YYYY-MM-DD HH:mm'
+              format: 'YYYY-MM-DD HH:mm',
+              id: 'DateTimePicker'
             }
           },
           {
@@ -277,7 +279,8 @@
               formatted: 'll',
               format: 'YYYY-MM-DD',
               color: 'purple',
-              label: 'Select date range'
+              label: 'Select date range',
+              id: 'RangeDatePicker'
             }
           },
           {
@@ -292,7 +295,8 @@
               color: 'coral',
               inputSize: 'lg',
               buttonColor: 'green',
-              buttonNowTranslation: 'Maintenant'
+              buttonNowTranslation: 'Maintenant',
+              id: 'DatePicker'
             }
           },
           {
@@ -309,7 +313,8 @@
               color: 'firebrick',
               minuteInterval: '10',
               label: 'Select time',
-              inputSize: 'sm'
+              inputSize: 'sm',
+              id: 'TimePicker'
             }
           },
           {
@@ -329,7 +334,8 @@
               inline: true,
               format: 'YYYY-MM-DD',
               formatted: 'll',
-              range: true
+              range: true,
+              id: 'InlinePicker'
             }
           },
           {
@@ -341,7 +347,8 @@
             value: null,
             options: {
               disabled: true,
-              label: 'Is Disabled'
+              label: 'Is Disabled',
+              id: 'DisabledPicker'
             }
           }
         ],

@@ -7,6 +7,7 @@
   >
     <CustomInput
       v-if="hasInput"
+      :id="id"
       ref="custom-input"
       v-model="dateFormatted"
       :disabled="disabled"
