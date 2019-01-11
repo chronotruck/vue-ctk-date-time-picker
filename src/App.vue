@@ -38,13 +38,12 @@
             class="component-container"
           >
             <p>Inititale value : '2018-04-05T04:26'</p>
-            <p>v-model = {{ value2 || 'null' }}</p>
+            <p>v-model = {{ rangeValues || 'null' }}</p>
             <br>
             <CtkDateTimePicker
-              v-model="value2"
+              v-model="rangeValues"
               color="purple"
               :dark="darkMode"
-              no-weekends-days
               open
               range
             />
@@ -230,7 +229,7 @@
     },
     data () {
       return {
-        devMode: false,
+        devMode: true,
         booleanOptions: [
           'noHeader', 'autoClose', 'error', 'dark', 'overlay', 'noWeekendDays', 'noShortcuts',
           'noButton', 'onlyDate', 'range', 'onlyTime', 'inline', 'persistent', 'disabled', 'noButtonNow', 'noValueToCustomElem'
@@ -255,7 +254,8 @@
             editOption: false,
             options: {
               format: 'YYYY-MM-DD HH:mm',
-              id: 'DateTimePicker'
+              id: 'DateTimePicker',
+              open: true
             }
           },
           {
@@ -279,6 +279,7 @@
               formatted: 'll',
               format: 'YYYY-MM-DD',
               color: 'purple',
+              open: true,
               label: 'Select date range',
               id: 'RangeDatePicker'
             }
@@ -356,7 +357,7 @@
         value2: null,
         value3: '2018-04-05T14:26',
         rangeValues: {
-          start: '2018-04-05',
+          start: '2018-04-04',
           end: '2018-04-20'
         },
         rangeValues2: {
