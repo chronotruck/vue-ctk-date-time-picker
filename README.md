@@ -173,11 +173,22 @@ When you set `isSelected` to true, the shortcut is selected by default
 | validate    | Click on validate button (so component is closed) |
 | destroy    | Component is destroy |
 
+## Keyboard Accessible
+
+| Key      | Action    |
+|------------|-----------|
+| Arrow Right | Next Day |
+| Arrow Left | Previous Day |
+| Arrow Down | Same day on next week |
+| Arrow Up | Same day on previous week |
+| Page Down | Same day on previous month |
+| Page Up | Same day on next month |
+
 ## Upcoming features (Todo)
 
-- Double Calendar on RangeDatePicker
+- Double Calendar on RangeDatePicker (issue : #33)
 - Inputs Text to choose values (issue #30)
-- Keyboard Accessibility (issue #45)
+- TimePicker seconds support (issue : #79)
 
 ## Contribution
 
