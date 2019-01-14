@@ -1,8 +1,11 @@
 #vueCtkDateTimePicker, html, body {
-  font-family: 'Roboto', Helvetica, Arial, sans-serif;
+  /* font-family: 'Roboto', Helvetica, Arial, sans-serif; */
+  font-family: Roboto, -apple-system, BlinkMacSystemFont, Segoe UI, Oxygen,
+        Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   color: #2c3e50;
+  font-size: 14px;
 }
 *, *::before, *::after {
   box-sizing: border-box;
@@ -177,6 +180,17 @@
   -webkit-justify-content: space-between;
   -webkit-box-align: stretch;
 }
+
+.justify-content-around {
+  justify-content: space-around;
+  -ms-flex-pack: justify;
+  -moz-box-align: stretch;
+  -moz-box-pack: justify;
+  -webkit-box-pack: justify;
+  -webkit-justify-content: space-between;
+  -webkit-box-align: stretch;
+}
+
 .flex-fill {
   -webkit-flex: 0 1 auto;
   -moz-flex: 0 1 auto;
@@ -195,5 +209,11 @@
   -moz-flex: 1;
   -ms-flex: 1;
   flex: 1;
+}
+.flex-wrap {
+  flex-wrap: wrap;
+}
+.flex-grow {
+  flex-grow: 1;
 }
 /** END FLEX HELPERS **/

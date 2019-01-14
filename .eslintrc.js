@@ -2,44 +2,46 @@
 
 module.exports = {
   root: true,
-  parser: 'vue-eslint-parser',
-  parserOptions: {
-    parser: 'babel-eslint',
-    sourceType: 'module'
-  },
+
   env: {
-    browser: true,
+    node: true
   },
+
   extends: [
-    'standard',
-    'plugin:vue/recommended'
+    'plugin:vue/strongly-recommended',
+    'eslint:recommended'
   ],
-  // required to lint *.vue files
-  plugins: [
-    'vue'
-  ],
-  // // add your custom rules here
+
   rules: {
-    // allow paren-less arrow functions
-    'arrow-parens': 0,
-    // allow async-await
     'generator-star-spacing': 0,
-    // allow debugger during development
-    'no-debugger': process.env.NODE_ENV === 'production' ? 2 : 0
+    'arrow-parens': 0,
+    'prefer-const': 2,
+    'no-trailing-spaces': 'error',
+    'no-debugger': 0,
+    'no-extra-semi': 'error',
+    semi: [
+      'error',
+      'never'
+    ],
+    'no-var': 'error',
+    'vue/attributes-order': 'error',
+    'vue/no-confusing-v-for-v-if': 'error',
+    'vue/no-v-html': 'error',
+    'vue/order-in-components': 'error',
+    'vue/this-in-template': 'error',
+    'vue/script-indent': 'error'
   },
-  /**
-   * This will disable the default indent rule for .vue files
-   * since the script-indent makes the check. Otherwise, this
-   * causes interference between both plugins.
-   *
-   * See: https://github.com/vuejs/eslint-plugin-vue/blob/master/docs/rules/script-indent.md
-   */
+
+  parserOptions: {
+    parser: 'babel-eslint'
+  },
+
   overrides: [
     {
       files: ['*.vue'],
       rules: {
         indent: 'off',
-        'vue/script-indent': ['error', 2, { 'baseIndent': 1 }]
+        'vue/script-indent': ['error', 2, { baseIndent: 1 }]
       }
     }
   ]
