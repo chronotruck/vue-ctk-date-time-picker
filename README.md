@@ -194,6 +194,7 @@ When you set `isSelected` to true, the shortcut is selected by default
 | Arrow Up | Same day on previous week |
 | Page Down | Same day on previous month |
 | Page Up | Same day on next month |
+| Enter or Space | Select day |
 
 # Upcoming features (Todo)
 
