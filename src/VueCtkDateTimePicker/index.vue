@@ -90,9 +90,9 @@
     })
   }
 
-  const nearestMinutes = (interval, date) => {
+  const nearestMinutes = (interval, date, format) => {
     const roundedMinutes = Math.ceil(date.minute() / interval) * interval
-    return moment(date.clone().minute(roundedMinutes).second(0))
+    return moment(date.clone().minute(roundedMinutes).second(0), format)
   }
 
   export default {
@@ -266,7 +266,7 @@
       },
       getDateFormatted () {
         const date = this.value
-          ? moment(this.value, this.format).format(this.formatted)
+          ? moment(this.value, this.formatOutput).format(this.formatted)
           : null
         return date
       },
@@ -283,15 +283,16 @@
       getDateTimeToSend (value) {
         const dateTime = typeof value !== 'undefined' ? value : this.value
         const dateToSend = dateTime
-          ? moment(dateTime)
+          ? moment(dateTime, 'YYYY-MM-DD HH:mm')
           : null
-        return dateToSend ? nearestMinutes(this.minuteInterval, moment(dateToSend)).format(this.formatOutput) : null
+        const dateTimeToSend = dateToSend ? nearestMinutes(this.minuteInterval, moment(dateToSend), 'YYYY-MM-DD HH:mm').format(this.formatOutput) : null
+        return dateTimeToSend
       },
       getDateTime () {
         const date = this.value
-          ? moment(this.value, this.format)
+          ? moment(this.value, this.formatOutput)
           : null
-        return date ? nearestMinutes(this.minuteInterval, date).format('YYYY-MM-DD HH:mm') : null
+        return date ? nearestMinutes(this.minuteInterval, date, this.formatOutput).format('YYYY-MM-DD HH:mm') : null
       },
       toggleDatePicker (val) {
         if (this.disabled) return

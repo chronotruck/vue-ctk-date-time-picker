@@ -253,7 +253,7 @@
           const date = rangeVal && (rangeVal.end || rangeVal.start) ? moment(rangeVal.end ? rangeVal.end : rangeVal.start) : moment()
           return new Month(date.month(), date.year())
         } else if (this.value) {
-          return new Month(moment(this.value, this.format).month(), moment(this.value, this.format).year(), this.locale)
+          return new Month(moment(this.value, 'YYYY-MM-DD').month(), moment(this.value, 'YYYY-MM-DD').year(), this.locale)
         } else {
           return new Month(moment().month(), moment().year(), this.locale)
         }
