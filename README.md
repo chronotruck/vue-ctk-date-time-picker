@@ -89,7 +89,9 @@ Here is an example of UMD implementation: https://codepen.io/louismazel/pen/jQWN
 | Props      | Type       | Required | Default    |
 |------------|------------|----------|------------|
 | v-model    | String | yes     | -          |
-| id  | String | no  | CtkDateTimePicker |
+| id  | String | no  | DateTimePicker |
+| format   | String | no      | 'YYYY-MM-DD hh:mm a' |
+| formatted   | String | no    | 'llll' (momentjs format) |
 | label      | String     | no    | Select date & time |
 | disabled | Boolean | no | false |
 | hint (1)       | String       | no       | -         |
@@ -100,8 +102,6 @@ Here is an example of UMD implementation: https://codepen.io/louismazel/pen/jQWN
 | locale (5)  | String | no     | Browser Locale |
 | persistent     | Boolean | no    | false |
 | minute-interval | Integer | no    | 1    |
-| formatted   | String | no    | 'llll' (momentjs format) |
-| format   | String | no      | - |
 | output-format   | String | no  | null |
 | time-zone (6)  | String | no  | Browser Time Zone |
 | only-time   | Boolean | no     | false |
