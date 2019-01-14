@@ -1,5 +1,6 @@
 <!-- ![vue-ctk-date-time-picker](./assets/logo_sticky.png) -->
-# vue-ctk-date-time-picker
+
+# VueCtkDateTimePicker
 
 > A vue component for select dates (range mode available) & time
 
@@ -7,15 +8,15 @@ This documentation is for v2.*. Find v1 documentation [here](./assets/doc-v1.md)
 
 ![vue-ctk-date-time-picker](./assets/illu-animated.gif)
 
-**Dark mode**
+## Dark mode
 
 ![vue-ctk-date-time-picker](./assets/illu-animated-dark.gif)
 
-## Demo
+# Demo
 
 [Enjoy](https://chronotruck.github.io/vue-ctk-date-time-picker/)
 
-## Installation
+# Installation
 
 Yarn
 
@@ -29,9 +30,9 @@ NPM
 npm i --save vue-ctk-date-time-picker
 ```
 
-## Usage
+# Usage
 
-### ES6 Modules / CommonJS
+## ES6 Modules / CommonJS
 
 ```js
 import VueCtkDateTimePicker from 'vue-ctk-date-time-picker';
@@ -41,27 +42,37 @@ Vue.component('VueCtkDateTimePicker', VueCtkDateTimePicker);
 ```
 
 ```html
-<VueCtkDateTimePicker />
+<VueCtkDateTimePicker v-model="yourValue" />
 ```
 
-### UMD
+## UMD
 
 ```html
 <link rel="stylesheet" type="text/css" href="${YOUR_PATH}/vue-ctk-date-time-picker.css">
 
-<VueCtkDateTimePicker></VueCtkDateTimePicker>
+<div id="app">
+  <VueCtkDateTimePicker v-model="yourValue"></VueCtkDateTimePicker>
+</div>
 
 <script src="https://unpkg.com/vue" charset="utf-8"></script>
 <script src="${YOUR_PATH}/vue-ctk-date-time-picker.umd.min.js" charset="utf-8"></script>
 
 <script type="text/javascript">
-  Vue.component('VueCtkDateTimePicker', window['vue-ctk-date-time-picker']);
+  Vue.component('vue-ctk-date-time-picker', window['vue-ctk-date-time-picker']);
+  new Vue({
+    el: '#app',
+    data () {
+      return {
+        yourValue: null
+      }
+    }
+  });
 </script>
 ```
 
 Here is an example of UMD implementation: https://codepen.io/louismazel/pen/jQWNzQ
 
-### Use custom element to trigger the component
+## Use custom element to trigger the component
 
 ```html
 <VueCtkDateTimePicker :no-value-to-custom-elem="(true|false)" />
@@ -73,7 +84,7 @@ Here is an example of UMD implementation: https://codepen.io/louismazel/pen/jQWN
 </VueCtkDateTimePicker>
 ```
 
-## Props API
+# Props API
 
 | Props      | Type       | Required | Default    |
 |------------|------------|----------|------------|
@@ -162,7 +173,7 @@ You can use this feature for translate the shortcuts
 
 When you set `isSelected` to true, the shortcut is selected by default
 
-## Events API
+# Events API
 
 | Event      | Return    |
 |------------|-----------|
@@ -173,7 +184,7 @@ When you set `isSelected` to true, the shortcut is selected by default
 | validate    | Click on validate button (so component is closed) |
 | destroy    | Component is destroy |
 
-## Keyboard Accessible
+# Keyboard Accessible
 
 | Key      | Action    |
 |------------|-----------|
@@ -184,13 +195,13 @@ When you set `isSelected` to true, the shortcut is selected by default
 | Page Down | Same day on previous month |
 | Page Up | Same day on next month |
 
-## Upcoming features (Todo)
+# Upcoming features (Todo)
 
 - Double Calendar on RangeDatePicker (issue : #33)
 - Inputs Text to choose values (issue #30)
 - TimePicker seconds support (issue : #79)
 
-## Contribution
+# Contribution
 
 ## Project setup
 
@@ -198,13 +209,13 @@ When you set `isSelected` to true, the shortcut is selected by default
 npm install
 ```
 
-### Compiles and hot-reloads for development
+## Compiles and hot-reloads for development
 
 ```bash
 npm run serve
 ```
 
-### Lints and fixes files
+## Lints and fixes files
 
 ```bash
 npm run lint

@@ -253,8 +253,7 @@
             editOption: false,
             options: {
               format: 'YYYY-MM-DD HH:mm',
-              id: 'DateTimePicker',
-              open: true
+              id: 'DateTimePicker'
             }
           },
           {
@@ -278,7 +277,6 @@
               formatted: 'll',
               format: 'YYYY-MM-DD',
               color: 'purple',
-              open: true,
               label: 'Select date range',
               id: 'RangeDatePicker'
             }
@@ -286,17 +284,19 @@
           {
             id: "3",
             title: 'Date Picker',
-            description: 'Date selector - With large input (input-size="lg")',
+            description: 'Date selector - With large input (input-size="lg") - format: "MM-DD-YYYY" - formatted: "ll"',
             editOption: false,
-            initial: '2018-04-05',
-            value: '2018-04-05',
+            initial: '14-01-2019',
+            value: '14-01-2019',
             options: {
               onlyDate: true,
               color: 'coral',
               inputSize: 'lg',
               buttonColor: 'green',
               buttonNowTranslation: 'Maintenant',
-              id: 'DatePicker'
+              id: 'DatePicker',
+              format: 'DD-MM-YYYY',
+              formatted: 'll'
             }
           },
           {
