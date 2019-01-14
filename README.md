@@ -226,10 +226,10 @@ npm run lint
 
 Work in progress
 
-## License
+# License
 
 This project is licensed under [MIT License](http://en.wikipedia.org/wiki/MIT_License)
 
-## Credit
+# Credit
 
 Open source time proudly sponsored by [Chronotruck](https://www.chronotruck.com)
