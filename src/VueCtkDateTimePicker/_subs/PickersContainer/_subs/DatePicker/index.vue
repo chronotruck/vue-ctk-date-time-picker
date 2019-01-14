@@ -39,7 +39,7 @@
             <CustomButton
               v-for="m in [month]"
               :key="m.month"
-              class="date-buttons fs-16 p-5"
+              class="date-buttons fs-16 padding-button"
               :color="color"
               :dark="dark"
               @click="selectingYearMonth = 'month'"
@@ -55,7 +55,7 @@
             <CustomButton
               v-for="y in [year]"
               :key="y"
-              class="date-buttons fs-16 p-5"
+              class="date-buttons fs-16 padding-button"
               :color="color"
               :dark="dark"
               @click="selectingYearMonth = 'year'"
@@ -325,8 +325,8 @@
     &.p-0 {
       padding: 0;
     }
-    .p-5 {
-      padding: 5px 3px;
+    .padding-button {
+      padding: 5px 3px !important;
     }
     .datepicker-controls {
       height: 56px;
@@ -354,7 +354,6 @@
       .datepicker-container-label {
         text-transform: capitalize;
         font-size: 16px;
-        line-height: 56px;
         position: relative;
         height: 56px;
         overflow: hidden;

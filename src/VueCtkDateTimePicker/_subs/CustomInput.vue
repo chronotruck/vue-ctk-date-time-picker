@@ -26,7 +26,7 @@
     <label
       ref="label"
       :for="id"
-      :class="errorHint ? 'text-danger' : 'text-primary'"
+      :class="errorHint ? 'text-danger' : null"
       :style="[colorStyle]"
       class="field-label"
     >
