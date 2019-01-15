@@ -195,6 +195,7 @@ When you set `isSelected` to true, the shortcut is selected by default
 | Page Down | Same day on previous month |
 | Page Up | Same day on next month |
 | Enter or Space | Select day |
+| Escape | Close component |
 
 # Upcoming features (Todo)
 

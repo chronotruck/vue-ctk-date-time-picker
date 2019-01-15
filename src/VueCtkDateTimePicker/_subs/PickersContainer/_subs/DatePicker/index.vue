@@ -154,11 +154,11 @@
     </div>
     <YearMonthSelector
       v-if="selectingYearMonth"
-      :value="value"
       :locale="locale"
       :color="color"
       :dark="dark"
       :mode="selectingYearMonth"
+      :month="month"
       @input="selectYearMonth"
       @back="selectingYearMonth = null"
     />
@@ -242,7 +242,8 @@
         return (
           this.isDateDisabled(day) ||
           this.isBeforeMinDate(day) ||
-          this.isAfterEndDate(day)
+          this.isAfterEndDate(day) ||
+          (this.isWeekEndDay(day) && this.noWeekendsDays)
         )
       },
       isDateDisabled (day) {
@@ -304,10 +305,13 @@
         this.$emit('change-month', val)
       },
       selectYearMonth (event) {
-        const isBefore = moment(event).isBefore(moment(this.value))
+        const { month, year } = event
+        const isBefore = year === this.month.year
+          ? month < this.month.month
+          : year < this.month.year
         this.transitionLabelName = isBefore ? `slidevprev` : `slidevnext`
         this.selectingYearMonth = null
-        this.$emit('input', event)
+        this.$emit('change-year-month', event)
       }
     }
   }

@@ -46,6 +46,7 @@
       :format="format"
       :no-weekends-days="noWeekendsDays"
       :has-button-validate="hasButtonValidate"
+      :has-no-button="hasNoButton"
       :range="range"
       :disabled-dates="disabledDates"
       :disabled-hours="disabledHours"
@@ -55,6 +56,7 @@
       :first-day-of-week="firstDayOfWeek"
       :custom-shortcuts="customShortcuts"
       @validate="validate"
+      @close="toggleDatePicker(false)"
     />
   </div>
 </template>
@@ -140,6 +142,7 @@
       inputSize: { type: String, default: String },
       buttonNowTranslation: { type: String, default: String },
       noButtonNow: {type: Boolean, default: false},
+      noButtonValidate: {type: Boolean, default: false},
       firstDayOfWeek: { type: Number, default: null },
       customShortcuts: { type: Array, default: Array },
       noValueToCustomElem: { type: Boolean, default: false }
@@ -155,8 +158,11 @@
       hasPickerOpen () {
         return this.persistent || this.pickerOpen
       },
+      hasNoButton () {
+        return this.noButton
+      },
       hasButtonValidate () {
-        return !this.inline && !this.autoClose && !this.noButton
+        return !this.inline && !this.autoClose
       },
       hasOnlyDate () {
         return this.onlyDate || this.range
@@ -184,9 +190,9 @@
         },
         set (value) {
           if (this.autoClose && this.range && (value.end && value.start)) {
-            this.toggleDatePicker()
+            this.toggleDatePicker(false)
           } else if (this.autoClose && !this.range) {
-            this.toggleDatePicker()
+            this.toggleDatePicker(false)
           }
           const newValue = this.range ? this.getRangeDateToSend(value) : this.getDateTimeToSend(value)
           this.$emit('input', newValue)
@@ -225,10 +231,7 @@
     beforeDestroy () {
       this.$emit('destroy')
       if (this.hasCustomElem) {
-        const target = this.$slots.default[0].elm
-        target.addEventListener('click', () => {
-          this.toggleDatePicker()
-        })
+        this.addEventToTriggerElement()
       }
     },
     methods: {
@@ -296,7 +299,7 @@
       },
       toggleDatePicker (val) {
         if (this.disabled) return
-        const isOpen = val || !this.pickerOpen
+        const isOpen = val === false ? val : !this.pickerOpen
         this.setBodyOverflow(isOpen)
         this.pickerOpen = isOpen
         this.$emit(this.pickerOpen ? 'is-shown' : 'is-hidden')
@@ -334,7 +337,7 @@
       },
       validate () {
         this.$emit('validate')
-        this.toggleDatePicker()
+        this.toggleDatePicker(false)
       }
     }
   }
