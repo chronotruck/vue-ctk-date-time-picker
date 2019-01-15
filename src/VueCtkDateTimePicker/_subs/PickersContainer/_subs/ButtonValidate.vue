@@ -22,6 +22,7 @@
       </span>
     </button>
     <button
+      v-if="hasButtonValidate"
       type="button"
       tabindex="-1"
       class="datepicker-button validate flex align-center justify-content-center"
@@ -51,7 +52,7 @@
 <script>
   import moment from 'moment-timezone'
   export default {
-    name: 'CtkButtonValidate',
+    name: 'ButtonValidate',
     props: {
       dark: { type: Boolean, default: Boolean },
       buttonColor: { type: String, default: String },
@@ -59,6 +60,7 @@
       onlyTime: { type: Boolean, default: Boolean },
       noButtonNow: {type: Boolean, default: Boolean},
       range: {type: Boolean, default: Boolean},
+      hasButtonValidate: { type: Boolean, default: Boolean }
     },
     computed: {
       colorStyle () {

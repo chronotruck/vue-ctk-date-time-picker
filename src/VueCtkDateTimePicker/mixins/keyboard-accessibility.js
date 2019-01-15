@@ -21,6 +21,7 @@ export default {
     keyPressed (e) {
       /*
         13 : Enter
+        27 : Escape
         32 : Space
         35 : Page Down
         36 : Page Up
@@ -49,6 +50,8 @@ export default {
             this.previousMonth()
           } else if (e.keyCode === 35) {
             this.nextMonth()
+          } else if (e.keyCode === 27) {
+            this.$emit('close')
           }
           if ('activeElement' in document) document.activeElement.blur()
         } catch (err) {
@@ -57,28 +60,46 @@ export default {
       }
     },
     previousWeek () {
-      this.newValue = moment(this.currentValue).subtract(1, 'week')
-      this.checkMonth()
+      const newValue = moment(this.currentValue).subtract(1, 'week')
+      if (!this.isDisabled(newValue)) {
+        this.newValue = newValue
+        this.checkMonth()
+      }
     },
     previousDay () {
-      this.newValue = moment(this.currentValue).subtract(1, 'days')
-      this.checkMonth()
+      const newValue = moment(this.currentValue).subtract(1, 'days')
+      if (!this.isDisabled(newValue)) {
+        this.newValue = newValue
+        this.checkMonth()
+      }
     },
     nextDay () {
-      this.newValue = moment(this.currentValue).add(1, 'days')
-      this.checkMonth()
+      const newValue = moment(this.currentValue).add(1, 'days')
+      if (!this.isDisabled(newValue)) {
+        this.newValue = newValue
+        this.checkMonth()
+      }
     },
     nextWeek () {
-      this.newValue = moment(this.currentValue).add(1, 'week')
-      this.checkMonth()
+      const newValue = moment(this.currentValue).add(1, 'week')
+      if (!this.isDisabled(newValue)) {
+        this.newValue = newValue
+        this.checkMonth()
+      }
     },
     previousMonth () {
-      this.newValue = moment(this.currentValue).subtract(1, 'month')
-      this.checkMonth()
+      const newValue = moment(this.currentValue).subtract(1, 'month')
+      if (!this.isDisabled(newValue)) {
+        this.newValue = newValue
+        this.checkMonth()
+      }
     },
     nextMonth () {
-      this.newValue = moment(this.currentValue).add(1, 'month')
-      this.checkMonth()
+      const newValue = moment(this.currentValue).add(1, 'month')
+      if (!this.isDisabled(newValue)) {
+        this.newValue = newValue
+        this.checkMonth()
+      }
     },
     selectThisDay () {
       this.selectDate(this.currentValue)

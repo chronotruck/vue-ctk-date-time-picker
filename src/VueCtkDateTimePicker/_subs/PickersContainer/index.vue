@@ -45,6 +45,8 @@
             :visible="visible"
             :custom-shortcuts="customShortcuts"
             @change-month="changeMonth"
+            @change-year-month="changeYearMonth"
+            @close="$emit('close')"
           />
           <!-- NEED 'HH:mm' format -->
           <TimePicker
@@ -63,15 +65,16 @@
           />
         </div>
         <ButtonValidate
-          v-if="hasButtonValidate"
+          v-if="!hasNoButton && !(inline && range)"
+          class="button-validate flex-fixed"
           :dark="dark"
           :button-color="buttonColor"
           :button-now-translation="buttonNowTranslation"
-          class="button-validate flex-fixed"
           :only-time="onlyTime"
           :no-button-now="noButtonNow"
           :range="range"
-          @validate="validate"
+          :has-button-validate="hasButtonValidate"
+          @validate="$emit('validate')"
           @now="setNow"
         />
       </div>
@@ -110,6 +113,7 @@
       maxDate: { type: String, default: String },
       minDate: { type: String, default: String },
       hasButtonValidate: { type: Boolean, default: Boolean },
+      hasNoButton: { type: Boolean, default: Boolean },
       noWeekendsDays: { type: Boolean, default: Boolean },
       disabledDates: { type: Array, default: Array },
       disabledHours: { type: Array, default: Array },
@@ -213,7 +217,7 @@
     methods: {
       setNow (event) {
         this.$emit('input', event)
-        this.validate()
+        this.$emit('close')
       },
       emitValue (payload) {
         const dateTime = this.range ? payload.value : this.getDateTime(payload)
@@ -270,8 +274,8 @@
           this.$refs.TimePicker.initPositionView()
         }
       },
-      validate () {
-        this.$emit('validate')
+      changeYearMonth ({month, year}) {
+        this.month = new Month(month, year, this.locale)
       }
     }
   }

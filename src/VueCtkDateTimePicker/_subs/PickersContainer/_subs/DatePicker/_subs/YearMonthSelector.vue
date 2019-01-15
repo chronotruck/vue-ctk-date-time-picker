@@ -17,16 +17,16 @@
     </div>
     <div class="flex-1 flex flex-wrap justify-content-between align-center">
       <CustomButton
-        v-for="(month, index) in months"
+        v-for="(m, index) in months"
         :key="index"
         :color="color"
-        :selected="currentMonth === index + 1"
+        :selected="currentMonth === index"
         :dark="dark"
         class="month-button"
         with-border
         @click="selectMonth(index)"
       >
-        {{ month }}
+        {{ m }}
       </CustomButton>
       <CustomButton
         v-for="year in years"
@@ -64,8 +64,8 @@
       locale: { type: String, default: String },
       dark: { type: Boolean, default: Boolean },
       color: { type: String, default: String },
-      value: { type: [String, Object], default: String },
-      mode: { type: String, default: String }
+      mode: { type: String, default: String },
+      month: { type: Object, default: Object }
     },
     data () {
       return {
@@ -74,17 +74,11 @@
       }
     },
     computed: {
-      currentDate () {
-        return this.value
-      },
       currentMonth () {
-        return parseInt(moment(this.currentDate, 'YYYY-MM-DD').format('M'))
+        return this.month.month
       },
       currentYear () {
-        return this.currentDate ? parseInt(moment(this.currentDate, 'YYYY-MM-DD').format('YYYY')) : parseInt(moment().format('YYYY'))
-      },
-      currentDay () {
-        return parseInt(moment(this.currentDate, 'YYYY-MM-DD').format('DD'))
+        return this.month.year
       },
       isMonthMode () {
         return this.mode === 'month'
@@ -104,17 +98,13 @@
       },
       getYears () {
         this.months = null
-        this.years = ArrayRange(this.currentYear - 7, this.currentYear + 7)
+        this.years = ArrayRange(this.month.year - 7, this.month.year + 7)
       },
       selectMonth (monthNumber) {
-        const date = this.currentDate ? moment(this.currentDate, 'YYYY-MM-DD') : moment()
-        const newDate = moment(date).month(monthNumber).format('YYYY-MM-DD')
-        this.$emit('input', newDate)
+        this.$emit('input', { month: monthNumber, year: this.currentYear })
       },
       selectYear (year) {
-        const date = this.currentDate ? moment(this.currentDate, 'YYYY-MM-DD') : moment()
-        const newDate = date.year(year).format('YYYY-MM-DD')
-        this.$emit('input', newDate)
+        this.$emit('input', { month: this.currentMonth, year: year })
       }
     }
   }

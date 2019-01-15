@@ -236,12 +236,14 @@
             id: "1",
             title: 'Date Time Picker',
             description: 'Date & Time selector',
-            initial: '2018-04-05 20:26',
-            value: '2018-04-05 20:26',
+            initial: '2018-04-07 20:26',
+            value: '2018-04-07 20:26',
             editOption: false,
             options: {
               format: 'YYYY-MM-DD HH:mm',
-              id: 'DateTimePicker'
+              id: 'DateTimePicker',
+              minDate: '2018-04-05',
+              maxDate: '2018-04-24'
             }
           },
           {
