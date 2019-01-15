@@ -9,7 +9,6 @@
       'is-dark': dark
     }, inputSize]"
     class="field"
-    @click.stop="$emit('click')"
   >
     <input
       :id="id"
@@ -23,7 +22,6 @@
       readonly
       @focus="$emit('focus')"
       @blur="$emit('blur')"
-      @click.stop="$emit('click')"
     >
     <label
       ref="label"
@@ -31,7 +29,6 @@
       :class="errorHint ? 'text-danger' : null"
       :style="[colorStyle]"
       class="field-label"
-      @click.stop="$emit('click')"
     >
       {{ hint || label }}
     </label>
