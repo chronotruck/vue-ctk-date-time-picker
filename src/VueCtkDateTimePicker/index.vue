@@ -18,7 +18,7 @@
       :color="color"
       :label="label"
       :input-size="inputSize"
-      @click.native="toggleDatePicker()"
+      @focus="toggleDatePicker(true)"
     />
     <slot v-else />
     <div
@@ -299,7 +299,7 @@
       },
       toggleDatePicker (val) {
         if (this.disabled) return
-        const isOpen = val === false ? val : !this.pickerOpen
+        const isOpen = (val === false || val === true) ? val : !this.pickerOpen
         this.setBodyOverflow(isOpen)
         this.pickerOpen = isOpen
         this.$emit(this.pickerOpen ? 'is-shown' : 'is-hidden')

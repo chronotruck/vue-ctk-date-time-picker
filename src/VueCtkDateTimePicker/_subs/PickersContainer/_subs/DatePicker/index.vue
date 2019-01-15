@@ -104,7 +104,7 @@
             :key="m.month"
             class="datepicker-days flex"
           >
-            <button
+            <div
               v-for="start in weekStart"
               :key="start + 'startEmptyDay'"
               class="datepicker-day align-center justify-content-center"

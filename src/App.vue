@@ -40,12 +40,18 @@
             <p>Inititale value : '2018-04-05T04:26'</p>
             <p>v-model = {{ value || 'null' }}</p>
             <br>
-            <CtkDateTimePicker
-              v-model="value2"
-              color="purple"
-              :dark="darkMode"
-              open
-            />
+            <div class="flex">
+              <CtkDateTimePicker
+                v-model="value2"
+                color="purple"
+                :dark="darkMode"
+              />
+              <CtkDateTimePicker
+                v-model="value2"
+                color="purple"
+                :dark="darkMode"
+              />
+            </div>
           </div>
         </div>
       </div>
@@ -216,7 +222,7 @@
     },
     data () {
       return {
-        devMode: false,
+        devMode: true,
         booleanOptions: [
           'noHeader', 'autoClose', 'error', 'dark', 'overlay', 'noWeekendDays', 'noShortcuts',
           'noButton', 'onlyDate', 'range', 'onlyTime', 'inline', 'persistent', 'disabled', 'noButtonNow', 'noValueToCustomElem'
