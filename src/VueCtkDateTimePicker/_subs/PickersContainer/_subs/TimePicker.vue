@@ -246,7 +246,6 @@
         setTimeout(() => {
           containers.forEach((container) => {
             const elem = this.$refs[container][0]
-            elem.style.overflow = 'hidden'
             elem.scrollTop = 0
             const selected = elem.querySelector(`.time-picker-column-item.active`)
             if (selected) {
@@ -258,7 +257,6 @@
               }
             }
             setTimeout(() => {
-              elem.style.overflow = 'auto'
               this.noScrollEvent = false
             }, 500)
           })
