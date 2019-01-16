@@ -28,11 +28,9 @@
           </button>
         </div>
         <div
-          class="datepicker-container-label flex-1"
-          :class="{'flex justify-content-center': !range}"
+          class="datepicker-container-label flex-1 flex justify-content-center"
         >
           <TransitionGroup
-            v-if="!range"
             :name="transitionLabelName"
             class="h-100 flex align-center flex-1 flex justify-content-right"
           >
@@ -48,7 +46,6 @@
             </CustomButton>
           </TransitionGroup>
           <TransitionGroup
-            v-if="!range"
             :name="transitionLabelName"
             class="h-100 flex align-center flex-1 flex"
           >
@@ -62,19 +59,6 @@
             >
               {{ year }}
             </CustomButton>
-          </TransitionGroup>
-          <TransitionGroup
-            v-else
-            :name="transitionLabelName"
-            class="h-100 flex align-center justify-content-center"
-          >
-            <div
-              v-for="m in [month]"
-              :key="m.month"
-              class="datepicker-label fs-16"
-            >
-              {{ `${monthFormatted} ${year}` }}
-            </div>
           </TransitionGroup>
         </div>
         <div class="arrow-month h-100 text-right">
@@ -151,17 +135,17 @@
           </div>
         </TransitionGroup>
       </div>
+      <YearMonthSelector
+        v-if="selectingYearMonth"
+        :locale="locale"
+        :color="color"
+        :dark="dark"
+        :mode="selectingYearMonth"
+        :month="month"
+        @input="selectYearMonth"
+        @back="selectingYearMonth = null"
+      />
     </div>
-    <YearMonthSelector
-      v-if="selectingYearMonth"
-      :locale="locale"
-      :color="color"
-      :dark="dark"
-      :mode="selectingYearMonth"
-      :month="month"
-      @input="selectYearMonth"
-      @back="selectingYearMonth = null"
-    />
   </div>
 </template>
 
@@ -331,6 +315,9 @@
     }
     .padding-button {
       padding: 5px 3px !important;
+    }
+    .calendar {
+      position: relative;
     }
     .datepicker-controls {
       height: 56px;
