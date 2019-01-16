@@ -131,7 +131,9 @@
       dateTime () {
         const date = this.value
           ? this.range
-            ? moment(this.value.end ? this.value.end : this.value.start, 'YYYY-MM-DD HH:mm')
+            ? (this.value.end || this.value.start)
+              ? moment(this.value.end ? this.value.end : this.value.start, 'YYYY-MM-DD HH:mm')
+              : moment()
             : moment(this.value, 'YYYY-MM-DD HH:mm')
           : moment()
         return date
@@ -151,8 +153,8 @@
         if (!hasStartValues && !hasEndValues) {
           return '... - ...'
         } else if (hasStartValues || hasEndValues) {
-          const datesFormatted = hasStartValues ? `${moment(this.value.start).format('ddd D MMM')}` : '...'
-          return hasEndValues ? `${datesFormatted} - ${moment(this.value.end).format('ddd D MMM')}` : `${datesFormatted} - ...`
+          const datesFormatted = hasStartValues ? `${moment(this.value.start).format('ll')}` : '...'
+          return hasEndValues ? `${datesFormatted} - ${moment(this.value.end).format('ll')}` : `${datesFormatted} - ...`
         } else {
           return null
         }
