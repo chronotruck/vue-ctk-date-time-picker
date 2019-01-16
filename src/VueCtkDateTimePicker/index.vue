@@ -2,7 +2,7 @@
   <div
     :id="id"
     ref="parent"
-    v-click-outside="() => { pickerOpen = false }"
+    v-click-outside="() => { toggleDatePicker(false) }"
     class="date-time-picker"
   >
     <CustomInput
@@ -302,7 +302,7 @@
         const isOpen = (val === false || val === true) ? val : !this.pickerOpen
         this.setBodyOverflow(isOpen)
         this.pickerOpen = isOpen
-        this.$emit(this.pickerOpen ? 'is-shown' : 'is-hidden')
+        this.$emit(isOpen ? 'is-shown' : 'is-hidden')
         if (this.pickerOpen && !this.position) {
           this.pickerPosition = this.getPosition()
         }
