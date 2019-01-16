@@ -38,7 +38,7 @@
             class="component-container"
           >
             <p>Inititale value : '2018-04-05T04:26'</p>
-            <p>v-model = {{ value || 'null' }}</p>
+            <p>v-model = {{ value2 || 'null' }}</p>
             <br>
             <div class="flex">
               <CtkDateTimePicker
@@ -222,7 +222,7 @@
     },
     data () {
       return {
-        devMode: true,
+        devMode: false,
         booleanOptions: [
           'noHeader', 'autoClose', 'error', 'dark', 'overlay', 'noWeekendDays', 'noShortcuts',
           'noButton', 'onlyDate', 'range', 'onlyTime', 'inline', 'persistent', 'disabled', 'noButtonNow', 'noValueToCustomElem'
