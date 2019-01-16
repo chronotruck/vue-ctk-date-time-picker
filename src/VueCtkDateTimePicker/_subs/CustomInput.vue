@@ -9,6 +9,7 @@
       'is-dark': dark
     }, inputSize]"
     class="field"
+    @click="focusInput"
   >
     <input
       :id="id"
@@ -22,6 +23,7 @@
       readonly
       @focus="$emit('focus')"
       @blur="$emit('blur')"
+      @click="$emit('click')"
     >
     <label
       ref="label"
@@ -29,6 +31,7 @@
       :class="errorHint ? 'text-danger' : null"
       :style="[colorStyle]"
       class="field-label"
+      @click="focusInput"
     >
       {{ hint || label }}
     </label>
@@ -62,6 +65,11 @@
         return cond
           ? { color: `${this.color}` }
           : null
+      }
+    },
+    methods: {
+      focusInput () {
+        this.$refs.CustomInput.focus()
       }
     }
   }
