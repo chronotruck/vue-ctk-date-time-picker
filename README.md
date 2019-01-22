@@ -108,14 +108,13 @@ Here is an example of UMD implementation: https://codepen.io/louismazel/pen/jQWN
 | only-date   | Boolean | no  | false |
 | no-header   | Boolean | no   | false |
 | no-value-to-custom-elem (7) | Boolean | no | false |
-| overlay | Boolean | no | true |
 | min-date (8)  | String | no  | - |
 | max-date (8)  | String | no  | - |
 | no-weekends-days | Boolean | no | false |
 | auto-close | Boolean | no | false |
 | inline | Boolean | no | false |
 | overlay | Boolean | no | false |
-| range-mode | Boolean | no | false |
+| range | Boolean | no | false |
 | dark | Boolean | no | false |
 | no-shortcuts | Boolean | no | false |
 | no-button | Boolean | no | false |
