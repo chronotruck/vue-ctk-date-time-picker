@@ -36,7 +36,7 @@
             :style="styleColor"
             class="time-picker-column-item-effect"
           />
-          <span class="time-picker-column-item-text">
+          <span class="time-picker-column-item-text flex-1">
             {{ item.item }}
           </span>
         </button>

@@ -15,7 +15,7 @@
       class="custom-button-effect"
     />
     <span
-      class="custom-button-content flex align-center justify-content-center"
+      class="custom-button-content flex align-center justify-content-center flex-1"
       :style="[colorStyle]"
     >
       <slot :style="[colorStyle]" />

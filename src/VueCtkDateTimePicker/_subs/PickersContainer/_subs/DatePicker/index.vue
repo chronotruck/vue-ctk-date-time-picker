@@ -37,7 +37,7 @@
             <CustomButton
               v-for="m in [month]"
               :key="m.month"
-              class="date-buttons fs-16 padding-button"
+              class="date-buttons font-size-16 padding-button"
               :color="color"
               :dark="dark"
               @click="selectingYearMonth = 'month'"
@@ -52,7 +52,7 @@
             <CustomButton
               v-for="y in [year]"
               :key="y"
-              class="date-buttons fs-16 padding-button"
+              class="date-buttons font-size-16 padding-button"
               :color="color"
               :dark="dark"
               @click="selectingYearMonth = 'year'"
@@ -123,7 +123,7 @@
                 v-if="isKeyboardSelected(day)"
                 class="datepicker-day-keyboard-selected"
               />
-              <span class="datepicker-day-text">
+              <span class="datepicker-day-text flex-1">
                 {{ day.format('D') }}
               </span>
             </button>
