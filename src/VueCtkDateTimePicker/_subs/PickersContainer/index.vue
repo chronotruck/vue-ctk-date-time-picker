@@ -121,7 +121,7 @@
       noShortcuts: { type: Boolean, default: Boolean },
       buttonColor: { type: String, default: String },
       buttonNowTranslation: { type: String, default: String },
-      noButtonNow: {type: Boolean, default: false},
+      noButtonNow: { type: Boolean, default: false },
       firstDayOfWeek: { type: Number, default: Number },
       customShortcuts: { type: Array, default: Array }
     },
@@ -153,8 +153,8 @@
           ? window.innerWidth < 412
             ? null
             : this.position === 'bottom'
-              ? {top: '100%', marginBottom: '10px'}
-              : {bottom: '100%', marginTop: '10px'}
+              ? { top: '100%', marginBottom: '10px' }
+              : { bottom: '100%', marginTop: '10px' }
           : null
       },
       timeFormat () {
@@ -274,7 +274,7 @@
           this.$refs.TimePicker.initPositionView()
         }
       },
-      changeYearMonth ({month, year}) {
+      changeYearMonth ({ month, year }) {
         this.month = new Month(month, year, this.locale)
       }
     }

@@ -6,6 +6,7 @@
     <button
       v-if="hasButtonNow"
       class="datepicker-button now flex align-center justify-content-center"
+      :class="{'right-margin': hasButtonValidate}"
       tabindex="-1"
       type="button"
       @click="emitNow()"
@@ -58,8 +59,8 @@
       buttonColor: { type: String, default: String },
       buttonNowTranslation: { type: String, default: String },
       onlyTime: { type: Boolean, default: Boolean },
-      noButtonNow: {type: Boolean, default: Boolean},
-      range: {type: Boolean, default: Boolean},
+      noButtonNow: { type: Boolean, default: Boolean },
+      range: { type: Boolean, default: Boolean },
       hasButtonValidate: { type: Boolean, default: Boolean }
     },
     computed: {
@@ -142,7 +143,9 @@
         }
       }
       &.now {
-        margin-right: 10px;
+        &.right-margin {
+          margin-right: 10px;
+        }
         .datepicker-button-content {
           color: dodgerblue;
         }

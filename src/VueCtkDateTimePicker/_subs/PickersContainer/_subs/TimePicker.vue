@@ -10,7 +10,10 @@
       :key="column.type"
       :ref="column.type"
       class="time-picker-column flex-1 flex flex-direction-column text-center"
-      @scroll="noScrollEvent ? null : onScroll($event, column.type)"
+      @scroll="noScrollEvent
+        ? null
+        : column.type === 'hours' ? onScrollHours($event) : column.type === 'minutes' ? onScrollMinutes($event) : onScrollApms($event)
+      "
     >
       <div>
         <div
@@ -33,7 +36,7 @@
             :style="styleColor"
             class="time-picker-column-item-effect"
           />
-          <span class="time-picker-column-item-text">
+          <span class="time-picker-column-item-text flex-1">
             {{ item.item }}
           </span>
         </button>
@@ -74,7 +77,7 @@
   const debounce = (fn, time) => {
     let timeout
 
-    return function() {
+    return function () {
       const functionCall = () => fn.apply(this, arguments)
       clearTimeout(timeout)
       timeout = setTimeout(functionCall, time)
@@ -102,7 +105,7 @@
         apm: null,
         oldvalue: this.value,
         columnPadding: {},
-        noScrollEvent: this.value && !this.inline ? true : false,
+        noScrollEvent: !!(this.value && !this.inline),
         delay: 0
       }
     },
@@ -143,9 +146,9 @@
       },
       columns () {
         return [
-          {type: 'hours', items: this.hours},
-          {type: 'minutes', items: this.minutes},
-          ...(this.apms ? [{type: 'apms', items: this.apms}] : []),
+          { type: 'hours', items: this.hours },
+          { type: 'minutes', items: this.minutes },
+          ...(this.apms ? [{ type: 'apms', items: this.apms }] : [])
         ]
       }
     },
@@ -173,27 +176,34 @@
       this.initPositionView()
     },
     methods: {
-      onScroll: debounce(function (scroll, type) {
+      getValue (scroll) {
         const itemHeight = 28
         const scrollTop = scroll.target.scrollTop
-        const value = this.isTwelveFormat && type === 'hours' ? Math.round(scrollTop / itemHeight) : Math.round(scrollTop / itemHeight)
-        if (type === 'hours') {
-          const hour = this.isTwelveFormat
-            ? this.apm === this.apms[0].value
-              ? value + 1
-              : (value + 1 + 12)
-            : value
-          if (this.isHoursDisabled(hour)) return
-          this.hour = hour === 24 && !this.isTwelveFormat ? 23 : hour
-        } else if (type === 'minutes') {
-          this.minute = value * this.minuteInterval
-        } else {
-          if (this.apms && this.apms[value] && this.apm !== this.apms[value].value) {
-            const newHour = this.apm === 'pm' || this.apm === 'PM' ? this.hour - 12 : this.hour + 12
-            this.hour = newHour
-          }
-          this.apm = this.apms[value].value
+        return Math.round(scrollTop / itemHeight)
+      },
+      onScrollHours: debounce(function (scroll) {
+        const value = this.getValue(scroll)
+        const hour = this.isTwelveFormat
+          ? this.apm === this.apms[0].value
+            ? value + 1
+            : (value + 1 + 12)
+          : value
+        if (this.isHoursDisabled(hour)) return
+        this.hour = hour === 24 && !this.isTwelveFormat ? 23 : hour
+        this.emitValue()
+      }, 100),
+      onScrollMinutes: debounce(function (scroll) {
+        const value = this.getValue(scroll)
+        this.minute = value * this.minuteInterval
+        this.emitValue()
+      }, 100),
+      onScrollApms: debounce(function (scroll) {
+        const value = this.getValue(scroll)
+        if (this.apms && this.apms[value] && this.apm !== this.apms[value].value) {
+          const newHour = this.apm === 'pm' || this.apm === 'PM' ? this.hour - 12 : this.hour + 12
+          this.hour = newHour
         }
+        this.apm = this.apms[value].value
         this.emitValue()
       }, 100),
       isActive (type, value) {

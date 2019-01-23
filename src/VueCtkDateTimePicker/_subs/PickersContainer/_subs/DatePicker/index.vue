@@ -28,18 +28,16 @@
           </button>
         </div>
         <div
-          class="datepicker-container-label flex-1"
-          :class="{'flex justify-content-center': !range}"
+          class="datepicker-container-label flex-1 flex justify-content-center"
         >
           <TransitionGroup
-            v-if="!range"
             :name="transitionLabelName"
             class="h-100 flex align-center flex-1 flex justify-content-right"
           >
             <CustomButton
               v-for="m in [month]"
               :key="m.month"
-              class="date-buttons fs-16 padding-button"
+              class="date-buttons font-size-16 padding-button"
               :color="color"
               :dark="dark"
               @click="selectingYearMonth = 'month'"
@@ -48,33 +46,19 @@
             </CustomButton>
           </TransitionGroup>
           <TransitionGroup
-            v-if="!range"
             :name="transitionLabelName"
             class="h-100 flex align-center flex-1 flex"
           >
             <CustomButton
               v-for="y in [year]"
               :key="y"
-              class="date-buttons fs-16 padding-button"
+              class="date-buttons font-size-16 padding-button"
               :color="color"
               :dark="dark"
               @click="selectingYearMonth = 'year'"
             >
               {{ year }}
             </CustomButton>
-          </TransitionGroup>
-          <TransitionGroup
-            v-else
-            :name="transitionLabelName"
-            class="h-100 flex align-center justify-content-center"
-          >
-            <div
-              v-for="m in [month]"
-              :key="m.month"
-              class="datepicker-label fs-16"
-            >
-              {{ `${monthFormatted} ${year}` }}
-            </div>
           </TransitionGroup>
         </div>
         <div class="arrow-month h-100 text-right">
@@ -104,7 +88,7 @@
             :key="m.month"
             class="datepicker-days flex"
           >
-            <button
+            <div
               v-for="start in weekStart"
               :key="start + 'startEmptyDay'"
               class="datepicker-day align-center justify-content-center"
@@ -139,7 +123,7 @@
                 v-if="isKeyboardSelected(day)"
                 class="datepicker-day-keyboard-selected"
               />
-              <span class="datepicker-day-text">
+              <span class="datepicker-day-text flex-1">
                 {{ day.format('D') }}
               </span>
             </button>
@@ -151,17 +135,17 @@
           </div>
         </TransitionGroup>
       </div>
+      <YearMonthSelector
+        v-if="selectingYearMonth"
+        :locale="locale"
+        :color="color"
+        :dark="dark"
+        :mode="selectingYearMonth"
+        :month="month"
+        @input="selectYearMonth"
+        @back="selectingYearMonth = null"
+      />
     </div>
-    <YearMonthSelector
-      v-if="selectingYearMonth"
-      :locale="locale"
-      :color="color"
-      :dark="dark"
-      :mode="selectingYearMonth"
-      :month="month"
-      @input="selectYearMonth"
-      @back="selectingYearMonth = null"
-    />
   </div>
 </template>
 
@@ -181,17 +165,17 @@
     },
     mixins: [KeyboardAccessibility],
     props: {
-      value: {type: [String, Object], default: String},
-      color: {type: String, default: String},
-      minDate: {type: String, default: String},
-      maxDate: {type: String, default: String},
-      locale: {type: String, default: String},
-      inline: {type: Boolean, default: Boolean},
-      noWeekendsDays: {type: Boolean, default: Boolean},
-      range: {type: Boolean, default: false},
-      disabledDates: {type: Array, default: Array},
-      dark: {type: Boolean, default: false},
-      month: {type: Object, default: Object},
+      value: { type: [String, Object], default: String },
+      color: { type: String, default: String },
+      minDate: { type: String, default: String },
+      maxDate: { type: String, default: String },
+      locale: { type: String, default: String },
+      inline: { type: Boolean, default: Boolean },
+      noWeekendsDays: { type: Boolean, default: Boolean },
+      range: { type: Boolean, default: false },
+      disabledDates: { type: Array, default: Array },
+      dark: { type: Boolean, default: false },
+      month: { type: Object, default: Object },
       height: { type: Number, default: Number },
       noShortcuts: { type: Boolean, default: Boolean },
       firstDayOfWeek: { type: Number, default: Number },
@@ -204,7 +188,7 @@
         transitionLabelName: 'slidevnext',
         weekDays: getWeekDays(this.locale, this.firstDayOfWeek),
         selectingYearMonth: null,
-        isKeyboardActive: true,
+        isKeyboardActive: true
       }
     },
     computed: {
@@ -331,6 +315,9 @@
     }
     .padding-button {
       padding: 5px 3px !important;
+    }
+    .calendar {
+      position: relative;
     }
     .datepicker-controls {
       height: 56px;

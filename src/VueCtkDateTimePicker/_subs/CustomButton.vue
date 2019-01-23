@@ -15,7 +15,7 @@
       class="custom-button-effect"
     />
     <span
-      class="custom-button-content flex align-center justify-content-center"
+      class="custom-button-content flex align-center justify-content-center flex-1"
       :style="[colorStyle]"
     >
       <slot :style="[colorStyle]" />
@@ -27,7 +27,7 @@
   export default {
     name: 'CustomButton',
     props: {
-      color: { type: String, default: 'dodgerblue'},
+      color: { type: String, default: 'dodgerblue' },
       dark: { type: Boolean, default: false },
       withBorder: { type: Boolean, default: false },
       hover: { type: Boolean, default: false },
@@ -45,7 +45,7 @@
         return {
           backgroundColor: this.color
         }
-      },
+      }
     }
   }
 </script>

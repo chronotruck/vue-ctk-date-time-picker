@@ -16,7 +16,7 @@
       @mouseleave="shortcut.isHover = false"
       @click="select(shortcut)"
     >
-      <span class="fs-12">
+      <span class="font-size-12 flex-1">
         {{ shortcut.label }}
       </span>
     </CustomButton>
@@ -33,7 +33,7 @@
       value: { type: Object, required: false, default: null },
       color: { type: String, default: String },
       dark: { type: Boolean, default: false },
-      dateTime: {type: Object, default: Object},
+      dateTime: { type: Object, default: Object },
       customShortcuts: { type: Array, default: Array },
       height: { type: Number, default: Number, required: true }
     },

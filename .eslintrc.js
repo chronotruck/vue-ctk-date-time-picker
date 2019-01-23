@@ -9,7 +9,9 @@ module.exports = {
 
   extends: [
     'plugin:vue/strongly-recommended',
-    'eslint:recommended'
+    'eslint:recommended',
+    'plugin:vue/essential',
+    '@vue/standard'
   ],
 
   rules: {
@@ -17,7 +19,7 @@ module.exports = {
     'arrow-parens': 0,
     'prefer-const': 2,
     'no-trailing-spaces': 'error',
-    'no-debugger': 0,
+    'no-debugger': process.env.NODE_ENV === 'production' ? 'error' : 'off',
     'no-extra-semi': 'error',
     semi: [
       'error',
@@ -29,7 +31,8 @@ module.exports = {
     'vue/no-v-html': 'error',
     'vue/order-in-components': 'error',
     'vue/this-in-template': 'error',
-    'vue/script-indent': 'error'
+    'vue/script-indent': 'error',
+    'no-console': process.env.NODE_ENV === 'production' ? 'error' : 'off'
   },
 
   parserOptions: {
@@ -41,7 +44,8 @@ module.exports = {
       files: ['*.vue'],
       rules: {
         indent: 'off',
-        'vue/script-indent': ['error', 2, { baseIndent: 1 }]
+        'vue/script-indent': ['error', 2, { baseIndent: 1 }],
+        'vue/component-name-in-template-casing': ['error', 'PascalCase']
       }
     }
   ]

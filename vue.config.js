@@ -4,7 +4,6 @@ module.exports = {
       openAnalyzer: false
     }
   },
-
-  baseUrl: './',
+  publicPath: './',
   lintOnSave: undefined
 }
