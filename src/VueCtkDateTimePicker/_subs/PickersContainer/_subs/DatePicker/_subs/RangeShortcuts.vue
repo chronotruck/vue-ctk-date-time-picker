@@ -33,7 +33,7 @@
       value: { type: Object, required: false, default: null },
       color: { type: String, default: String },
       dark: { type: Boolean, default: false },
-      dateTime: {type: Object, default: Object},
+      dateTime: { type: Object, default: Object },
       customShortcuts: { type: Array, default: Array },
       height: { type: Number, default: Number, required: true }
     },

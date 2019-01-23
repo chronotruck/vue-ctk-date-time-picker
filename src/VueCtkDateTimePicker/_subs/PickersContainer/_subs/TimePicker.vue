@@ -77,7 +77,7 @@
   const debounce = (fn, time) => {
     let timeout
 
-    return function() {
+    return function () {
       const functionCall = () => fn.apply(this, arguments)
       clearTimeout(timeout)
       timeout = setTimeout(functionCall, time)
@@ -105,7 +105,7 @@
         apm: null,
         oldvalue: this.value,
         columnPadding: {},
-        noScrollEvent: this.value && !this.inline ? true : false,
+        noScrollEvent: !!(this.value && !this.inline),
         delay: 0
       }
     },
@@ -146,9 +146,9 @@
       },
       columns () {
         return [
-          {type: 'hours', items: this.hours},
-          {type: 'minutes', items: this.minutes},
-          ...(this.apms ? [{type: 'apms', items: this.apms}] : []),
+          { type: 'hours', items: this.hours },
+          { type: 'minutes', items: this.minutes },
+          ...(this.apms ? [{ type: 'apms', items: this.apms }] : [])
         ]
       }
     },

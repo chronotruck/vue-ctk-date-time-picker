@@ -131,18 +131,18 @@
       onlyTime: { type: Boolean, default: false },
       onlyDate: { type: Boolean, default: false },
       noHeader: { type: Boolean, default: false },
-      range: {type: Boolean, default: false},
+      range: { type: Boolean, default: false },
       noWeekendsDays: { type: Boolean, default: false },
       noShortcuts: { type: Boolean, default: false },
       noButton: { type: Boolean, default: false },
       disabledDates: { type: Array, default: Array },
-      disabledHours: {type: Array, default: Array},
+      disabledHours: { type: Array, default: Array },
       open: { type: Boolean, default: false },
       persistent: { type: Boolean, default: false },
       inputSize: { type: String, default: String },
       buttonNowTranslation: { type: String, default: String },
-      noButtonNow: {type: Boolean, default: false},
-      noButtonValidate: {type: Boolean, default: false},
+      noButtonNow: { type: Boolean, default: false },
+      noButtonValidate: { type: Boolean, default: false },
       firstDayOfWeek: { type: Number, default: null },
       customShortcuts: { type: Array, default: Array },
       noValueToCustomElem: { type: Boolean, default: false }
@@ -261,8 +261,8 @@
         const hasStartValues = this.value && this.value.start
         const hasEndValues = this.value && this.value.end
         if (hasStartValues || hasEndValues) {
-          const datesFormatted = hasStartValues ? `${moment(this.value.start, this.formatOutput).set({hour:0,minute:0,second:0}).format(this.formatted)}` : '...'
-          return hasEndValues ? `${datesFormatted} - ${moment(this.value.end, this.formatOutput).set({hour:23,minute:59,second:59}).format(this.formatted)}` : `${datesFormatted} - ...`
+          const datesFormatted = hasStartValues ? `${moment(this.value.start, this.formatOutput).set({ hour: 0, minute: 0, second: 0 }).format(this.formatted)}` : '...'
+          return hasEndValues ? `${datesFormatted} - ${moment(this.value.end, this.formatOutput).set({ hour: 23, minute: 59, second: 59 }).format(this.formatted)}` : `${datesFormatted} - ...`
         } else {
           return null
         }
@@ -276,8 +276,8 @@
       getRangeDateToSend (payload) {
         const { start, end } = typeof payload !== 'undefined' ? payload : this.value
         return start || end
-          ? { start: start ? moment(start, 'YYYY-MM-DD').set({hour:0,minute:0,second:0}).format(this.formatOutput) : null,
-              end: end ? moment(end, 'YYYY-MM-DD').set({hour:23,minute:59,second:59}).format(this.formatOutput) : null,
+          ? { start: start ? moment(start, 'YYYY-MM-DD').set({ hour: 0, minute: 0, second: 0 }).format(this.formatOutput) : null,
+              end: end ? moment(end, 'YYYY-MM-DD').set({ hour: 23, minute: 59, second: 59 }).format(this.formatOutput) : null,
               shortcut: payload.value }
           : { start: moment().format(this.formatOutput),
               end: moment().format(this.formatOutput),

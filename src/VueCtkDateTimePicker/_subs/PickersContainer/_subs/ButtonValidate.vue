@@ -59,8 +59,8 @@
       buttonColor: { type: String, default: String },
       buttonNowTranslation: { type: String, default: String },
       onlyTime: { type: Boolean, default: Boolean },
-      noButtonNow: {type: Boolean, default: Boolean},
-      range: {type: Boolean, default: Boolean},
+      noButtonNow: { type: Boolean, default: Boolean },
+      range: { type: Boolean, default: Boolean },
       hasButtonValidate: { type: Boolean, default: Boolean }
     },
     computed: {

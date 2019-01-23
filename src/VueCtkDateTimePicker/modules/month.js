@@ -49,5 +49,5 @@ export const getWeekDays = (locale, firstDay) => {
 }
 
 export const getMonthsShort = (locale) => {
-  return Array.apply(0, Array(12)).map(function(_,i){return moment().locale(locale).month(i).format('MMM')})
+  return Array.apply(0, Array(12)).map(function (_, i) { return moment().locale(locale).month(i).format('MMM') })
 }

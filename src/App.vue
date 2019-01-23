@@ -239,7 +239,7 @@
         ],
         demoComponents: [
           {
-            id: "1",
+            id: '1',
             title: 'Date Time Picker',
             description: 'Date & Time selector',
             initial: '2018-04-07 20:26',
@@ -253,7 +253,7 @@
             }
           },
           {
-            id: "2",
+            id: '2',
             title: 'Range Date Picker',
             description: 'Date Range selector - With custom element to trigger the component (only input or button)',
             editOption: false,
@@ -278,7 +278,7 @@
             }
           },
           {
-            id: "3",
+            id: '3',
             title: 'Date Picker',
             description: 'Date selector - With large input (input-size="lg") - format: "MM-DD-YYYY" - formatted: "ll"',
             editOption: false,
@@ -296,7 +296,7 @@
             }
           },
           {
-            id: "4",
+            id: '4',
             title: 'Time Picker - With small input (input-size="sm") & minute-interval="10"',
             description: 'Time selector',
             editOption: false,
@@ -314,7 +314,7 @@
             }
           },
           {
-            id: "5",
+            id: '5',
             title: 'Inline Picker',
             description: 'Inline selector (available for all pickers)',
             editOption: false,
@@ -335,7 +335,7 @@
             }
           },
           {
-            id: "6",
+            id: '6',
             title: 'Disabled Picker',
             description: '(disabled="true")',
             editOption: false,
