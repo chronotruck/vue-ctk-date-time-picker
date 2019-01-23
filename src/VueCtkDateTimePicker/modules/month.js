@@ -1,4 +1,4 @@
-import Moment from 'moment-timezone'
+import Moment from 'moment'
 import { extendMoment } from 'moment-range'
 const moment = extendMoment(Moment)
 
@@ -13,10 +13,6 @@ export default class Month {
 
   getWeekStart () {
     return this.start.weekday()
-  }
-
-  getDays () {
-    return Array.from(moment.range(this.start, this.end).by('days'))
   }
 
   getFormatted () {

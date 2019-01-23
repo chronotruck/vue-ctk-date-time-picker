@@ -103,7 +103,6 @@ Here is an example of UMD implementation: https://codepen.io/louismazel/pen/jQWN
 | persistent     | Boolean | no    | false |
 | minute-interval | Integer | no    | 1    |
 | output-format   | String | no  | null |
-| time-zone (6)  | String | no  | Browser Time Zone |
 | only-time   | Boolean | no     | false |
 | only-date   | Boolean | no  | false |
 | no-header   | Boolean | no   | false |

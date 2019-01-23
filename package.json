@@ -19,8 +19,8 @@
     "ui": "vue ui"
   },
   "dependencies": {
+    "moment": "^2.24.0",
     "moment-range": "^4.0.1",
-    "moment-timezone": "^0.5.23",
     "v-click-outside": "^2.0.2",
     "vue": "^2.5.17"
   },

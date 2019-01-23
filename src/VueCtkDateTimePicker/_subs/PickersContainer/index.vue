@@ -83,7 +83,7 @@
 </template>
 
 <script>
-  import moment from 'moment-timezone'
+  import moment from 'moment'
 
   import DatePicker from './_subs/DatePicker'
   import TimePicker from './_subs/TimePicker'

@@ -23,7 +23,7 @@
   </div>
 </template>
 <script>
-  import moment from 'moment-timezone'
+  import moment from 'moment'
   import CustomButton from '@/VueCtkDateTimePicker/_subs/CustomButton'
 
   export default {
