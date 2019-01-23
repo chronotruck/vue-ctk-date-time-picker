@@ -5,7 +5,7 @@
   "author": "Louis Mazel <loic.mazuel@chronotruck.com>",
   "scripts": {
     "serve": "vue-cli-service serve --mode development",
-    "build": "npm run lint && npm run build:lib && npm run build:docs",
+    "build": "npm run build:lib && npm run build:docs",
     "test": "vue-cli-service test:unit /test/specs",
     "lint": "vue-cli-service lint",
     "before-publish": "npm i && npm run lint && npm run test:unit && npm run build",
