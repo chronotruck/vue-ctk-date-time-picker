@@ -10,7 +10,7 @@
     "lint": "vue-cli-service lint",
     "before-publish": "npm i && npm run lint && npm run test:unit && npm run build",
     "build:docs": "vue-cli-service build --dest docs --mode production",
-    "build:lib": "vue-cli-service build --target lib ./src/VueCtkDateTimePicker/index.vue && cp dist/vue-ctk-date-time-picker.css dist/vue-ctk-date-time-picker.min.css",
+    "build:lib": "vue-cli-service build --target lib ./src/VueCtkDateTimePicker/index.vue",
     "lint:fix": "eslint --ext .js,.vue src",
     "publish-npm:beta": "npm publish --tag beta",
     "serve:build": "vue-cli-service serve --mode production",
