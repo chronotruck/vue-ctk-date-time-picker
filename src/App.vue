@@ -61,6 +61,7 @@
             <div class="flex">
               <CtkDateTimePicker
                 v-model="value2"
+                input-size="lg"
                 color="purple"
                 :dark="darkMode"
               />
@@ -235,7 +236,7 @@
     },
     data () {
       return {
-        devMode: true,
+        devMode: false,
         booleanOptions: [
           'noHeader', 'autoClose', 'error', 'dark', 'overlay', 'noWeekendDays', 'noShortcuts',
           'noButton', 'onlyDate', 'range', 'onlyTime', 'inline', 'persistent', 'disabled', 'noButtonNow', 'noValueToCustomElem'
