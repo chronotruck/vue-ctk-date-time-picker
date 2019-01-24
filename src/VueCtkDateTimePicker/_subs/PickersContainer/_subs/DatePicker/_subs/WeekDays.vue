@@ -6,7 +6,7 @@
     <div
       v-for="(weekDay, index) in weekDays"
       :key="index"
-      class="flex-1 text-muted font-size-12 flex justify-content-center align-center week-days-container"
+      class="flex-1 text-muted lm-fs-12 flex justify-content-center align-center week-days-container"
     >
       {{ weekDay }}
     </div>

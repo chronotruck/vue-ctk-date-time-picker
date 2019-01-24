@@ -1,73 +1,3 @@
-#vueCtkDateTimePicker, html, body {
-  /* font-family: 'Roboto', Helvetica, Arial, sans-serif; */
-  font-family: Roboto, -apple-system, BlinkMacSystemFont, Segoe UI, Oxygen,
-        Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  color: #2c3e50;
-  font-size: 14px;
-}
-*, *::before, *::after {
-  box-sizing: border-box;
-}
-.logo {
-  width: 180px;
-}
-.dots-text {
-  text-overflow: ellipsis;
-  white-space: nowrap;
-  overflow: hidden;
-}
-.text-muted {
-  color: rgba(0,0,0,.54) !important;
-}
-.text-strong {
-  font-weight: 500;
-}
-.text-center {
-  text-align: center !important;
-}
-.text-left {
-  text-align: left !important;
-}
-.text-right {
-  text-align: right !important;
-}
-.font-size-12 {
-  font-size: 12px !important;
-}
-.font-size-14 {
-  font-size: 14px !important;
-}
-.font-size-16 {
-  font-size: 16px !important;
-}
-.font-size-18 {
-  font-size: 18px !important;
-}
-.fw-300 {
-  font-weight: 300;
-}
-.fw-400 {
-  font-weight: 400;
-}
-.fw-500 {
-  font-weight: 500;
-}
-.br-4 {
-  border-radius: 4px;
-}
-.h-100 {
-  height: 100% !important;
-}
-.mh-100 {
-  max-height: 100% !important;
-}
-.w-100 {
-  width: 100% !important;
-}
-
-/** FLEX HELPERS **/
 .fluid {
   width: 100%;
 }
@@ -84,9 +14,9 @@
   flex: 1 1 100%;
 }
 .spacer {
-  -webkit-box-flex: 1!important;
-  -ms-flex-positive: 1!important;
-  flex-grow: 1!important;
+  -webkit-box-flex: 1 !important;
+  -ms-flex-positive: 1 !important;
+  flex-grow: 1 !important;
 }
 
 .align-center {
@@ -98,10 +28,10 @@
 }
 
 .flex {
-  display: -webkit-box;      /* OLD - iOS 6-, Safari 3.1-6 */
-  display: -moz-box;         /* OLD - Firefox 19- (buggy but mostly works) */
-  display: -ms-flexbox;      /* TWEENER - IE 10 */
-  display: -webkit-flex;     /* NEW - Chrome */
+  display: -webkit-box; /* OLD - iOS 6-, Safari 3.1-6 */
+  display: -moz-box; /* OLD - Firefox 19- (buggy but mostly works) */
+  display: -ms-flexbox; /* TWEENER - IE 10 */
+  display: -webkit-flex; /* NEW - Chrome */
   display: flex;
 }
 
@@ -151,7 +81,7 @@
   -moz-flex-direction: row;
 }
 
-.justify-content-right {
+.justify-content-right, .justify-content-end {
   justify-content: flex-end;
   -ms-flex-pack: end;
   -moz-box-align: end;
@@ -216,4 +146,3 @@
 .flex-grow {
   flex-grow: 1;
 }
-/** END FLEX HELPERS **/

@@ -1,0 +1,43 @@
+@import "./variables/index.scss";
+
+@function set-var-class($var) {
+  @if ($var == 'margin') {
+    @return 'm';
+  } @else {
+    @return 'p';
+  }
+}
+
+// Font-size
+@each $pm in $pms {
+  @each $size in $spacing-sizes {
+    $p: set-var-class($pm);
+
+    @debug set-var-class($pm);
+
+    $i: index($spacing-sizes, $size);
+    .lm-#{$p}r-#{$i} {
+      #{$pm}-right: #{$size} !important;
+    }
+    .lm-#{$p}t-#{$i} {
+      #{$pm}-top: #{$size} !important;
+    }
+    .lm-#{$p}b-#{$i} {
+      #{$pm}-bottom: #{$size} !important;
+    }
+    .lm-#{$p}l-#{$i} {
+      #{$pm}-left: #{$size} !important;
+    }
+    .lm-#{$p}x-#{$i} {
+      #{$pm}-left: #{$size} !important;
+      #{$pm}-right: #{$size} !important;
+    }
+    .lm-#{$p}y-#{$i} {
+      #{$pm}-top: #{$size} !important;
+      #{$pm}-bottom: #{$size} !important;
+    }
+    .lm-#{$p}-#{$i} {
+      #{$pm}: #{$size} !important;
+    }
+  }
+}

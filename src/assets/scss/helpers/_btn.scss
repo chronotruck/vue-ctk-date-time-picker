@@ -1,0 +1,58 @@
+.lm-btn {
+  padding: 10px 20px;
+  margin-bottom: 20px;
+  border: none;
+  display: inline-block;
+  border-radius: 4px;
+  text-decoration: none;
+  font-weight: 500;
+  font-size: 12px;
+  outline: none;
+  cursor: pointer;
+  transition: all 0.25s cubic-bezier(0.645, 0.045, 0.355, 1);
+  background-color: dodgerblue;
+  color: white;
+  font-weight: 500;
+  &:hover {
+    background-color: darken(dodgerblue, 10%);
+    box-shadow: 0 0 8px 0 rgba(232, 237, 250, 0.6),
+      0 2px 4px 0 rgba(232, 237, 250, 0.5);
+  }
+  &.option {
+    background-color: #424242;
+    &:hover {
+      background-color: darken(#424242, 10%);
+    }
+  }
+  &-success {
+    background-color: yellowgreen;
+    &:hover {
+      background-color: darken(yellowgreen, 10%);
+    }
+  }
+  &-dark {
+    background-color: #424242;
+    &:hover {
+      background-color: darken(#424242, 10%);
+    }
+  }
+  &-danger {
+    background-color: orangered;
+    &:hover {
+      background-color: darken(orangered, 10%);
+    }
+  }
+}
+.dark {
+  .lm-btn {
+    &:hover {
+      box-shadow: 0 0 8px 0 rgba(0,0,0,.6), 0 2px 4px 0 rgba(0,0,0,.5);
+    }
+    &.option {
+      background-color: #424242;
+      &:hover {
+        background-color: lighten(#424242, 10%);
+      }
+    }
+  }
+}

@@ -13,7 +13,7 @@
       :height="height"
       @change-range="$emit('input', $event)"
     />
-    <div class="calendar w-100">
+    <div class="calendar lm-w-100">
       <div class="datepicker-controls flex align-center justify-content-center">
         <div class="arrow-month h-100">
           <button
@@ -37,7 +37,7 @@
             <CustomButton
               v-for="m in [month]"
               :key="m.month"
-              class="date-buttons font-size-16 padding-button"
+              class="date-buttons lm-fs-16 padding-button"
               :color="color"
               :dark="dark"
               @click="selectingYearMonth = 'month'"
@@ -52,7 +52,7 @@
             <CustomButton
               v-for="y in [year]"
               :key="y"
-              class="date-buttons font-size-16 padding-button"
+              class="date-buttons lm-fs-16 padding-button"
               :color="color"
               :dark="dark"
               @click="selectingYearMonth = 'year'"
@@ -302,7 +302,6 @@
 </script>
 
 <style lang="scss" scoped>
-  @import "@/VueCtkDateTimePicker/assets/animation.scss";
   #DatePicker.datepicker-container {
     width: 260px;
     padding: 0 5px;

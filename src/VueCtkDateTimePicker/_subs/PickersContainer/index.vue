@@ -282,7 +282,6 @@
 </script>
 
 <style lang="scss" scoped>
-  @import "@/VueCtkDateTimePicker/assets/animation.scss";
   .datetimepicker {
     position: absolute;
     z-index: 9;

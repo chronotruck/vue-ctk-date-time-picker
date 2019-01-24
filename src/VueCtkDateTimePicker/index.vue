@@ -345,9 +345,6 @@
     font-size: 14px;
     border-radius: 4px;
     position: relative;
-    * {
-      box-sizing: border-box;
-    }
     .time-picker-overlay {
       z-index: 2;
       position: fixed;

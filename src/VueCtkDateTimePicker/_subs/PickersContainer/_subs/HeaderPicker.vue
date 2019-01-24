@@ -176,7 +176,6 @@
 </script>
 
 <style lang="scss" scoped>
-  @import "@/VueCtkDateTimePicker/assets/animation.scss";
   $headerTextSize: 18px;
   .header-picker {
     background: #FFF;

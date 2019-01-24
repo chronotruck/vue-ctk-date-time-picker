@@ -1,0 +1,11 @@
+@import "./_flex.scss";
+@import "./_fonts.scss";
+@import "./_container-size.scss";
+@import "./_spacing.scss";
+@import "./_btn.scss";
+@import "./_animation.scss";
+@import "./_typo.scss";
+
+*, *::before, *::after {
+  box-sizing: border-box;
+}
