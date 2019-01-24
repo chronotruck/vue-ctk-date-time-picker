@@ -65,7 +65,7 @@
     "tsconfig.json",
     "dist/"
   ],
-  "homepage": "https://github.com/chronotruck/vue-ctk-date-time-picker#readme",
+  "homepage": "https://chronotruck.github.io/vue-ctk-date-time-picker",
   "keywords": [
     "vue",
     "javascript",
