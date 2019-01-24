@@ -417,7 +417,7 @@
 </script>
 
 <style lang="scss">
-  @import "./assets/scss/main.scss";
+  // @import "./assets/scss/main.scss";
   html, body, #app, #vueCtkDateTimePicker {
     margin: 0;
     min-height: 100%;
