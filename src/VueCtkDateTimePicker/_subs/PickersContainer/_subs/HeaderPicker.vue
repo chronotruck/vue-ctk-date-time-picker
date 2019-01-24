@@ -106,7 +106,7 @@
 </template>
 
 <script>
-  import moment from 'moment-timezone'
+  import moment from 'moment'
 
   export default {
     name: 'HeaderPicker',
@@ -176,7 +176,6 @@
 </script>
 
 <style lang="scss" scoped>
-  @import "@/VueCtkDateTimePicker/assets/animation.scss";
   $headerTextSize: 18px;
   .header-picker {
     background: #FFF;

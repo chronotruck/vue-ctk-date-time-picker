@@ -62,17 +62,11 @@
 </template>
 
 <script>
-  import moment from 'moment-timezone'
+  import moment from 'moment'
   import vClickOutside from 'v-click-outside'
 
   import CustomInput from './_subs/CustomInput'
   import PickersContainer from './_subs/PickersContainer'
-
-  const getDefaultTZ = () => {
-    const tz = moment.tz.guess() || 'America/Los_Angeles'
-    moment.locale(tz)
-    return tz
-  }
 
   const getDefaultLocale = () => {
     const locale = (window.navigator.userLanguage || window.navigator.language || 'en').substr(0, 2)
@@ -120,7 +114,6 @@
       inline: { type: Boolean, default: false },
       position: { type: String, default: String },
       locale: { type: String, default: getDefaultLocale() },
-      timeZone: { type: String, default: getDefaultTZ() },
       formatted: { type: String, default: 'llll' },
       format: { type: String, default: 'YYYY-MM-DD hh:mm a' },
       outputFormat: { type: String, default: String },
@@ -352,9 +345,6 @@
     font-size: 14px;
     border-radius: 4px;
     position: relative;
-    * {
-      box-sizing: border-box;
-    }
     .time-picker-overlay {
       z-index: 2;
       position: fixed;

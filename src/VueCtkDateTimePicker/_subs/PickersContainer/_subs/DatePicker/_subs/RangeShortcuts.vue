@@ -16,14 +16,14 @@
       @mouseleave="shortcut.isHover = false"
       @click="select(shortcut)"
     >
-      <span class="font-size-12 flex-1">
+      <span class="lm-fs-12 flex-1">
         {{ shortcut.label }}
       </span>
     </CustomButton>
   </div>
 </template>
 <script>
-  import moment from 'moment-timezone'
+  import moment from 'moment'
   import CustomButton from '@/VueCtkDateTimePicker/_subs/CustomButton'
 
   export default {

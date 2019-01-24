@@ -1,6 +1,6 @@
 {
   "name": "vue-ctk-date-time-picker",
-  "version": "2.0.4",
+  "version": "2.0.5",
   "description": "A vue component for select date & time (by Chronotruck)",
   "author": "Louis Mazel <loic.mazuel@chronotruck.com>",
   "scripts": {
@@ -19,9 +19,12 @@
     "ui": "vue ui"
   },
   "dependencies": {
+    "moment": "^2.24.0",
     "moment-range": "^4.0.1",
-    "moment-timezone": "^0.5.23",
     "v-click-outside": "^2.0.2",
+    "vue": "^2.5.22"
+  },
+  "peerDependencies": {
     "vue": "^2.5.17"
   },
   "devDependencies": {
@@ -62,7 +65,7 @@
     "tsconfig.json",
     "dist/"
   ],
-  "homepage": "https://github.com/chronotruck/vue-ctk-date-time-picker#readme",
+  "homepage": "https://chronotruck.github.io/vue-ctk-date-time-picker",
   "keywords": [
     "vue",
     "javascript",

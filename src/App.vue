@@ -20,9 +20,27 @@
         >
         <h1>CtkDatetimePicker</h1>
         <h3>A VueJs component for select date & time</h3>
+        <div
+          v-if="devMode"
+          class="container lm-mt-4"
+        >
+          <a
+            class="lm-btn lm-btn-dark lm-mr-2"
+            target="_blank"
+            href="https://github.com/chronotruck/vue-ctk-date-time-picker"
+          >
+            Github
+          </a>
+          <a
+            class="lm-btn lm-btn-danger"
+            target="_blank"
+            href="https://www.npmjs.com/package/vue-ctk-date-time-picker"
+          >
+            Npm
+          </a>
+        </div>
         <button
-          class="btn"
-          style="margin-top: 20px;"
+          class="lm-btn lm-btn-success"
           @click="darkMode = !darkMode"
         >
           {{ darkMode ? 'Disable' : 'Enable' }} Dark Mode
@@ -43,11 +61,7 @@
             <div class="flex">
               <CtkDateTimePicker
                 v-model="value2"
-                color="purple"
-                :dark="darkMode"
-              />
-              <CtkDateTimePicker
-                v-model="value2"
+                input-size="lg"
                 color="purple"
                 :dark="darkMode"
               />
@@ -75,7 +89,7 @@
             </div>
             <hr>
             <button
-              class="btn option"
+              class="lm-btn option"
               @click="demo.editOption = !demo.editOption"
             >
               Edit options
@@ -199,7 +213,7 @@
                 <button
                   v-else-if="demo.options && demo.options.slot && demo.options.slot.type === 'button'"
                   type="button"
-                  class="btn"
+                  class="lm-btn"
                   style="margin: 0;"
                 />
               </CtkDateTimePicker>
@@ -403,7 +417,7 @@
 </script>
 
 <style lang="scss">
-  @import "./assets/main.css";
+  @import "./assets/scss/main.scss";
   html, body, #app, #vueCtkDateTimePicker {
     margin: 0;
     min-height: 100%;
@@ -440,105 +454,5 @@
     border-top: 1px solid #ebebeb;
     border-bottom: 0;
     margin: 20px 0;
-  }
-  textarea {
-    background-color: #FFF;
-    color: #bd4147;
-    border: 1px solid #CCC;
-    border-radius: 4px;
-    outline: none;
-    font-size: 85%;
-    width: 100%;
-    font-weight: 700;
-    font-family: monospace, monospace;
-    resize: none;
-  }
-  .btn {
-    padding: 10px 20px;
-    margin-bottom: 20px;
-    border: none;
-    border-radius: 4px;
-    font-size: 12px;
-    outline: none;
-    cursor: pointer;
-    transition: all 0.25s cubic-bezier(0.645, 0.045, 0.355, 1);
-    background-color: #96bf31;
-    color: #FFF;
-    font-weight: 500;
-    &:hover {
-      background-color: darken(#96bf31, 10%);
-      box-shadow: 0 0 8px 0 rgba(232,237,250,.6), 0 2px 4px 0 rgba(232,237,250,.5);
-    }
-    &.option {
-      background-color: #424242;
-      &:hover {
-        background-color: darken(#424242, 10%);
-      }
-    }
-  }
-  .component {
-    padding: 10px;
-    background: #FFF;
-    border-radius: 4px;
-    border: 1px solid #ebebeb;
-    &:hover {
-      box-shadow: 0 0 8px 0 rgba(232,237,250,.6), 0 2px 4px 0 rgba(232,237,250,.5);
-    }
-    &.options {
-      margin-bottom: 20px;
-    }
-  }
-  .component-container {
-    margin: 0 10px 20px 10px;
-    padding: 20px;
-    background: #FFF;
-    border-radius: 4px;
-    border: 1px solid #ebebeb;
-    min-width: 300px;
-    transition: all 0.25s cubic-bezier(0.645, 0.045, 0.355, 1);
-    flex: 1 0 48%;
-    &:hover {
-      box-shadow: 0 0 8px 0 rgba(232,237,250,.6), 0 2px 4px 0 rgba(232,237,250,.5);
-    }
-    &.dark {
-      background-color: darken(#424242, 10%);
-      color: #FFF;
-      textarea {
-        background: #424242;
-        color: dodgerblue;
-      }
-      .btn {
-        &:hover {
-          box-shadow: 0 0 8px 0 rgba(0,0,0,.6), 0 2px 4px 0 rgba(0,0,0,.5);
-        }
-        &.option {
-          background-color: #424242;
-          &:hover {
-            background-color: lighten(#424242, 10%);
-          }
-        }
-      }
-    }
-  }
-  .dark {
-    .component-container, .component {
-      border: 1px solid #424242;
-      background-color: darken(#424242, 10%);
-      &:hover {
-        box-shadow: 0 0 8px 0 rgba(0,0,0,.6), 0 2px 4px 0 rgba(0,0,0,.5);
-      }
-    }
-    hr {
-      border-color: #424242;
-    }
-  }
-  @media screen and (max-width: 1024px) {
-    .components-container.flex {
-      -webkit-flex-direction: column;
-      -ms-flex-direction: column;
-      flex-direction: column;
-      flex-flow: column;
-      -moz-flex-direction: column;
-    }
   }
 </style>

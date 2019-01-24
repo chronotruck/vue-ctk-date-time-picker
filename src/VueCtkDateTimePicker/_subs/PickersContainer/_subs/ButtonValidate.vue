@@ -51,7 +51,7 @@
 </template>
 
 <script>
-  import moment from 'moment-timezone'
+  import moment from 'moment'
   export default {
     name: 'ButtonValidate',
     props: {
