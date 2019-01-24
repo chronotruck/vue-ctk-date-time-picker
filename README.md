@@ -106,9 +106,9 @@ Here is an example of UMD implementation: https://codepen.io/louismazel/pen/jQWN
 | only-time   | Boolean | no     | false |
 | only-date   | Boolean | no  | false |
 | no-header   | Boolean | no   | false |
-| no-value-to-custom-elem (7) | Boolean | no | false |
-| min-date (8)  | String | no  | - |
-| max-date (8)  | String | no  | - |
+| no-value-to-custom-elem (6) | Boolean | no | false |
+| min-date (7)  | String | no  | - |
+| max-date (7)  | String | no  | - |
 | no-weekends-days | Boolean | no | false |
 | auto-close | Boolean | no | false |
 | inline | Boolean | no | false |
@@ -121,9 +121,9 @@ Here is an example of UMD implementation: https://codepen.io/louismazel/pen/jQWN
 | button-now-translation | String | no | 'Now' |
 | no-button-now | Boolean | no | false |
 | first-day-of-week | Int (0 to 7) | no | - |
-| disabled-dates (9) | Array`<string>` | no | [] |
-| disabled-hours (10) | Array`<string>` | no | - |
-| custom-shortcuts (11) | Array`<object>` | no | - |
+| disabled-dates (8) | Array`<string>` | no | [] |
+| disabled-hours (9) | Array`<string>` | no | - |
+| custom-shortcuts (10) | Array`<object>` | no | - |
 
 (1) hint : Is a text that replaces the label/placeholder (Ex : Error designation)
 
@@ -135,17 +135,15 @@ Here is an example of UMD implementation: https://codepen.io/louismazel/pen/jQWN
 
 (5) locale : Default value is the locale of the browser - Ex : Set `locale="fr"` to force to French language
 
-(6) time-zone : Default value is the time-zone of the browser - Ex : Set `Europe/Paris` to force to French TZ. Do not forget to use a format like this `YYYY-MM-DDTHH:mm:ssZ` to get the TZ
+(6) no-value-to-custom-elem : No value will set to your elem (you can get the formatted value with @formatted-value event)
 
-(7) no-value-to-custom-elem : No value will set to your elem (you can get the formatted value with @formatted-value event)
+(7) min-date & max-date : Must be `'YYYY-MM-DD'` format
 
-(8) min-date & max-date : Must be `'YYYY-MM-DD'` format
+(8) Disabled-Dates is an Array of dates in 'YYYY-MM-DD' format (ex: `['2018-04-03', '2018-04-07', '2018-04-09']`)
 
-(9) Disabled-Dates is an Array of dates in 'YYYY-MM-DD' format (ex: `['2018-04-03', '2018-04-07', '2018-04-09']`)
+(9) disabled-hours : Must be an Array of hours in 24h format ('00' to '23') : `['00','01','02','03','04','05','06','07','19','20','21','22','23']`
 
-(10) disabled-hours : Must be an Array of hours in 24h format ('00' to '23') : `['00','01','02','03','04','05','06','07','19','20','21','22','23']`
-
-(11) custom-shortcuts - It's an Array of Objects like this :
+(10) custom-shortcuts - It's an Array of Objects like this :
 
 ```js
 [
