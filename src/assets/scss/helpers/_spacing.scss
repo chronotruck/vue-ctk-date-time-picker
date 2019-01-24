@@ -13,8 +13,6 @@
   @each $size in $spacing-sizes {
     $p: set-var-class($pm);
 
-    @debug set-var-class($pm);
-
     $i: index($spacing-sizes, $size);
     .lm-#{$p}r-#{$i} {
       #{$pm}-right: #{$size} !important;
