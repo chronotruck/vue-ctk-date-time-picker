@@ -339,6 +339,7 @@
       right: 0;
       left: 0;
       .datepicker {
+        border-radius: 0 !important;
         bottom: 0 !important;
         top: 0 !important;
         left: 0 !important;

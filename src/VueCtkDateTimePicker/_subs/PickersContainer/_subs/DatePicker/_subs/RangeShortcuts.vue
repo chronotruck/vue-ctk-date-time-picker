@@ -170,6 +170,9 @@
   @media screen and (max-width: 415px) {
     .shortcuts-container:not(.inline) {
       width: 100%;
+      max-width: 100%;
+      min-width: 100%;
+      border-right: 0;
       border-bottom: 1px solid #EAEAEA;
     }
     .shortcuts-container.is-dark {
