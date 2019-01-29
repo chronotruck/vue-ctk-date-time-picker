@@ -5,7 +5,7 @@
   "author": "Louis Mazel <loic.mazuel@chronotruck.com>",
   "scripts": {
     "serve": "vue-cli-service serve --mode development",
-    "build": "npm run build:lib && npm run build:docs",
+    "build": "npm run build:lib && npm run build:docs && npm run delete:reports",
     "test": "vue-cli-service test:unit /test/specs",
     "lint": "vue-cli-service lint",
     "before-publish": "npm i && npm run lint && npm run test:unit && npm run build",
@@ -16,7 +16,10 @@
     "serve:build": "vue-cli-service serve --mode production",
     "test:unit": "vue-cli-service test:unit",
     "test:unit:watch": "vue-cli-service test:unit --watch",
-    "ui": "vue ui"
+    "ui": "vue ui",
+    "delete-docs-report": "rm ./docs/report.html",
+    "delete-dist-report": "rm ./dist/report.html",
+    "delete:reports": "npm run delete-docs-report && npm run delete-dist-report"
   },
   "dependencies": {
     "moment": "^2.24.0",
