@@ -1,0 +1,23 @@
+.lm-text-white {
+  color: white;
+}
+.lm-dots-text {
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  overflow: hidden;
+}
+.lm-text-muted {
+  color: rgba(0,0,0,.54) !important;
+}
+.lm-text-strong {
+  font-weight: 500;
+}
+.lm-text-center {
+  text-align: center !important;
+}
+.lm-text-left {
+  text-align: left !important;
+}
+.lm-text-right {
+  text-align: right !important;
+}

@@ -1,281 +1,304 @@
 <template>
   <div
     :id="id"
-    :class="{'inline': isInline, 'is-dark': dark}"
-    class="ctk-date-time-picker"
+    ref="parent"
+    v-click-outside="() => { toggleDatePicker(false) }"
+    class="date-time-picker"
   >
+    <CustomInput
+      v-if="hasInput"
+      :id="id"
+      ref="custom-input"
+      v-model="dateFormatted"
+      :disabled="disabled"
+      :dark="dark"
+      :hint="hint"
+      :error-hint="error"
+      :is-focus="hasPickerOpen"
+      :color="color"
+      :label="label"
+      :input-size="inputSize"
+      @focus="toggleDatePicker(true)"
+    />
+    <slot v-else />
     <div
-      v-if="!isInline"
-      ref="parent"
-      :class="{'is-focused': isFocus || isVisible, 'has-value': dateFormatted, 'has-error': errorHint, 'is-disabled': disabled}"
-      class="field"
-      @click="showDatePicker"
-    >
-      <input
-        ref="CtkDateTimePicker"
-        :id="id"
-        :value="dateFormatted"
-        :placeholder="label"
-        :disabled="disabled"
-        :style="[getBorderStyle]"
-        type="text"
-        class="field-input"
-        readonly
-        @focus="onFocus"
-      >
-      <label
-        ref="label"
-        :for="id"
-        :class="hint ? (errorHint ? 'text-danger' : 'text-primary') : ''"
-        :style="[getColorStyle]"
-        class="field-label"
-      >
-        {{ hint || label }}
-      </label>
-
-    </div>
-
-    <div
-      v-if="overlay && isVisible && !isInline"
-      :class="{'has-background': overlayBackground}"
+      v-if="hasPickerOpen && overlay"
       class="time-picker-overlay"
-      @click.stop="unFocus"
+      @click.stop="toggleDatePicker(false)"
     />
-    <ctk-date-picker-agenda
-      v-if="!rangeMode"
+    <PickersContainer
+      v-if="!disabled && isMounted"
       ref="agenda"
-      v-model="value"
-      :date-time="dateTime"
+      v-model="dateTime"
+      :visible="hasPickerOpen"
+      :position="pickerPosition"
+      :inline="inline"
       :color="color"
-      :visible="isVisible"
-      :without-header="!withoutHeader"
-      :disable-time="hasDisabledTime"
-      :disable-date="disableDate"
+      :button-color="buttonColor"
+      :dark="dark"
+      :no-header="noHeader"
+      :only-time="onlyTime"
+      :only-date="hasOnlyDate"
       :minute-interval="minuteInterval"
-      :time-format="timeFormat"
       :locale="locale"
       :min-date="minDate"
       :max-date="maxDate"
-      :agenda-position="agendaPosition"
-      :inline="isInline"
+      :format="format"
       :no-weekends-days="noWeekendsDays"
-      :enable-button-validate="enableButtonValidate"
-      :auto-close="autoClose"
-      :range-mode="rangeMode"
+      :has-button-validate="hasButtonValidate"
+      :has-no-button="hasNoButton"
+      :range="range"
       :disabled-dates="disabledDates"
-      :dark="dark"
       :disabled-hours="disabledHours"
-      @change-date="changeDate"
+      :no-shortcuts="noShortcuts"
+      :button-now-translation="buttonNowTranslation"
+      :no-button-now="noButtonNow"
+      :first-day-of-week="firstDayOfWeek"
+      :custom-shortcuts="customShortcuts"
       @validate="validate"
-    />
-    <ctk-date-range-picker
-      v-else
-      ref="range"
-      v-model="value"
-      :date-time="dateTime"
-      :color="color"
-      :visible="isVisible"
-      :without-header="!withoutHeader"
-      :disable-time="hasDisabledTime"
-      :disable-date="disableDate"
-      :minute-interval="minuteInterval"
-      :time-format="timeFormat"
-      :locale="locale"
-      :min-date="minDate"
-      :max-date="maxDate"
-      :agenda-position="agendaPosition"
-      :inline="isInline"
-      :no-weekends-days="noWeekendsDays"
-      :enable-button-validate="enableButtonValidate"
-      :auto-close="autoClose"
-      :range-mode="rangeMode"
-      :disabled-dates="disabledDates"
-      :without-range-shortcut="withoutRangeShortcut"
-      :dark="dark"
-      :shortcuts-translation="shortcutsTranslation"
-      @change-date="changeDate"
-      @validate="validate"
+      @close="toggleDatePicker(false)"
     />
   </div>
 </template>
 
 <script>
-  import moment from 'moment-timezone'
-  import CtkDatePickerAgenda from './_subs/CtkDatePickerAgenda'
-  import CtkDateRangePicker from './_subs/CtkDateRangePicker'
+  import moment from 'moment'
+  import vClickOutside from 'v-click-outside'
 
-  const nearestMinutes = (interval, someMoment, m) => {
-    const roundedMinutes = Math.ceil(someMoment.minute() / interval) * interval
-    return m(someMoment.clone().minute(roundedMinutes).second(0))
-  }
-
-  const getDefaultTZ = () => {
-    return moment.tz.guess() || 'America/Los_Angeles'
-  }
+  import CustomInput from './_subs/CustomInput'
+  import PickersContainer from './_subs/PickersContainer'
 
   const getDefaultLocale = () => {
-    return (window.navigator.userLanguage || window.navigator.language || 'en').substr(0, 2)
+    const locale = (window.navigator.userLanguage || window.navigator.language || 'en').substr(0, 2)
+    moment.locale(locale)
+    return locale
+  }
+
+  const updateMomentLocale = (locale, firstDayOfWeek) => {
+    moment.locale(locale)
+    const firstDayNumber = Number.isInteger(firstDayOfWeek) && firstDayOfWeek === 0
+      ? 7
+      : firstDayOfWeek || moment.localeData(locale).firstDayOfWeek()
+    moment.updateLocale(locale, {
+      week: {
+        dow: firstDayNumber
+      }
+    })
+  }
+
+  const nearestMinutes = (interval, date, format) => {
+    const roundedMinutes = Math.ceil(date.minute() / interval) * interval
+    return moment(date.clone().minute(roundedMinutes).second(0), format)
   }
 
   export default {
     name: 'VueCtkDateTimePicker',
     components: {
-      CtkDatePickerAgenda,
-      CtkDateRangePicker
+      CustomInput,
+      PickersContainer
+    },
+    directives: {
+      clickOutside: vClickOutside.directive
     },
     props: {
+      value: { type: [String, Object], default: null },
       label: { type: String, default: 'Select date & time' },
       hint: { type: String, default: String },
-      errorHint: { type: Boolean, default: Boolean },
-      value: { type: [String, Object], required: false, default: null },
-      formatted: { type: String, default: 'llll' },
-      format: { type: String, default: String },
+      error: { type: Boolean, default: Boolean },
+      color: { type: String, default: 'dodgerblue' },
+      buttonColor: { type: String, default: String },
+      id: { type: String, default: 'DateTimePicker' },
+      disabled: { type: Boolean, default: false },
+      dark: { type: Boolean, default: false },
+      overlay: { type: Boolean, default: false },
+      inline: { type: Boolean, default: false },
+      position: { type: String, default: String },
       locale: { type: String, default: getDefaultLocale() },
-      timeZone: { type: String, default: getDefaultTZ() },
-      disableTime: { type: Boolean, default: false },
-      disableDate: { type: Boolean, default: false },
-      minuteInterval: { type: Number, default: 1 },
-      color: { type: String, default: String },
-      timeFormat: { type: String, default: 'h:mm a' },
-      withoutHeader: { type: Boolean, default: false },
-      id: { type: String, default: 'CtkDateTimePicker' },
+      formatted: { type: String, default: 'llll' },
+      format: { type: String, default: 'YYYY-MM-DD hh:mm a' },
+      outputFormat: { type: String, default: String },
+      minuteInterval: { type: [String, Number], default: 1 },
       minDate: { type: String, default: String },
       maxDate: { type: String, default: String },
-      withoutInput: { type: Boolean, default: false },
-      inline: { type: Boolean, default: false },
-      noWeekendsDays: {type: Boolean, default: false},
-      autoClose: {type: Boolean, default: false},
-      disabled: {type: Boolean, default: false},
-      overlay: {type: Boolean, default: true},
+      autoClose: { type: Boolean, default: false },
+      onlyTime: { type: Boolean, default: false },
+      onlyDate: { type: Boolean, default: false },
+      noHeader: { type: Boolean, default: false },
+      range: { type: Boolean, default: false },
+      noWeekendsDays: { type: Boolean, default: false },
+      noShortcuts: { type: Boolean, default: false },
+      noButton: { type: Boolean, default: false },
       disabledDates: { type: Array, default: Array },
-      rangeMode: {type: Boolean, default: false},
-      overlayBackground: {type: Boolean, default: false},
-      withoutRangeShortcut: {type: Boolean, default: false},
-      dark: {type: Boolean, default: false},
-      shortcutsTranslation: {type: Object, default: Object},
-      disabledHours: {type: Array, default: Array}
+      disabledHours: { type: Array, default: Array },
+      open: { type: Boolean, default: false },
+      persistent: { type: Boolean, default: false },
+      inputSize: { type: String, default: String },
+      buttonNowTranslation: { type: String, default: String },
+      noButtonNow: { type: Boolean, default: false },
+      noButtonValidate: { type: Boolean, default: false },
+      firstDayOfWeek: { type: Number, default: null },
+      customShortcuts: { type: Array, default: Array },
+      noValueToCustomElem: { type: Boolean, default: false }
     },
     data () {
       return {
-        isVisible: false,
-        isFocus: false,
-        agendaPosition: 'top',
-        oldValue: this.value,
-        clientWidth: null
+        pickerOpen: false,
+        pickerPosition: this.position,
+        isMounted: false
       }
     },
     computed: {
-      enableButtonValidate () {
-        return !this.isInline && !this.autoClose
+      hasPickerOpen () {
+        return this.persistent || this.pickerOpen
       },
-      isInline () {
-        return this.withoutInput || this.inline
+      hasNoButton () {
+        return this.noButton
       },
-      getColorStyle () {
-        const cond = this.isFocus || this.isVisible
-        return cond
-          ? { color: this.color }
-          : null
+      hasButtonValidate () {
+        return !this.inline && !this.autoClose
       },
-      getBorderStyle () {
-        const cond = (this.isFocus && !this.errorHint) || this.isVisible
-        return cond
-          ? { borderColor: this.color }
-          : null
-      },
-      dateTime () {
-        return this.rangeMode ? this.getRangeDatesTime() : this.getDateTime()
+      hasOnlyDate () {
+        return this.onlyDate || this.range
       },
       dateFormatted () {
-        return this.rangeMode ? this.getRangeDatesFormatted() : this.getDateFormatted()
+        const dateFormatted = this.range
+          ? this.getRangeDatesFormatted()
+          : this.getDateFormatted()
+        this.$emit('formatted-value', dateFormatted)
+        return dateFormatted
       },
-      hasDisabledTime () {
-        return this.disableTime || this.rangeMode
+      hasCustomElem () {
+        return this.$slots.default
+      },
+      hasInput () {
+        return !this.inline && !this.$slots.default
+      },
+      dateTime: {
+        get () {
+          const dateTime = this.range
+            ? { start: this.value && this.value.start ? moment(this.value.start, this.formatOutput).format('YYYY-MM-DD') : null,
+                end: this.value && this.value.end ? moment(this.value.end, this.formatOutput).format('YYYY-MM-DD') : null }
+            : this.getDateTime()
+          return dateTime
+        },
+        set (value) {
+          if (this.autoClose && this.range && (value.end && value.start)) {
+            this.toggleDatePicker(false)
+          } else if (this.autoClose && !this.range) {
+            this.toggleDatePicker(false)
+          }
+          const newValue = this.range ? this.getRangeDateToSend(value) : this.getDateTimeToSend(value)
+          this.$emit('input', newValue)
+          if (this.hasCustomElem && !this.noValueToCustomElem) {
+            this.$nextTick(() => {
+              this.setValueToCustomElem()
+            })
+          }
+        }
+      },
+      formatOutput () {
+        return this.outputFormat || this.format
       }
     },
-    created () {
-      if (this.value) {
-        const val = this.rangeMode ? this.value : this.disableDate ? moment(`${moment().format('YYYY-MM-DD')} ${this.value}`, `YYYY-MM-DD ${this.format}`) : moment(this.value, this.format).tz(this.timeZone)
-        this.$emit('input', (this.rangeMode
-          ? this.getRangeDatesTimeFormat(val)
-          : this.getDateTimeFormat(val))
-        )
-      } else if (this.rangeMode) {
-        this.$emit('input', this.getRangeDatesTimeFormat({}))
+    watch: {
+      open (val) {
+        if (this.disabled) return
+        this.pickerOpen = val
       }
-      moment.tz(this.timeZone)
-      moment.locale(this.locale)
+    },
+    mounted () {
+      updateMomentLocale(this.locale, this.firstDayOfWeek)
+      this.pickerPosition = this.getPosition()
+      this.pickerOpen = this.open
+      if (this.hasCustomElem) {
+        this.addEventToTriggerElement()
+        if (!this.noValueToCustomElem) {
+          this.setValueToCustomElem()
+        }
+      }
+      this.isMounted = true
+      if (this.format === 'YYYY-MM-DD hh:mm a' && this.onlyTime) {
+        window.console.warn(`A (time) format must be indicated/ (Ex : format="HH:mm")`)
+      }
+    },
+    beforeDestroy () {
+      this.$emit('destroy')
+      if (this.hasCustomElem) {
+        this.addEventToTriggerElement()
+      }
     },
     methods: {
-      getDateTime (value = null) {
-        const date = this.disableDate
-          ? this.value
-            ? moment(`${moment().tz(this.timeZone).format('YYYY-MM-DD')} ${this.value}`, `YYYY-MM-DD ${this.format}`).tz(this.timeZone)
-            : moment().tz(this.timeZone)
-          : this.value
-            ? moment(this.value, this.format).tz(this.timeZone)
-            : moment().tz(this.timeZone)
-        return nearestMinutes(this.minuteInterval, date, moment)
+      setValueToCustomElem () {
+        const target = this.$slots.default[0]
+        if (target) {
+          if (target.tag === 'input') {
+            target.elm.value = this.dateFormatted
+          } else {
+            target.elm.innerHTML = this.dateFormatted ? this.dateFormatted : this.label
+          }
+        } else {
+          window.console.warn(`Impossible to find custom element`)
+        }
       },
-      getDateTimeFormat (day) {
-        return nearestMinutes(this.minuteInterval, day, moment).tz(this.timeZone).format(this.format)
-      },
-      getDateFormatted () {
-        const date = this.value
-          ? this.disableDate
-            ? moment(`${moment().tz(this.timeZone).format('YYYY-MM-DD')} ${this.value}`, `YYYY-MM-DD ${this.format}`).tz(this.timeZone)
-            : moment(this.value, this.format).tz(this.timeZone)
-          : null
-        return date ? nearestMinutes(this.minuteInterval, date, moment).locale(this.locale).tz(this.timeZone).format(this.formatted) : null
-      },
-      getRangeDatesTime () {
-        const hasStartValues = this.value && this.value.start
-        const hasEndValues = this.value && this.value.end
-        return { start: hasStartValues ? moment(this.value.start, this.format).tz(this.timeZone) : null, end: hasEndValues ? moment(this.value.end, this.format).tz(this.timeZone) : null }
-      },
-      getRangeDatesTimeFormat (day) {
-        const { start, end } = day
-        return {
-          start: start ? moment(start).tz(this.timeZone).format(this.format) : null,
-          end: end ? moment(end).tz(this.timeZone).format(this.format) : null
+      addEventToTriggerElement () {
+        const target = this.$slots.default[0].elm
+        if (target) {
+          target.addEventListener('click', () => {
+            this.toggleDatePicker()
+          })
+        } else {
+          window.console.warn(`Impossible to find custom element`)
         }
       },
       getRangeDatesFormatted () {
         const hasStartValues = this.value && this.value.start
         const hasEndValues = this.value && this.value.end
         if (hasStartValues || hasEndValues) {
-          const datesFormatted = hasStartValues ? `${moment(this.value.start).tz(this.timeZone).locale(this.locale).format(this.formatted)}` : '...'
-          return hasEndValues ? `${datesFormatted} - ${moment(this.value.end).tz(this.timeZone).locale(this.locale).format(this.formatted)}` : `${datesFormatted} - ...`
+          const datesFormatted = hasStartValues ? `${moment(this.value.start, this.formatOutput).set({ hour: 0, minute: 0, second: 0 }).format(this.formatted)}` : '...'
+          return hasEndValues ? `${datesFormatted} - ${moment(this.value.end, this.formatOutput).set({ hour: 23, minute: 59, second: 59 }).format(this.formatted)}` : `${datesFormatted} - ...`
         } else {
           return null
         }
       },
-      changeDate (day) {
-        this.$emit('input', (this.rangeMode ? this.getRangeDatesTimeFormat(day) : this.getDateTimeFormat(day)))
-        if (this.autoClose && this.rangeMode && (day.end && day.start)) {
-          this.hideDatePicker()
-        } else if (this.autoClose && !this.rangeMode) {
-          this.hideDatePicker()
-        }
+      getDateFormatted () {
+        const date = this.value
+          ? moment(this.value, this.formatOutput).format(this.formatted)
+          : null
+        return date
       },
-      showDatePicker () {
+      getRangeDateToSend (payload) {
+        const { start, end } = typeof payload !== 'undefined' ? payload : this.value
+        return start || end
+          ? { start: start ? moment(start, 'YYYY-MM-DD').set({ hour: 0, minute: 0, second: 0 }).format(this.formatOutput) : null,
+              end: end ? moment(end, 'YYYY-MM-DD').set({ hour: 23, minute: 59, second: 59 }).format(this.formatOutput) : null,
+              shortcut: payload.value }
+          : { start: moment().format(this.formatOutput),
+              end: moment().format(this.formatOutput),
+              shortcut: payload.value }
+      },
+      getDateTimeToSend (value) {
+        const dateTime = typeof value !== 'undefined' ? value : this.value
+        const dateToSend = dateTime
+          ? moment(dateTime, 'YYYY-MM-DD HH:mm')
+          : null
+        const dateTimeToSend = dateToSend ? nearestMinutes(this.minuteInterval, moment(dateToSend), 'YYYY-MM-DD HH:mm').format(this.formatOutput) : null
+        return dateTimeToSend
+      },
+      getDateTime () {
+        const date = this.value
+          ? moment(this.value, this.formatOutput)
+          : null
+        return date ? nearestMinutes(this.minuteInterval, date, this.formatOutput).format('YYYY-MM-DD HH:mm') : null
+      },
+      toggleDatePicker (val) {
         if (this.disabled) return
-        this.setBodyOverflow(true)
-        const rect = this.$refs.parent.getBoundingClientRect()
-        const windowHeight = window.innerHeight
-        let datePickerHeight = 428
-
-        datePickerHeight = !this.enableButtonValidate ? 428 - 46 : datePickerHeight
-        datePickerHeight = this.withoutHeader ? 428 - 65 : datePickerHeight
-
-        const position = ((windowHeight - (rect.top + rect.height)) > datePickerHeight) || ((windowHeight - rect.top) > windowHeight / 2 + rect.height)
-        this.agendaPosition = position ? 'top' : 'bottom'
-
-        this.isVisible = true
-      },
-      hideDatePicker () {
-        this.setBodyOverflow()
-        this.isVisible = false
+        const isOpen = (val === false || val === true) ? val : !this.pickerOpen
+        this.setBodyOverflow(isOpen)
+        this.pickerOpen = isOpen
+        this.$emit(isOpen ? 'is-shown' : 'is-hidden')
+        if (this.pickerOpen && !this.position) {
+          this.pickerPosition = this.getPosition()
+        }
       },
       setBodyOverflow (value) {
         if (window.innerWidth < 412) {
@@ -283,34 +306,45 @@
           body.style.overflow = value ? 'hidden' : null
         }
       },
-      onFocus () {
-        this.isFocus = true
-        this.showDatePicker()
-      },
-      unFocus () {
-        this.hideDatePicker()
-        this.isFocus = false
+      getPosition () {
+        if (this.position) {
+          return this.position
+        } else {
+          const parentRect = this.$refs.parent.getBoundingClientRect()
+          const windowHeight = window.innerHeight
+          let datePickerHeight = 445
+
+          datePickerHeight = this.noButton ? datePickerHeight - 41 : datePickerHeight
+          datePickerHeight = this.noHeader ? datePickerHeight - 58 : datePickerHeight
+          if (parentRect.top < datePickerHeight) {
+            // No place on top --> bottom
+            return 'bottom'
+          } else if (windowHeight - (parentRect.height + datePickerHeight + parentRect.top) >= 0) {
+            // Have place on bottom --> bottom
+            return 'bottom'
+          } else {
+            // No place on bottom --> top
+            return 'top'
+          }
+        }
       },
       validate () {
-        this.unFocus()
+        this.$emit('validate')
+        this.toggleDatePicker(false)
       }
     }
   }
 </script>
 
 <style lang="scss">
-  @import url('//fonts.googleapis.com/css?family=Roboto:400,500,700');
   @import "./assets/main.scss";
-  .ctk-date-time-picker {
+  .date-time-picker {
     width: 100%;
     margin: 0 auto;
     text-align: left;
     font-size: 14px;
     border-radius: 4px;
     position: relative;
-    * {
-      box-sizing: border-box;
-    }
     .time-picker-overlay {
       z-index: 2;
       position: fixed;
@@ -318,118 +352,7 @@
       left: 0;
       right: 0;
       bottom: 0;
-      &.has-background {
-        background: rgba(0, 0, 0, 0.4);
-      }
-    }
-    .field{
-      position: relative;
-      .field-label{
-        position: absolute;
-        top: 3px;
-        cursor: pointer;
-        left: 13px;
-        -webkit-transform: translateY(25%);
-        transform: translateY(25%);
-        opacity: 0;
-        -webkit-transition: all 0.25s cubic-bezier(0.645, 0.045, 0.355, 1);
-        transition: all 0.25s cubic-bezier(0.645, 0.045, 0.355, 1);
-        font-size: 11px;
-        color: rgba(0, 0, 0, 0.54);
-      }
-      .field-input{
-        cursor: pointer;
-        background-color: #FFF;
-        -webkit-transition-duration: 0.3s;
-        transition-duration: 0.3s;
-        position: relative;
-        width: 100%;
-        height: 42px;
-        min-height: 42px;
-        padding: 0 12px;
-        font-weight: 300;
-        -webkit-appearance: none;
-        outline: none;
-        border: 1px solid rgba(0, 0, 0, 0.2);
-        border-radius: 4px;
-        font-size: 14px;
-        z-index: 0;
-      }
-      &.has-error {
-        .field-input {
-          border-color: orangered !important;
-        }
-        .field-label{
-          opacity: 1;
-          -webkit-transform: translateY(0);
-          transform: translateY(0);
-          font-size: 11px;
-        }
-        .field-input {
-          padding-top: 14px;
-        }
-      }
-      &.has-value {
-        .field-label {
-          opacity: 1;
-          -webkit-transform: translateY(0);
-          transform: translateY(0);
-          font-size: 11px;
-        }
-        .field-input {
-          padding-top: 14px;
-        }
-      }
-      &.is-focused {
-        .field-input {
-          border-color: dodgerblue;
-        }
-        .field-label {
-          color: dodgerblue;
-        }
-      }
-      &.is-disabled {
-        .field-input {
-          border-color: #CCC;
-          background: #F2F2F2;
-        }
-        .field-label, .field-input {
-          cursor: default;
-        }
-      }
-    }
-    .text-danger {
-      color: orangered !important;
-    }
-    &.is-dark {
-      .field-label{
-        color: #ffffffb3;
-      }
-      .field-input{
-        background-color: #424242;
-        border-color: #ffffffb3;
-        color: #ffffffb3;
-      }
-      ::-webkit-input-placeholder { /* WebKit, Blink, Edge */
-        color: #ffffffb3;
-      }
-      :-moz-placeholder { /* Mozilla Firefox 4 to 18 */
-        color: #ffffffb3;
-        opacity:  1;
-      }
-      ::-moz-placeholder { /* Mozilla Firefox 19+ */
-        color: #ffffffb3;
-        opacity:  1;
-      }
-      :-ms-input-placeholder { /* Internet Explorer 10-11 */
-        color: #ffffffb3;
-      }
-      ::-ms-input-placeholder { /* Microsoft Edge */
-        color: #ffffffb3;
-      }
-      ::placeholder { /* Most modern browsers support this now. */
-        color: #ffffffb3;
-      }
+      background: rgba(0, 0, 0, 0.4);
     }
   }
 
@@ -437,7 +360,7 @@
     .time-picker-overlay {
       display: none;
     }
-    .ctk-date-time-picker:not(.inline) {
+    .date-time-picker:not(.inline) {
       position: inherit !important;
     }
   }

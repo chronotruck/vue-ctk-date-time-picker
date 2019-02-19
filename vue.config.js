@@ -4,12 +4,6 @@ module.exports = {
       openAnalyzer: false
     }
   },
-  indexPath: 'index.html',
-  runtimeCompiler: true,
-  baseUrl: './',
-  devServer: {
-    watchOptions: {
-      poll: true
-    }
-  }
+  publicPath: './',
+  lintOnSave: undefined
 }

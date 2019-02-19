@@ -1,7 +1,0 @@
-node_modules/
-demo/*
-webpack.config.js
-README.md
-.gitignore
-.editorconfig
-.babelrc

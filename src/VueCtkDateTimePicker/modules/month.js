@@ -3,7 +3,8 @@ import { extendMoment } from 'moment-range'
 const moment = extendMoment(Moment)
 
 export default class Month {
-  constructor (month, year) {
+  constructor (month, year, locale) {
+    moment.locale(locale)
     this.start = moment([year, month])
     this.end = this.start.clone().endOf('month')
     this.month = month
@@ -14,12 +15,12 @@ export default class Month {
     return this.start.weekday()
   }
 
-  getDays () {
-    return Array.from(moment.range(this.start, this.end).by('days'))
+  getFormatted () {
+    return this.start.format('MMMM')
   }
 
-  getFormatted () {
-    return this.start.format('MMMM YYYY')
+  getYear () {
+    return this.start.format('YYYY')
   }
 
   getWeeks () {
@@ -32,7 +33,17 @@ export default class Month {
   }
 }
 
-export const getWeekDays = function (locale) {
-  const firstDay = moment.localeData(locale).firstDayOfWeek()
-  return moment.weekdaysShort(firstDay === 1)
+export const getWeekDays = (locale, firstDay) => {
+  const firstDayNumber = firstDay === 0
+    ? 7
+    : firstDay || moment.localeData(locale).firstDayOfWeek()
+  let days = moment.weekdaysShort()
+  const keep = days.splice(firstDayNumber)
+  const stay = days
+  days = keep.concat(stay)
+  return days
+}
+
+export const getMonthsShort = (locale) => {
+  return Array.apply(0, Array(12)).map((_, i) => moment().locale(locale).month(i).format('MMM'))
 }

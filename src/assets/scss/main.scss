@@ -1,0 +1,129 @@
+@import "./helpers/index.scss";
+
+*, *::before, *::after {
+  box-sizing: border-box;
+}
+
+.component {
+  padding: 10px;
+  background: #FFF;
+  border-radius: 4px;
+  border: 1px solid #ebebeb;
+  &:hover {
+    box-shadow: 0 0 8px 0 rgba(232,237,250,.6), 0 2px 4px 0 rgba(232,237,250,.5);
+  }
+  &.options {
+    margin-bottom: 20px;
+  }
+}
+.component-container {
+  margin: 0 10px 20px 10px;
+  padding: 20px;
+  background: #FFF;
+  border-radius: 4px;
+  border: 1px solid #ebebeb;
+  min-width: 300px;
+  transition: all 0.25s cubic-bezier(0.645, 0.045, 0.355, 1);
+  flex: 1 0 48%;
+  &:hover {
+    box-shadow: 0 0 8px 0 rgba(232,237,250,.6), 0 2px 4px 0 rgba(232,237,250,.5);
+  }
+  &.dark {
+    background-color: darken(#424242, 10%);
+    color: #FFF;
+    textarea {
+      background: #424242;
+      color: dodgerblue;
+    }
+  }
+}
+.dark {
+  .component-container, .component {
+    border: 1px solid #424242;
+    background-color: darken(#424242, 10%);
+    &:hover {
+      box-shadow: 0 0 8px 0 rgba(0,0,0,.6), 0 2px 4px 0 rgba(0,0,0,.5);
+    }
+  }
+  hr {
+    border-color: #424242;
+  }
+}
+@media screen and (max-width: 1024px) {
+  .components-container.flex {
+    -webkit-flex-direction: column;
+    -ms-flex-direction: column;
+    flex-direction: column;
+    flex-flow: column;
+    -moz-flex-direction: column;
+  }
+}
+
+.logo {
+  width: 180px;
+}
+
+/** TYPO HELPERS **/
+
+.lm-br-4 {
+  border-radius: 4px;
+}
+
+.component {
+  padding: 10px;
+  background: #FFF;
+  border-radius: 4px;
+  border: 1px solid #ebebeb;
+  &:hover {
+    box-shadow: 0 0 8px 0 rgba(232,237,250,.6), 0 2px 4px 0 rgba(232,237,250,.5);
+  }
+  &.options {
+    margin-bottom: 20px;
+  }
+}
+.component-container {
+  margin: 0 10px 20px 10px;
+  padding: 20px;
+  background: #FFF;
+  border-radius: 4px;
+  border: 1px solid #ebebeb;
+  min-width: 300px;
+  transition: all 0.25s cubic-bezier(0.645, 0.045, 0.355, 1);
+  flex: 1 0 48%;
+  &:hover {
+    box-shadow: 0 0 8px 0 rgba(232,237,250,.6), 0 2px 4px 0 rgba(232,237,250,.5);
+  }
+  &.dark {
+    background-color: darken(#424242, 10%);
+    color: #FFF;
+    textarea {
+      background: #424242;
+      color: dodgerblue;
+    }
+  }
+}
+.dark {
+  .component-container, .component {
+    border: 1px solid #424242;
+    background-color: darken(#424242, 10%);
+    &:hover {
+      box-shadow: 0 0 8px 0 rgba(0,0,0,.6), 0 2px 4px 0 rgba(0,0,0,.5);
+    }
+  }
+  hr {
+    border-color: #424242;
+  }
+}
+@media screen and (max-width: 1024px) {
+  .components-container.flex {
+    -webkit-flex-direction: column;
+    -ms-flex-direction: column;
+    flex-direction: column;
+    flex-flow: column;
+    -moz-flex-direction: column;
+  }
+}
+
+.logo {
+  width: 180px;
+}

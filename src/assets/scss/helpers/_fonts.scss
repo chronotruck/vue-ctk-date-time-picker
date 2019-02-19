@@ -1,0 +1,15 @@
+@import "./variables/index.scss";
+
+// Font-size
+@each $size in $font-sizes {
+  .lm-fs-#{$size} {
+    font-size: #{$size}px !important;
+  }
+}
+
+// Font-weight
+@each $weight in $font-weights {
+  .lm-fw-#{$weight} {
+    font-weight: #{$weight};
+  }
+}
