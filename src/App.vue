@@ -365,9 +365,9 @@
           {
             id: '7',
             title: 'Enabled/Disabled dates Picker',
-            description: '(disabled="false")',
+            description: '',
             editOption: false,
-            initial: 'null',
+            initial: {'disabledDates' : ["2019-02-22"], 'enabledDates' : ["2019-02-21", "2019-02-22", "2019-02-23"]},
             value: null,
             options: {
               id: 'EnabledDisabledDatesPicker',
