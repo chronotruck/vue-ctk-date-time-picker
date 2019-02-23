@@ -38,6 +38,7 @@
             :min-date="minDate"
             :max-date="maxDate"
             :disabled-dates="disabledDates"
+            :enabled-dates="enabledDates"
             :range="range"
             :no-shortcuts="noShortcuts"
             :height="height"
@@ -117,6 +118,7 @@
       noWeekendsDays: { type: Boolean, default: Boolean },
       disabledDates: { type: Array, default: Array },
       disabledHours: { type: Array, default: Array },
+      enabledDates: { type: Array, default: Array },
       range: { type: Boolean, default: Boolean },
       noShortcuts: { type: Boolean, default: Boolean },
       buttonColor: { type: String, default: String },

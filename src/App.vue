@@ -191,6 +191,7 @@
                 :disabled="demo.options.disabled"
                 :disabled-dates="demo.options.disabledDates"
                 :disabled-hours="demo.options.disabledHours"
+                :enabled-dates="demo.options.enabledDates"
                 :minute-interval="demo.options.minuteInterval"
                 :first-day-of-week="demo.options.firstDayOfWeek"
                 :min-date="demo.options.minDate"
@@ -359,6 +360,21 @@
               disabled: true,
               label: 'Is Disabled',
               id: 'DisabledPicker'
+            }
+          },
+          {
+            id: '7',
+            title: 'Enabled/Disabled dates Picker',
+            description: '(disabled="false")',
+            editOption: false,
+            initial: 'null',
+            value: null,
+            options: {
+              id: 'EnabledDisabledDatesPicker',
+              disabledDates : ['2019-02-22'],
+              enabledDates : ['2019-02-21', '2019-02-22', '2019-02-23'],
+              inline: true,
+              format: 'YYYY-MM-DD',
             }
           }
         ],
