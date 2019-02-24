@@ -30,7 +30,7 @@
             active: isActive(column.type, item.value),
             disabled: item.disabled
           }"
-          @click="isActive(column.type, item.value) ? null : setTime(item.value, column.type)"
+          @click="item.disabled ? null : setTime(item.value, column.type)"
         >
           <span
             :style="styleColor"

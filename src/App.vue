@@ -263,7 +263,8 @@
               format: 'YYYY-MM-DD HH:mm',
               id: 'DateTimePicker',
               minDate: '2018-04-05',
-              maxDate: '2018-04-24'
+              maxDate: '2018-04-24',
+              disabledHours: ['10', '11', '16']
             }
           },
           {
