@@ -34,10 +34,12 @@
             :month="month"
             :inline="inline"
             :no-weekends-days="noWeekendsDays"
+            :disabled-weekly="disabledWeekly"
             :color="color"
             :min-date="minDate"
             :max-date="maxDate"
             :disabled-dates="disabledDates"
+            :enabled-dates="enabledDates"
             :range="range"
             :no-shortcuts="noShortcuts"
             :height="height"
@@ -116,8 +118,10 @@
       hasButtonValidate: { type: Boolean, default: Boolean },
       hasNoButton: { type: Boolean, default: Boolean },
       noWeekendsDays: { type: Boolean, default: Boolean },
+      disabledWeekly: { type: Array, default: Array },
       disabledDates: { type: Array, default: Array },
       disabledHours: { type: Array, default: Array },
+      enabledDates: { type: Array, default: Array },
       range: { type: Boolean, default: Boolean },
       noShortcuts: { type: Boolean, default: Boolean },
       buttonColor: { type: String, default: String },
@@ -341,6 +345,7 @@
       right: 0;
       left: 0;
       .datepicker {
+        border-radius: 0 !important;
         bottom: 0 !important;
         top: 0 !important;
         left: 0 !important;

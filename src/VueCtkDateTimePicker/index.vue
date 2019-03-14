@@ -45,11 +45,13 @@
       :max-date="maxDate"
       :format="format"
       :no-weekends-days="noWeekendsDays"
+      :disabled-weekly="disabledWeekly"
       :has-button-validate="hasButtonValidate"
       :has-no-button="hasNoButton"
       :range="range"
       :disabled-dates="disabledDates"
       :disabled-hours="disabledHours"
+      :enabled-dates="enabledDates"
       :no-shortcuts="noShortcuts"
       :button-now-translation="buttonNowTranslation"
       :no-button-now="noButtonNow"
@@ -127,10 +129,12 @@
       noHeader: { type: Boolean, default: false },
       range: { type: Boolean, default: false },
       noWeekendsDays: { type: Boolean, default: false },
+      disabledWeekly: { type: Array, default: Array },
       noShortcuts: { type: Boolean, default: false },
       noButton: { type: Boolean, default: false },
       disabledDates: { type: Array, default: Array },
       disabledHours: { type: Array, default: Array },
+      enabledDates: { type: Array, default: Array },
       open: { type: Boolean, default: false },
       persistent: { type: Boolean, default: false },
       inputSize: { type: String, default: String },

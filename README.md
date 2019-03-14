@@ -125,6 +125,7 @@ Here is an example of UMD implementation: https://codepen.io/louismazel/pen/jQWN
 | disabled-hours (9) | Array`<string>` | no | - |
 | custom-shortcuts (10) | Array`<object>` | no | - |
 | keyboard | Boolean | no | true |
+| disabled-weekly (11) | Array`<integer>` | no | [] |
 
 (1) hint : Is a text that replaces the label/placeholder (Ex : Error designation)
 
@@ -169,6 +170,8 @@ If the value of shortcut is a number (Integer), this number correspond to number
 You can use this feature for translate the shortcuts
 
 When you set `isSelected` to true, the shortcut is selected by default
+
+(11) disabled-weekly : Days of the week which are disabled every week, in Array format with day index, Sunday as 0 and Saturday as 6: `[0,4,6]`
 
 # Events API
 
