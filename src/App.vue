@@ -64,6 +64,7 @@
                 input-size="lg"
                 color="purple"
                 :dark="darkMode"
+                right
               />
             </div>
           </div>
@@ -208,6 +209,7 @@
                 :no-keyboard="demo.options.noKeyboard"
                 :no-value-to-custom-elem="demo.options.noValueToCustomElem"
                 :disabled-weekly="demo.options.disabledWeekly"
+                :right="demo.options.right"
               >
                 <input
                   v-if="demo.options && demo.options.slot && demo.options.slot.type === 'input'"
@@ -243,7 +245,7 @@
         booleanOptions: [
           'noHeader', 'autoClose', 'error', 'dark', 'overlay', 'noWeekendDays', 'noShortcuts',
           'noButton', 'onlyDate', 'range', 'onlyTime', 'inline', 'persistent', 'disabled', 'noButtonNow', 'noValueToCustomElem',
-          'noKeyboard'
+          'noKeyboard', 'right'
         ],
         stringOptions: [
           'id', 'label', 'hint', 'color', 'buttonColor', 'position', 'format', 'formatted', 'outputFormat',
@@ -298,7 +300,7 @@
           {
             id: '3',
             title: 'Date Picker',
-            description: 'Date selector - With large input (input-size="lg") - format: "MM-DD-YYYY" - formatted: "ll"',
+            description: 'Date selector - right position - With large input (input-size="lg") - format: "MM-DD-YYYY" - formatted: "ll"',
             editOption: false,
             initial: '14-01-2019',
             value: '14-01-2019',
@@ -310,7 +312,8 @@
               buttonNowTranslation: 'Maintenant',
               id: 'DatePicker',
               format: 'DD-MM-YYYY',
-              formatted: 'll'
+              formatted: 'll',
+              right: true
             }
           },
           {

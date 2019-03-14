@@ -12,6 +12,7 @@
       <div
         :style="[responsivePosition, width]"
         class="datepicker flex flex-direction-column"
+        :class="{ 'right': right }"
       >
         <HeaderPicker
           v-if="!noHeader"
@@ -129,7 +130,8 @@
       noButtonNow: { type: Boolean, default: false },
       firstDayOfWeek: { type: Number, default: Number },
       customShortcuts: { type: Array, default: Array },
-      noKeyboard: { type: Boolean, default: false }
+      noKeyboard: { type: Boolean, default: false },
+      right: { type: Boolean, default: false }
     },
     data () {
       return {
@@ -291,6 +293,7 @@
   .datetimepicker {
     position: absolute;
     z-index: 9;
+    width: 100%;
     &.visible {
       z-index: 999;
     }
@@ -307,6 +310,9 @@
         background: #FFF;
         border-bottom-left-radius: 4px;
         border-bottom-right-radius: 4px;
+      }
+      &.right {
+        right: 0;
       }
     }
     &.is-dark {
