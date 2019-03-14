@@ -5,6 +5,9 @@ import moment from 'moment'
   * @module mixin - keyboardAccessibility
 */
 export default {
+  props: {
+    keyboard: { type: Boolean, default: true }
+  },
   data () {
     return {
       newValue: null
@@ -126,7 +129,7 @@ export default {
     }
   },
   mounted () {
-    if (this.inline || this.visible) {
+    if (this.keyboard && (this.inline || this.visible)) {
       window.addEventListener('keydown', this.keyPressed)
     }
   },
@@ -135,7 +138,7 @@ export default {
   },
   watch: {
     visible (value) {
-      if (value) {
+      if (this.keyboard && value) {
         window.addEventListener('keydown', this.keyPressed)
       } else {
         window.removeEventListener('keydown', this.keyPressed)

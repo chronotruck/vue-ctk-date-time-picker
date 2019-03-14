@@ -124,6 +124,7 @@ Here is an example of UMD implementation: https://codepen.io/louismazel/pen/jQWN
 | disabled-dates (8) | Array`<string>` | no | [] |
 | disabled-hours (9) | Array`<string>` | no | - |
 | custom-shortcuts (10) | Array`<object>` | no | - |
+| keyboard | Boolean | no | true |
 | disabled-weekly (11) | Array`<integer>` | no | [] |
 
 (1) hint : Is a text that replaces the label/placeholder (Ex : Error designation)

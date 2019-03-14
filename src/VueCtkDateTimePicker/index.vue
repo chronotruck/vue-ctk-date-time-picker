@@ -57,6 +57,7 @@
       :no-button-now="noButtonNow"
       :first-day-of-week="firstDayOfWeek"
       :custom-shortcuts="customShortcuts"
+      :keyboard="keyboard"
       @validate="validate"
       @close="toggleDatePicker(false)"
     />
@@ -142,7 +143,8 @@
       noButtonValidate: { type: Boolean, default: false },
       firstDayOfWeek: { type: Number, default: null },
       customShortcuts: { type: Array, default: Array },
-      noValueToCustomElem: { type: Boolean, default: false }
+      noValueToCustomElem: { type: Boolean, default: false },
+      keyboard: { type: Boolean, default: true }
     },
     data () {
       return {
