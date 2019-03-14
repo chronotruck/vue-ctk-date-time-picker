@@ -182,8 +182,6 @@
     border-bottom: 1px solid #EAEAEA;
     color: #FFF;
     position: relative;
-    border-top-left-radius: 4px;
-    border-top-right-radius: 4px;
     &-year {
       opacity: 0.7;
       margin-bottom: 5px;
