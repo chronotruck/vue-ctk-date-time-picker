@@ -45,6 +45,7 @@
       :max-date="maxDate"
       :format="format"
       :no-weekends-days="noWeekendsDays"
+      :disabled-weekly="disabledWeekly"
       :has-button-validate="hasButtonValidate"
       :has-no-button="hasNoButton"
       :range="range"
@@ -126,6 +127,7 @@
       noHeader: { type: Boolean, default: false },
       range: { type: Boolean, default: false },
       noWeekendsDays: { type: Boolean, default: false },
+      disabledWeekly: { type: Array, default: Array },
       noShortcuts: { type: Boolean, default: false },
       noButton: { type: Boolean, default: false },
       disabledDates: { type: Array, default: Array },
