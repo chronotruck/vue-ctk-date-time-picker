@@ -175,6 +175,7 @@
       disabledWeekly: { type: Array, default: Array },
       range: { type: Boolean, default: false },
       disabledDates: { type: Array, default: Array },
+      enabledDates: { type: Array, default: Array },
       dark: { type: Boolean, default: false },
       month: { type: Object, default: Object },
       height: { type: Number, default: Number },
@@ -226,6 +227,7 @@
       isDisabled (day) {
         return (
           this.isDateDisabled(day) ||
+          !this.isDateEnabled(day) || 
           this.isBeforeMinDate(day) ||
           this.isAfterEndDate(day) ||
           this.isDayDisabledWeekly(day) ||
@@ -234,6 +236,9 @@
       },
       isDateDisabled (day) {
         return this.disabledDates.indexOf(day.format('YYYY-MM-DD')) > -1
+      },
+      isDateEnabled (day) {
+        return this.enabledDates.length == 0 || this.enabledDates.indexOf(day.format('YYYY-MM-DD')) > -1
       },
       isBeforeMinDate (day) {
         return day.isBefore(moment(this.minDate))

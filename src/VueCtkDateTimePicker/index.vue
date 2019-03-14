@@ -51,6 +51,7 @@
       :range="range"
       :disabled-dates="disabledDates"
       :disabled-hours="disabledHours"
+      :enabled-dates="enabledDates"
       :no-shortcuts="noShortcuts"
       :button-now-translation="buttonNowTranslation"
       :no-button-now="noButtonNow"
@@ -132,6 +133,7 @@
       noButton: { type: Boolean, default: false },
       disabledDates: { type: Array, default: Array },
       disabledHours: { type: Array, default: Array },
+      enabledDates: { type: Array, default: Array },
       open: { type: Boolean, default: false },
       persistent: { type: Boolean, default: false },
       inputSize: { type: String, default: String },
