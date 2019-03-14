@@ -34,6 +34,7 @@
             :month="month"
             :inline="inline"
             :no-weekends-days="noWeekendsDays"
+            :disabled-weekly="disabledWeekly"
             :color="color"
             :min-date="minDate"
             :max-date="maxDate"
@@ -115,6 +116,7 @@
       hasButtonValidate: { type: Boolean, default: Boolean },
       hasNoButton: { type: Boolean, default: Boolean },
       noWeekendsDays: { type: Boolean, default: Boolean },
+      disabledWeekly: { type: Array, default: Array },
       disabledDates: { type: Array, default: Array },
       disabledHours: { type: Array, default: Array },
       range: { type: Boolean, default: Boolean },
