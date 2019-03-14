@@ -46,7 +46,7 @@
             :first-day-of-week="firstDayOfWeek"
             :visible="visible"
             :custom-shortcuts="customShortcuts"
-            :keyboard="keyboard"
+            :no-keyboard="noKeyboard"
             @change-month="changeMonth"
             @change-year-month="changeYearMonth"
             @close="$emit('close')"
@@ -129,7 +129,7 @@
       noButtonNow: { type: Boolean, default: false },
       firstDayOfWeek: { type: Number, default: Number },
       customShortcuts: { type: Array, default: Array },
-      keyboard: { type: Boolean, default: true }
+      noKeyboard: { type: Boolean, default: false }
     },
     data () {
       return {
