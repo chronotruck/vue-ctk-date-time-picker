@@ -129,7 +129,7 @@
       noButtonNow: { type: Boolean, default: false },
       firstDayOfWeek: { type: Number, default: Number },
       customShortcuts: { type: Array, default: Array },
-      keyboard: { type: Boolean, default: true },
+      keyboard: { type: Boolean, default: true }
     },
     data () {
       return {
