@@ -360,6 +360,34 @@
               label: 'Is Disabled',
               id: 'DisabledPicker'
             }
+          },
+          {
+            id: '7',
+            title: 'Min and Max date with time in 24h-format',
+            description: 'minDate: 2019-03-03 20:10, maxDate: 2019-06-24 09:14',
+            initial: '2019-03-04 20:26',
+            value: '2019-03-04 20:26',
+            editOption: false,
+            options: {
+              format: 'YYYY-MM-DD HH:mm',
+              id: 'DateTimePicker',
+              minDate: '2019-03-03 20:10',
+              maxDate: '2019-06-24 09:14'
+            }
+          },
+          {
+            id: '8',
+            title: 'Min and Max date with time in 12h-format',
+            description: 'minDate: 2019-03-03 8:10 pm, maxDate: 2019-06-24 9:14 am',
+            initial: '2019-03-04 20:26',
+            value: '2019-03-04 20:26',
+            editOption: false,
+            options: {
+              format: 'YYYY-MM-DD h:mm a',
+              id: 'DateTimePicker',
+              minDate: '2019-03-03 8:10 pm',
+              maxDate: '2019-06-24 9:14 am'
+            }
           }
         ],
         value: '06-01-2014 05:00',

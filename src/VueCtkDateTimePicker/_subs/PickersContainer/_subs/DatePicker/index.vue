@@ -234,7 +234,7 @@
         return this.disabledDates.indexOf(day.format('YYYY-MM-DD')) > -1
       },
       isBeforeMinDate (day) {
-        return day.isBefore(moment(this.minDate))
+        return day.isBefore(moment(this.minDate, 'YYYY-MM-DD'))
       },
       isAfterEndDate (day) {
         return moment(day).isAfter(this.maxDate)

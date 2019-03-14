@@ -63,10 +63,11 @@
       }
     })
   }
-  const ArrayMinuteRange = (end, twoDigit, step = 1) => {
-    const len = Math.floor(end / step)
+  const ArrayMinuteRange = (start, end, twoDigit, step = 1) => {
+    const len = Math.floor(end / step) - start
+    
     return Array(len).fill().map((_, idx) => {
-      const number = idx * step
+      const number = start + idx * step
       return {
         value: number,
         item: (twoDigit && (number < 10) ? '0' : '') + number
@@ -96,7 +97,9 @@
       visible: { type: Boolean, default: Boolean },
       onlyTime: { type: Boolean, default: Boolean },
       dark: { type: Boolean, default: Boolean },
-      disabledHours: { type: Array, default: Array }
+      disabledHours: { type: Array, default: Array },
+      minTime: { type: String, default: String },
+      maxTime: { type: String, default: String },
     },
     data () {
       return {
@@ -116,18 +119,25 @@
         }
       },
       isTwelveFormat () {
-        return this.format.includes('h')
+        return this.format.includes('A') || this.format.includes('a')
       },
       hours () {
         const twoDigit = this.format.includes('hh') || this.format.includes('HH')
         const isAfternoon = this.apm ? this.apm === 'pm' || this.apm === 'PM' : false
+        let min_h = this.isTwelveFormat ? 1 : 0
+        let max_h = this.isTwelveFormat ? 12 : 23
+        if (this.minTime)
+          min_h = this.isTwelveFormat ? moment(this.minTime, 'h:mm a').format('h') : moment(this.minTime, 'HH:mm').format('HH')
+        if (this.maxTime)
+          max_h = this.isTwelveFormat ? moment(this.maxTime, 'h:mm a').format('h') : moment(this.maxTime, 'HH:mm').format('HH')
+        
+        // In case if hour present as 08, 09, etc
+        min_h = parseInt(min_h, 10)
+        max_h = parseInt(max_h, 10)
+
         return ArrayHourRange(
-          this.isTwelveFormat
-            ? 1
-            : 0,
-          this.isTwelveFormat
-            ? 12
-            : 23,
+          min_h,
+          max_h,
           twoDigit,
           isAfternoon,
           this.disabledHours
@@ -135,12 +145,35 @@
       },
       minutes () {
         const twoDigit = this.format.includes('mm') || this.format.includes('MM')
-        return ArrayMinuteRange(60, twoDigit, this.minuteInterval)
+        let min_m = 0
+        let max_m = 60
+        if (this.minTime)
+          min_m = this.isTwelveFormat ? moment(this.minTime, 'h:mm a').format('mm') : moment(this.minTime, 'HH:mm').format('mm')
+        if (this.maxTime)
+          max_m = this.isTwelveFormat ? moment(this.maxTime, 'h:mm a').format('mm') : moment(this.maxTime, 'HH:mm').format('mm')
+        
+        // In case if minute present as 08, 09, etc
+        min_m = parseInt(min_m, 10)
+        max_m = parseInt(max_m, 10)
+
+        return ArrayMinuteRange(min_m, max_m, twoDigit, this.minuteInterval)
       },
       apms () {
-        const upper = [{ value: 'AM', item: 'AM' }, { value: 'PM', item: 'PM' }]
-        const lower = [{ value: 'am', item: 'am' }, { value: 'pm', item: 'pm' }]
-        return this.format.includes('A') || this.format.includes('a')
+        let am_pm = ''
+
+        if (this.isTwelveFormat && this.minTime)
+          am_pm = moment(this.minTime, 'h:mm a').format('a')
+        if (this.isTwelveFormat && this.maxTime)
+          am_pm = moment(this.maxTime, 'h:mm a').format('a')
+
+        const upper = am_pm ? 
+                      [{value : am_pm.toUpperCase(), item : am_pm.toUpperCase()}] : 
+                      [{ value: 'AM', item: 'AM' }, { value: 'PM', item: 'PM' }]
+        const lower = am_pm ? 
+                      [{value : am_pm, item : am_pm}] : 
+                      [{ value: 'am', item: 'am' }, { value: 'pm', item: 'pm' }]
+        
+        return this.isTwelveFormat
           ? this.format.includes('A') ? upper : lower
           : null
       },
@@ -229,7 +262,7 @@
         this.minute = parseInt(moment(this.value, this.format).format('mm'))
         this.apm = this.apms && this.value
           ? this.hour > 12
-            ? this.apms[1].value
+            ? this.apms.length > 1 ? this.apms[1].value : this.apms[0].value
             : this.apms[0].value
           : null
         this.columnPad()
