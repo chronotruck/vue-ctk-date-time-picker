@@ -227,7 +227,7 @@
       isDisabled (day) {
         return (
           this.isDateDisabled(day) ||
-          !this.isDateEnabled(day) || 
+          !this.isDateEnabled(day) ||
           this.isBeforeMinDate(day) ||
           this.isAfterEndDate(day) ||
           this.isDayDisabledWeekly(day) ||
@@ -238,7 +238,7 @@
         return this.disabledDates.indexOf(day.format('YYYY-MM-DD')) > -1
       },
       isDateEnabled (day) {
-        return this.enabledDates.length == 0 || this.enabledDates.indexOf(day.format('YYYY-MM-DD')) > -1
+        return this.enabledDates.length === 0 || this.enabledDates.indexOf(day.format('YYYY-MM-DD')) > -1
       },
       isBeforeMinDate (day) {
         return day.isBefore(moment(this.minDate))

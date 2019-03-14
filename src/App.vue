@@ -367,14 +367,14 @@
             title: 'Enabled/Disabled dates Picker',
             description: '',
             editOption: false,
-            initial: {'disabledDates' : ["2019-02-22"], 'enabledDates' : ["2019-02-21", "2019-02-22", "2019-02-23"]},
+            initial: { 'disabledDates': ['2019-02-22'], 'enabledDates': ['2019-02-21', '2019-02-22', '2019-02-23'] },
             value: null,
             options: {
               id: 'EnabledDisabledDatesPicker',
-              disabledDates : ['2019-02-22'],
-              enabledDates : ['2019-02-21', '2019-02-22', '2019-02-23'],
+              disabledDates: ['2019-02-22'],
+              enabledDates: ['2019-02-21', '2019-02-22', '2019-02-23'],
               inline: true,
-              format: 'YYYY-MM-DD',
+              format: 'YYYY-MM-DD'
             }
           }
         ],
