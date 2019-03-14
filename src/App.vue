@@ -205,7 +205,9 @@
                 :input-size="demo.options.inputSize"
                 :custom-shortcuts="demo.options.customShortcuts"
                 :persistent="demo.options.persistent"
+                :no-keyboard="demo.options.noKeyboard"
                 :no-value-to-custom-elem="demo.options.noValueToCustomElem"
+                :disabled-weekly="demo.options.disabledWeekly"
               >
                 <input
                   v-if="demo.options && demo.options.slot && demo.options.slot.type === 'input'"
@@ -240,11 +242,12 @@
         devMode: false,
         booleanOptions: [
           'noHeader', 'autoClose', 'error', 'dark', 'overlay', 'noWeekendDays', 'noShortcuts',
-          'noButton', 'onlyDate', 'range', 'onlyTime', 'inline', 'persistent', 'disabled', 'noButtonNow', 'noValueToCustomElem'
+          'noButton', 'onlyDate', 'range', 'onlyTime', 'inline', 'persistent', 'disabled', 'noButtonNow', 'noValueToCustomElem',
+          'noKeyboard'
         ],
         stringOptions: [
           'id', 'label', 'hint', 'color', 'buttonColor', 'position', 'format', 'formatted', 'outputFormat',
-          'minDate', 'maxDate', 'inputSize', 'buttonNowTranslation'
+          'minDate', 'maxDate', 'inputSize', 'buttonNowTranslation', 'disabledWeekly'
         ],
         optionsNotEditable: [
           'customShortcuts', 'disabledDates', 'disabledHours'
@@ -331,7 +334,7 @@
           {
             id: '5',
             title: 'Inline Picker',
-            description: 'Inline selector (available for all pickers)',
+            description: 'Inline selector with keyboard accessibility disabled & disabled weekly dates (available for all pickers)',
             editOption: false,
             initial: {
               start: '2018-04-05',
@@ -346,7 +349,9 @@
               format: 'YYYY-MM-DD',
               formatted: 'll',
               range: true,
-              id: 'InlinePicker'
+              id: 'InlinePicker',
+              disabledWeekly: [0, 4, 6],
+              noKeyboard: true
             }
           },
           {
@@ -367,14 +372,14 @@
             title: 'Enabled/Disabled dates Picker',
             description: '',
             editOption: false,
-            initial: { 'disabledDates': ['2019-02-22'], 'enabledDates': ['2019-02-21', '2019-02-22', '2019-02-23'] },
-            value: null,
+            initial: { 'disabledDates': ['2021-02-22'], 'enabledDates': ['2021-02-21', '2021-02-22', '2021-02-23'] },
+            value: '2021-02-22',
             options: {
               id: 'EnabledDisabledDatesPicker',
-              disabledDates: ['2019-02-22'],
-              enabledDates: ['2019-02-21', '2019-02-22', '2019-02-23'],
+              disabledDates: ['2021-02-22'],
+              enabledDates: ['2021-02-21', '2021-02-22', '2021-02-23'],
               inline: true,
-              format: 'YYYY-MM-DD'
+              format: 'YYYY-MM-DD HH:mm'
             }
           }
         ],

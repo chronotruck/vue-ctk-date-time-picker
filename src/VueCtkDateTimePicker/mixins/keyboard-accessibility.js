@@ -6,7 +6,7 @@ import moment from 'moment'
 */
 export default {
   props: {
-    keyboard: { type: Boolean, default: true }
+    noKeyboard: { type: Boolean, default: false }
   },
   data () {
     return {
@@ -129,7 +129,7 @@ export default {
     }
   },
   mounted () {
-    if (this.keyboard && (this.inline || this.visible)) {
+    if (!this.noKeyboard && (this.inline || this.visible)) {
       window.addEventListener('keydown', this.keyPressed)
     }
   },
@@ -138,7 +138,7 @@ export default {
   },
   watch: {
     visible (value) {
-      if (this.keyboard && value) {
+      if (!this.noKeyboard && value) {
         window.addEventListener('keydown', this.keyPressed)
       } else {
         window.removeEventListener('keydown', this.keyPressed)
