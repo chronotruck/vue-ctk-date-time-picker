@@ -20,6 +20,7 @@
       :style="[borderStyle]"
       type="text"
       class="field-input"
+      :class="{ 'no-clear-button': noClearButton }"
       readonly
       @focus="$emit('focus')"
       @blur="$emit('blur')"
@@ -39,7 +40,7 @@
       v-if="hasClearButton"
       :color="dark ? '#757575' : '#424242'"
       :dark="dark"
-      class="field-clear-button-2"
+      class="field-clear-button"
       round
       @click="$emit('clear')"
     >
@@ -136,7 +137,8 @@
       width: 100%;
       height: 42px;
       min-height: 42px;
-      padding: 0 12px;
+      padding-left: 12px;
+      padding-right: 44px;
       font-weight: 400;
       -webkit-appearance: none;
       outline: none;
@@ -144,8 +146,11 @@
       border-radius: 4px;
       font-size: 14px;
       z-index: 0;
+      &.no-clear-button {
+        padding: 0 12px;
+      }
     }
-    &-clear-button-2 {
+    &-clear-button {
       position: absolute;
       right: 12px;
     }
