@@ -38,7 +38,7 @@
     </label>
     <CustomButton
       v-if="hasClearButton"
-      :color="dark ? '#757575' : '#424242'"
+      :color="dark ? '#757575' : 'rgba(0, 0, 0, 0.54)'"
       :dark="dark"
       class="field-clear-button"
       round
