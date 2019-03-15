@@ -253,7 +253,7 @@
           'minDate', 'maxDate', 'inputSize', 'buttonNowTranslation', 'disabledWeekly'
         ],
         optionsNotEditable: [
-          'customShortcuts', 'disabledDates', 'disabledHours'
+          'customShortcuts', 'disabledDates', 'disabledHours', 'locale'
         ],
         intOptions: [
           'minuteInterval', 'firstDayOfWeek'
