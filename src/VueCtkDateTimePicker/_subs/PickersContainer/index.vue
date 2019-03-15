@@ -16,6 +16,7 @@
       >
         <HeaderPicker
           v-if="!noHeader"
+          :key="componentKey"
           v-model="value"
           :color="color"
           :only-time="onlyTime"
@@ -48,6 +49,7 @@
             :visible="visible"
             :custom-shortcuts="customShortcuts"
             :no-keyboard="noKeyboard"
+            :locale="locale"
             @change-month="changeMonth"
             @change-year-month="changeYearMonth"
             @close="$emit('close')"
@@ -136,7 +138,8 @@
     data () {
       return {
         month: this.getMonth(),
-        transitionName: 'slidevnext'
+        transitionName: 'slidevnext',
+        componentKey: 0
       }
     },
     computed: {
@@ -220,6 +223,10 @@
     watch: {
       value (value) {
         this.month = this.getMonth(value)
+      },
+      locale () {
+        this.month = this.getMonth()
+        this.componentKey += 1
       }
     },
     methods: {

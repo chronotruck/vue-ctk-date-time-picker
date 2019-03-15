@@ -64,6 +64,7 @@
                 input-size="lg"
                 color="purple"
                 :dark="darkMode"
+                locale="fr"
                 right
               />
             </div>
@@ -252,7 +253,7 @@
           'minDate', 'maxDate', 'inputSize', 'buttonNowTranslation', 'disabledWeekly'
         ],
         optionsNotEditable: [
-          'customShortcuts', 'disabledDates', 'disabledHours'
+          'customShortcuts', 'disabledDates', 'disabledHours', 'locale'
         ],
         intOptions: [
           'minuteInterval', 'firstDayOfWeek'
