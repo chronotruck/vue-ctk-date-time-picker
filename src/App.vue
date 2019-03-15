@@ -211,6 +211,7 @@
                 :no-value-to-custom-elem="demo.options.noValueToCustomElem"
                 :disabled-weekly="demo.options.disabledWeekly"
                 :right="demo.options.right"
+                :no-clear-button="demo.options.noClearButton"
               >
                 <input
                   v-if="demo.options && demo.options.slot && demo.options.slot.type === 'input'"
@@ -246,7 +247,7 @@
         booleanOptions: [
           'noHeader', 'autoClose', 'error', 'dark', 'overlay', 'noWeekendDays', 'noShortcuts',
           'noButton', 'onlyDate', 'range', 'onlyTime', 'inline', 'persistent', 'disabled', 'noButtonNow', 'noValueToCustomElem',
-          'noKeyboard', 'right'
+          'noKeyboard', 'right', 'noClearButton'
         ],
         stringOptions: [
           'id', 'label', 'hint', 'color', 'buttonColor', 'position', 'format', 'formatted', 'outputFormat',
