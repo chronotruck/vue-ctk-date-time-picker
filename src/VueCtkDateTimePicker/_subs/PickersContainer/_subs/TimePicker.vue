@@ -49,7 +49,7 @@
   </div>
 </template>
 <script>
-  import moment,{ max } from 'moment'
+  import moment from 'moment'
 
   const ArrayHourRange = (start, end, twoDigit, isAfternoon, disabledHours, isTwelveFormat) => {
     return Array(end - start + 1).fill().map((_, idx) => {
@@ -65,14 +65,14 @@
   }
   const ArrayMinuteRange = (start, end, twoDigit, step = 1, disabledMinutes) => {
     const len = Math.floor(end / step) - start
-    
+
     return Array(len).fill().map((_, idx) => {
       const number = start + idx * step
-      const txt_minute = (twoDigit && (number < 10) ? '0' : '') + number
+      const txtMinute = (twoDigit && (number < 10) ? '0' : '') + number
       return {
         value: number,
-        item: txt_minute,
-        disabled : disabledMinutes.includes(txt_minute)
+        item: txtMinute,
+        disabled: disabledMinutes.includes(txtMinute)
       }
     })
   }
@@ -101,7 +101,7 @@
       dark: { type: Boolean, default: Boolean },
       disabledHours: { type: Array, default: Array },
       minTime: { type: String, default: String },
-      maxTime: { type: String, default: String },
+      maxTime: { type: String, default: String }
     },
     data () {
       return {
@@ -126,12 +126,12 @@
       hours () {
         const twoDigit = this.format.includes('hh') || this.format.includes('HH')
         const isAfternoon = this.apm ? this.apm === 'pm' || this.apm === 'PM' : false
-        const min_h = this.isTwelveFormat ? 1 : 0
-        const max_h = this.isTwelveFormat ? 12 : 23
-        
+        const minH = this.isTwelveFormat ? 1 : 0
+        const maxH = this.isTwelveFormat ? 12 : 23
+
         return ArrayHourRange(
-          min_h,
-          max_h,
+          minH,
+          maxH,
           twoDigit,
           isAfternoon,
           this._disabledHours,
@@ -143,19 +143,19 @@
         return ArrayMinuteRange(0, 60, twoDigit, this.minuteInterval, this._disabledMinutes)
       },
       apms () {
-        const am_pm = this.isTwelveFormat ?
-                        this.minTime ? 
-                          moment(this.minTime, 'hh:mm a').format('a') 
-                        : this.maxTime ? 
-                          moment(this.maxTime, 'hh:mm a').format('a') 
-                          : ''
-                      : ''
-        const upper = am_pm ? 
-                      [{value : am_pm.toUpperCase(), item : am_pm.toUpperCase()}] : 
-                      [{ value: 'AM', item: 'AM' }, { value: 'PM', item: 'PM' }]
-        const lower = am_pm ? 
-                      [{value : am_pm, item : am_pm}] : 
-                      [{ value: 'am', item: 'am' }, { value: 'pm', item: 'pm' }]
+        const ampm = this.isTwelveFormat
+          ? this.minTime
+            ? moment(this.minTime, 'hh:mm a').format('a')
+            : this.maxTime
+              ? moment(this.maxTime, 'hh:mm a').format('a')
+              : ''
+          : ''
+        const upper = ampm
+          ? [{ value: ampm.toUpperCase(), item: ampm.toUpperCase() }]
+          : [{ value: 'AM', item: 'AM' }, { value: 'PM', item: 'PM' }]
+        const lower = ampm
+          ? [{ value: ampm, item: ampm }]
+          : [{ value: 'am', item: 'am' }, { value: 'pm', item: 'pm' }]
         return this.isTwelveFormat
           ? this.format.includes('A') ? upper : lower
           : null
@@ -167,89 +167,89 @@
           ...(this.apms ? [{ type: 'apms', items: this.apms }] : [])
         ]
       },
-      _disabledHours(){
-        let min_enabled_hour = 0
-        let max_enabled_hour = 23
-        if (this.minTime)
-          min_enabled_hour = this.isTwelveFormat ? 
-                              this.minTime.toUpperCase().includes('AM') ?
-                                moment(this.minTime, 'h:mm a').format('h') :
-                                parseInt(moment(this.minTime, 'h:mm a').format('h')) + 12
-                            : moment(this.minTime, 'HH:mm').format('HH')
-        if (this.maxTime)
-          max_enabled_hour = this.isTwelveFormat ? 
-                              this.maxTime.toUpperCase().includes('AM') ?
-                                moment(this.maxTime, 'h:mm a').format('h') :
-                                parseInt(moment(this.maxTime, 'h:mm a').format('h'), 10) + 12
-                            : moment(this.maxTime, 'HH:mm').format('HH')
-        
-        // In case if hour present as 08, 09, etc
-        min_enabled_hour = parseInt(min_enabled_hour, 10)
-        max_enabled_hour = parseInt(max_enabled_hour, 10)
+      _disabledHours () {
+        let minEnabledHour = 0
+        let maxEnabledHour = 23
+        if (this.minTime) {
+          minEnabledHour = this.isTwelveFormat
+            ? this.minTime.toUpperCase().includes('AM')
+              ? moment(this.minTime, 'h:mm a').format('h')
+              : parseInt(moment(this.minTime, 'h:mm a').format('h')) + 12
+            : moment(this.minTime, 'HH:mm').format('HH')
+        }
+        if (this.maxTime) {
+          maxEnabledHour = this.isTwelveFormat
+            ? this.maxTime.toUpperCase().includes('AM')
+              ? moment(this.maxTime, 'h:mm a').format('h')
+              : parseInt(moment(this.maxTime, 'h:mm a').format('h'), 10) + 12
+            : moment(this.maxTime, 'HH:mm').format('HH')
+        }
 
-        if (min_enabled_hour != 0 || max_enabled_hour != 23){
-          
+        // In case if hour present as 08, 09, etc
+        minEnabledHour = parseInt(minEnabledHour, 10)
+        maxEnabledHour = parseInt(maxEnabledHour, 10)
+
+        if (minEnabledHour !== 0 || maxEnabledHour !== 23) {
           const enabledHours = [...Array(24)]
-                              .map((_,i) => i)
-                              .filter(h => h >= min_enabled_hour && h <= max_enabled_hour)
-          
-          if (!enabledHours.includes(this.hour)){
+            .map((_, i) => i)
+            .filter(h => h >= minEnabledHour && h <= maxEnabledHour)
+
+          if (!enabledHours.includes(this.hour)) {
             this.hour = enabledHours[0]
             this.emitValue()
           }
 
-          let _disabledHours = [...Array(24)]
-                                .map((_,i) => i)
-                                .filter(h => !enabledHours.includes(h))
-                                .map(h => h < 10 ? '0' + h : '' + h)
+          const _disabledHours = [...Array(24)]
+            .map((_, i) => i)
+            .filter(h => !enabledHours.includes(h))
+            .map(h => h < 10 ? '0' + h : '' + h)
           this.disabledHours.forEach(h => _disabledHours.push(h))
 
           return _disabledHours
-        } else{
+        } else {
           return this.disabledHours
         }
       },
-      _disabledMinutes(){
-        let min_enabled_minute = 0
-        let max_enabled_minute = 60
-        if (this.isTwelveFormat){
-          if (this.minTime){
-            const min_t = moment(this.minTime, 'h:mm a')
-            let min_t_h = parseInt(min_t.format('h'), 10) + (this.apm.toUpperCase() === 'PM' ?  12 : 0)
-            min_enabled_minute = min_t_h === this.hour ? parseInt(min_t.format('mm'), 10) : min_enabled_minute
-          } else if (this.maxTime){
-            const max_t = moment(this.maxTime, 'h:mm a')
-            let max_t_h = parseInt(max_t.format('h'), 10) + (this.apm.toUpperCase() === 'PM' ?  12 : 0)
-            max_enabled_minute = max_t_h === this.hour ? parseInt(max_t.format('mm'), 10) : max_enabled_minute
-          }          
-        } else{
-          if (this.minTime){
-            const min_t = moment(this.minTime, 'HH:mm')
-            const min_t_h = parseInt(moment(this.minTime, 'HH:mm').format('HH'), 10)
-            min_enabled_minute = min_t_h === this.hour ? parseInt(min_t.format('mm'), 10) : min_enabled_minute
-          } else if (this.maxTime){
-            const max_t = moment(this.maxTime, 'HH:mm')
-            const max_t_h = parseInt(moment(this.maxTime, 'HH:mm').format('HH'), 10)
-            max_enabled_minute = max_t_h === this.hour ? parseInt(max_t.format('mm'), 10) : max_enabled_minute
-          }   
+      _disabledMinutes () {
+        let minEnabledMinute = 0
+        let maxEnabledMinute = 60
+        if (this.isTwelveFormat) {
+          if (this.minTime) {
+            const minTime = moment(this.minTime, 'h:mm a')
+            const minTimeHour = parseInt(minTime.format('h'), 10) + (this.apm.toUpperCase() === 'PM' ? 12 : 0)
+            minEnabledMinute = minTimeHour === this.hour ? parseInt(minTime.format('mm'), 10) : minEnabledMinute
+          } else if (this.maxTime) {
+            const maxTime = moment(this.maxTime, 'h:mm a')
+            const maxTimeHour = parseInt(maxTime.format('h'), 10) + (this.apm.toUpperCase() === 'PM' ? 12 : 0)
+            maxEnabledMinute = maxTimeHour === this.hour ? parseInt(maxTime.format('mm'), 10) : maxEnabledMinute
+          }
+        } else {
+          if (this.minTime) {
+            const minTime = moment(this.minTime, 'HH:mm')
+            const minTimeHour = parseInt(moment(this.minTime, 'HH:mm').format('HH'), 10)
+            minEnabledMinute = minTimeHour === this.hour ? parseInt(minTime.format('mm'), 10) : minEnabledMinute
+          } else if (this.maxTime) {
+            const maxTime = moment(this.maxTime, 'HH:mm')
+            const maxTimeHour = parseInt(moment(this.maxTime, 'HH:mm').format('HH'), 10)
+            maxEnabledMinute = maxTimeHour === this.hour ? parseInt(maxTime.format('mm'), 10) : maxEnabledMinute
+          }
         }
 
-        if (min_enabled_minute != 0 || max_enabled_minute != 60){
-          
+        if (minEnabledMinute !== 0 || maxEnabledMinute !== 60) {
           const enabledMinutes = [...Array(60)]
-                              .map((_,i) => i)
-                              .filter(m => m >= min_enabled_minute && m <= max_enabled_minute)
-          
-          if (!enabledMinutes.includes(this.minute)){
+            .map((_, i) => i)
+            .filter(m => m >= minEnabledMinute && m <= maxEnabledMinute)
+
+          if (!enabledMinutes.includes(this.minute)) {
             this.minute = enabledMinutes[0]
             this.emitValue()
           }
 
           return [...Array(60)]
-                  .map((_,i) => i)
-                  .filter(m => !enabledMinutes.includes(m))
-                  .map(m => m < 10 ? '0' + m : '' + m)
-        } else{
+            .map((_, i) => i)
+            .filter(m => !enabledMinutes.includes(m))
+            .map(m => m < 10 ? '0' + m : '' + m)
+        } else {
           return []
         }
       }

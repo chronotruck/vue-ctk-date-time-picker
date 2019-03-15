@@ -131,7 +131,7 @@
       return {
         month: this.getMonth(),
         transitionName: 'slidevnext',
-        time_format : this.format.includes('a') || this.format.includes('A') ? 'h:mm a' : 'HH:mm'
+        time_format: this.format.includes('a') || this.format.includes('A') ? 'h:mm a' : 'HH:mm'
       }
     },
     computed: {
@@ -211,21 +211,21 @@
           return date
         }
       },
-      minTime(){
-        let time = moment(this.minDate).format(this.time_format)
-        if (this.minDate && 
-            time != '00:00' &&
-            moment(this.date).isSame(moment(this.minDate, 'YYYY-MM-DD'))) {
-            return time
+      minTime () {
+        const time = moment(this.minDate).format(this.time_format)
+        if (this.minDate &&
+          time !== '00:00' &&
+          moment(this.date).isSame(moment(this.minDate, 'YYYY-MM-DD'))) {
+          return time
         }
         return ''
       },
-      maxTime(){
-        let time = moment(this.maxDate).format(this.time_format)
-        if (this.maxDate && 
-            time != '00:00' &&
-            moment(this.date).isSame(moment(this.maxDate, 'YYYY-MM-DD'))) {
-            return time
+      maxTime () {
+        const time = moment(this.maxDate).format(this.time_format)
+        if (this.maxDate &&
+          time !== '00:00' &&
+          moment(this.date).isSame(moment(this.maxDate, 'YYYY-MM-DD'))) {
+          return time
         }
         return ''
       }
