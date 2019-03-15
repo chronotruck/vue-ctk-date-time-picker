@@ -80,14 +80,16 @@
 
   const updateMomentLocale = (locale, firstDayOfWeek) => {
     moment.locale(locale)
-    const firstDayNumber = Number.isInteger(firstDayOfWeek) && firstDayOfWeek === 0
-      ? 7
-      : firstDayOfWeek || moment.localeData(locale).firstDayOfWeek()
-    moment.updateLocale(locale, {
-      week: {
-        dow: firstDayNumber
-      }
-    })
+    if (firstDayOfWeek) {
+      const firstDayNumber = Number.isInteger(firstDayOfWeek) && firstDayOfWeek === 0
+        ? 7
+        : firstDayOfWeek || moment.localeData(locale).firstDayOfWeek()
+      moment.updateLocale(locale, {
+        week: {
+          dow: firstDayNumber
+        }
+      })
+    }
   }
 
   const nearestMinutes = (interval, date, format) => {
@@ -170,8 +172,8 @@
       },
       dateFormatted () {
         const dateFormatted = this.range
-          ? this.getRangeDatesFormatted()
-          : this.getDateFormatted()
+          ? this.getRangeDatesFormatted(this.locale)
+          : this.getDateFormatted(this.locale)
         this.$emit('formatted-value', dateFormatted)
         return dateFormatted
       },
@@ -212,6 +214,9 @@
       open (val) {
         if (this.disabled) return
         this.pickerOpen = val
+      },
+      locale (value) {
+        updateMomentLocale(value, this.firstDayOfWeek)
       }
     },
     mounted () {

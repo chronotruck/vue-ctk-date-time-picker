@@ -64,6 +64,7 @@
                 input-size="lg"
                 color="purple"
                 :dark="darkMode"
+                locale="fr"
                 right
               />
             </div>

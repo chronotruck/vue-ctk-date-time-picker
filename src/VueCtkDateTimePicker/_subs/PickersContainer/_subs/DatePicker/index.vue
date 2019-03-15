@@ -188,7 +188,6 @@
       return {
         transitionDaysName: 'slidenext',
         transitionLabelName: 'slidevnext',
-        weekDays: getWeekDays(this.locale, this.firstDayOfWeek),
         selectingYearMonth: null,
         isKeyboardActive: true
       }
@@ -215,6 +214,9 @@
       },
       year () {
         return `${this.month.getYear()}`
+      },
+      weekDays () {
+        return getWeekDays(this.locale, this.firstDayOfWeek)
       }
     },
     methods: {
