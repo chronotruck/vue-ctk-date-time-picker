@@ -34,4 +34,10 @@ describe('CustomButton.vue', () => {
     wrapper.setProps({ selected: true })
     expect(wrapper.classes('is-selected')).toBe(true)
   })
+  it('has round class when have round prop', () => {
+    const wrapper = shallowMount(CustomButton)
+    expect(wrapper.classes('round')).toBe(false)
+    wrapper.setProps({ round: true })
+    expect(wrapper.classes('round')).toBe(true)
+  })
 })

@@ -18,7 +18,9 @@
       :color="color"
       :label="label"
       :input-size="inputSize"
+      :no-clear-button="noClearButton"
       @focus="toggleDatePicker(true)"
+      @clear="$emit('input', null)"
     />
     <slot v-else />
     <div
@@ -148,7 +150,8 @@
       customShortcuts: { type: Array, default: Array },
       noValueToCustomElem: { type: Boolean, default: false },
       noKeyboard: { type: Boolean, default: false },
-      right: { type: Boolean, default: false }
+      right: { type: Boolean, default: false },
+      noClearButton: { type: Boolean, default: false }
     },
     data () {
       return {

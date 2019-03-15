@@ -8,7 +8,7 @@
       'is-disabled': disabled,
       'is-dark': dark
     }, inputSize]"
-    class="field"
+    class="field flex align-center"
     @click="focusInput"
   >
     <input
@@ -35,12 +35,29 @@
     >
       {{ hint || label }}
     </label>
+    <CustomButton
+      v-if="hasClearButton"
+      :color="dark ? '#757575' : '#424242'"
+      :dark="dark"
+      class="field-clear-button-2"
+      round
+      @click="$emit('clear')"
+    >
+      <span class="fs-16">
+        ✕
+      </span>
+    </CustomButton>
   </div>
 </template>
 
 <script>
+  import CustomButton from './CustomButton'
+
   export default {
     name: 'CustomInput',
+    components: {
+      CustomButton
+    },
     props: {
       isFocus: { type: Boolean, default: false },
       value: { type: [String, Object], required: false, default: null },
@@ -51,7 +68,8 @@
       disabled: { type: Boolean, default: false },
       dark: { type: Boolean, default: false },
       id: { type: String, default: 'CustomInput' },
-      inputSize: { type: String, default: String }
+      inputSize: { type: String, default: String },
+      noClearButton: { type: Boolean, default: false }
     },
     computed: {
       borderStyle () {
@@ -65,6 +83,9 @@
         return cond
           ? { color: `${this.color}` }
           : null
+      },
+      hasClearButton () {
+        return !this.noClearButton && !this.disabled && this.value
       }
     },
     methods: {
@@ -93,7 +114,7 @@
         }
       }
     }
-    .field-label{
+    &-label{
       position: absolute;
       top: 5px;
       cursor: pointer;
@@ -106,7 +127,7 @@
       font-size: 11px;
       color: rgba(0, 0, 0, 0.54);
     }
-    .field-input{
+    &-input{
       cursor: pointer;
       background-color: #FFF;
       -webkit-transition-duration: 0.3s;
@@ -123,6 +144,10 @@
       border-radius: 4px;
       font-size: 14px;
       z-index: 0;
+    }
+    &-clear-button-2 {
+      position: absolute;
+      right: 12px;
     }
     &.has-error {
       .field-input {
