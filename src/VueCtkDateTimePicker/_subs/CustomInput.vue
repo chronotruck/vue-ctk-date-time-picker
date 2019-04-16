@@ -92,6 +92,7 @@
     methods: {
       focusInput () {
         this.$refs.CustomInput.focus()
+        this.$emit('focus')
       }
     }
   }
