@@ -17,6 +17,7 @@
       :is-focus="hasPickerOpen"
       :color="color"
       :label="label"
+      :labelShow="labelShow"
       :input-size="inputSize"
       :no-clear-button="noClearButton"
       @focus="toggleDatePicker(true)"
@@ -111,6 +112,7 @@
     props: {
       value: { type: [String, Object], default: null },
       label: { type: String, default: 'Select date & time' },
+      labelShow: { type: Boolean, default: true },
       hint: { type: String, default: String },
       error: { type: Boolean, default: Boolean },
       color: { type: String, default: 'dodgerblue' },
