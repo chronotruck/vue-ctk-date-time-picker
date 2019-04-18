@@ -17,7 +17,7 @@
       :is-focus="hasPickerOpen"
       :color="color"
       :label="label"
-      :labelShow="labelShow"
+      :label-show="labelShow"
       :input-size="inputSize"
       :no-clear-button="noClearButton"
       @focus="toggleDatePicker(true)"

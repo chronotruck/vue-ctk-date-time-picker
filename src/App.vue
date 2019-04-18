@@ -183,7 +183,7 @@
                 :button-color="demo.options.buttonColor"
                 :no-header="demo.options.noHeader"
                 :label="demo.options.label"
-                :labelShow="demo.options.labelShow"
+                :label-show="demo.options.labelShow"
                 :auto-close="demo.options.autoClose"
                 :error="demo.options.error"
                 :hint="demo.options.hint"

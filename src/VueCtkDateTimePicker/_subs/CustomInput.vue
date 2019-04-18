@@ -28,8 +28,8 @@
       @click="$emit('click')"
     >
     <label
-      ref="label"
       v-if="labelShow"
+      ref="label"
       :for="id"
       :class="errorHint ? 'text-danger' : null"
       :style="[colorStyle]"
