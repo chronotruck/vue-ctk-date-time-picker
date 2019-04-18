@@ -6,7 +6,8 @@
       'has-value': value,
       'has-error': errorHint,
       'is-disabled': disabled,
-      'is-dark': dark
+      'is-dark': dark,
+      'label-not-show': !labelShow
     }, inputSize]"
     class="field flex align-center"
     @click="focusInput"
@@ -28,6 +29,7 @@
     >
     <label
       ref="label"
+      v-if="labelShow"
       :for="id"
       :class="errorHint ? 'text-danger' : null"
       :style="[colorStyle]"
@@ -63,6 +65,7 @@
       isFocus: { type: Boolean, default: false },
       value: { type: [String, Object], required: false, default: null },
       label: { type: String, default: 'Select date & time' },
+      labelShow: { type: Boolean, default: true },
       hint: { type: String, default: String },
       errorHint: { type: Boolean, default: Boolean },
       color: { type: String, default: String },
@@ -258,6 +261,11 @@
           padding-top: 12px;
         }
       }
+      &.has-value.label-not-show{
+        .field-input {
+          padding-top: 0;
+        }
+      }
     }
     &.lg {
       .field-input {
@@ -271,6 +279,11 @@
       &.has-value {
         .field-input {
           padding-top: 16px;
+        }
+      }
+      &.has-value.label-not-show{
+        .field-input {
+          padding-top: 0;
         }
       }
     }
