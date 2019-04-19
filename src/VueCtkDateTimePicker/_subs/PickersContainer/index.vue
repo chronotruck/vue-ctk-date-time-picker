@@ -141,7 +141,6 @@
       return {
         month: this.getMonth(),
         transitionName: 'slidevnext',
-        time_format: this.format.includes('a') || this.format.includes('A') ? 'h:mm a' : 'HH:mm',
         componentKey: 0
       }
     },
@@ -223,16 +222,18 @@
         }
       },
       minTime () {
-        const time = moment(this.minDate).format(this.time_format)
-        if (this.minDate &&
+        const time = moment(this.minDate).format(this.timeFormat)
+        if (
+          this.minDate &&
           time !== '00:00' &&
-          moment(this.date).isSame(moment(this.minDate, 'YYYY-MM-DD'))) {
+          moment(this.date).isSame(moment(this.minDate, 'YYYY-MM-DD'))
+        ) {
           return time
         }
         return ''
       },
       maxTime () {
-        const time = moment(this.maxDate).format(this.time_format)
+        const time = moment(this.maxDate).format(this.timeFormat)
         if (this.maxDate &&
           time !== '00:00' &&
           moment(this.date).isSame(moment(this.maxDate, 'YYYY-MM-DD'))) {

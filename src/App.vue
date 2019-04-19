@@ -61,11 +61,13 @@
             <div class="flex">
               <CtkDateTimePicker
                 v-model="value2"
-                input-size="lg"
                 color="purple"
                 :dark="darkMode"
                 locale="fr"
-                right
+                no-label
+                :format="'YYYY-MM-DD HH:mm'"
+                :min-date="'2018-04-05 12:15'"
+                :max-date="'2018-04-24 18:45'"
               />
             </div>
           </div>
@@ -393,14 +395,14 @@
             id: '8',
             title: 'Min and Max date with time in 12h-format',
             description: 'minDate: 2019-03-03 8:10 pm, maxDate: 2019-06-24 9:14 am',
-            initial: '2019-03-04 20:26',
-            value: '2019-03-04 20:26',
+            initial: '2019-03-03 8:10 pm',
+            value: '2019-03-06 8:20 pm',
             editOption: false,
             options: {
               format: 'YYYY-MM-DD h:mm a',
               id: 'DateTimePicker',
               minDate: '2019-03-03 8:10 pm',
-              maxDate: '2019-06-24 9:14 am'
+              maxDate: '2019-03-24 9:14 am'
             }
           },
           {

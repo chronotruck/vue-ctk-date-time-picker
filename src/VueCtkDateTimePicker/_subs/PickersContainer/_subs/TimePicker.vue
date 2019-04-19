@@ -195,7 +195,7 @@
             .filter(h => h >= minEnabledHour && h <= maxEnabledHour)
 
           if (!enabledHours.includes(this.hour)) {
-            this.hour = enabledHours[0]
+            this.hour = enabledHours[0] // eslint-disable-line
             this.emitValue()
           }
 
@@ -214,7 +214,7 @@
         let minEnabledMinute = 0
         let maxEnabledMinute = 60
         if (this.isTwelveFormat) {
-          if (this.minTime) {
+          if (this.minTime && this.apm) {
             const minTime = moment(this.minTime, 'h:mm a')
             const minTimeHour = parseInt(minTime.format('h'), 10) + (this.apm.toUpperCase() === 'PM' ? 12 : 0)
             minEnabledMinute = minTimeHour === this.hour ? parseInt(minTime.format('mm'), 10) : minEnabledMinute
@@ -241,7 +241,7 @@
             .filter(m => m >= minEnabledMinute && m <= maxEnabledMinute)
 
           if (!enabledMinutes.includes(this.minute)) {
-            this.minute = enabledMinutes[0]
+            this.minute = enabledMinutes[0] // eslint-disable-line
             this.emitValue()
           }
 
@@ -381,9 +381,10 @@
         }, 0)
       },
       getAvailableHour () {
-        return this.hours.find((element) => {
+        const availableHours = this.hours.find((element) => {
           return element.disabled === false
-        }).value
+        })
+        return availableHours ? availableHours.value : null
       },
       setTime (item, type) {
         if (type === 'hours') {
