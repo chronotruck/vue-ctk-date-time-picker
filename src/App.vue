@@ -183,7 +183,7 @@
                 :button-color="demo.options.buttonColor"
                 :no-header="demo.options.noHeader"
                 :label="demo.options.label"
-                :label-show="demo.options.labelShow"
+                :no-label="demo.options.noLabel"
                 :auto-close="demo.options.autoClose"
                 :error="demo.options.error"
                 :hint="demo.options.hint"
@@ -248,7 +248,7 @@
         booleanOptions: [
           'noHeader', 'autoClose', 'error', 'dark', 'overlay', 'noWeekendDays', 'noShortcuts',
           'noButton', 'onlyDate', 'range', 'onlyTime', 'inline', 'persistent', 'disabled', 'noButtonNow', 'noValueToCustomElem',
-          'noKeyboard', 'right', 'noClearButton', 'labelShow'
+          'noKeyboard', 'right', 'noClearButton', 'noLabel'
         ],
         stringOptions: [
           'id', 'label', 'hint', 'color', 'buttonColor', 'position', 'format', 'formatted', 'outputFormat',
@@ -272,8 +272,7 @@
               format: 'YYYY-MM-DD HH:mm',
               id: 'DateTimePicker',
               minDate: '2018-04-05',
-              maxDate: '2018-04-24',
-              labelShow: true
+              maxDate: '2018-04-24'
             }
           },
           {
@@ -298,14 +297,13 @@
               format: 'YYYY-MM-DD',
               color: 'purple',
               label: 'Select date range',
-              id: 'RangeDatePicker',
-              labelShow: true
+              id: 'RangeDatePicker'
             }
           },
           {
             id: '3',
             title: 'Date Picker',
-            description: 'Date selector - right position - labelShow false - With large input (input-size="lg") - format: "MM-DD-YYYY" - formatted: "ll"',
+            description: 'Date selector - right position - noLabel true - With large input (input-size="lg") - format: "MM-DD-YYYY" - formatted: "ll"',
             editOption: false,
             initial: '14-01-2019',
             value: '14-01-2019',
@@ -319,7 +317,7 @@
               format: 'DD-MM-YYYY',
               formatted: 'll',
               right: true,
-              labelShow: false
+              noLabel: true
             }
           },
           {
@@ -338,7 +336,7 @@
               label: 'Select time',
               inputSize: 'sm',
               id: 'TimePicker',
-              labelShow: true
+              noLabel: true
             }
           },
           {
@@ -361,8 +359,7 @@
               range: true,
               id: 'InlinePicker',
               disabledWeekly: [0, 4, 6],
-              noKeyboard: true,
-              labelShow: true
+              noKeyboard: true
             }
           },
           {
