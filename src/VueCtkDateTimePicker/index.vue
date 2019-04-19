@@ -31,6 +31,7 @@
     />
     <PickersContainer
       v-if="!disabled && isMounted"
+      :id="id"
       ref="agenda"
       v-model="dateTime"
       :visible="hasPickerOpen"

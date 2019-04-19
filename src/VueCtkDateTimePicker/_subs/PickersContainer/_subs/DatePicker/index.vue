@@ -1,6 +1,6 @@
 <template>
   <div
-    id="DatePicker"
+    :id="`${id}-DatePicker`"
     :class="{'flex-1 inline': inline, 'p-0 range flex-1': range, 'is-dark': dark, 'has-shortcuts': range && !noShortcuts}"
     class="datepicker-container flex flex-fixed"
   >
@@ -165,6 +165,7 @@
     },
     mixins: [KeyboardAccessibility],
     props: {
+      id: { type: String, default: String },
       value: { type: [String, Object], default: String },
       color: { type: String, default: String },
       minDate: { type: String, default: String },

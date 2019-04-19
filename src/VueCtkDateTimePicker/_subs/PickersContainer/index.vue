@@ -31,6 +31,7 @@
           <!-- NEED 'YYYY-MM-DD' format -->
           <DatePicker
             v-if="!onlyTime"
+            :id="id"
             v-model="date"
             :dark="dark"
             :month="month"
@@ -108,6 +109,7 @@
     props: {
       value: { type: [String, Object], default: String },
       visible: { type: Boolean, required: true, default: false },
+      id: { type: String, default: String },
       position: { type: String, default: 'bottom' },
       inline: { type: Boolean, default: false },
       dark: { type: Boolean, default: false },
