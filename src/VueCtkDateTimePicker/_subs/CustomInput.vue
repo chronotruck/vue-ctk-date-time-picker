@@ -7,7 +7,7 @@
       'has-error': errorHint,
       'is-disabled': disabled,
       'is-dark': dark,
-      'label-not-show': !labelShow
+      'no-label': noLabel
     }, inputSize]"
     class="field flex align-center"
     @click="focusInput"
@@ -28,7 +28,7 @@
       @click="$emit('click')"
     >
     <label
-      v-if="labelShow"
+      v-if="!noLabel"
       ref="label"
       :for="id"
       :class="errorHint ? 'text-danger' : null"
@@ -65,7 +65,7 @@
       isFocus: { type: Boolean, default: false },
       value: { type: [String, Object], required: false, default: null },
       label: { type: String, default: 'Select date & time' },
-      labelShow: { type: Boolean, default: true },
+      noLabel: { type: Boolean, default: true },
       hint: { type: String, default: String },
       errorHint: { type: Boolean, default: Boolean },
       color: { type: String, default: String },
@@ -179,8 +179,10 @@
         transform: translateY(0);
         font-size: 11px;
       }
-      .field-input {
-        padding-top: 14px;
+      &:not(.no-label) {
+        .field-input {
+          padding-top: 14px;
+        }
       }
     }
     &.is-focused {
@@ -256,14 +258,9 @@
       .field-label {
         font-size: 10px;
       }
-      &.has-value {
+      &.has-value:not(.no-label) {
         .field-input {
           padding-top: 12px;
-        }
-      }
-      &.has-value.label-not-show{
-        .field-input {
-          padding-top: 0;
         }
       }
     }
@@ -276,14 +273,9 @@
       .field-label {
         font-size: 14px;
       }
-      &.has-value {
+      &.has-value:not(.no-label) {
         .field-input {
           padding-top: 16px;
-        }
-      }
-      &.has-value.label-not-show{
-        .field-input {
-          padding-top: 0;
         }
       }
     }
