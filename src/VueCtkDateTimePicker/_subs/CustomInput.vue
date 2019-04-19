@@ -65,7 +65,7 @@
       isFocus: { type: Boolean, default: false },
       value: { type: [String, Object], required: false, default: null },
       label: { type: String, default: 'Select date & time' },
-      noLabel: { type: Boolean, default: true },
+      noLabel: { type: Boolean, default: false },
       hint: { type: String, default: String },
       errorHint: { type: Boolean, default: Boolean },
       color: { type: String, default: String },
