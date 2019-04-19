@@ -76,7 +76,7 @@
       borderStyle () {
         const cond = (this.isFocus && !this.errorHint)
         return cond
-          ? { border: `1px solid ${this.color} !important` }
+          ? { border: `1px solid ${this.color}` }
           : null
       },
       colorStyle () {
