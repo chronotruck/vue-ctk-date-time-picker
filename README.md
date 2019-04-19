@@ -105,6 +105,7 @@ Here is an example of UMD implementation: https://codepen.io/louismazel/pen/jQWN
 | output-format   | String | no  | null |
 | only-time   | Boolean | no     | false |
 | only-date   | Boolean | no  | false |
+| no-label   | Boolean | no   | false |
 | no-header   | Boolean | no   | false |
 | no-value-to-custom-elem (6) | Boolean | no | false |
 | min-date (7)  | String | no  | - |
@@ -141,7 +142,7 @@ Here is an example of UMD implementation: https://codepen.io/louismazel/pen/jQWN
 
 (6) no-value-to-custom-elem : No value will set to your elem (you can get the formatted value with @formatted-value event)
 
-(7) min-date & max-date : Must be `'YYYY-MM-DD'` format
+(7) min-date && max-date should be in the same format as property format specified. If format not set - it is set to 'YYYY-MM-DD hh:mm a' by default
 
 (8) Disabled-Dates is an Array of dates in 'YYYY-MM-DD' format (ex: `['2018-04-03', '2018-04-07', '2018-04-09']`)
 
