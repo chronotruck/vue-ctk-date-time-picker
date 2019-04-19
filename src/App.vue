@@ -64,6 +64,8 @@
                 input-size="lg"
                 color="purple"
                 :dark="darkMode"
+                locale="fr"
+                right
               />
             </div>
           </div>
@@ -181,6 +183,7 @@
                 :button-color="demo.options.buttonColor"
                 :no-header="demo.options.noHeader"
                 :label="demo.options.label"
+                :no-label="demo.options.noLabel"
                 :auto-close="demo.options.autoClose"
                 :error="demo.options.error"
                 :hint="demo.options.hint"
@@ -191,6 +194,7 @@
                 :disabled="demo.options.disabled"
                 :disabled-dates="demo.options.disabledDates"
                 :disabled-hours="demo.options.disabledHours"
+                :enabled-dates="demo.options.enabledDates"
                 :minute-interval="demo.options.minuteInterval"
                 :first-day-of-week="demo.options.firstDayOfWeek"
                 :min-date="demo.options.minDate"
@@ -204,7 +208,11 @@
                 :input-size="demo.options.inputSize"
                 :custom-shortcuts="demo.options.customShortcuts"
                 :persistent="demo.options.persistent"
+                :no-keyboard="demo.options.noKeyboard"
                 :no-value-to-custom-elem="demo.options.noValueToCustomElem"
+                :disabled-weekly="demo.options.disabledWeekly"
+                :right="demo.options.right"
+                :no-clear-button="demo.options.noClearButton"
               >
                 <input
                   v-if="demo.options && demo.options.slot && demo.options.slot.type === 'input'"
@@ -239,14 +247,15 @@
         devMode: false,
         booleanOptions: [
           'noHeader', 'autoClose', 'error', 'dark', 'overlay', 'noWeekendDays', 'noShortcuts',
-          'noButton', 'onlyDate', 'range', 'onlyTime', 'inline', 'persistent', 'disabled', 'noButtonNow', 'noValueToCustomElem'
+          'noButton', 'onlyDate', 'range', 'onlyTime', 'inline', 'persistent', 'disabled', 'noButtonNow', 'noValueToCustomElem',
+          'noKeyboard', 'right', 'noClearButton', 'noLabel'
         ],
         stringOptions: [
           'id', 'label', 'hint', 'color', 'buttonColor', 'position', 'format', 'formatted', 'outputFormat',
-          'minDate', 'maxDate', 'inputSize', 'buttonNowTranslation'
+          'minDate', 'maxDate', 'inputSize', 'buttonNowTranslation', 'disabledWeekly'
         ],
         optionsNotEditable: [
-          'customShortcuts', 'disabledDates', 'disabledHours'
+          'customShortcuts', 'disabledDates', 'disabledHours', 'locale'
         ],
         intOptions: [
           'minuteInterval', 'firstDayOfWeek'
@@ -294,7 +303,7 @@
           {
             id: '3',
             title: 'Date Picker',
-            description: 'Date selector - With large input (input-size="lg") - format: "MM-DD-YYYY" - formatted: "ll"',
+            description: 'Date selector - right position - noLabel true - With large input (input-size="lg") - format: "MM-DD-YYYY" - formatted: "ll"',
             editOption: false,
             initial: '14-01-2019',
             value: '14-01-2019',
@@ -306,7 +315,9 @@
               buttonNowTranslation: 'Maintenant',
               id: 'DatePicker',
               format: 'DD-MM-YYYY',
-              formatted: 'll'
+              formatted: 'll',
+              right: true,
+              noLabel: true
             }
           },
           {
@@ -324,13 +335,14 @@
               minuteInterval: '10',
               label: 'Select time',
               inputSize: 'sm',
-              id: 'TimePicker'
+              id: 'TimePicker',
+              noLabel: true
             }
           },
           {
             id: '5',
             title: 'Inline Picker',
-            description: 'Inline selector (available for all pickers)',
+            description: 'Inline selector with keyboard accessibility disabled & disabled weekly dates (available for all pickers)',
             editOption: false,
             initial: {
               start: '2018-04-05',
@@ -345,7 +357,9 @@
               format: 'YYYY-MM-DD',
               formatted: 'll',
               range: true,
-              id: 'InlinePicker'
+              id: 'InlinePicker',
+              disabledWeekly: [0, 4, 6],
+              noKeyboard: true
             }
           },
           {
@@ -387,6 +401,21 @@
               id: 'DateTimePicker',
               minDate: '2019-03-03 8:10 pm',
               maxDate: '2019-06-24 9:14 am'
+            }
+          },
+          {
+            id: '9',
+            title: 'Enabled/Disabled dates Picker',
+            description: '',
+            editOption: false,
+            initial: { 'disabledDates': ['2021-02-22'], 'enabledDates': ['2021-02-21', '2021-02-22', '2021-02-23'] },
+            value: '2021-02-22',
+            options: {
+              id: 'EnabledDisabledDatesPicker',
+              disabledDates: ['2021-02-22'],
+              enabledDates: ['2021-02-21', '2021-02-22', '2021-02-23'],
+              inline: true,
+              format: 'YYYY-MM-DD HH:mm'
             }
           }
         ],

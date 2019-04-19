@@ -17,8 +17,11 @@
       :is-focus="hasPickerOpen"
       :color="color"
       :label="label"
+      :no-label="noLabel"
       :input-size="inputSize"
+      :no-clear-button="noClearButton"
       @focus="toggleDatePicker(true)"
+      @clear="$emit('input', null)"
     />
     <slot v-else />
     <div
@@ -45,16 +48,20 @@
       :max-date="maxDate"
       :format="format"
       :no-weekends-days="noWeekendsDays"
+      :disabled-weekly="disabledWeekly"
       :has-button-validate="hasButtonValidate"
       :has-no-button="hasNoButton"
       :range="range"
       :disabled-dates="disabledDates"
       :disabled-hours="disabledHours"
+      :enabled-dates="enabledDates"
       :no-shortcuts="noShortcuts"
       :button-now-translation="buttonNowTranslation"
       :no-button-now="noButtonNow"
       :first-day-of-week="firstDayOfWeek"
       :custom-shortcuts="customShortcuts"
+      :no-keyboard="noKeyboard"
+      :right="right"
       @validate="validate"
       @close="toggleDatePicker(false)"
     />
@@ -76,14 +83,16 @@
 
   const updateMomentLocale = (locale, firstDayOfWeek) => {
     moment.locale(locale)
-    const firstDayNumber = Number.isInteger(firstDayOfWeek) && firstDayOfWeek === 0
-      ? 7
-      : firstDayOfWeek || moment.localeData(locale).firstDayOfWeek()
-    moment.updateLocale(locale, {
-      week: {
-        dow: firstDayNumber
-      }
-    })
+    if (firstDayOfWeek) {
+      const firstDayNumber = Number.isInteger(firstDayOfWeek) && firstDayOfWeek === 0
+        ? 7
+        : firstDayOfWeek || moment.localeData(locale).firstDayOfWeek()
+      moment.updateLocale(locale, {
+        week: {
+          dow: firstDayNumber
+        }
+      })
+    }
   }
 
   const nearestMinutes = (interval, date, format) => {
@@ -103,6 +112,7 @@
     props: {
       value: { type: [String, Object], default: null },
       label: { type: String, default: 'Select date & time' },
+      noLabel: { type: Boolean, default: false },
       hint: { type: String, default: String },
       error: { type: Boolean, default: Boolean },
       color: { type: String, default: 'dodgerblue' },
@@ -126,10 +136,12 @@
       noHeader: { type: Boolean, default: false },
       range: { type: Boolean, default: false },
       noWeekendsDays: { type: Boolean, default: false },
+      disabledWeekly: { type: Array, default: Array },
       noShortcuts: { type: Boolean, default: false },
       noButton: { type: Boolean, default: false },
       disabledDates: { type: Array, default: Array },
       disabledHours: { type: Array, default: Array },
+      enabledDates: { type: Array, default: Array },
       open: { type: Boolean, default: false },
       persistent: { type: Boolean, default: false },
       inputSize: { type: String, default: String },
@@ -138,7 +150,10 @@
       noButtonValidate: { type: Boolean, default: false },
       firstDayOfWeek: { type: Number, default: null },
       customShortcuts: { type: Array, default: Array },
-      noValueToCustomElem: { type: Boolean, default: false }
+      noValueToCustomElem: { type: Boolean, default: false },
+      noKeyboard: { type: Boolean, default: false },
+      right: { type: Boolean, default: false },
+      noClearButton: { type: Boolean, default: false }
     },
     data () {
       return {
@@ -162,8 +177,8 @@
       },
       dateFormatted () {
         const dateFormatted = this.range
-          ? this.getRangeDatesFormatted()
-          : this.getDateFormatted()
+          ? this.getRangeDatesFormatted(this.locale)
+          : this.getDateFormatted(this.locale)
         this.$emit('formatted-value', dateFormatted)
         return dateFormatted
       },
@@ -204,6 +219,9 @@
       open (val) {
         if (this.disabled) return
         this.pickerOpen = val
+      },
+      locale (value) {
+        updateMomentLocale(value, this.firstDayOfWeek)
       }
     },
     mounted () {

@@ -6,9 +6,10 @@
       'has-value': value,
       'has-error': errorHint,
       'is-disabled': disabled,
-      'is-dark': dark
+      'is-dark': dark,
+      'no-label': noLabel
     }, inputSize]"
-    class="field"
+    class="field flex align-center"
     @click="focusInput"
   >
     <input
@@ -20,12 +21,14 @@
       :style="[borderStyle]"
       type="text"
       class="field-input"
+      :class="{ 'no-clear-button': noClearButton }"
       readonly
       @focus="$emit('focus')"
       @blur="$emit('blur')"
       @click="$emit('click')"
     >
     <label
+      v-if="!noLabel"
       ref="label"
       :for="id"
       :class="errorHint ? 'text-danger' : null"
@@ -35,29 +38,48 @@
     >
       {{ hint || label }}
     </label>
+    <CustomButton
+      v-if="hasClearButton"
+      :color="dark ? '#757575' : 'rgba(0, 0, 0, 0.54)'"
+      :dark="dark"
+      class="field-clear-button"
+      round
+      @click="$emit('clear')"
+    >
+      <span class="fs-16">
+        ✕
+      </span>
+    </CustomButton>
   </div>
 </template>
 
 <script>
+  import CustomButton from './CustomButton'
+
   export default {
     name: 'CustomInput',
+    components: {
+      CustomButton
+    },
     props: {
       isFocus: { type: Boolean, default: false },
       value: { type: [String, Object], required: false, default: null },
       label: { type: String, default: 'Select date & time' },
+      noLabel: { type: Boolean, default: true },
       hint: { type: String, default: String },
       errorHint: { type: Boolean, default: Boolean },
       color: { type: String, default: String },
       disabled: { type: Boolean, default: false },
       dark: { type: Boolean, default: false },
       id: { type: String, default: 'CustomInput' },
-      inputSize: { type: String, default: String }
+      inputSize: { type: String, default: String },
+      noClearButton: { type: Boolean, default: false }
     },
     computed: {
       borderStyle () {
         const cond = (this.isFocus && !this.errorHint)
         return cond
-          ? { border: `1px solid ${this.color} !important` }
+          ? { border: `1px solid ${this.color}` }
           : null
       },
       colorStyle () {
@@ -65,11 +87,15 @@
         return cond
           ? { color: `${this.color}` }
           : null
+      },
+      hasClearButton () {
+        return !this.noClearButton && !this.disabled && this.value
       }
     },
     methods: {
       focusInput () {
         this.$refs.CustomInput.focus()
+        this.$emit('focus')
       }
     }
   }
@@ -93,7 +119,7 @@
         }
       }
     }
-    .field-label{
+    &-label{
       position: absolute;
       top: 5px;
       cursor: pointer;
@@ -106,7 +132,7 @@
       font-size: 11px;
       color: rgba(0, 0, 0, 0.54);
     }
-    .field-input{
+    &-input{
       cursor: pointer;
       background-color: #FFF;
       -webkit-transition-duration: 0.3s;
@@ -115,7 +141,8 @@
       width: 100%;
       height: 42px;
       min-height: 42px;
-      padding: 0 12px;
+      padding-left: 12px;
+      padding-right: 44px;
       font-weight: 400;
       -webkit-appearance: none;
       outline: none;
@@ -123,6 +150,13 @@
       border-radius: 4px;
       font-size: 14px;
       z-index: 0;
+      &.no-clear-button {
+        padding: 0 12px;
+      }
+    }
+    &-clear-button {
+      position: absolute;
+      right: 12px;
     }
     &.has-error {
       .field-input {
@@ -145,8 +179,10 @@
         transform: translateY(0);
         font-size: 11px;
       }
-      .field-input {
-        padding-top: 14px;
+      &:not(.no-label) {
+        .field-input {
+          padding-top: 14px;
+        }
       }
     }
     &.is-focused {
@@ -222,7 +258,7 @@
       .field-label {
         font-size: 10px;
       }
-      &.has-value {
+      &.has-value:not(.no-label) {
         .field-input {
           padding-top: 12px;
         }
@@ -237,7 +273,7 @@
       .field-label {
         font-size: 14px;
       }
-      &.has-value {
+      &.has-value:not(.no-label) {
         .field-input {
           padding-top: 16px;
         }

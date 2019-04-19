@@ -12,9 +12,11 @@
       <div
         :style="[responsivePosition, width]"
         class="datepicker flex flex-direction-column"
+        :class="{ 'right': right }"
       >
         <HeaderPicker
           v-if="!noHeader"
+          :key="componentKey"
           v-model="value"
           :color="color"
           :only-time="onlyTime"
@@ -34,16 +36,20 @@
             :month="month"
             :inline="inline"
             :no-weekends-days="noWeekendsDays"
+            :disabled-weekly="disabledWeekly"
             :color="color"
             :min-date="minDate"
             :max-date="maxDate"
             :disabled-dates="disabledDates"
+            :enabled-dates="enabledDates"
             :range="range"
             :no-shortcuts="noShortcuts"
             :height="height"
             :first-day-of-week="firstDayOfWeek"
             :visible="visible"
             :custom-shortcuts="customShortcuts"
+            :no-keyboard="noKeyboard"
+            :locale="locale"
             @change-month="changeMonth"
             @change-year-month="changeYearMonth"
             @close="$emit('close')"
@@ -117,21 +123,26 @@
       hasButtonValidate: { type: Boolean, default: Boolean },
       hasNoButton: { type: Boolean, default: Boolean },
       noWeekendsDays: { type: Boolean, default: Boolean },
+      disabledWeekly: { type: Array, default: Array },
       disabledDates: { type: Array, default: Array },
       disabledHours: { type: Array, default: Array },
+      enabledDates: { type: Array, default: Array },
       range: { type: Boolean, default: Boolean },
       noShortcuts: { type: Boolean, default: Boolean },
       buttonColor: { type: String, default: String },
       buttonNowTranslation: { type: String, default: String },
       noButtonNow: { type: Boolean, default: false },
       firstDayOfWeek: { type: Number, default: Number },
-      customShortcuts: { type: Array, default: Array }
+      customShortcuts: { type: Array, default: Array },
+      noKeyboard: { type: Boolean, default: false },
+      right: { type: Boolean, default: false }
     },
     data () {
       return {
         month: this.getMonth(),
         transitionName: 'slidevnext',
-        time_format: this.format.includes('a') || this.format.includes('A') ? 'h:mm a' : 'HH:mm'
+        time_format: this.format.includes('a') || this.format.includes('A') ? 'h:mm a' : 'HH:mm',
+        componentKey: 0
       }
     },
     computed: {
@@ -233,6 +244,10 @@
     watch: {
       value (value) {
         this.month = this.getMonth(value)
+      },
+      locale () {
+        this.month = this.getMonth()
+        this.componentKey += 1
       }
     },
     methods: {
@@ -306,6 +321,7 @@
   .datetimepicker {
     position: absolute;
     z-index: 9;
+    width: 100%;
     &.visible {
       z-index: 999;
     }
@@ -322,6 +338,9 @@
         background: #FFF;
         border-bottom-left-radius: 4px;
         border-bottom-right-radius: 4px;
+      }
+      &.right {
+        right: 0;
       }
     }
     &.is-dark {
@@ -360,6 +379,7 @@
       right: 0;
       left: 0;
       .datepicker {
+        border-radius: 0 !important;
         bottom: 0 !important;
         top: 0 !important;
         left: 0 !important;

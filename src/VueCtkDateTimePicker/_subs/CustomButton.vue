@@ -1,10 +1,16 @@
 <template>
   <button
     class="custom-button flex align-center justify-content-center"
-    :class="{'is-dark': dark, 'with-border': withBorder, 'is-hover': hover, 'is-selected': selected}"
+    :class="{
+      'is-dark': dark,
+      'with-border': withBorder,
+      'is-hover': hover,
+      'is-selected': selected,
+      'round': round
+    }"
     tabindex="-1"
     type="button"
-    @click="$emit('click')"
+    @click.stop="$emit('click')"
     @focus="$emit('focus')"
     @blur="$emit('blur')"
     @mouseover="$emit('mouseover')"
@@ -31,7 +37,8 @@
       dark: { type: Boolean, default: false },
       withBorder: { type: Boolean, default: false },
       hover: { type: Boolean, default: false },
-      selected: { type: Boolean, default: false }
+      selected: { type: Boolean, default: false },
+      round: { type: Boolean, default: false }
     },
     computed: {
       colorStyle () {
@@ -123,6 +130,16 @@
       }
       svg {
         fill: white !important;
+      }
+    }
+    &.round {
+      padding: 0;
+      width: 24px;
+      height: 24px;
+      border-radius: 50%;
+      .custom-button-effect {
+        border-radius: 50%;
+        height: 24px;
       }
     }
   }

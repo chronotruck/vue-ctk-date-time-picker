@@ -172,8 +172,10 @@
       locale: { type: String, default: String },
       inline: { type: Boolean, default: Boolean },
       noWeekendsDays: { type: Boolean, default: Boolean },
+      disabledWeekly: { type: Array, default: Array },
       range: { type: Boolean, default: false },
       disabledDates: { type: Array, default: Array },
+      enabledDates: { type: Array, default: Array },
       dark: { type: Boolean, default: false },
       month: { type: Object, default: Object },
       height: { type: Number, default: Number },
@@ -186,7 +188,6 @@
       return {
         transitionDaysName: 'slidenext',
         transitionLabelName: 'slidevnext',
-        weekDays: getWeekDays(this.locale, this.firstDayOfWeek),
         selectingYearMonth: null,
         isKeyboardActive: true
       }
@@ -213,6 +214,9 @@
       },
       year () {
         return `${this.month.getYear()}`
+      },
+      weekDays () {
+        return getWeekDays(this.locale, this.firstDayOfWeek)
       }
     },
     methods: {
@@ -225,13 +229,18 @@
       isDisabled (day) {
         return (
           this.isDateDisabled(day) ||
+          !this.isDateEnabled(day) ||
           this.isBeforeMinDate(day) ||
           this.isAfterEndDate(day) ||
+          this.isDayDisabledWeekly(day) ||
           (this.isWeekEndDay(day) && this.noWeekendsDays)
         )
       },
       isDateDisabled (day) {
         return this.disabledDates.indexOf(day.format('YYYY-MM-DD')) > -1
+      },
+      isDateEnabled (day) {
+        return this.enabledDates.length === 0 || this.enabledDates.indexOf(day.format('YYYY-MM-DD')) > -1
       },
       isBeforeMinDate (day) {
         return day.isBefore(moment(this.minDate, 'YYYY-MM-DD'))
@@ -261,6 +270,10 @@
       },
       lastInRange (day) {
         return this.value && this.value.end ? moment(moment(this.value.end).format('YYYY-MM-DD')).isSame(day.format('YYYY-MM-DD')) : false
+      },
+      isDayDisabledWeekly (day) {
+        const dayConst = moment(day).day()
+        return this.disabledWeekly.indexOf(dayConst) > -1
       },
       isWeekEndDay (day) {
         const dayConst = moment(day).day()
