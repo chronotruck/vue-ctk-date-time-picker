@@ -316,7 +316,7 @@
 </script>
 
 <style lang="scss" scoped>
-  #DatePicker.datepicker-container {
+  .datepicker-container {
     width: 260px;
     padding: 0 5px;
     position: relative;
