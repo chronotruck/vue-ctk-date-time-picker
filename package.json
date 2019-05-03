@@ -21,10 +21,12 @@
     "delete-dist-report": "rm ./dist/report.html",
     "delete:reports": "npm run delete-docs-report && npm run delete-dist-report"
   },
-  "dependencies": {
+  "peerDependencies": {
     "vue": "^2.5.22",
     "moment": "^2.24.0",
-    "moment-range": "^4.0.1",
+    "moment-range": "^4.0.1"
+  },
+  "dependencies": {
     "v-click-outside": "^2.0.2"
   },
   "devDependencies": {
@@ -39,10 +41,13 @@
     "babel-jest": "^23.6.0",
     "eslint": "^5.8.0",
     "eslint-plugin-vue": "^5.0.0",
+    "moment": "^2.24.0",
+    "moment-range": "^4.0.1",
     "node-sass": "^4.11.0",
     "sass-loader": "^7.1.0",
+    "vue": "^2.5.22",
     "vue-cli-plugin-webpack-bundle-analyzer": "^1.2.0",
-    "vue-template-compiler": "^2.6.9"
+    "vue-template-compiler": "^2.6.10"
   },
   "postcss": {
     "plugins": {
