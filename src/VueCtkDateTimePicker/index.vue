@@ -27,7 +27,7 @@
     <div
       v-if="hasPickerOpen && overlay"
       class="time-picker-overlay"
-      @click.stop="toggleDatePicker(false)"
+      @click.prevent.stop="toggleDatePicker(false)"
     />
     <PickersContainer
       v-if="!disabled && isMounted"

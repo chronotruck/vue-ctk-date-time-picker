@@ -7,7 +7,7 @@
       :class="{'inline': inline, 'is-dark': dark, 'visible': visible}"
       :style="responsivePosition"
       class="datetimepicker flex"
-      @click.stop
+      @click.prevent.stop
     >
       <div
         :style="[responsivePosition, width]"
