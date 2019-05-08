@@ -63,6 +63,7 @@
       :custom-shortcuts="customShortcuts"
       :no-keyboard="noKeyboard"
       :right="right"
+      :reverse-y-m-order="reverseYMOrder"
       @validate="validate"
       @close="toggleDatePicker(false)"
     />
@@ -154,7 +155,8 @@
       noValueToCustomElem: { type: Boolean, default: false },
       noKeyboard: { type: Boolean, default: false },
       right: { type: Boolean, default: false },
-      noClearButton: { type: Boolean, default: false }
+      noClearButton: { type: Boolean, default: false },
+      reverseYMOrder: { type: Boolean, default: false }
     },
     data () {
       return {

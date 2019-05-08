@@ -107,6 +107,7 @@
 
 <script>
   import moment from 'moment'
+  const YEAR_REGEX = new RegExp('([/, -]+)?(YYYYY?|YY|Yr)[年년年]?([/, -]+)?')
 
   export default {
     name: 'HeaderPicker',
@@ -116,6 +117,7 @@
       onlyTime: { type: Boolean, default: Boolean },
       transitionName: { type: String, default: String },
       format: { type: String, default: String },
+      locale: { type: String, default: String },
       timeFormat: { type: String, default: String },
       noTime: { type: Boolean, default: Boolean },
       range: { type: Boolean, default: Boolean },
@@ -139,10 +141,10 @@
         return date
       },
       year () {
-        return this.dateTime.format('YYYY')
+        return this.dateTime.year()
       },
       getDateFormatted () {
-        return this.dateTime.format('ddd D MMM')
+        return this.dateTime.format(moment.localeData(this.locale).longDateFormat('LL').replace(YEAR_REGEX, ''))
       },
       isFormatTwelve () {
         return this.format ? (this.format.indexOf('a') > -1) || (this.format.indexOf('A') > -1) : false

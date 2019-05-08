@@ -22,6 +22,7 @@
           :only-time="onlyTime"
           :format="format"
           :time-format="timeFormat"
+          :locale="locale"
           :transition-name="transitionName"
           :no-time="onlyDate"
           :dark="dark"
@@ -51,6 +52,7 @@
             :custom-shortcuts="customShortcuts"
             :no-keyboard="noKeyboard"
             :locale="locale"
+            :reverse-y-m-order="reverseYMOrder"
             @change-month="changeMonth"
             @change-year-month="changeYearMonth"
             @close="$emit('close')"
@@ -137,7 +139,8 @@
       firstDayOfWeek: { type: Number, default: Number },
       customShortcuts: { type: Array, default: Array },
       noKeyboard: { type: Boolean, default: false },
-      right: { type: Boolean, default: false }
+      right: { type: Boolean, default: false },
+      reverseYMOrder: { type: Boolean, default: false }
     },
     data () {
       return {
