@@ -129,6 +129,7 @@ Here is an example of UMD implementation: https://codepen.io/louismazel/pen/jQWN
 | no-keyboard (12) | Boolean | no | false |
 | right (13) | Boolean | no | false |
 | noClearButton | Boolean | no | false |
+| reverseYMOrder | Boolean | no | false |
 
 (1) hint : Is a text that replaces the label/placeholder (Ex : Error designation)
 

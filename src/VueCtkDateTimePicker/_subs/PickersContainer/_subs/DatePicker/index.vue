@@ -29,10 +29,12 @@
         </div>
         <div
           class="datepicker-container-label flex-1 flex justify-content-center"
+          :class="reverseYMOrder ? 'flex-direction-reversed' : ''"
         >
           <TransitionGroup
             :name="transitionLabelName"
-            class="h-100 flex align-center flex-1 flex justify-content-right"
+            class="h-100 flex align-center flex-1 flex"
+            :class="reverseYMOrder ? 'justify-content-left' : 'justify-content-right'"
           >
             <CustomButton
               v-for="m in [month]"
@@ -48,6 +50,7 @@
           <TransitionGroup
             :name="transitionLabelName"
             class="h-100 flex align-center flex-1 flex"
+            :class="reverseYMOrder ? 'justify-content-right' : 'justify-content-left'"
           >
             <CustomButton
               v-for="y in [year]"
@@ -183,7 +186,8 @@
       noShortcuts: { type: Boolean, default: Boolean },
       firstDayOfWeek: { type: Number, default: Number },
       customShortcuts: { type: Array, default: Array },
-      visible: { type: Boolean, default: Boolean }
+      visible: { type: Boolean, default: Boolean },
+      reverseYMOrder: { type: Boolean, default: false }
     },
     data () {
       return {
