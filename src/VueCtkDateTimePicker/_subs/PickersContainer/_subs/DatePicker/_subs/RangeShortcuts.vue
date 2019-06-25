@@ -39,7 +39,7 @@
     },
     data () {
       return {
-        types: ['day', '-day', 'isoWeek', '-isoWeek', 'month', '-month', 'year', '-year', 'week', '-week'],
+        types: ['day', '-day', '+day', 'isoWeek', '-isoWeek', 'month', '-month', 'year', '-year', 'week', '-week'],
         shortcuts: [
           { label: 'This week', value: 'isoWeek', isHover: false, isSelected: false },
           { label: 'Last week', value: '-isoWeek', isHover: false, isSelected: false },
@@ -86,6 +86,10 @@
             shortcut.end = moment()
             shortcut.start = moment().subtract(value, 'd')
             break
+          case typeof value === 'string' && new RegExp(/[+][0-9]+/g).test(value):
+            shortcut.end = moment().add(value.match(/[0-9]+/g)[0], 'd')
+            shortcut.start = moment()
+            break
           case value === '-month':
             shortcut.start = moment().subtract(1, 'months').startOf('month')
             shortcut.end = moment().subtract(1, 'months').endOf('month')
@@ -105,6 +109,10 @@
           case value === '-day':
             shortcut.start = moment().subtract(1, 'days').startOf('day')
             shortcut.end = moment().subtract(1, 'days').endOf('day')
+            break
+          case value === '+day':
+            shortcut.start = moment().add(1, 'days').startOf('day')
+            shortcut.end = moment().add(1, 'days').endOf('day')
             break
           }
         })
@@ -144,7 +152,7 @@
         this.$emit('change-range', { start, end, value })
       },
       isValidValue (value) {
-        return value && (this.types.indexOf(value) > -1 || (typeof value === 'number' && value > 0))
+        return value && (this.types.indexOf(value) > -1 || (typeof value === 'number' && value > 0) || (typeof value === 'string' && value.match(/[+][0-9]+/g)))
       }
     }
   }

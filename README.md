@@ -152,6 +152,8 @@ Here is an example of UMD implementation: https://codepen.io/louismazel/pen/jQWN
 
 ```js
 [
+  { label: `Next 7 days`, value: '+7', isSelected: false },
+  { label: `Tomorrow`, value: '+day', isSelected: false },
   { label: `Aujourd'hui`, value: 'day', isSelected: false },
   { label: 'Yesterday', value: '-day', isSelected: false },
   { label: 'This Week', value: 'week', isSelected: true },
