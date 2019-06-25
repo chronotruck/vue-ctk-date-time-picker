@@ -168,7 +168,7 @@ Here is an example of UMD implementation: https://codepen.io/louismazel/pen/jQWN
 ]
 ```
 
-Shortcut types allowed : `['day', '-day', 'isoWeek', '-isoWeek', 'month', '-month', 'year', '-year', 'week', '-week']`
+Shortcut types allowed : `['day', '-day', '+day', 'isoWeek', '-isoWeek', 'month', '-month', 'year', '-year', 'week', '-week']`
 
 If the value of shortcut is a number (Integer), this number correspond to number of day (for 5 --> Last 5 days)
 
@@ -180,7 +180,7 @@ When you set `isSelected` to true, the shortcut is selected by default
 
 (12) no-keyboard : Disable keyboard accessibility & navigation
 
-(13) right : add this attribute to align the picker on right 
+(13) right : add this attribute to align the picker on right
 
 # Events API
 
