@@ -21,6 +21,7 @@
       :input-size="inputSize"
       :no-clear-button="noClearButton"
       @focus="toggleDatePicker(true)"
+      @blur="toggleDatePicker(false)"
       @clear="$emit('input', null)"
     />
     <slot v-else />
