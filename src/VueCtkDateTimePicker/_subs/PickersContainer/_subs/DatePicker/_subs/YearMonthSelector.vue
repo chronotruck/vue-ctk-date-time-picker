@@ -4,7 +4,7 @@
     :class="{'dark': dark}"
   >
     <div class="datepicker-controls flex align-center justify-content-right">
-      <div class="arrow-month h-100">
+      <div class="arrow-month h-100" v-if="!isMonthMode">
         <button
           type="button"
           tabindex="-1"
@@ -17,7 +17,7 @@
           </svg>
         </button>
       </div>
-      <div class="arrow-month h-100 text-right">
+      <div class="arrow-month h-100 text-right" v-if="!isMonthMode">
         <button
           type="button"
           tabindex="-1"
