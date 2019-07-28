@@ -4,7 +4,10 @@
     :class="{'dark': dark}"
   >
     <div class="datepicker-controls flex align-center justify-content-right">
-      <div class="arrow-month h-100" v-if="!isMonthMode">
+      <div
+        v-if="!isMonthMode"
+        class="arrow-month h-100"
+      >
         <button
           type="button"
           tabindex="-1"
@@ -13,11 +16,15 @@
         >
           <svg viewBox="0 0 1000 1000">
             <path
-              d="M336.2 274.5l-210.1 210h805.4c13 0 23 10 23 23s-10 23-23 23H126.1l210.1 210.1c11 11 11 21 0 32-5 5-10 7-16 7s-11-2-16-7l-249.1-249c-11-11-11-21 0-32l249.1-249.1c21-21.1 53 10.9 32 32z"/>
+              d="M336.2 274.5l-210.1 210h805.4c13 0 23 10 23 23s-10 23-23 23H126.1l210.1 210.1c11 11 11 21 0 32-5 5-10 7-16 7s-11-2-16-7l-249.1-249c-11-11-11-21 0-32l249.1-249.1c21-21.1 53 10.9 32 32z"
+            />
           </svg>
         </button>
       </div>
-      <div class="arrow-month h-100 text-right" v-if="!isMonthMode">
+      <div
+        v-if="!isMonthMode"
+        class="arrow-month h-100 text-right"
+      >
         <button
           type="button"
           tabindex="-1"
@@ -26,7 +33,8 @@
         >
           <svg viewBox="0 0 1000 1000">
             <path
-              d="M694.4 242.4l249.1 249.1c11 11 11 21 0 32L694.4 772.7c-5 5-10 7-16 7s-11-2-16-7c-11-11-11-21 0-32l210.1-210.1H67.1c-13 0-23-10-23-23s10-23 23-23h805.4L662.4 274.5c-21-21.1 11-53.1 32-32.1z"/>
+              d="M694.4 242.4l249.1 249.1c11 11 11 21 0 32L694.4 772.7c-5 5-10 7-16 7s-11-2-16-7c-11-11-11-21 0-32l210.1-210.1H67.1c-13 0-23-10-23-23s10-23 23-23h805.4L662.4 274.5c-21-21.1 11-53.1 32-32.1z"
+            />
           </svg>
         </button>
       </div>
@@ -71,7 +79,7 @@
 </template>
 
 <script>
-  import {getMonthsShort} from '@/VueCtkDateTimePicker/modules/month'
+  import { getMonthsShort } from '@/VueCtkDateTimePicker/modules/month'
   import CustomButton from '@/VueCtkDateTimePicker/_subs/CustomButton'
 
   const ArrayRange = (start, end) => {
@@ -87,30 +95,30 @@
       CustomButton
     },
     props: {
-      locale: {type: String, default: String},
-      dark: {type: Boolean, default: Boolean},
-      color: {type: String, default: String},
-      mode: {type: String, default: String},
-      month: {type: Object, default: Object}
+      locale: { type: String, default: String },
+      dark: { type: Boolean, default: Boolean },
+      color: { type: String, default: String },
+      mode: { type: String, default: String },
+      month: { type: Object, default: Object }
     },
-    data() {
+    data () {
       return {
         months: null,
         years: null
       }
     },
     computed: {
-      currentMonth() {
+      currentMonth () {
         return this.month.month
       },
-      currentYear() {
+      currentYear () {
         return this.month.year
       },
-      isMonthMode() {
+      isMonthMode () {
         return this.mode === 'month'
       }
     },
-    mounted() {
+    mounted () {
       if (this.isMonthMode) {
         this.getMonths()
       } else {
@@ -118,25 +126,25 @@
       }
     },
     methods: {
-      getMonths() {
+      getMonths () {
         this.years = null
         this.months = getMonthsShort(this.locale)
       },
-      getYears() {
+      getYears () {
         this.months = null
         this.years = ArrayRange(this.month.year - 7, this.month.year + 7)
       },
-      prevStepYears() {
+      prevStepYears () {
         this.years = ArrayRange(this.years[0] - 14, this.years[0])
       },
-      nextStepYears() {
+      nextStepYears () {
         this.years = ArrayRange(this.years[this.years.length - 1], this.years[this.years.length - 1] + 14)
       },
-      selectMonth(monthNumber) {
-        this.$emit('input', {month: monthNumber, year: this.currentYear})
+      selectMonth (monthNumber) {
+        this.$emit('input', { month: monthNumber, year: this.currentYear })
       },
-      selectYear(year) {
-        this.$emit('input', {month: this.currentMonth, year: year})
+      selectYear (year) {
+        this.$emit('input', { month: this.currentMonth, year: year })
       }
     }
   }
