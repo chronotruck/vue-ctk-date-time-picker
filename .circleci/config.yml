@@ -1,0 +1,57 @@
+version: 2
+
+jobs:
+  build:
+    working_directory: ~/app
+    docker:
+      - image: circleci/node:10.13.0
+    steps:
+      - checkout
+      - run:
+          name: Install dependencies
+          command: |
+            npm ci
+      - run:
+          name: Run build
+          command: |
+            npm run build:lib
+      - persist_to_workspace:
+          root: ~/app
+
+  tests_unit:
+    working_directory: ~/app
+    docker:
+      - image: circleci/node:10.13.0
+        environment:
+          APP_PORT: 8080
+    steps:
+      - attach_workspace:
+          at: ~/app
+      - run:
+          name: Run tests
+          command: |
+            npm run test:unit
+
+  misc:
+    working_directory: ~/app
+    docker:
+      - image: circleci/node:10.13.0
+    steps:
+      - attach_workspace:
+          at: ~/app
+      - run:
+          name: Lint
+          command: |
+            npm run lint
+
+workflows:
+  version: 2
+  app:
+    jobs:
+      - build
+      - tests_unit:
+          requires:
+            - build
+      - misc:
+          requires:
+            - build
