@@ -17,6 +17,8 @@ jobs:
             npm run build:lib
       - persist_to_workspace:
           root: ~/app
+          paths:
+            - ./
 
   tests_unit:
     working_directory: ~/app
