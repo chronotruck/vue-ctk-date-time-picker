@@ -5,6 +5,7 @@
     v-click-outside="() => { toggleDatePicker(false) }"
     class="date-time-picker"
   >
+    <!-- Input -->
     <CustomInput
       v-if="hasInput"
       :id="id"
@@ -24,13 +25,16 @@
       @clear="$emit('input', null)"
     />
     <slot v-else />
+
     <div
       v-if="hasPickerOpen && overlay"
       class="time-picker-overlay"
       @click.stop="toggleDatePicker(false)"
     />
+
+    <!-- Date picker container -->
     <PickersContainer
-      v-if="!disabled && isMounted"
+      v-if="!disabled"
       :id="id"
       ref="agenda"
       v-model="dateTime"
@@ -159,8 +163,7 @@
     data () {
       return {
         pickerOpen: false,
-        pickerPosition: this.position,
-        isMounted: false
+        pickerPosition: this.position
       }
     },
     computed: {
@@ -235,7 +238,6 @@
           this.setValueToCustomElem()
         }
       }
-      this.isMounted = true
       if (this.format === 'YYYY-MM-DD hh:mm a' && this.onlyTime) {
         window.console.warn(`A (time) format must be indicated/ (Ex : format="HH:mm")`)
       }
