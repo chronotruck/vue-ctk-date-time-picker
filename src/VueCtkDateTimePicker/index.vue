@@ -80,11 +80,7 @@
   import CustomInput from './_subs/CustomInput'
   import PickersContainer from './_subs/PickersContainer'
 
-  const getDefaultLocale = () => {
-    const locale = (window.navigator.userLanguage || window.navigator.language || 'en').substr(0, 2)
-    moment.locale(locale)
-    return locale
-  }
+  import props from './props'
 
   const updateMomentLocale = (locale, firstDayOfWeek) => {
     moment.locale(locale)
@@ -114,52 +110,7 @@
     directives: {
       clickOutside: vClickOutside.directive
     },
-    props: {
-      value: { type: [String, Object], default: null },
-      label: { type: String, default: 'Select date & time' },
-      noLabel: { type: Boolean, default: false },
-      hint: { type: String, default: String },
-      error: { type: Boolean, default: Boolean },
-      color: { type: String, default: 'dodgerblue' },
-      buttonColor: { type: String, default: String },
-      id: { type: String, default: 'DateTimePicker' },
-      disabled: { type: Boolean, default: false },
-      dark: { type: Boolean, default: false },
-      overlay: { type: Boolean, default: false },
-      inline: { type: Boolean, default: false },
-      position: { type: String, default: String },
-      locale: { type: String, default: getDefaultLocale() },
-      formatted: { type: String, default: 'llll' },
-      format: { type: String, default: 'YYYY-MM-DD hh:mm a' },
-      outputFormat: { type: String, default: String },
-      minuteInterval: { type: [String, Number], default: 1 },
-      minDate: { type: String, default: String },
-      maxDate: { type: String, default: String },
-      autoClose: { type: Boolean, default: false },
-      onlyTime: { type: Boolean, default: false },
-      onlyDate: { type: Boolean, default: false },
-      noHeader: { type: Boolean, default: false },
-      range: { type: Boolean, default: false },
-      noWeekendsDays: { type: Boolean, default: false },
-      disabledWeekly: { type: Array, default: Array },
-      noShortcuts: { type: Boolean, default: false },
-      noButton: { type: Boolean, default: false },
-      disabledDates: { type: Array, default: Array },
-      disabledHours: { type: Array, default: Array },
-      enabledDates: { type: Array, default: Array },
-      open: { type: Boolean, default: false },
-      persistent: { type: Boolean, default: false },
-      inputSize: { type: String, default: String },
-      buttonNowTranslation: { type: String, default: String },
-      noButtonNow: { type: Boolean, default: false },
-      noButtonValidate: { type: Boolean, default: false },
-      firstDayOfWeek: { type: Number, default: null },
-      customShortcuts: { type: Array, default: Array },
-      noValueToCustomElem: { type: Boolean, default: false },
-      noKeyboard: { type: Boolean, default: false },
-      right: { type: Boolean, default: false },
-      noClearButton: { type: Boolean, default: false }
-    },
+    props,
     data () {
       return {
         pickerOpen: false,
