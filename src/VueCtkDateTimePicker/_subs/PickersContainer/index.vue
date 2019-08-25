@@ -118,7 +118,7 @@
       onlyDate: { type: Boolean, default: false },
       onlyTime: { type: Boolean, default: null },
       minuteInterval: { type: [String, Number], default: 1 },
-      format: { type: String, default: null },
+      format: { type: String, default: 'YYYY-MM-DD hh:mm a' },
       locale: { type: String, default: null },
       maxDate: { type: String, default: null },
       minDate: { type: String, default: null },
