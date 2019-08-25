@@ -17,8 +17,8 @@
   export default {
     name: 'WeekDays',
     props: {
-      weekDays: { type: Array, default: Array, required: true },
-      dark: { type: Boolean, default: Boolean }
+      weekDays: { type: Array, default: () => ([]), required: true },
+      dark: { type: Boolean, default: null }
     }
   }
 </script>

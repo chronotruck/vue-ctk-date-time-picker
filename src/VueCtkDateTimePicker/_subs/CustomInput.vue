@@ -66,13 +66,13 @@
       value: { type: [String, Object], required: false, default: null },
       label: { type: String, default: 'Select date & time' },
       noLabel: { type: Boolean, default: false },
-      hint: { type: String, default: String },
-      errorHint: { type: Boolean, default: Boolean },
-      color: { type: String, default: String },
+      hint: { type: String, default: null },
+      errorHint: { type: Boolean, default: null },
+      color: { type: String, default: null },
       disabled: { type: Boolean, default: false },
       dark: { type: Boolean, default: false },
       id: { type: String, default: 'CustomInput' },
-      inputSize: { type: String, default: String },
+      inputSize: { type: String, default: null },
       noClearButton: { type: Boolean, default: false }
     },
     computed: {
