@@ -52,9 +52,13 @@
 
 <script>
   import moment from 'moment'
+
   export default {
     name: 'ButtonValidate',
     props: {
+      /**
+       * TODO: Remove wrong default values
+       */
       dark: { type: Boolean, default: Boolean },
       buttonColor: { type: String, default: String },
       buttonNowTranslation: { type: String, default: String },

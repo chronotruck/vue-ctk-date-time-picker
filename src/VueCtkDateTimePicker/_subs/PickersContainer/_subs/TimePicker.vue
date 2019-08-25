@@ -9,6 +9,7 @@
       v-for="column in columns"
       :key="column.type"
       :ref="column.type"
+      :class="[`time-picker-column-${column.type}`]"
       class="time-picker-column flex-1 flex flex-direction-column text-center"
       @scroll="noScrollEvent
         ? null
@@ -90,6 +91,9 @@
   export default {
     name: 'TimePicker',
     props: {
+      /**
+       * TODO: Fix default prop values
+       */
       value: { type: String, default: String },
       format: { type: String, default: String },
       minuteInterval: { type: [String, Number], default: Number },
