@@ -395,7 +395,7 @@
           this.hour = item
         } else if (type === 'minutes') {
           this.minute = item
-        } else if (type === 'apms') {
+        } else if (type === 'apms' && this.apm !== item) {
           const newHour = item === 'pm' || item === 'PM' ? this.hour + 12 : this.hour - 12
           this.hour = newHour
           this.apm = item
