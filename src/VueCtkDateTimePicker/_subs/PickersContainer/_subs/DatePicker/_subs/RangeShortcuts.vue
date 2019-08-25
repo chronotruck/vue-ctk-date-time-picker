@@ -31,11 +31,11 @@
     components: { CustomButton },
     props: {
       value: { type: Object, required: false, default: null },
-      color: { type: String, default: String },
+      color: { type: String, default: null },
       dark: { type: Boolean, default: false },
-      dateTime: { type: Object, default: Object },
-      customShortcuts: { type: Array, default: Array },
-      height: { type: Number, default: Number, required: true }
+      dateTime: { type: Object, default: null },
+      customShortcuts: { type: Array, default: () => ([]) },
+      height: { type: Number, required: true }
     },
     data () {
       return {
