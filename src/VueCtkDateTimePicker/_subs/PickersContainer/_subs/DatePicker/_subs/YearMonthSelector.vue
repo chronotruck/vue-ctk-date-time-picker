@@ -60,11 +60,11 @@
       CustomButton
     },
     props: {
-      locale: { type: String, default: String },
-      dark: { type: Boolean, default: Boolean },
-      color: { type: String, default: String },
-      mode: { type: String, default: String },
-      month: { type: Object, default: Object }
+      locale: { type: String, default: null },
+      dark: { type: Boolean, default: null },
+      color: { type: String, default: null },
+      mode: { type: String, default: null },
+      month: { type: Object, default: null }
     },
     data () {
       return {
