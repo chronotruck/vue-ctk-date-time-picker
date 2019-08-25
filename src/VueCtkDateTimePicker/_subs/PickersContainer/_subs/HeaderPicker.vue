@@ -111,15 +111,15 @@
   export default {
     name: 'HeaderPicker',
     props: {
-      value: { type: [String, Object], default: String },
-      color: { type: String, default: String },
-      onlyTime: { type: Boolean, default: Boolean },
-      transitionName: { type: String, default: String },
-      format: { type: String, default: String },
-      timeFormat: { type: String, default: String },
-      noTime: { type: Boolean, default: Boolean },
-      range: { type: Boolean, default: Boolean },
-      dark: { type: Boolean, default: Boolean }
+      value: { type: [String, Object], default: null },
+      color: { type: String, default: null },
+      onlyTime: { type: Boolean, default: null },
+      transitionName: { type: String, default: null },
+      format: { type: String, default: null },
+      timeFormat: { type: String, default: null },
+      noTime: { type: Boolean, default: null },
+      range: { type: Boolean, default: null },
+      dark: { type: Boolean, default: null }
     },
     computed: {
       bgStyle () {
