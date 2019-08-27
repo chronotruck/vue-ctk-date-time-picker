@@ -94,6 +94,9 @@
       transition: all 450ms cubic-bezier(0.23, 1, 0.32, 1) 0ms;
       transform: scale(0);
     }
+    .flex-fix {
+      display: inline-block;
+    }
     &.with-border {
       border: 1px solid #eaeaea;
     }
