@@ -155,8 +155,7 @@
       }
     }
     &-clear-button {
-      position: absolute;
-      right: 12px;
+      margin: 0 0 0 -30px;
     }
     &.has-error {
       .field-input {
