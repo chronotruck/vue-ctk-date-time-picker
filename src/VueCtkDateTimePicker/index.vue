@@ -1,6 +1,6 @@
 <template>
   <div
-    :id="id"
+    :id="'${id}-wrapper'"
     ref="parent"
     v-click-outside="() => { toggleDatePicker(false) }"
     class="date-time-picker"
