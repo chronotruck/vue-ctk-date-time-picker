@@ -169,8 +169,8 @@ Here is an example of UMD implementation: https://codepen.io/louismazel/pen/jQWN
   { label: 'Last iso Week', value: '-isoWeek', isSelected: false },
   { label: 'This Month', value: 'month', isSelected: false },
   { label: 'Last Month', value: '-month', isSelected: false },
-  { label: 'This Month', value: 'year', isSelected: false },
-  { label: 'Last Month', value: '-year', isSelected: false },
+  { label: 'This Year', value: 'year', isSelected: false },
+  { label: 'Last Year', value: '-year', isSelected: false },
   { label: 'Last 5 days', value: 5, isSelected: false }
 ];
 ```
