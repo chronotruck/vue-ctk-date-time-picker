@@ -138,6 +138,7 @@ Here is an example of UMD implementation: https://codepen.io/louismazel/pen/jQWN
 | no-keyboard (12)            | Boolean           | no       | false                    |
 | right (13)                  | Boolean           | no       | false                    |
 | noClearButton               | Boolean           | no       | false                    |
+| noScrollEvent (14)          | Boolean           | no       | false                    |
 
 (1) hint : Is a text that replaces the label/placeholder (Ex : Error designation)
 
@@ -188,6 +189,8 @@ When you set `isSelected` to true, the shortcut is selected by default
 (12) no-keyboard : Disable keyboard accessibility & navigation
 
 (13) right : add this attribute to align the picker on right
+
+(14) noScrollEvent : Set this to `true` if you don't want the time picker to auto-select a time after scrolling
 
 # Events API
 

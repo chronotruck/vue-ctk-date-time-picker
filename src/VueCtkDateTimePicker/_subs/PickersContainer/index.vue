@@ -71,6 +71,7 @@
             :disabled-hours="disabledHours"
             :min-time="minTime"
             :max-time="maxTime"
+            :no-scroll-event="noScrollEvent"
           />
         </div>
         <ButtonValidate
@@ -137,7 +138,8 @@
       firstDayOfWeek: { type: Number, default: null },
       customShortcuts: { type: Array, default: null },
       noKeyboard: { type: Boolean, default: false },
-      right: { type: Boolean, default: false }
+      right: { type: Boolean, default: false },
+      noScrollEvent: { type: Boolean, default: false }
     },
     data () {
       return {

@@ -44,5 +44,6 @@ export default {
   noValueToCustomElem: { type: Boolean, default: false },
   noKeyboard: { type: Boolean, default: false },
   right: { type: Boolean, default: false },
-  noClearButton: { type: Boolean, default: false }
+  noClearButton: { type: Boolean, default: false },
+  noScrollEvent: { type: Boolean, default: false }
 }
