@@ -28,16 +28,16 @@
           </button>
         </div>
         <div
-          class="datepicker-container-label flex-1 flex justify-content-center"
+          class="datepicker-container-label flex-1 justify-content-center flex"
         >
           <TransitionGroup
             :name="transitionLabelName"
-            class="h-100 flex align-center flex-1 flex justify-content-right"
+            class="h-100 flex align-center flex-1 justify-content-right"
           >
             <CustomButton
               v-for="m in [month]"
               :key="m.month"
-              class="date-buttons lm-fs-16 padding-button"
+              class="date-buttons lm-fs-16 padding-button flex-fix"
               :color="color"
               :dark="dark"
               @click="selectingYearMonth = 'month'"
@@ -47,12 +47,12 @@
           </TransitionGroup>
           <TransitionGroup
             :name="transitionLabelName"
-            class="h-100 flex align-center flex-1 flex"
+            class="h-100 flex align-center flex-1"
           >
             <CustomButton
               v-for="y in [year]"
               :key="y"
-              class="date-buttons lm-fs-16 padding-button"
+              class="date-buttons lm-fs-16 padding-button flex-fix"
               :color="color"
               :dark="dark"
               @click="selectingYearMonth = 'year'"
