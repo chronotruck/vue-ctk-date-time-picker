@@ -11,7 +11,7 @@
       :ref="column.type"
       :class="[`time-picker-column-${column.type}`]"
       class="time-picker-column flex-1 flex flex-direction-column text-center"
-      @scroll="noScrollEvent
+      @scroll="noScrollEvent || positionViewChanging
         ? null
         : column.type === 'hours' ? onScrollHours($event) : column.type === 'minutes' ? onScrollMinutes($event) : onScrollApms($event)
       "
@@ -102,7 +102,8 @@
       dark: { type: Boolean, default: null },
       disabledHours: { type: Array, default: () => ([]) },
       minTime: { type: String, default: null },
-      maxTime: { type: String, default: null }
+      maxTime: { type: String, default: null },
+      noScrollEvent: { type: Boolean, default: false }
     },
     data () {
       return {
@@ -111,7 +112,7 @@
         apm: null,
         oldvalue: this.value,
         columnPadding: {},
-        noScrollEvent: !!(this.value && !this.inline),
+        positionViewChanging: !!(this.value && !this.inline),
         delay: 0
       }
     },
@@ -359,7 +360,7 @@
         }
       },
       initPositionView () {
-        this.noScrollEvent = true
+        this.positionViewChanging = true
         const containers = ['hours', 'minutes']
         if (this.apms) containers.push('apms')
         setTimeout(() => {
@@ -376,7 +377,7 @@
               }
             }
             setTimeout(() => {
-              this.noScrollEvent = false
+              this.positionViewChanging = false
             }, 500)
           })
         }, 0)

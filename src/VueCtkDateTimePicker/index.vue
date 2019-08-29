@@ -67,6 +67,7 @@
       :custom-shortcuts="customShortcuts"
       :no-keyboard="noKeyboard"
       :right="right"
+      :no-scroll-event="noScrollEvent"
       @validate="validate"
       @close="toggleDatePicker(false)"
     />
