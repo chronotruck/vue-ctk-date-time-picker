@@ -8,7 +8,7 @@
     <!-- Input -->
     <CustomInput
       v-if="hasInput"
-      :id="id"
+      :id="`${id}-input`"
       ref="custom-input"
       v-model="dateFormatted"
       :disabled="disabled"
@@ -35,7 +35,7 @@
     <!-- Date picker container -->
     <PickersContainer
       v-if="!disabled"
-      :id="id"
+      :id="'${id}-pickers-container'"
       ref="agenda"
       v-model="dateTime"
       :visible="hasPickerOpen"
