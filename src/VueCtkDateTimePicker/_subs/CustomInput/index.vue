@@ -13,7 +13,7 @@
     @click="focusInput"
   >
     <input
-      :id="id"
+      :id="$attrs.id"
       ref="CustomInput"
       :value="value"
       :placeholder="label"
@@ -30,7 +30,7 @@
     <label
       v-if="!noLabel"
       ref="label"
-      :for="id"
+      :for="$attrs.id"
       :class="errorHint ? 'text-danger' : null"
       :style="[colorStyle]"
       class="field-label"
@@ -54,13 +54,14 @@
 </template>
 
 <script>
-  import CustomButton from './CustomButton'
+  import CustomButton from './../CustomButton'
 
   export default {
     name: 'CustomInput',
     components: {
       CustomButton
     },
+    inheritAttrs: false,
     props: {
       isFocus: { type: Boolean, default: false },
       value: { type: [String, Object], required: false, default: null },
@@ -71,7 +72,6 @@
       color: { type: String, default: null },
       disabled: { type: Boolean, default: false },
       dark: { type: Boolean, default: false },
-      id: { type: String, default: 'CustomInput' },
       inputSize: { type: String, default: null },
       noClearButton: { type: Boolean, default: false }
     },
