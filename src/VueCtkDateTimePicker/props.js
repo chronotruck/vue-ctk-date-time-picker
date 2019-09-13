@@ -8,7 +8,6 @@ export default {
   error: { type: Boolean, default: null },
   color: { type: String, default: 'dodgerblue' },
   buttonColor: { type: String, default: null },
-  id: { type: String, default: 'DateTimePicker' },
   disabled: { type: Boolean, default: false },
   dark: { type: Boolean, default: false },
   overlay: { type: Boolean, default: false },

@@ -1,6 +1,5 @@
 <template>
   <div
-    :id="id"
     ref="parent"
     v-click-outside="() => { toggleDatePicker(false) }"
     class="date-time-picker"
@@ -8,7 +7,7 @@
     <!-- Input -->
     <CustomInput
       v-if="hasInput"
-      :id="id"
+      :id="$attrs.id"
       ref="custom-input"
       v-model="dateFormatted"
       :disabled="disabled"
@@ -35,7 +34,6 @@
     <!-- Date picker container -->
     <PickersContainer
       v-if="!disabled"
-      :id="id"
       ref="agenda"
       v-model="dateTime"
       :visible="hasPickerOpen"
@@ -110,6 +108,7 @@
     directives: {
       clickOutside: vClickOutside.directive
     },
+    inheritAttrs: false,
     props,
     data () {
       return {
