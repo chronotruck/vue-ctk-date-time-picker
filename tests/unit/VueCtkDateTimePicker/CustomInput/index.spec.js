@@ -40,9 +40,29 @@ describe('VueCtkDateTimePicker/CustomInput', () => {
       expect(input.attributes().id).toEqual('fieldId')
     })
 
-    /**
-     * TODO: Add tests for the disabled case
-     */
+    it('should have the disabled from the attributes', () => {
+      const wrapper = shallowMount(CustomInput, {
+        attrs: {
+          disabled: true
+        }
+      })
+
+      const input = wrapper.find('.field-input')
+      expect(input.attributes().disabled).toBeDefined()
+    })
+
+    it('should have any attribute from the attributes', () => {
+      const wrapper = shallowMount(CustomInput, {
+        attrs: {
+          name: 'hello-world',
+          rest: 'attribute'
+        }
+      })
+
+      const input = wrapper.find('.field-input')
+      expect(input.attributes().name).toEqual('hello-world')
+      expect(input.attributes().rest).toEqual('attribute')
+    })
   })
 
   /**
