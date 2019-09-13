@@ -40,7 +40,7 @@ describe('VueCtkDateTimePicker', () => {
     })
 
     describe('id attr', () => {
-      it('should have the id prop from the attribute', async () => {
+      it('should have the id prop from the attribute', () => {
         const wrapper = shallowMount(VueCtkDateTimePicker, {
           propsData: {
             inline: false
@@ -50,26 +50,67 @@ describe('VueCtkDateTimePicker', () => {
           }
         })
 
-        await wrapper.vm.$nextTick()
         const input = wrapper.find(CustomInput)
         expect(input.attributes().id).toEqual('myField-input')
+      })
+    })
+
+    describe('disabled attr', () => {
+      it('should have the disabled prop from the attribute', () => {
+        const wrapper = shallowMount(VueCtkDateTimePicker, {
+          propsData: {
+            inline: false
+          },
+          attrs: {
+            disabled: true
+          }
+        })
+
+        const input = wrapper.find(CustomInput)
+        expect(input.attributes().disabled).toBeDefined()
+      })
+    })
+
+    describe('name attr', () => {
+      it('should have the name attr', () => {
+        const wrapper = shallowMount(VueCtkDateTimePicker, {
+          propsData: {
+            inline: false
+          },
+          attrs: {
+            name: 'myFieldName'
+          }
+        })
+
+        const input = wrapper.find(CustomInput)
+        expect(input.attributes().name).toEqual('myFieldName')
       })
     })
   })
 
   describe('picker container', () => {
-    it('should be defined if the "disabled" prop is not defined', () => {
-      wrapper.setProps({
-        disabled: false
+    it('should be defined if the "disabled" attribute is not defined', () => {
+      const wrapper = shallowMount(VueCtkDateTimePicker, {
+        propsData: {
+          inline: false
+        },
+        attrs: {
+          disabled: false
+        }
       })
 
       const container = wrapper.find(PickersContainer)
       expect(container.exists()).toBeTruthy()
     })
 
-    it('should not be defined if the "disabled" prop is defined', () => {
-      wrapper.setProps({
-        disabled: true
+    it('should not be defined if the "disabled" attribute is defined', () => {
+      const wrapper = shallowMount(VueCtkDateTimePicker, {
+        propsData: {
+          inline: false
+        },
+        attrs: {
+          disabled: true
+        }
       })
 
       const container = wrapper.find(PickersContainer)

@@ -11,7 +11,7 @@
       :id="`${$attrs.id}-input`"
       ref="custom-input"
       v-model="dateFormatted"
-      :disabled="disabled"
+      v-bind="$attrs"
       :dark="dark"
       :hint="hint"
       :error-hint="error"
@@ -24,7 +24,9 @@
       @focus="toggleDatePicker(true)"
       @clear="$emit('input', null)"
     />
-    <slot v-else />
+    <slot
+      v-else
+    />
 
     <div
       v-if="hasPickerOpen && overlay"
@@ -34,7 +36,7 @@
 
     <!-- Date picker container -->
     <PickersContainer
-      v-if="!disabled"
+      v-if="!isDisabled"
       :id="`${$attrs.id}-picker-container`"
       ref="agenda"
       v-model="dateTime"
@@ -169,11 +171,19 @@
       },
       formatOutput () {
         return this.outputFormat || this.format
+      },
+      /**
+       * Returns true if the field is disabled
+       * @function isDisabled
+       * @returns {boolean}
+       */
+      isDisabled () {
+        return typeof this.$attrs.disabled !== 'undefined' && this.$attrs.disabled !== false
       }
     },
     watch: {
       open (val) {
-        if (this.disabled) return
+        if (this.isDisabled) return
         this.pickerOpen = val
       },
       locale (value) {
@@ -202,6 +212,9 @@
     },
     methods: {
       setValueToCustomElem () {
+        /**
+         * TODO: Find a way (perhaps), to bind default attrs to custom element.
+         */
         const target = this.$slots.default[0]
         if (target) {
           if (target.tag === 'input') {
@@ -264,7 +277,7 @@
         return date ? nearestMinutes(this.minuteInterval, date, this.formatOutput).format('YYYY-MM-DD HH:mm') : null
       },
       toggleDatePicker (val) {
-        if (this.disabled) return
+        if (this.isDisabled) return
         const isOpen = (val === false || val === true) ? val : !this.pickerOpen
         this.setBodyOverflow(isOpen)
         this.pickerOpen = isOpen

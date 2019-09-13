@@ -5,7 +5,7 @@
       'is-focused': isFocus,
       'has-value': value,
       'has-error': errorHint,
-      'is-disabled': disabled,
+      'is-disabled': isDisabled,
       'is-dark': dark,
       'no-label': noLabel
     }, inputSize]"
@@ -15,9 +15,9 @@
     <input
       :id="$attrs.id"
       ref="CustomInput"
+      v-bind="$attrs"
       :value="value"
       :placeholder="label"
-      :disabled="disabled"
       :style="[borderStyle]"
       type="text"
       class="field-input"
@@ -70,7 +70,6 @@
       hint: { type: String, default: null },
       errorHint: { type: Boolean, default: null },
       color: { type: String, default: null },
-      disabled: { type: Boolean, default: false },
       dark: { type: Boolean, default: false },
       inputSize: { type: String, default: null },
       noClearButton: { type: Boolean, default: false }
@@ -90,6 +89,14 @@
       },
       hasClearButton () {
         return !this.noClearButton && !this.disabled && this.value
+      },
+      /**
+       * Returns true if the field is disabled
+       * @function isDisabled
+       * @returns {boolean}
+       */
+      isDisabled () {
+        return typeof this.$attrs.disabled !== 'undefined' && this.$attrs.disabled !== false
       }
     },
     methods: {
