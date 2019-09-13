@@ -79,7 +79,7 @@ Vue.component('VueCtkDateTimePicker', VueCtkDateTimePicker);
 </script>
 ```
 
-Here is an example of UMD implementation: https://codepen.io/louismazel/pen/jQWNzQ
+Here is an example of [UMD implementation](https://codepen.io/louismazel/pen/jQWNzQ).
 
 ## Use custom element to trigger the component
 
