@@ -38,6 +38,23 @@ describe('VueCtkDateTimePicker', () => {
       const input = wrapper.find(CustomInput)
       expect(input.exists()).toBeFalsy()
     })
+
+    describe('id attr', () => {
+      it('should have the id prop from the attribute', async () => {
+        const wrapper = shallowMount(VueCtkDateTimePicker, {
+          propsData: {
+            inline: false
+          },
+          attrs: {
+            id: 'myField'
+          }
+        })
+
+        await wrapper.vm.$nextTick()
+        const input = wrapper.find(CustomInput)
+        expect(input.attributes().id).toEqual('myField-input')
+      })
+    })
   })
 
   describe('picker container', () => {
@@ -57,6 +74,22 @@ describe('VueCtkDateTimePicker', () => {
 
       const container = wrapper.find(PickersContainer)
       expect(container.exists()).toBeFalsy()
+    })
+
+    describe('id attribute', () => {
+      it('should have the id attribute', () => {
+        const wrapper = shallowMount(VueCtkDateTimePicker, {
+          propsData: {
+            inline: false
+          },
+          attrs: {
+            id: 'myField'
+          }
+        })
+
+        const container = wrapper.find(PickersContainer)
+        expect(container.attributes().id).toEqual('myField-picker-container')
+      })
     })
   })
 
