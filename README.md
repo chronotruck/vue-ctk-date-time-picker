@@ -79,7 +79,7 @@ Vue.component('VueCtkDateTimePicker', VueCtkDateTimePicker);
 </script>
 ```
 
-Here is an example of UMD implementation: https://codepen.io/louismazel/pen/jQWNzQ
+Here is an example of [UMD implementation](https://codepen.io/louismazel/pen/jQWNzQ).
 
 ## Use custom element to trigger the component
 
@@ -98,11 +98,9 @@ Here is an example of UMD implementation: https://codepen.io/louismazel/pen/jQWN
 | Props                       | Type              | Required | Default                  |
 | --------------------------- | ----------------- | -------- | ------------------------ |
 | v-model                     | String            | yes      | -                        |
-| id                          | String            | no       | DateTimePicker           |
 | format                      | String            | no       | 'YYYY-MM-DD hh:mm a'     |
 | formatted                   | String            | no       | 'llll' (momentjs format) |
 | label                       | String            | no       | Select date & time       |
-| disabled                    | Boolean           | no       | false                    |
 | hint (1)                    | String            | no       | -                        |
 | error (2)                   | Boolean           | no       | false                    |
 | color (3)                   | String (hex)      | no       | dodgerblue               |
@@ -188,6 +186,8 @@ When you set `isSelected` to true, the shortcut is selected by default
 (12) no-keyboard : Disable keyboard accessibility & navigation
 
 (13) right : add this attribute to align the picker on right
+
+> Any additionnal attribute passed to the component will be automatically be binded to the input component. (eg. if you passes a `type` attribute, the `<input>` will receive it).
 
 # Events API
 
