@@ -4,7 +4,9 @@
 
 > A vue component for select dates (range mode available) & time
 
-This documentation is for v2.*. Find v1 documentation [here](./assets/doc-v1.md)
+[![Build Status](https://circleci.com/gh/chronotruck/vue-ctk-date-time-picker/tree/master.svg?style=shield)](https://circleci.com/gh/chronotruck/vue-ctk-date-time-picker/tree/master)
+
+This documentation is for v2.\*. Find v1 documentation [here](./assets/doc-v1.md)
 
 ![vue-ctk-date-time-picker](./assets/illu-animated.gif)
 
@@ -48,29 +50,36 @@ Vue.component('VueCtkDateTimePicker', VueCtkDateTimePicker);
 ## UMD
 
 ```html
-<link rel="stylesheet" type="text/css" href="${YOUR_PATH}/vue-ctk-date-time-picker.css">
+<link
+  rel="stylesheet"
+  type="text/css"
+  href="${YOUR_PATH}/vue-ctk-date-time-picker.css"
+/>
 
 <div id="app">
   <VueCtkDateTimePicker v-model="yourValue"></VueCtkDateTimePicker>
 </div>
 
 <script src="https://unpkg.com/vue" charset="utf-8"></script>
-<script src="${YOUR_PATH}/vue-ctk-date-time-picker.umd.min.js" charset="utf-8"></script>
+<script
+  src="${YOUR_PATH}/vue-ctk-date-time-picker.umd.min.js"
+  charset="utf-8"
+></script>
 
 <script type="text/javascript">
   Vue.component('vue-ctk-date-time-picker', window['vue-ctk-date-time-picker']);
   new Vue({
     el: '#app',
-    data () {
+    data() {
       return {
         yourValue: null
-      }
+      };
     }
   });
 </script>
 ```
 
-Here is an example of UMD implementation: https://codepen.io/louismazel/pen/jQWNzQ
+Here is an example of [UMD implementation](https://codepen.io/louismazel/pen/jQWNzQ).
 
 ## Use custom element to trigger the component
 
@@ -86,49 +95,47 @@ Here is an example of UMD implementation: https://codepen.io/louismazel/pen/jQWN
 
 # Props API
 
-| Props      | Type       | Required | Default    |
-|------------|------------|----------|------------|
-| v-model    | String | yes     | -          |
-| id  | String | no  | DateTimePicker |
-| format   | String | no      | 'YYYY-MM-DD hh:mm a' |
-| formatted   | String | no    | 'llll' (momentjs format) |
-| label      | String     | no    | Select date & time |
-| disabled | Boolean | no | false |
-| hint (1)       | String       | no       | -         |
-| error (2) | Boolean    | no      | false     |
-| color (3)     | String (hex) | no    | dodgerblue |
-| button-color (4)    | String (hex) | no    | #00C853 |
-| position     | String | no    | null |
-| locale (5)  | String | no     | Browser Locale |
-| persistent     | Boolean | no    | false |
-| minute-interval | Integer | no    | 1    |
-| output-format   | String | no  | null |
-| only-time   | Boolean | no     | false |
-| only-date   | Boolean | no  | false |
-| no-label   | Boolean | no   | false |
-| no-header   | Boolean | no   | false |
-| no-value-to-custom-elem (6) | Boolean | no | false |
-| min-date (7)  | String | no  | - |
-| max-date (7)  | String | no  | - |
-| no-weekends-days | Boolean | no | false |
-| auto-close | Boolean | no | false |
-| inline | Boolean | no | false |
-| overlay | Boolean | no | false |
-| range | Boolean | no | false |
-| dark | Boolean | no | false |
-| no-shortcuts | Boolean | no | false |
-| no-button | Boolean | no | false |
-| input-size | String (sm or lg) | no | null |
-| button-now-translation | String | no | 'Now' |
-| no-button-now | Boolean | no | false |
-| first-day-of-week | Int (0 to 7) | no | - |
-| disabled-dates (8) | Array`<string>` | no | [] |
-| disabled-hours (9) | Array`<string>` | no | - |
-| custom-shortcuts (10) | Array`<object>` | no | - |
-| disabled-weekly (11) | Array`<integer>` | no | [] |
-| no-keyboard (12) | Boolean | no | false |
-| right (13) | Boolean | no | false |
-| noClearButton | Boolean | no | false |
+| Props                       | Type              | Required | Default                  |
+| --------------------------- | ----------------- | -------- | ------------------------ |
+| v-model                     | String            | yes      | -                        |
+| format                      | String            | no       | 'YYYY-MM-DD hh:mm a'     |
+| formatted                   | String            | no       | 'llll' (momentjs format) |
+| label                       | String            | no       | Select date & time       |
+| hint (1)                    | String            | no       | -                        |
+| error (2)                   | Boolean           | no       | false                    |
+| color (3)                   | String (hex)      | no       | dodgerblue               |
+| button-color (4)            | String (hex)      | no       | #00C853                  |
+| position                    | String            | no       | null                     |
+| locale (5)                  | String            | no       | Browser Locale           |
+| persistent                  | Boolean           | no       | false                    |
+| minute-interval             | Integer           | no       | 1                        |
+| output-format               | String            | no       | null                     |
+| only-time                   | Boolean           | no       | false                    |
+| only-date                   | Boolean           | no       | false                    |
+| no-label                    | Boolean           | no       | false                    |
+| no-header                   | Boolean           | no       | false                    |
+| no-value-to-custom-elem (6) | Boolean           | no       | false                    |
+| min-date (7)                | String            | no       | -                        |
+| max-date (7)                | String            | no       | -                        |
+| no-weekends-days            | Boolean           | no       | false                    |
+| auto-close                  | Boolean           | no       | false                    |
+| inline                      | Boolean           | no       | false                    |
+| overlay                     | Boolean           | no       | false                    |
+| range                       | Boolean           | no       | false                    |
+| dark                        | Boolean           | no       | false                    |
+| no-shortcuts                | Boolean           | no       | false                    |
+| no-button                   | Boolean           | no       | false                    |
+| input-size                  | String (sm or lg) | no       | null                     |
+| button-now-translation      | String            | no       | 'Now'                    |
+| no-button-now               | Boolean           | no       | false                    |
+| first-day-of-week           | Int (0 to 7)      | no       | -                        |
+| disabled-dates (8)          | Array`<string>`   | no       | []                       |
+| disabled-hours (9)          | Array`<string>`   | no       | -                        |
+| custom-shortcuts (10)       | Array`<object>`   | no       | -                        |
+| disabled-weekly (11)        | Array`<integer>`  | no       | []                       |
+| no-keyboard (12)            | Boolean           | no       | false                    |
+| right (13)                  | Boolean           | no       | false                    |
+| noClearButton               | Boolean           | no       | false                    |
 
 (1) hint : Is a text that replaces the label/placeholder (Ex : Error designation)
 
@@ -160,10 +167,10 @@ Here is an example of UMD implementation: https://codepen.io/louismazel/pen/jQWN
   { label: 'Last iso Week', value: '-isoWeek', isSelected: false },
   { label: 'This Month', value: 'month', isSelected: false },
   { label: 'Last Month', value: '-month', isSelected: false },
-  { label: 'This Month', value: 'year', isSelected: false },
-  { label: 'Last Month', value: '-year', isSelected: false },
+  { label: 'This Year', value: 'year', isSelected: false },
+  { label: 'Last Year', value: '-year', isSelected: false },
   { label: 'Last 5 days', value: 5, isSelected: false }
-]
+];
 ```
 
 Shortcut types allowed : `['day', '-day', 'isoWeek', '-isoWeek', 'month', '-month', 'year', '-year', 'week', '-week']`
@@ -178,31 +185,33 @@ When you set `isSelected` to true, the shortcut is selected by default
 
 (12) no-keyboard : Disable keyboard accessibility & navigation
 
-(13) right : add this attribute to align the picker on right 
+(13) right : add this attribute to align the picker on right
+
+> Any additionnal attribute passed to the component will be automatically be binded to the input component. (eg. if you passes a `type` attribute, the `<input>` will receive it).
 
 # Events API
 
-| Event      | Return    |
-|------------|-----------|
-| input    |  value (formatted with 'format' props) |
-| formatted-value    | value (formatted with 'formatted' props) |
-| is-shown    | Component is shown |
-| is-hidden    | Component is hidden |
-| validate    | Click on validate button (so component is closed) |
-| destroy    | Component is destroy |
+| Event           | Return                                            |
+| --------------- | ------------------------------------------------- |
+| input           | value (formatted with 'format' props)             |
+| formatted-value | value (formatted with 'formatted' props)          |
+| is-shown        | Component is shown                                |
+| is-hidden       | Component is hidden                               |
+| validate        | Click on validate button (so component is closed) |
+| destroy         | Component is destroy                              |
 
 # Keyboard Accessible
 
-| Key      | Action    |
-|------------|-----------|
-| Arrow Right | Next Day |
-| Arrow Left | Previous Day |
-| Arrow Down | Same day on next week |
-| Arrow Up | Same day on previous week |
-| Page Down | Same day on previous month |
-| Page Up | Same day on next month |
-| Enter or Space | Select day |
-| Escape | Close component |
+| Key            | Action                     |
+| -------------- | -------------------------- |
+| Arrow Right    | Next Day                   |
+| Arrow Left     | Previous Day               |
+| Arrow Down     | Same day on next week      |
+| Arrow Up       | Same day on previous week  |
+| Page Down      | Same day on previous month |
+| Page Up        | Same day on next month     |
+| Enter or Space | Select day                 |
+| Escape         | Close component            |
 
 # Upcoming features (Todo)
 
@@ -210,13 +219,51 @@ When you set `isSelected` to true, the shortcut is selected by default
 - Inputs Text to choose values (issue #30)
 - TimePicker seconds support (issue : #79)
 
-# Contribution
+# Contribute
 
-## Project setup
+## Setting up development server
+
+### Without Docker
+
+Ensure you have Node and npm in your machine. Minimal config is:
+
+- node >= 6.0
+- npm >= 3.0
+
+> This project is built with `node@10.x`.
+
+Install the development dependencies by running:
 
 ```bash
 npm install
 ```
+
+or
+
+```bash
+npm ci # Recommanded if you have node > 10.x
+```
+
+Once your dependencies are installed, start the development server with:
+
+```bash
+npm run serve
+```
+
+This will start the development server available at `http://localhost:8080`.
+
+### Docker
+
+To easily set-up your development environment, you can spin up a container containing the development app.
+For that, you need Docker with docker-compose in your machine.
+
+Once you've everything running, you can simply run the following command to start the dev server:
+
+```bash
+docker-compose up -d
+```
+
+This will start the development server inside a container and accessible through `http://localhost:8080`.
 
 ## Compiles and hot-reloads for development
 
@@ -224,7 +271,7 @@ npm install
 npm run serve
 ```
 
-## Lints and fixes files
+## Linter
 
 ```bash
 npm run lint

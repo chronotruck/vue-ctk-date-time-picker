@@ -9,6 +9,7 @@
       v-for="column in columns"
       :key="column.type"
       :ref="column.type"
+      :class="[`time-picker-column-${column.type}`]"
       class="time-picker-column flex-1 flex flex-direction-column text-center"
       @scroll="noScrollEvent
         ? null
@@ -90,18 +91,18 @@
   export default {
     name: 'TimePicker',
     props: {
-      value: { type: String, default: String },
-      format: { type: String, default: String },
-      minuteInterval: { type: [String, Number], default: Number },
-      height: { type: Number, default: Number, required: true },
-      color: { type: String, default: String },
-      inline: { type: Boolean, default: Boolean },
-      visible: { type: Boolean, default: Boolean },
-      onlyTime: { type: Boolean, default: Boolean },
-      dark: { type: Boolean, default: Boolean },
-      disabledHours: { type: Array, default: Array },
-      minTime: { type: String, default: String },
-      maxTime: { type: String, default: String }
+      value: { type: String, default: null },
+      format: { type: String, default: null },
+      minuteInterval: { type: [String, Number], default: 1 },
+      height: { type: Number, required: true },
+      color: { type: String, default: null },
+      inline: { type: Boolean, default: null },
+      visible: { type: Boolean, default: null },
+      onlyTime: { type: Boolean, default: null },
+      dark: { type: Boolean, default: null },
+      disabledHours: { type: Array, default: () => ([]) },
+      minTime: { type: String, default: null },
+      maxTime: { type: String, default: null }
     },
     data () {
       return {
@@ -391,7 +392,7 @@
           this.hour = item
         } else if (type === 'minutes') {
           this.minute = item
-        } else if (type === 'apms') {
+        } else if (type === 'apms' && this.apm !== item) {
           const newHour = item === 'pm' || item === 'PM' ? this.hour + 12 : this.hour - 12
           this.hour = newHour
           this.apm = item

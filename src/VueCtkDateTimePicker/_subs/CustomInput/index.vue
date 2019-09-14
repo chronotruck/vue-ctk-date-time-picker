@@ -5,7 +5,7 @@
       'is-focused': isFocus,
       'has-value': value,
       'has-error': errorHint,
-      'is-disabled': disabled,
+      'is-disabled': isDisabled,
       'is-dark': dark,
       'no-label': noLabel
     }, inputSize]"
@@ -13,11 +13,11 @@
     @click="focusInput"
   >
     <input
-      :id="id"
+      :id="$attrs.id"
       ref="CustomInput"
+      v-bind="$attrs"
       :value="value"
       :placeholder="label"
-      :disabled="disabled"
       :style="[borderStyle]"
       type="text"
       class="field-input"
@@ -30,7 +30,7 @@
     <label
       v-if="!noLabel"
       ref="label"
-      :for="id"
+      :for="$attrs.id"
       :class="errorHint ? 'text-danger' : null"
       :style="[colorStyle]"
       class="field-label"
@@ -54,25 +54,24 @@
 </template>
 
 <script>
-  import CustomButton from './CustomButton'
+  import CustomButton from './../CustomButton'
 
   export default {
     name: 'CustomInput',
     components: {
       CustomButton
     },
+    inheritAttrs: false,
     props: {
       isFocus: { type: Boolean, default: false },
       value: { type: [String, Object], required: false, default: null },
       label: { type: String, default: 'Select date & time' },
       noLabel: { type: Boolean, default: false },
-      hint: { type: String, default: String },
-      errorHint: { type: Boolean, default: Boolean },
-      color: { type: String, default: String },
-      disabled: { type: Boolean, default: false },
+      hint: { type: String, default: null },
+      errorHint: { type: Boolean, default: null },
+      color: { type: String, default: null },
       dark: { type: Boolean, default: false },
-      id: { type: String, default: 'CustomInput' },
-      inputSize: { type: String, default: String },
+      inputSize: { type: String, default: null },
       noClearButton: { type: Boolean, default: false }
     },
     computed: {
@@ -90,6 +89,14 @@
       },
       hasClearButton () {
         return !this.noClearButton && !this.disabled && this.value
+      },
+      /**
+       * Returns true if the field is disabled
+       * @function isDisabled
+       * @returns {boolean}
+       */
+      isDisabled () {
+        return typeof this.$attrs.disabled !== 'undefined' && this.$attrs.disabled !== false
       }
     },
     methods: {

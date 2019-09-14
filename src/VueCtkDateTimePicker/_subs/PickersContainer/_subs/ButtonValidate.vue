@@ -52,16 +52,20 @@
 
 <script>
   import moment from 'moment'
+
   export default {
     name: 'ButtonValidate',
     props: {
-      dark: { type: Boolean, default: Boolean },
-      buttonColor: { type: String, default: String },
-      buttonNowTranslation: { type: String, default: String },
-      onlyTime: { type: Boolean, default: Boolean },
-      noButtonNow: { type: Boolean, default: Boolean },
-      range: { type: Boolean, default: Boolean },
-      hasButtonValidate: { type: Boolean, default: Boolean }
+      /**
+       * TODO: Remove wrong default values
+       */
+      dark: { type: Boolean, default: null },
+      buttonColor: { type: String, default: null },
+      buttonNowTranslation: { type: String, default: null },
+      onlyTime: { type: Boolean, default: null },
+      noButtonNow: { type: Boolean, default: null },
+      range: { type: Boolean, default: null },
+      hasButtonValidate: { type: Boolean, default: null }
     },
     computed: {
       colorStyle () {

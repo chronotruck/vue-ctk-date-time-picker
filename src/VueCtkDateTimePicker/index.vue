@@ -1,16 +1,17 @@
 <template>
   <div
-    :id="id"
+    :id="`${$attrs.id}-wrapper`"
     ref="parent"
     v-click-outside="() => { toggleDatePicker(false) }"
     class="date-time-picker"
   >
+    <!-- Input -->
     <CustomInput
       v-if="hasInput"
-      :id="id"
+      :id="`${$attrs.id}-input`"
       ref="custom-input"
       v-model="dateFormatted"
-      :disabled="disabled"
+      v-bind="$attrs"
       :dark="dark"
       :hint="hint"
       :error-hint="error"
@@ -23,15 +24,20 @@
       @focus="toggleDatePicker(true)"
       @clear="$emit('input', null)"
     />
-    <slot v-else />
+    <slot
+      v-else
+    />
+
     <div
       v-if="hasPickerOpen && overlay"
       class="time-picker-overlay"
       @click.stop="toggleDatePicker(false)"
     />
+
+    <!-- Date picker container -->
     <PickersContainer
-      v-if="!disabled && isMounted"
-      :id="id"
+      v-if="!isDisabled"
+      :id="`${$attrs.id}-picker-container`"
       ref="agenda"
       v-model="dateTime"
       :visible="hasPickerOpen"
@@ -76,11 +82,7 @@
   import CustomInput from './_subs/CustomInput'
   import PickersContainer from './_subs/PickersContainer'
 
-  const getDefaultLocale = () => {
-    const locale = (window.navigator.userLanguage || window.navigator.language || 'en').substr(0, 2)
-    moment.locale(locale)
-    return locale
-  }
+  import props from './props'
 
   const updateMomentLocale = (locale, firstDayOfWeek) => {
     moment.locale(locale)
@@ -110,57 +112,12 @@
     directives: {
       clickOutside: vClickOutside.directive
     },
-    props: {
-      value: { type: [String, Object], default: null },
-      label: { type: String, default: 'Select date & time' },
-      noLabel: { type: Boolean, default: false },
-      hint: { type: String, default: String },
-      error: { type: Boolean, default: Boolean },
-      color: { type: String, default: 'dodgerblue' },
-      buttonColor: { type: String, default: String },
-      id: { type: String, default: 'DateTimePicker' },
-      disabled: { type: Boolean, default: false },
-      dark: { type: Boolean, default: false },
-      overlay: { type: Boolean, default: false },
-      inline: { type: Boolean, default: false },
-      position: { type: String, default: String },
-      locale: { type: String, default: getDefaultLocale() },
-      formatted: { type: String, default: 'llll' },
-      format: { type: String, default: 'YYYY-MM-DD hh:mm a' },
-      outputFormat: { type: String, default: String },
-      minuteInterval: { type: [String, Number], default: 1 },
-      minDate: { type: String, default: String },
-      maxDate: { type: String, default: String },
-      autoClose: { type: Boolean, default: false },
-      onlyTime: { type: Boolean, default: false },
-      onlyDate: { type: Boolean, default: false },
-      noHeader: { type: Boolean, default: false },
-      range: { type: Boolean, default: false },
-      noWeekendsDays: { type: Boolean, default: false },
-      disabledWeekly: { type: Array, default: Array },
-      noShortcuts: { type: Boolean, default: false },
-      noButton: { type: Boolean, default: false },
-      disabledDates: { type: Array, default: Array },
-      disabledHours: { type: Array, default: Array },
-      enabledDates: { type: Array, default: Array },
-      open: { type: Boolean, default: false },
-      persistent: { type: Boolean, default: false },
-      inputSize: { type: String, default: String },
-      buttonNowTranslation: { type: String, default: String },
-      noButtonNow: { type: Boolean, default: false },
-      noButtonValidate: { type: Boolean, default: false },
-      firstDayOfWeek: { type: Number, default: null },
-      customShortcuts: { type: Array, default: Array },
-      noValueToCustomElem: { type: Boolean, default: false },
-      noKeyboard: { type: Boolean, default: false },
-      right: { type: Boolean, default: false },
-      noClearButton: { type: Boolean, default: false }
-    },
+    inheritAttrs: false,
+    props,
     data () {
       return {
         pickerOpen: false,
-        pickerPosition: this.position,
-        isMounted: false
+        pickerPosition: this.position
       }
     },
     computed: {
@@ -214,11 +171,19 @@
       },
       formatOutput () {
         return this.outputFormat || this.format
+      },
+      /**
+       * Returns true if the field is disabled
+       * @function isDisabled
+       * @returns {boolean}
+       */
+      isDisabled () {
+        return typeof this.$attrs.disabled !== 'undefined' && this.$attrs.disabled !== false
       }
     },
     watch: {
       open (val) {
-        if (this.disabled) return
+        if (this.isDisabled) return
         this.pickerOpen = val
       },
       locale (value) {
@@ -235,7 +200,6 @@
           this.setValueToCustomElem()
         }
       }
-      this.isMounted = true
       if (this.format === 'YYYY-MM-DD hh:mm a' && this.onlyTime) {
         window.console.warn(`A (time) format must be indicated/ (Ex : format="HH:mm")`)
       }
@@ -248,6 +212,9 @@
     },
     methods: {
       setValueToCustomElem () {
+        /**
+         * TODO: Find a way (perhaps), to bind default attrs to custom element.
+         */
         const target = this.$slots.default[0]
         if (target) {
           if (target.tag === 'input') {
@@ -310,7 +277,7 @@
         return date ? nearestMinutes(this.minuteInterval, date, this.formatOutput).format('YYYY-MM-DD HH:mm') : null
       },
       toggleDatePicker (val) {
-        if (this.disabled) return
+        if (this.isDisabled) return
         const isOpen = (val === false || val === true) ? val : !this.pickerOpen
         this.setBodyOverflow(isOpen)
         this.pickerOpen = isOpen
