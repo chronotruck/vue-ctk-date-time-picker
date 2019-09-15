@@ -21,12 +21,9 @@ module.exports = {
     'no-trailing-spaces': 'error',
     'no-debugger': process.env.NODE_ENV === 'production' ? 'error' : 'off',
     'no-extra-semi': 'error',
-    semi: [
-      'error',
-      'never'
-    ],
+    semi: 'off',
     'no-var': 'error',
-    'vue/attributes-order': 'error',
+    'vue/attributes-order': 'off',
     'vue/no-confusing-v-for-v-if': 'error',
     'vue/no-v-html': 'error',
     'vue/order-in-components': 'error',
