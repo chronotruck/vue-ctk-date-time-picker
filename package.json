@@ -63,7 +63,8 @@
   },
   "files": [
     "tsconfig.json",
-    "dist/"
+    "dist/",
+    "nuxt/"
   ],
   "homepage": "https://chronotruck.github.io/vue-ctk-date-time-picker",
   "keywords": [
