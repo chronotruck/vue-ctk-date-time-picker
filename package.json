@@ -12,7 +12,7 @@
     "before-publish": "npm i && npm run lint && npm run test:unit && npm run build",
     "build:docs": "vue-cli-service build --dest docs --mode production",
     "build:lib": "vue-cli-service build --target lib ./src/VueCtkDateTimePicker/index.vue",
-    "serve:integration": "vue-cli-service serve --mode production --port 8081",
+    "serve:integration": "vue-cli-service serve --mode production --port 8080",
     "lint:fix": "eslint --ext .js,.vue src",
     "publish-npm:beta": "npm publish --tag beta",
     "serve:build": "vue-cli-service serve --mode production",
