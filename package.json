@@ -8,7 +8,7 @@
     "serve:nuxt": "nuxt src",
     "build": "npm run build:lib && npm run build:docs && npm run delete:reports",
     "test": "vue-cli-service test:unit /test/specs",
-    "lint": "vue-cli-service lint",
+    "lint": "vue-cli-service lint --mode production",
     "before-publish": "npm i && npm run lint && npm run test:unit && npm run build",
     "build:docs": "vue-cli-service build --dest docs --mode production",
     "build:lib": "vue-cli-service build --target lib ./src/VueCtkDateTimePicker/index.vue",
