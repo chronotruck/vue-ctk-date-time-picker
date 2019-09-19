@@ -164,6 +164,8 @@
         }
       },
       responsivePosition () {
+        if (typeof window === 'undefined') return null
+
         return !this.inline
           ? window.innerWidth < 412
             ? null
