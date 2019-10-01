@@ -71,6 +71,7 @@
             :disabled-hours="disabledHours"
             :min-time="minTime"
             :max-time="maxTime"
+            :behaviour="behaviour"
           />
         </div>
         <ButtonValidate
@@ -137,7 +138,8 @@
       firstDayOfWeek: { type: Number, default: null },
       customShortcuts: { type: Array, default: null },
       noKeyboard: { type: Boolean, default: false },
-      right: { type: Boolean, default: false }
+      right: { type: Boolean, default: false },
+      behaviour: { type: Object, default: () => ({}) }
     },
     data () {
       return {
@@ -164,6 +166,8 @@
         }
       },
       responsivePosition () {
+        if (typeof window === 'undefined') return null
+
         return !this.inline
           ? window.innerWidth < 412
             ? null

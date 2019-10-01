@@ -2,7 +2,7 @@
   <div
     :id="`${$attrs.id}-wrapper`"
     ref="parent"
-    v-click-outside="() => { toggleDatePicker(false) }"
+    v-click-outside="closePicker"
     class="date-time-picker"
   >
     <!-- Input -->
@@ -31,7 +31,7 @@
     <div
       v-if="hasPickerOpen && overlay"
       class="time-picker-overlay"
-      @click.stop="toggleDatePicker(false)"
+      @click.stop="closePicker"
     />
 
     <!-- Date picker container -->
@@ -69,8 +69,9 @@
       :custom-shortcuts="customShortcuts"
       :no-keyboard="noKeyboard"
       :right="right"
+      :behaviour="_behaviour"
       @validate="validate"
-      @close="toggleDatePicker(false)"
+      @close="closePicker"
     />
   </div>
 </template>
@@ -101,6 +102,17 @@
   const nearestMinutes = (interval, date, format) => {
     const roundedMinutes = Math.ceil(date.minute() / interval) * interval
     return moment(date.clone().minute(roundedMinutes).second(0), format)
+  }
+
+  /**
+   * Object containing the default behaviour values of the calendar.
+   * Those values can be overrided by the `behaviour` property.
+   * @const defaultBehaviour
+   */
+  const defaultBehaviour = {
+    time: {
+      nearestIfDisabled: true
+    }
   }
 
   export default {
@@ -156,9 +168,9 @@
         },
         set (value) {
           if (this.autoClose && this.range && (value.end && value.start)) {
-            this.toggleDatePicker(false)
+            this.closePicker()
           } else if (this.autoClose && !this.range) {
-            this.toggleDatePicker(false)
+            this.closePicker()
           }
           const newValue = this.range ? this.getRangeDateToSend(value) : this.getDateTimeToSend(value)
           this.$emit('input', newValue)
@@ -179,6 +191,21 @@
        */
       isDisabled () {
         return typeof this.$attrs.disabled !== 'undefined' && this.$attrs.disabled !== false
+      },
+      /**
+       * Returns the behaviour object with the overrided values
+       * @function _behaviour
+       * @returns {Object}
+       */
+      _behaviour () {
+        const { time } = defaultBehaviour
+
+        return {
+          time: {
+            ...time,
+            ...this.behaviour.time
+          }
+        }
       }
     },
     watch: {
@@ -201,7 +228,7 @@
         }
       }
       if (this.format === 'YYYY-MM-DD hh:mm a' && this.onlyTime) {
-        window.console.warn(`A (time) format must be indicated/ (Ex : format="HH:mm")`)
+        console.warn(`A (time) format must be indicated/ (Ex : format="HH:mm")`)
       }
     },
     beforeDestroy () {
@@ -276,12 +303,27 @@
           : null
         return date ? nearestMinutes(this.minuteInterval, date, this.formatOutput).format('YYYY-MM-DD HH:mm') : null
       },
+      /**
+       * Closes the datepicker
+       * @function closePicker
+       */
+      closePicker () {
+        if (this.pickerOpen) {
+          this.$emit('is-hidden')
+          this.pickerOpen = false
+          this.setBodyOverflow(false)
+        }
+      },
       toggleDatePicker (val) {
         if (this.isDisabled) return
         const isOpen = (val === false || val === true) ? val : !this.pickerOpen
         this.setBodyOverflow(isOpen)
         this.pickerOpen = isOpen
-        this.$emit(isOpen ? 'is-shown' : 'is-hidden')
+
+        if (isOpen) {
+          this.$emit('is-shown')
+        }
+
         if (this.pickerOpen && !this.position) {
           this.pickerPosition = this.getPosition()
         }
@@ -316,7 +358,7 @@
       },
       validate () {
         this.$emit('validate')
-        this.toggleDatePicker(false)
+        this.closePicker()
       }
     }
   }

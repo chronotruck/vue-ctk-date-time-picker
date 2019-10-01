@@ -1,10 +1,11 @@
 {
   "name": "vue-ctk-date-time-picker",
-  "version": "2.2.0",
+  "version": "2.3.0",
   "description": "A vue component for select date & time (by Chronotruck)",
   "author": "Louis Mazel <loic.mazuel@chronotruck.com>",
   "scripts": {
     "serve": "vue-cli-service serve --mode development",
+    "serve:nuxt": "nuxt src",
     "build": "npm run build:lib && npm run build:docs && npm run delete:reports",
     "test": "vue-cli-service test:unit /test/specs",
     "lint": "vue-cli-service lint",
@@ -22,10 +23,10 @@
     "delete:reports": "npm run delete-docs-report && npm run delete-dist-report"
   },
   "dependencies": {
-    "vue": "^2.5.22",
     "moment": "^2.24.0",
     "moment-range": "^4.0.1",
-    "v-click-outside": "^2.0.2"
+    "v-click-outside": "^2.0.2",
+    "vue": "^2.6.9"
   },
   "devDependencies": {
     "@vue/cli-plugin-babel": "^3.2.0",
@@ -40,8 +41,10 @@
     "eslint": "^5.8.0",
     "eslint-plugin-vue": "^5.0.0",
     "node-sass": "^4.11.0",
+    "nuxt": "^2.9.2",
     "sass-loader": "^7.1.0",
     "vue-cli-plugin-webpack-bundle-analyzer": "^1.2.0",
+    "vue-server-renderer": "^2.6.9",
     "vue-template-compiler": "^2.6.9"
   },
   "postcss": {
@@ -63,7 +66,8 @@
   },
   "files": [
     "tsconfig.json",
-    "dist/"
+    "dist/",
+    "nuxt/"
   ],
   "homepage": "https://chronotruck.github.io/vue-ctk-date-time-picker",
   "keywords": [

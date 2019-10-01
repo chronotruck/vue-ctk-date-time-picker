@@ -95,47 +95,48 @@ Here is an example of [UMD implementation](https://codepen.io/louismazel/pen/jQW
 
 # Props API
 
-| Props                       | Type              | Required | Default                  |
-| --------------------------- | ----------------- | -------- | ------------------------ |
-| v-model                     | String            | yes      | -                        |
-| format                      | String            | no       | 'YYYY-MM-DD hh:mm a'     |
-| formatted                   | String            | no       | 'llll' (momentjs format) |
-| label                       | String            | no       | Select date & time       |
-| hint (1)                    | String            | no       | -                        |
-| error (2)                   | Boolean           | no       | false                    |
-| color (3)                   | String (hex)      | no       | dodgerblue               |
-| button-color (4)            | String (hex)      | no       | #00C853                  |
-| position                    | String            | no       | null                     |
-| locale (5)                  | String            | no       | Browser Locale           |
-| persistent                  | Boolean           | no       | false                    |
-| minute-interval             | Integer           | no       | 1                        |
-| output-format               | String            | no       | null                     |
-| only-time                   | Boolean           | no       | false                    |
-| only-date                   | Boolean           | no       | false                    |
-| no-label                    | Boolean           | no       | false                    |
-| no-header                   | Boolean           | no       | false                    |
-| no-value-to-custom-elem (6) | Boolean           | no       | false                    |
-| min-date (7)                | String            | no       | -                        |
-| max-date (7)                | String            | no       | -                        |
-| no-weekends-days            | Boolean           | no       | false                    |
-| auto-close                  | Boolean           | no       | false                    |
-| inline                      | Boolean           | no       | false                    |
-| overlay                     | Boolean           | no       | false                    |
-| range                       | Boolean           | no       | false                    |
-| dark                        | Boolean           | no       | false                    |
-| no-shortcuts                | Boolean           | no       | false                    |
-| no-button                   | Boolean           | no       | false                    |
-| input-size                  | String (sm or lg) | no       | null                     |
-| button-now-translation      | String            | no       | 'Now'                    |
-| no-button-now               | Boolean           | no       | false                    |
-| first-day-of-week           | Int (0 to 7)      | no       | -                        |
-| disabled-dates (8)          | Array`<string>`   | no       | []                       |
-| disabled-hours (9)          | Array`<string>`   | no       | -                        |
-| custom-shortcuts (10)       | Array`<object>`   | no       | -                        |
-| disabled-weekly (11)        | Array`<integer>`  | no       | []                       |
-| no-keyboard (12)            | Boolean           | no       | false                    |
-| right (13)                  | Boolean           | no       | false                    |
-| noClearButton               | Boolean           | no       | false                    |
+| Props                       | Type              | Required | Default                     |
+| --------------------------- | ----------------- | -------- | --------------------------- |
+| v-model                     | String            | yes      | -                           |
+| format                      | String            | no       | 'YYYY-MM-DD hh:mm a'        |
+| formatted                   | String            | no       | 'llll' (momentjs format)    |
+| label                       | String            | no       | Select date & time          |
+| hint (1)                    | String            | no       | -                           |
+| error (2)                   | Boolean           | no       | false                       |
+| color (3)                   | String (hex)      | no       | dodgerblue                  |
+| button-color (4)            | String (hex)      | no       | #00C853                     |
+| position                    | String            | no       | null                        |
+| locale (5)                  | String            | no       | Browser Locale              |
+| persistent                  | Boolean           | no       | false                       |
+| minute-interval             | Integer           | no       | 1                           |
+| output-format               | String            | no       | null                        |
+| only-time                   | Boolean           | no       | false                       |
+| only-date                   | Boolean           | no       | false                       |
+| no-label                    | Boolean           | no       | false                       |
+| no-header                   | Boolean           | no       | false                       |
+| no-value-to-custom-elem (6) | Boolean           | no       | false                       |
+| min-date (7)                | String            | no       | -                           |
+| max-date (7)                | String            | no       | -                           |
+| no-weekends-days            | Boolean           | no       | false                       |
+| auto-close                  | Boolean           | no       | false                       |
+| inline                      | Boolean           | no       | false                       |
+| overlay                     | Boolean           | no       | false                       |
+| range                       | Boolean           | no       | false                       |
+| dark                        | Boolean           | no       | false                       |
+| no-shortcuts                | Boolean           | no       | false                       |
+| no-button                   | Boolean           | no       | false                       |
+| input-size                  | String (sm or lg) | no       | null                        |
+| button-now-translation      | String            | no       | 'Now'                       |
+| no-button-now               | Boolean           | no       | false                       |
+| first-day-of-week           | Int (0 to 7)      | no       | -                           |
+| disabled-dates (8)          | Array`<string>`   | no       | []                          |
+| disabled-hours (9)          | Array`<string>`   | no       | -                           |
+| custom-shortcuts (10)       | Array`<object>`   | no       | -                           |
+| disabled-weekly (11)        | Array`<integer>`  | no       | []                          |
+| no-keyboard (12)            | Boolean           | no       | false                       |
+| right (13)                  | Boolean           | no       | false                       |
+| noClearButton               | Boolean           | no       | false                       |
+| behaviour                   | Object            | no       | [See behaviour](#Behaviour) |
 
 (1) hint : Is a text that replaces the label/placeholder (Ex : Error designation)
 
@@ -188,6 +189,36 @@ When you set `isSelected` to true, the shortcut is selected by default
 (13) right : add this attribute to align the picker on right
 
 > Any additionnal attribute passed to the component will be automatically be binded to the input component. (eg. if you passes a `type` attribute, the `<input>` will receive it).
+
+## Behaviour
+
+In order to avoid having too much properties in the component, We're adding a `behaviour` property that is an object including some annex behaviour values.
+
+The default value for this object is:
+
+```js
+{
+  time: {
+    nearestIfDisabled: true;
+  }
+}
+```
+
+To override those values, pass a new object with the values you want to override:
+
+```html
+<ctk-date-time-picker
+  :behaviour="{
+    time: {
+      nearestIfDisabled: false
+    }
+  }"
+/>
+```
+
+| Behaviour              | Description                                                                                                                                                                                                                                                                                                                                                                       | Type    | Default |
+| ---------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------- | ------- |
+| time.nearestIfDisabled | If `true`, it will select the nearest available hour in the timepicker, if the current selected hour is disabled. Per example, if the hour is 12 but all the hours have been disabled until 14, then the 14 will be selected by default. Set `false` to disable this behaviour; the current hour will remain selected even if it has been disabled. The user cannot re-select it. | Boolean | true    |
 
 # Events API
 
