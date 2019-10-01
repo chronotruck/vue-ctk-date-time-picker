@@ -284,7 +284,7 @@
              * time to now.
              * TODO: Handle the case where there is no time prefilled
              */
-            concatenedDate = `${moment(value, this.format).format('YYYY-MM-DD')} ${moment().format('HH:mm')}`
+            concatenedDate = `${value} ${moment().format('HH:mm')}`
           }
 
           return `${moment(concatenedDate, 'YYYY-MM-DD HH:mm').format(this.format)}`
