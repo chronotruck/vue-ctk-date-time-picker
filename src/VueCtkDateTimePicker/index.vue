@@ -292,9 +292,9 @@
       getDateTimeToSend (value) {
         const dateTime = typeof value !== 'undefined' ? value : this.value
         const dateToSend = dateTime
-          ? moment(dateTime, 'YYYY-MM-DD HH:mm')
+          ? moment(dateTime, this.format)
           : null
-        const dateTimeToSend = dateToSend ? nearestMinutes(this.minuteInterval, moment(dateToSend), 'YYYY-MM-DD HH:mm').format(this.formatOutput) : null
+        const dateTimeToSend = dateToSend ? nearestMinutes(this.minuteInterval, moment(dateToSend), this.format).format(this.formatOutput) : null
         return dateTimeToSend
       },
       getDateTime () {
