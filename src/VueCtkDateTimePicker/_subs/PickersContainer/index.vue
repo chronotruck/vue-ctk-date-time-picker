@@ -202,7 +202,7 @@
         },
         get () {
           return this.value
-            ? moment(this.value, this.format).format('HH:mm')
+            ? moment(this.value, 'YYYY-MM-DD HH:mm').format('HH:mm')
             : null
         }
       },
@@ -220,7 +220,7 @@
               : this.range
                 ? { start: this.value.start ? moment(this.value.start).format('YYYY-MM-DD') : null,
                     end: this.value.end ? moment(this.value.end).format('YYYY-MM-DD') : null }
-                : moment(this.value, this.format).format('YYYY-MM-DD')
+                : moment(this.value, 'YYYY-MM-DD HH:mm').format('YYYY-MM-DD')
             : this.range
               ? { start: null, end: null }
               : null
@@ -270,37 +270,11 @@
         }
       },
       getDateTime ({ value, type }) {
-        if (this.onlyTime) return `${moment().format('YYYY-MM-DD')} ${value}`
-        if (type === 'date') {
-          let concatenedDate
-          if (this.time) {
-            /**
-             * We're in the case where there is a time pre-filled
-             */
-            concatenedDate = `${value} ${this.time}`
-          } else {
-            /**
-             * We're in the case where there is no time prefilled, we set the
-             * time to now.
-             * TODO: Handle the case where there is no time prefilled
-             */
-            concatenedDate = `${value} ${moment().format('HH:mm')}`
-          }
-
-          return `${moment(concatenedDate, 'YYYY-MM-DD HH:mm').format(this.format)}`
-        } else {
-          /**
-           * Case where the user selects the time
-           */
-          let concatenedDate
-          if (this.date) {
-            concatenedDate = `${this.date} ${value}`
-          } else {
-            concatenedDate = `${moment().format('YYYY-MM-DD')} ${value}`
-          }
-
-          return `${moment(concatenedDate, 'YYYY-MM-DD HH:mm').format(this.format)}`
-        }
+        return this.onlyTime
+          ? `${moment().format('YYYY-MM-DD')} ${value}`
+          : type === 'date'
+            ? this.time ? `${value} ${this.time}` : `${value} ${moment().format('HH:mm')}`
+            : this.date ? `${this.date} ${value}` : `${moment().format('YYYY-MM-DD')} ${value}`
       },
       getTransitionName (date) {
         const isBigger = moment(date) > moment(`${this.date || moment().format('YYYY-MM-DD')} ${this.time || moment().format('HH:mm')}`)
