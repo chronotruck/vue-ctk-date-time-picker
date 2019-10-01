@@ -69,6 +69,7 @@
       :custom-shortcuts="customShortcuts"
       :no-keyboard="noKeyboard"
       :right="right"
+      :behaviour="_behaviour"
       @validate="validate"
       @close="closePicker"
     />
@@ -101,6 +102,17 @@
   const nearestMinutes = (interval, date, format) => {
     const roundedMinutes = Math.ceil(date.minute() / interval) * interval
     return moment(date.clone().minute(roundedMinutes).second(0), format)
+  }
+
+  /**
+   * Object containing the default behaviour values of the calendar.
+   * Those values can be overrided by the `behaviour` property.
+   * @const defaultBehaviour
+   */
+  const defaultBehaviour = {
+    time: {
+      nearestIfDisabled: true
+    }
   }
 
   export default {
@@ -179,6 +191,21 @@
        */
       isDisabled () {
         return typeof this.$attrs.disabled !== 'undefined' && this.$attrs.disabled !== false
+      },
+      /**
+       * Returns the behaviour object with the overrided values
+       * @function _behaviour
+       * @returns {Object}
+       */
+      _behaviour () {
+        const { time } = defaultBehaviour
+
+        return {
+          time: {
+            ...time,
+            ...this.behaviour.time
+          }
+        }
       }
     },
     watch: {
