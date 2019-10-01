@@ -196,7 +196,7 @@
             .map((_, i) => i)
             .filter(h => h >= minEnabledHour && h <= maxEnabledHour)
 
-          if (!enabledHours.includes(this.hour) && this.behaviour.time.nearestIfDisabled) {
+          if (!enabledHours.includes(this.hour) && this.behaviour && this.behaviour.time && this.behaviour.time.nearestIfDisabled) {
             this.hour = enabledHours[0] // eslint-disable-line
             this.emitValue()
           }
@@ -341,7 +341,7 @@
          * and the selected hour is disabled, we set the hour to the nearest hour available.
          * Otherwise just set the hour to the current value.
          */
-        this.hour = this.behaviour.time.nearestIfDisabled && this.isHoursDisabled(hourToSet)
+        this.hour = this.behaviour && this.behaviour.time && this.behaviour.time.nearestIfDisabled && this.isHoursDisabled(hourToSet)
           ? this.getAvailableHour()
           : hourToSet
 
