@@ -40,6 +40,7 @@ export default {
   firstDayOfWeek: { type: Number, default: null },
   customShortcuts: { type: Array, default: () => ([]) },
   noValueToCustomElem: { type: Boolean, default: false },
+  behaviour: { type: Object, default: () => ({}) },
   noKeyboard: { type: Boolean, default: false },
   right: { type: Boolean, default: false },
   noClearButton: { type: Boolean, default: false }

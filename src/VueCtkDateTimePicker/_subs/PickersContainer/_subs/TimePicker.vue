@@ -102,6 +102,7 @@
       dark: { type: Boolean, default: null },
       disabledHours: { type: Array, default: () => ([]) },
       minTime: { type: String, default: null },
+      behaviour: { type: Object, default: () => ({}) },
       maxTime: { type: String, default: null }
     },
     data () {
@@ -195,7 +196,7 @@
             .map((_, i) => i)
             .filter(h => h >= minEnabledHour && h <= maxEnabledHour)
 
-          if (!enabledHours.includes(this.hour)) {
+          if (!enabledHours.includes(this.hour) && this.behaviour.time.nearestIfDisabled) {
             this.hour = enabledHours[0] // eslint-disable-line
             this.emitValue()
           }
@@ -334,7 +335,16 @@
         const hourToSet = this.isTwelveFormat && (tmpHour === 12 || tmpHour === 0)
           ? tmpHour === 0 ? 12 : 24
           : tmpHour
-        this.hour = this.isHoursDisabled(hourToSet) ? this.getAvailableHour() : hourToSet
+
+        /**
+         * Here we have two different behaviours. If the behaviour `nearestIfDisabled` is enabled
+         * and the selected hour is disabled, we set the hour to the nearest hour available.
+         * Otherwise just set the hour to the current value.
+         */
+        this.hour = this.behaviour.time.nearestIfDisabled && this.isHoursDisabled(hourToSet)
+          ? this.getAvailableHour()
+          : hourToSet
+
         this.minute = parseInt(moment(this.value, this.format).format('mm'))
         this.apm = this.apms && this.value
           ? this.hour > 12
@@ -503,6 +513,14 @@
           .time-picker-column-item-effect {
             transform: scale(0) !important;
             opacity: 0 !important;
+          }
+
+          &.active {
+            .time-picker-column-item-effect {
+              background-color: #eaeaea !important;
+              transform: scale(1) !important;
+              opacity: 1 !important;
+            }
           }
         }
       }
