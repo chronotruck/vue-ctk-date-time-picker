@@ -242,7 +242,7 @@
             .map((_, i) => i)
             .filter(m => m >= minEnabledMinute && m <= maxEnabledMinute)
 
-          if (!enabledMinutes.includes(this.minute)) {
+          if (!enabledMinutes.includes(this.minute) && this.behaviour && this.behaviour.time && this.behaviour.time.nearestIfDisabled) {
             this.minute = enabledMinutes[0] // eslint-disable-line
             this.emitValue()
           }
