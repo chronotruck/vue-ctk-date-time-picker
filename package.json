@@ -69,7 +69,7 @@
     "dist/",
     "nuxt/"
   ],
-  "homepage": "https://chronotruck.github.io/vue-ctk-date-time-picker",
+  "homepage": "https://github.com/chronotruck/vue-ctk-date-time-picker/releases",
   "keywords": [
     "vue",
     "javascript",
