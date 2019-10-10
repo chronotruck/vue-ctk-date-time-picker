@@ -21,7 +21,6 @@
         <h1>CtkDatetimePicker</h1>
         <h3>A VueJs component for select date & time</h3>
         <div
-          v-if="devMode"
           class="container lm-mt-4"
         >
           <a
@@ -30,6 +29,13 @@
             href="https://github.com/chronotruck/vue-ctk-date-time-picker"
           >
             Github
+          </a>
+          <a
+            class="lm-btn lm-btn-dark lm-mr-2"
+            target="_blank"
+            href="https://github.com/chronotruck/vue-ctk-date-time-picker/releases"
+          >
+            Changelog
           </a>
           <a
             class="lm-btn lm-btn-danger"
