@@ -131,6 +131,7 @@ Here is an example of [UMD implementation](https://codepen.io/louismazel/pen/jQW
 | first-day-of-week           | Int (0 to 7)      | no       | -                           |
 | disabled-dates (8)          | Array`<string>`   | no       | []                          |
 | disabled-hours (9)          | Array`<string>`   | no       | -                           |
+| shortcut                    | String            | no       | -                           |
 | custom-shortcuts (10)       | Array`<object>`   | no       | -                           |
 | disabled-weekly (11)        | Array`<integer>`  | no       | []                          |
 | no-keyboard (12)            | Boolean           | no       | false                       |
@@ -156,31 +157,31 @@ Here is an example of [UMD implementation](https://codepen.io/louismazel/pen/jQW
 
 (9) disabled-hours : Must be an Array of hours in 24h format ('00' to '23') : `['00','01','02','03','04','05','06','07','19','20','21','22','23']`
 
-(10) custom-shortcuts - It's an Array of Objects like this :
+(10) custom-shortcuts - It's an array of objects. Each object represents a single shortcut.
 
 ```js
 [
-  { label: `Aujourd'hui`, value: 'day', isSelected: false },
-  { label: 'Yesterday', value: '-day', isSelected: false },
-  { label: 'This Week', value: 'week', isSelected: true },
-  { label: 'Last Week', value: '-week', isSelected: false },
-  { label: 'This iso Week', value: 'isoWeek', isSelected: true },
-  { label: 'Last iso Week', value: '-isoWeek', isSelected: false },
-  { label: 'This Month', value: 'month', isSelected: false },
-  { label: 'Last Month', value: '-month', isSelected: false },
-  { label: 'This Year', value: 'year', isSelected: false },
-  { label: 'Last Year', value: '-year', isSelected: false },
-  { label: 'Last 5 days', value: 5, isSelected: false }
+  { key: 'thisWeek', label: 'This week', value: 'isoWeek' },
+  { key: 'lastWeek', label: 'Last week', value: '-isoWeek' },
+  { key: 'last7Days', label: 'Last 7 days', value: 7 },
+  { key: 'last30Days', label: 'Last 30 days', value: 30 },
+  { key: 'thisMonth', label: 'This month', value: 'month' },
+  { key: 'lastMonth', label: 'Last month', value: '-month' },
+  { key: 'thisYear', label: 'This year', value: 'year' },
+  { key: 'lastYear', label: 'Last year', value: '-year' }
 ];
 ```
 
-Shortcut types allowed : `['day', '-day', 'isoWeek', '-isoWeek', 'month', '-month', 'year', '-year', 'week', '-week']`
-
+Shortcut types allowed are : `['day', '-day', 'isoWeek', '-isoWeek', 'quarter', 'month', '-month', 'year', '-year', 'week', '-week']`
+For each shortcut, a `key`, `label` and `value` must be specified. The `key` is a unique key for that specific shortcut.
 If the value of shortcut is a number (Integer), this number correspond to number of day (for 5 --> Last 5 days)
+You can use this feature for translate existings shortcuts.
 
-You can use this feature for translate the shortcuts
+With the `shortcut` property, you can specify a shortcut that's selected by default by passing it's `key` value.
 
-When you set `isSelected` to true, the shortcut is selected by default
+```js
+  :shortcut="'thisMonth'"
+```
 
 (11) disabled-weekly : Days of the week which are disabled every week, in Array format with day index, Sunday as 0 and Saturday as 6: `[0,4,6]`
 
