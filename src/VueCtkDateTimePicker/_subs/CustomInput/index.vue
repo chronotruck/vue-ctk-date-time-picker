@@ -167,7 +167,7 @@
     }
     &.has-error {
       .field-input {
-        border-color: orangered !important;
+        border-color: orangered;
       }
       .field-label{
         opacity: 1;
@@ -210,7 +210,7 @@
       }
     }
     .text-danger {
-      color: orangered !important;
+      color: orangered;
     }
     &.is-dark {
       ::-webkit-input-placeholder { /* WebKit, Blink, Edge */
