@@ -464,17 +464,14 @@
           })
         ),
         customShortcuts: [
-          { label: `Aujourd'hui`, value: 'day', isSelected: false },
-          { label: 'Yesterday', value: '-day', isSelected: false },
-          { label: 'This Week', value: 'week', isSelected: true },
-          { label: 'Last Week', value: '-week', isSelected: false },
-          { label: 'This iso Week', value: 'isoWeek', isSelected: true },
-          { label: 'Last iso Week', value: '-isoWeek', isSelected: false },
-          { label: 'This Month', value: 'month', isSelected: false },
-          { label: 'Last Month', value: '-month', isSelected: false },
-          { label: 'This Month', value: 'year', isSelected: false },
-          { label: 'Last Month', value: '-year', isSelected: false },
-          { label: 'Last 5 days', value: 5, isSelected: false }
+          { key: 'thisWeek', label: 'This week', value: 'isoWeek' },
+          { key: 'lastWeek', label: 'Last week', value: '-isoWeek' },
+          { key: 'last7Days', label: 'Last 7 days', value: 7 },
+          { key: 'last30Days', label: 'Last 30 days', value: 30 },
+          { key: 'thisMonth', label: 'This month', value: 'month' },
+          { key: 'lastMonth', label: 'Last month', value: '-month' },
+          { key: 'thisYear', label: 'This year', value: 'year' },
+          { key: 'lastYear', label: 'Last year', value: '-year' }
         ]
       }
     }
