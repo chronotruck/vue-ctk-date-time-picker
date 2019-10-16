@@ -46,7 +46,8 @@
         default: () => ([]),
         validator: val => val.every(shortcut => {
           const isValueInteger = Number.isInteger(shortcut.value)
-          return shortcut.key && shortcut.label && (isValueInteger ? true : SHORTCUT_TYPES.includes(shortcut.value))
+          const isFunction = typeof shortcut.value === 'function'
+          return shortcut.key && shortcut.label && (isValueInteger || isFunction ? true : SHORTCUT_TYPES.includes(shortcut.value))
         })
       },
       height: { type: Number, required: true }
@@ -104,6 +105,22 @@
             start: moment().subtract(value, 'd'),
             end: moment(),
             value
+          }
+        }
+
+        /**
+         * Case where the value is a function that is in charge of
+         * handling the start & end values
+         */
+        if (typeof value === 'function') {
+          const { start, end } = value()
+
+          if (!start || !end) throw new Error('Missing "start" or "end" values.')
+          if (!moment.isMoment(start) || !moment.isMoment(end)) throw new Error('The "start" or "end" values are not moment objects.')
+
+          return {
+            start,
+            end
           }
         }
 

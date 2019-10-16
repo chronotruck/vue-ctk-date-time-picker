@@ -174,8 +174,25 @@ Here is an example of [UMD implementation](https://codepen.io/louismazel/pen/jQW
 
 Shortcut types allowed are : `['day', '-day', 'isoWeek', '-isoWeek', 'quarter', 'month', '-month', 'year', '-year', 'week', '-week']`
 For each shortcut, a `key`, `label` and `value` must be specified. The `key` is a unique key for that specific shortcut.
-If the value of shortcut is a number (Integer), this number correspond to number of day (for 5 --> Last 5 days)
 You can use this feature for translate existings shortcuts.
+If the **value of shortcut is a number** (Integer), this number correspond to number of day (for 5 --> Last 5 days).
+
+If the **value of shortcut is a function**, we'll use it to generate the `start` and `end` values. This function should return an object with the start & end values. Both values **must be a moment object**. The function is called when the user clicks on the shortcut button.
+
+```js
+[
+  {
+    key: 'customValue',
+    label: 'My custom thing',
+    value: () => {
+      return {
+        start: moment(),
+        end: moment().add(2, 'days')
+      }
+    }
+  },
+];
+```
 
 With the `shortcut` property, you can specify a shortcut that's selected by default by passing it's `key` value.
 
