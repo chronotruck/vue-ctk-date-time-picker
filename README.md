@@ -174,6 +174,7 @@ Here is an example of [UMD implementation](https://codepen.io/louismazel/pen/jQW
 
 Shortcut types allowed are : `['day', '-day', 'isoWeek', '-isoWeek', 'quarter', 'month', '-month', 'year', '-year', 'week', '-week']`
 For each shortcut, a `key`, `label` and `value` must be specified. The `key` is a unique key for that specific shortcut.
+Additional values can be passed as a `callback` function that will be called whenever the user clicks on the shortcut. The callback receives an object as first argument with the `start` and `end` values, with the `shortcut` object itself.
 You can use this feature for translate existings shortcuts.
 If the **value of shortcut is a number** (Integer), this number correspond to number of day (for 5 --> Last 5 days).
 
@@ -189,6 +190,9 @@ If the **value of shortcut is a function**, we'll use it to generate the `start`
         start: moment(),
         end: moment().add(2, 'days')
       }
+    },
+    callback: ({ start, end }) => {
+      console.log('My shortcut was clicked with values: ', start, end)
     }
   },
 ];

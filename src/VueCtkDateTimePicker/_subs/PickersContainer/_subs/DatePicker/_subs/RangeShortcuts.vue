@@ -167,6 +167,18 @@
         this.selectedShortcut = shortcut.key
         const { start, end, value } = this.getShortcutByKey(this.selectedShortcut)
         this.$emit('change-range', { start, end, value })
+
+        /**
+         * Calls a callback function (if defined) on shortcut click
+         */
+        if (shortcut.callback) {
+          if (typeof shortcut.callback !== 'function') throw new Error('The callback must be a function.')
+          shortcut.callback({
+            shortcut,
+            start,
+            end
+          })
+        }
       }
     }
   }
