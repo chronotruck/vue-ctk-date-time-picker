@@ -138,6 +138,7 @@ Here is an example of [UMD implementation](https://codepen.io/louismazel/pen/jQW
 | right (13)                  | Boolean           | no       | false                       |
 | noClearButton               | Boolean           | no       | false                       |
 | behaviour                   | Object            | no       | [See behaviour](#Behaviour) |
+| id (14)                     | String            | no       | undefined                   |
 
 (1) hint : Is a text that replaces the label/placeholder (Ex : Error designation)
 
@@ -209,6 +210,8 @@ With the `shortcut` property, you can specify a shortcut that's selected by defa
 (12) no-keyboard : Disable keyboard accessibility & navigation
 
 (13) right : add this attribute to align the picker on right
+
+(14) id : it assign id such as 'passedstring-input' to input help diffrentiate between two date-time-picker on same component.
 
 > Any additionnal attribute passed to the component will be automatically be binded to the input component. (eg. if you passes a `type` attribute, the `<input>` will receive it).
 
