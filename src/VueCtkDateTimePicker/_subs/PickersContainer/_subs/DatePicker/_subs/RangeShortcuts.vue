@@ -206,9 +206,24 @@
       width: 100%;
       max-width: 100%;
       min-width: 100%;
+      max-width: 100vw;
+      min-width: 100vw;
       border-right: 0;
       border-bottom: 1px solid #EAEAEA;
+      height: 52px !important;
+      flex-direction: row;
+      display: flex;
+      white-space: nowrap;
+
+      .shortcut-button {
+        margin-bottom: 0;
+      }
+
+      .shortcut-button:not(:last-child) {
+        margin-right: 10px;
+      }
     }
+
     .shortcuts-container.is-dark {
       border-color: lighten(#424242, 20%);
     }

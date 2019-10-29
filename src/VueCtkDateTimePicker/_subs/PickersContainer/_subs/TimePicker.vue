@@ -538,6 +538,11 @@
     }
   }
   @media screen and (max-width: 415px) {
+    .time-picker.inline {
+      flex: auto;
+      border-left: none;
+    }
+
     .time-picker:not(.inline) {
       border: 0;
       border-top: 1px solid #EAEAEA;
@@ -545,6 +550,7 @@
       max-width: 100%;
       height: unset !important;
       overflow: hidden;
+
       &.dark {
         border-top: 1px solid #757575;
       }

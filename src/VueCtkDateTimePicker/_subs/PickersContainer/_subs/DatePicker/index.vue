@@ -325,6 +325,7 @@
     &.range.has-shortcuts {
       width: 400px;
     }
+
     &.p-0 {
       padding: 0;
     }
@@ -520,7 +521,7 @@
     }
   }
   @media screen and (max-width: 415px) {
-    #DatePicker.datepicker-container {
+    .datepicker-container {
       width: 100%;
       &:not(.inline) {
         .datepicker-controls {
