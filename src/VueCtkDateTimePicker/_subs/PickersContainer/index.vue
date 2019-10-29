@@ -48,6 +48,7 @@
             :height="height"
             :first-day-of-week="firstDayOfWeek"
             :visible="visible"
+            :shortcut="shortcut"
             :custom-shortcuts="customShortcuts"
             :no-keyboard="noKeyboard"
             :locale="locale"
@@ -136,6 +137,7 @@
       buttonNowTranslation: { type: String, default: null },
       noButtonNow: { type: Boolean, default: false },
       firstDayOfWeek: { type: Number, default: null },
+      shortcut: { type: String, default: null },
       customShortcuts: { type: Array, default: null },
       noKeyboard: { type: Boolean, default: false },
       right: { type: Boolean, default: false },
@@ -377,7 +379,17 @@
       flex-direction: column;
       flex-flow: column;
       -moz-flex-direction: column;
+      height: 100%;
     }
+
+    .datepicker-container {
+      width: 100%;
+
+      &.has-shortcuts {
+        flex-direction: column;
+      }
+    }
+
     .datetimepicker:not(.inline) {
       margin: 0 !important;
       position: absolute;

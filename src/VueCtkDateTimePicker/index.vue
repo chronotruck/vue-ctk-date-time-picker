@@ -66,6 +66,7 @@
       :button-now-translation="buttonNowTranslation"
       :no-button-now="noButtonNow"
       :first-day-of-week="firstDayOfWeek"
+      :shortcut="shortcut"
       :custom-shortcuts="customShortcuts"
       :no-keyboard="noKeyboard"
       :right="right"

@@ -7,6 +7,7 @@
     <RangeShortcuts
       v-if="range && !noShortcuts"
       ref="range-shortcuts"
+      :value="shortcut"
       :color="color"
       :dark="dark"
       :custom-shortcuts="customShortcuts"
@@ -167,6 +168,7 @@
     props: {
       id: { type: String, default: null },
       value: { type: [String, Object], default: null },
+      shortcut: { type: String, default: null },
       color: { type: String, default: null },
       minDate: { type: String, default: null },
       maxDate: { type: String, default: null },
@@ -283,7 +285,7 @@
       },
       selectDate (day) {
         if (this.range && !this.noShortcuts) {
-          this.$refs['range-shortcuts'].unSelectAllShortcuts()
+          this.$refs['range-shortcuts'].selectedShortcut = null
         }
         if (this.range) {
           if (!this.value.start || this.value.end || day.isBefore(moment(this.value.start))) {
@@ -323,6 +325,7 @@
     &.range.has-shortcuts {
       width: 400px;
     }
+
     &.p-0 {
       padding: 0;
     }
@@ -518,7 +521,7 @@
     }
   }
   @media screen and (max-width: 415px) {
-    #DatePicker.datepicker-container {
+    .datepicker-container {
       width: 100%;
       &:not(.inline) {
         .datepicker-controls {
