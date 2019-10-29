@@ -379,7 +379,17 @@
       flex-direction: column;
       flex-flow: column;
       -moz-flex-direction: column;
+      height: 100%;
     }
+
+    .datepicker-container {
+      width: 100%;
+
+      &.has-shortcuts {
+        flex-direction: column;
+      }
+    }
+
     .datetimepicker:not(.inline) {
       margin: 0 !important;
       position: absolute;
