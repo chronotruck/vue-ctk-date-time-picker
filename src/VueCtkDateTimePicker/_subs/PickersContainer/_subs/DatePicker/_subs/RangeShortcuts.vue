@@ -25,7 +25,7 @@
   import moment from 'moment'
   import CustomButton from '@/VueCtkDateTimePicker/_subs/CustomButton'
 
-  const SHORTCUT_TYPES = ['day', 'date', '-day', 'isoWeek', 'quarter', '-isoWeek', 'month', '-month', 'year', '-year', 'week', '-week']
+  const SHORTCUT_TYPES = ['day', 'date', '-day', 'isoWeek', 'quarter', '-isoWeek', 'month', '-month', 'year', '-year', '+year', 'week', '-week']
 
   /**
    * Component used to show a list of the shortcuts currently available
@@ -135,6 +135,12 @@
           return {
             start: moment().subtract(1, 'months').startOf('month'),
             end: moment().subtract(1, 'months').endOf('month'),
+            value
+          }
+        case '+year':
+          return {
+            start: moment().add(1, 'years').startOf('year'),
+            end: moment().add(1, 'years').endOf('year'),
             value
           }
         case '-year':

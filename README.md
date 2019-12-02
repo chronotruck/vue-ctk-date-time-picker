@@ -169,11 +169,12 @@ Here is an example of [UMD implementation](https://codepen.io/louismazel/pen/jQW
   { key: 'thisMonth', label: 'This month', value: 'month' },
   { key: 'lastMonth', label: 'Last month', value: '-month' },
   { key: 'thisYear', label: 'This year', value: 'year' },
-  { key: 'lastYear', label: 'Last year', value: '-year' }
+  { key: 'lastYear', label: 'Last year', value: '-year' },
+  { key: 'nextYear', label: 'Next year', value: '+year' }
 ];
 ```
 
-Shortcut types allowed are : `['day', '-day', 'isoWeek', '-isoWeek', 'quarter', 'month', '-month', 'year', '-year', 'week', '-week']`
+Shortcut types allowed are : `['day', '-day', 'isoWeek', '-isoWeek', 'quarter', 'month', '-month', 'year', '+year', '-year', 'week', '-week']`
 For each shortcut, a `key`, `label` and `value` must be specified. The `key` is a unique key for that specific shortcut.
 Additional values can be passed as a `callback` function that will be called whenever the user clicks on the shortcut. The callback receives an object as first argument with the `start` and `end` values, with the `shortcut` object itself.
 You can use this feature for translate existings shortcuts.
