@@ -15,7 +15,6 @@ export default class Month {
     this.start = moment([year, month])
     this.end = this.start.clone().endOf('month')
     this.month = month
-    this.locale = locale
     this.year = year
   }
 
