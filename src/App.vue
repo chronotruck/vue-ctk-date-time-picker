@@ -204,7 +204,7 @@
                 :disabled-hours="demo.options.disabledHours"
                 :enabled-dates="demo.options.enabledDates"
                 :minute-interval="demo.options.minuteInterval"
-                :first-day-of-week="demo.options.firstDayOfWeek"
+                :first-day-of-week="parseInt(demo.options.firstDayOfWeek)"
                 :min-date="demo.options.minDate"
                 :max-date="demo.options.maxDate"
                 :no-weekends-days="demo.options.noWeekendDays"

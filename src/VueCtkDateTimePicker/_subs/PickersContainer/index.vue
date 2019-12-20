@@ -257,6 +257,9 @@
       locale () {
         this.month = this.getMonth()
         this.componentKey += 1
+      },
+      firstDayOfWeek() {
+        this.month = this.getMonth()
       }
     },
     methods: {
@@ -300,11 +303,11 @@
         if (this.range) {
           const rangeVal = payload || this.value
           const date = rangeVal && (rangeVal.end || rangeVal.start) ? moment(rangeVal.end ? rangeVal.end : rangeVal.start) : moment()
-          return new Month(date.month(), date.year())
+          return new Month(date.month(), date.year(), parseInt(this.firstDayOfWeek))
         } else if (this.value) {
-          return new Month(moment(this.value, 'YYYY-MM-DD').month(), moment(this.value, 'YYYY-MM-DD').year(), this.locale)
+          return new Month(moment(this.value, 'YYYY-MM-DD').month(), moment(this.value, 'YYYY-MM-DD').year(), this.locale, parseInt(this.firstDayOfWeek))
         } else {
-          return new Month(moment().month(), moment().year(), this.locale)
+          return new Month(moment().month(), moment().year(), this.locale, parseInt(this.firstDayOfWeek))
         }
       },
       changeMonth (val) {
@@ -314,13 +317,13 @@
           year += (val === 'prev' ? -1 : +1)
           month = (val === 'prev' ? 11 : 0)
         }
-        this.month = new Month(month, year, this.locale)
+        this.month = new Month(month, year, this.locale, parseInt(this.firstDayOfWeek))
         if (this.$refs.TimePicker) {
           this.$refs.TimePicker.initPositionView()
         }
       },
       changeYearMonth ({ month, year }) {
-        this.month = new Month(month, year, this.locale)
+        this.month = new Month(month, year, this.locale, parseInt(this.firstDayOfWeek))
       }
     }
   }
