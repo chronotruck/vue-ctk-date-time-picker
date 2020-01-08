@@ -303,7 +303,7 @@
         if (this.range) {
           const rangeVal = payload || this.value
           const date = rangeVal && (rangeVal.end || rangeVal.start) ? moment(rangeVal.end ? rangeVal.end : rangeVal.start) : moment()
-          return new Month(date.month(), date.year(), parseInt(this.firstDayOfWeek))
+          return new Month(date.month(), date.year())
         } else if (this.value) {
           return new Month(moment(this.value, 'YYYY-MM-DD').month(), moment(this.value, 'YYYY-MM-DD').year(), this.locale, parseInt(this.firstDayOfWeek))
         } else {
