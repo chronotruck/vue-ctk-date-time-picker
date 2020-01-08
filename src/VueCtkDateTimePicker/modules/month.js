@@ -4,7 +4,6 @@ const moment = extendMoment(Moment)
 
 export default class Month {
   constructor (month, year, locale, firstDayOfWeek) {
-    console.log(month, year, locale, firstDayOfWeek)
     moment.locale(locale)
     if (firstDayOfWeek) {
       moment.updateLocale(locale, {
