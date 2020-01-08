@@ -269,20 +269,21 @@
           'minuteInterval', 'firstDayOfWeek'
         ],
         demoComponents: [
-          {
-            id: '1',
-            title: 'Date Time Picker',
-            description: 'Date & Time selector',
-            initial: '2018-04-07 20:26',
-            value: '2018-04-07 20:26',
-            editOption: false,
-            options: {
-              format: 'YYYY-MM-DD HH:mm',
-              id: 'DateTimePicker',
-              minDate: '2018-04-05',
-              maxDate: '2018-04-24'
-            }
-          },
+          // {
+          //   id: '1',
+          //   title: 'Date Time Picker',
+          //   description: 'Date & Time selector',
+          //   initial: '2018-04-07 20:26',
+          //   value: '2018-04-07 20:26',
+          //   editOption: false,
+          //   options: {
+          //     format: 'YYYY-MM-DD HH:mm',
+          //     id: 'DateTimePicker',
+          //     minDate: '2018-04-05',
+          //     maxDate: '2018-04-24',
+          //     firstDayOfWeek: 3,
+          //   }
+          // },
           {
             id: '2',
             title: 'Range Date Picker',
@@ -305,127 +306,128 @@
               format: 'YYYY-MM-DD',
               color: 'purple',
               label: 'Select date range',
-              id: 'RangeDatePicker'
+              id: 'RangeDatePicker',
+              firstDayOfWeek: 4,
             }
           },
-          {
-            id: '3',
-            title: 'Date Picker',
-            description: 'Date selector - right position - noLabel true - With large input (input-size="lg") - format: "MM-DD-YYYY" - formatted: "ll"',
-            editOption: false,
-            initial: '14-01-2019',
-            value: '14-01-2019',
-            options: {
-              onlyDate: true,
-              color: 'coral',
-              inputSize: 'lg',
-              buttonColor: 'green',
-              buttonNowTranslation: 'Maintenant',
-              id: 'DatePicker',
-              format: 'DD-MM-YYYY',
-              formatted: 'll',
-              right: true,
-              noLabel: true
-            }
-          },
-          {
-            id: '4',
-            title: 'Time Picker - With small input (input-size="sm") & minute-interval="10"',
-            description: 'Time selector',
-            editOption: false,
-            initial: '11:26 am',
-            value: '11:26 am',
-            options: {
-              format: 'hh:mm a',
-              formatted: 'hh:mm a',
-              onlyTime: true,
-              color: 'firebrick',
-              minuteInterval: '10',
-              label: 'Select time',
-              inputSize: 'sm',
-              id: 'TimePicker',
-              noLabel: true
-            }
-          },
-          {
-            id: '5',
-            title: 'Inline Picker',
-            description: 'Inline selector with keyboard accessibility disabled & disabled weekly dates (available for all pickers)',
-            editOption: false,
-            initial: {
-              start: '2018-04-05',
-              end: '2018-04-20'
-            },
-            value: {
-              start: '2018-04-05',
-              end: '2018-04-20'
-            },
-            options: {
-              inline: true,
-              format: 'YYYY-MM-DD',
-              formatted: 'll',
-              range: true,
-              id: 'InlinePicker',
-              disabledWeekly: [0, 4, 6],
-              noKeyboard: true
-            }
-          },
-          {
-            id: '6',
-            title: 'Disabled Picker',
-            description: '(disabled="true")',
-            editOption: false,
-            initial: 'null',
-            value: null,
-            options: {
-              disabled: true,
-              label: 'Is Disabled',
-              id: 'DisabledPicker'
-            }
-          },
-          {
-            id: '7',
-            title: 'Min and Max date with time in 24h-format',
-            description: 'minDate: 2019-03-03 20:10, maxDate: 2019-06-24 09:14',
-            initial: '2019-03-04 20:26',
-            value: '2019-03-04 20:26',
-            editOption: false,
-            options: {
-              format: 'YYYY-MM-DD HH:mm',
-              id: 'DateTimePicker',
-              minDate: '2019-03-03 20:10',
-              maxDate: '2019-06-24 09:14'
-            }
-          },
-          {
-            id: '8',
-            title: 'Min and Max date with time in 12h-format',
-            description: 'minDate: 2019-03-03 8:10 pm, maxDate: 2019-06-24 9:14 am',
-            initial: '2019-03-03 8:10 pm',
-            value: '2019-03-06 8:20 pm',
-            editOption: false,
-            options: {
-              format: 'YYYY-MM-DD h:mm a',
-              id: 'DateTimePicker',
-              minDate: '2019-03-03 8:10 pm',
-              maxDate: '2019-03-24 9:14 am'
-            }
-          },
-          {
-            id: '9',
-            title: 'Enabled/Disabled dates Picker',
-            description: '',
-            editOption: false,
-            initial: { 'disabledDates': ['2021-02-22'], 'enabledDates': ['2021-02-21', '2021-02-22', '2021-02-23'] },
-            value: '2021-02-22',
-            options: {
-              id: 'EnabledDisabledDatesPicker',
-              disabledDates: ['2021-02-22'],
-              enabledDates: ['2021-02-21', '2021-02-22', '2021-02-23'],
-              inline: true,
-              format: 'YYYY-MM-DD HH:mm'
-            }
-          }
+          // {
+          //   id: '3',
+          //   title: 'Date Picker',
+          //   description: 'Date selector - right position - noLabel true - With large input (input-size="lg") - format: "MM-DD-YYYY" - formatted: "ll"',
+          //   editOption: false,
+          //   initial: '14-01-2019',
+          //   value: '14-01-2019',
+          //   options: {
+          //     onlyDate: true,
+          //     color: 'coral',
+          //     inputSize: 'lg',
+          //     buttonColor: 'green',
+          //     buttonNowTranslation: 'Maintenant',
+          //     id: 'DatePicker',
+          //     format: 'DD-MM-YYYY',
+          //     formatted: 'll',
+          //     right: true,
+          //     noLabel: true
+          //   }
+          // },
+          // {
+          //   id: '4',
+          //   title: 'Time Picker - With small input (input-size="sm") & minute-interval="10"',
+          //   description: 'Time selector',
+          //   editOption: false,
+          //   initial: '11:26 am',
+          //   value: '11:26 am',
+          //   options: {
+          //     format: 'hh:mm a',
+          //     formatted: 'hh:mm a',
+          //     onlyTime: true,
+          //     color: 'firebrick',
+          //     minuteInterval: '10',
+          //     label: 'Select time',
+          //     inputSize: 'sm',
+          //     id: 'TimePicker',
+          //     noLabel: true
+          //   }
+          // },
+          // {
+          //   id: '5',
+          //   title: 'Inline Picker',
+          //   description: 'Inline selector with keyboard accessibility disabled & disabled weekly dates (available for all pickers)',
+          //   editOption: false,
+          //   initial: {
+          //     start: '2018-04-05',
+          //     end: '2018-04-20'
+          //   },
+          //   value: {
+          //     start: '2018-04-05',
+          //     end: '2018-04-20'
+          //   },
+          //   options: {
+          //     inline: true,
+          //     format: 'YYYY-MM-DD',
+          //     formatted: 'll',
+          //     range: true,
+          //     id: 'InlinePicker',
+          //     disabledWeekly: [0, 4, 6],
+          //     noKeyboard: true
+          //   }
+          // },
+          // {
+          //   id: '6',
+          //   title: 'Disabled Picker',
+          //   description: '(disabled="true")',
+          //   editOption: false,
+          //   initial: 'null',
+          //   value: null,
+          //   options: {
+          //     disabled: true,
+          //     label: 'Is Disabled',
+          //     id: 'DisabledPicker'
+          //   }
+          // },
+          // {
+          //   id: '7',
+          //   title: 'Min and Max date with time in 24h-format',
+          //   description: 'minDate: 2019-03-03 20:10, maxDate: 2019-06-24 09:14',
+          //   initial: '2019-03-04 20:26',
+          //   value: '2019-03-04 20:26',
+          //   editOption: false,
+          //   options: {
+          //     format: 'YYYY-MM-DD HH:mm',
+          //     id: 'DateTimePicker',
+          //     minDate: '2019-03-03 20:10',
+          //     maxDate: '2019-06-24 09:14'
+          //   }
+          // },
+          // {
+          //   id: '8',
+          //   title: 'Min and Max date with time in 12h-format',
+          //   description: 'minDate: 2019-03-03 8:10 pm, maxDate: 2019-06-24 9:14 am',
+          //   initial: '2019-03-03 8:10 pm',
+          //   value: '2019-03-06 8:20 pm',
+          //   editOption: false,
+          //   options: {
+          //     format: 'YYYY-MM-DD h:mm a',
+          //     id: 'DateTimePicker',
+          //     minDate: '2019-03-03 8:10 pm',
+          //     maxDate: '2019-03-24 9:14 am'
+          //   }
+          // },
+          // {
+          //   id: '9',
+          //   title: 'Enabled/Disabled dates Picker',
+          //   description: '',
+          //   editOption: false,
+          //   initial: { 'disabledDates': ['2021-02-22'], 'enabledDates': ['2021-02-21', '2021-02-22', '2021-02-23'] },
+          //   value: '2021-02-22',
+          //   options: {
+          //     id: 'EnabledDisabledDatesPicker',
+          //     disabledDates: ['2021-02-22'],
+          //     enabledDates: ['2021-02-21', '2021-02-22', '2021-02-23'],
+          //     inline: true,
+          //     format: 'YYYY-MM-DD HH:mm'
+          //   }
+          // }
         ],
         value: '06-01-2014 05:00',
         value2: null,
