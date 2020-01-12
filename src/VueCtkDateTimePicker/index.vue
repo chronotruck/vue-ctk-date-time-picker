@@ -86,20 +86,6 @@
 
   import props from './props'
 
-  const updateMomentLocale = (locale, firstDayOfWeek) => {
-    moment.locale(locale)
-    if (firstDayOfWeek) {
-      const firstDayNumber = Number.isInteger(firstDayOfWeek) && firstDayOfWeek === 0
-        ? 7
-        : firstDayOfWeek || moment.localeData(locale).firstDayOfWeek()
-      moment.updateLocale(locale, {
-        week: {
-          dow: firstDayNumber
-        }
-      })
-    }
-  }
-
   const nearestMinutes = (interval, date, format) => {
     const roundedMinutes = Math.ceil(date.minute() / interval) * interval
     return moment(date.clone().minute(roundedMinutes).second(0), format)
@@ -214,12 +200,8 @@
         if (this.isDisabled) return
         this.pickerOpen = val
       },
-      locale (value) {
-        updateMomentLocale(value, this.firstDayOfWeek)
-      }
     },
     mounted () {
-      updateMomentLocale(this.locale, this.firstDayOfWeek)
       this.pickerPosition = this.getPosition()
       this.pickerOpen = this.open
       if (this.hasCustomElem) {
