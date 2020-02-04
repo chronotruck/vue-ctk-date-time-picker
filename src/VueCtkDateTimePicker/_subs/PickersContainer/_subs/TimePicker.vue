@@ -288,9 +288,11 @@
       onScrollHours: debounce(function (scroll) {
         const value = this.getValue(scroll)
         const hour = this.isTwelveFormat
-          ? this.apm.toLowerCase() === 'am'
-            ? value + 1
-            : (value + 1 + 12)
+					? this.apm
+						? this.apm.toLowerCase() === 'am'
+							? value + 1
+							: (value + 1 + 12)
+						:value
           : value
         if (this.isHoursDisabled(hour)) return
         this.hour = hour === 24 && !this.isTwelveFormat ? 23 : hour
