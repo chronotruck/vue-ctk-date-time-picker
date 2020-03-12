@@ -9,12 +9,18 @@
       class="header-picker-year"
     >
       <TransitionGroup :name="transitionName">
-        <div
+        <span
           v-for="y in [year]"
           :key="y"
         >
           {{ y }}
-        </div>
+        </span>
+        <span
+          key="local-time"
+          class="localtime"
+        >
+          {{ localTime }}
+        </span>
       </TransitionGroup>
     </div>
 
@@ -128,6 +134,9 @@
           backgroundColor: this.color
         }
       },
+      localTime () {
+        return Intl.DateTimeFormat().resolvedOptions().timeZone
+      },
       dateTime () {
         const date = this.value
           ? this.range
@@ -189,6 +198,10 @@
       line-height: 14px;
       position: relative;
       height: 14px;
+    }
+    .localtime {
+      float: right;
+      margin-right: 10px;
     }
     &-date, &-time, &-minute, &-hour, &-range {
       font-size: $headerTextSize;
