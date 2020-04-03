@@ -59,7 +59,7 @@
 
 <style lang="scss" scoped>
   .custom-button {
-    padding: 0px 20px;
+    padding: 0px 5px;
     position: relative;
     background-color: white;
     border: 1px solid transparent;
