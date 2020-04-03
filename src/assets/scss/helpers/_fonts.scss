@@ -3,7 +3,7 @@
 // Font-size
 @each $size in $font-sizes {
   .lm-fs-#{$size} {
-    font-size: #{$size/12}em !important;
+    font-size: #{$size}px !important;
   }
 }
 
