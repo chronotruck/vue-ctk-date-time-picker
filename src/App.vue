@@ -280,7 +280,8 @@
               format: 'YYYY-MM-DD HH:mm',
               id: 'DateTimePicker',
               minDate: '2018-04-05',
-              maxDate: '2018-04-24'
+              maxDate: '2018-04-24',
+              firstDayOfWeek: 3,
             }
           },
           {
@@ -305,7 +306,7 @@
               format: 'YYYY-MM-DD',
               color: 'purple',
               label: 'Select date range',
-              id: 'RangeDatePicker'
+              id: 'RangeDatePicker',
             }
           },
           {
