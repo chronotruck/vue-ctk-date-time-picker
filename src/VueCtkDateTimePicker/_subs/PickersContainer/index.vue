@@ -28,34 +28,36 @@
           :range="range"
         />
         <div class="pickers-container flex">
-          <!-- NEED 'YYYY-MM-DD' format -->
-          <DatePicker
-            v-if="!onlyTime"
-            :id="$attrs.id"
-            v-model="date"
-            :dark="dark"
-            :month="month"
-            :inline="inline"
-            :no-weekends-days="noWeekendsDays"
-            :disabled-weekly="disabledWeekly"
-            :color="color"
-            :min-date="minDate"
-            :max-date="maxDate"
-            :disabled-dates="disabledDates"
-            :enabled-dates="enabledDates"
-            :range="range"
-            :no-shortcuts="noShortcuts"
-            :height="height"
-            :first-day-of-week="firstDayOfWeek"
-            :visible="visible"
-            :shortcut="shortcut"
-            :custom-shortcuts="customShortcuts"
-            :no-keyboard="noKeyboard"
-            :locale="locale"
-            @change-month="changeMonth"
-            @change-year-month="changeYearMonth"
-            @close="$emit('close')"
-          />
+          <div>
+            <!-- NEED 'YYYY-MM-DD' format -->
+            <DatePicker
+              v-if="!onlyTime"
+              :id="$attrs.id"
+              v-model="date"
+              :dark="dark"
+              :month="month"
+              :inline="inline"
+              :no-weekends-days="noWeekendsDays"
+              :disabled-weekly="disabledWeekly"
+              :color="color"
+              :min-date="minDate"
+              :max-date="maxDate"
+              :disabled-dates="disabledDates"
+              :enabled-dates="enabledDates"
+              :range="range"
+              :no-shortcuts="noShortcuts"
+              :height="height"
+              :first-day-of-week="firstDayOfWeek"
+              :visible="visible"
+              :shortcut="shortcut"
+              :custom-shortcuts="customShortcuts"
+              :no-keyboard="noKeyboard"
+              :locale="locale"
+              @change-month="changeMonth"
+              @change-year-month="changeYearMonth"
+              @close="$emit('close')"
+            />
+          </div>
           <!-- NEED 'HH:mm' format -->
           <TimePicker
             v-if="!onlyDate"

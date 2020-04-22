@@ -202,6 +202,7 @@
       },
     },
     mounted () {
+      console.log('loaded');
       this.pickerPosition = this.getPosition()
       this.pickerOpen = this.open
       if (this.hasCustomElem) {
