@@ -73,6 +73,7 @@
             :min-time="minTime"
             :max-time="maxTime"
             :behaviour="behaviour"
+            :scroll-select="scrollSelect"
           />
         </div>
         <ButtonValidate
@@ -141,7 +142,8 @@
       customShortcuts: { type: Array, default: null },
       noKeyboard: { type: Boolean, default: false },
       right: { type: Boolean, default: false },
-      behaviour: { type: Object, default: () => ({}) }
+      behaviour: { type: Object, default: () => ({}) },
+      scrollSelect: { type: Boolean, default: true }
     },
     data () {
       return {

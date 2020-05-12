@@ -53,6 +53,20 @@ describe('VueCtkDateTimePicker/PickersContainer/TimePicker', () => {
     })
   })
 
+  describe('scroll-select', () => {
+    it('should auto select a column value if `scroll-select` is true', () => {
+      wrapper.setProps({
+        'scroll-select': true
+      })
+    })
+
+    it('should not auto select a column value if `scroll-select` is false', () => {
+      wrapper.setProps({
+        'scroll-select': false
+      })
+    })
+  })
+
   describe('columns', () => {
     it('should have 2 columns if there isnt amp', () => {
       wrapper.setProps({

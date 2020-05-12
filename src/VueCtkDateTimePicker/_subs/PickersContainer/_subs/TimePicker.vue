@@ -103,7 +103,8 @@
       disabledHours: { type: Array, default: () => ([]) },
       minTime: { type: String, default: null },
       behaviour: { type: Object, default: () => ({}) },
-      maxTime: { type: String, default: null }
+      maxTime: { type: String, default: null },
+      scrollSelect: { type: Boolean, default: true }
     },
     data () {
       return {
@@ -112,7 +113,7 @@
         apm: null,
         oldvalue: this.value,
         columnPadding: {},
-        noScrollEvent: !!(this.value && !this.inline),
+        noScrollEvent: !!(this.value && !this.scrollSelect),
         delay: 0
       }
     },
