@@ -257,7 +257,7 @@
         booleanOptions: [
           'noHeader', 'autoClose', 'error', 'dark', 'overlay', 'noWeekendDays', 'noShortcuts',
           'noButton', 'onlyDate', 'range', 'onlyTime', 'inline', 'persistent', 'disabled', 'noButtonNow', 'noValueToCustomElem',
-          'noKeyboard', 'right', 'noClearButton', 'noLabel', 'scroll-select'
+          'noKeyboard', 'right', 'noClearButton', 'noLabel', 'scrollSelect'
         ],
         stringOptions: [
           'id', 'label', 'hint', 'color', 'buttonColor', 'position', 'format', 'formatted', 'outputFormat',
@@ -281,7 +281,8 @@
               format: 'YYYY-MM-DD HH:mm',
               id: 'DateTimePicker',
               minDate: '2018-04-05',
-              maxDate: '2018-04-24'
+              maxDate: '2018-04-24',
+              scrollSelect: true
             }
           },
           {
@@ -331,7 +332,7 @@
           },
           {
             id: '4',
-            title: 'Time Picker - With small input (input-size="sm") & minute-interval="10"',
+            title: 'Time Picker - With small input (input-size="sm"), minute-interval="10", and scroll-select="false"',
             description: 'Time selector',
             editOption: false,
             initial: '11:26 am',
@@ -346,7 +347,7 @@
               inputSize: 'sm',
               id: 'TimePicker',
               noLabel: true,
-              scrollSelect: true
+              scrollSelect: false
             }
           },
           {
@@ -396,7 +397,8 @@
               format: 'YYYY-MM-DD HH:mm',
               id: 'DateTimePicker',
               minDate: '2019-03-03 20:10',
-              maxDate: '2019-06-24 09:14'
+              maxDate: '2019-06-24 09:14',
+              scrollSelect: true
             }
           },
           {
@@ -410,7 +412,8 @@
               format: 'YYYY-MM-DD h:mm a',
               id: 'DateTimePicker',
               minDate: '2019-03-03 8:10 pm',
-              maxDate: '2019-03-24 9:14 am'
+              maxDate: '2019-03-24 9:14 am',
+              scrollSelect: true
             }
           },
           {
@@ -425,11 +428,11 @@
               disabledDates: ['2021-02-22'],
               enabledDates: ['2021-02-21', '2021-02-22', '2021-02-23'],
               inline: true,
-              format: 'YYYY-MM-DD HH:mm'
+              format: 'YYYY-MM-DD HH:mm',
+              scrollSelect: true
             }
           }
         ],
-        scrollSelect: false,
         value: '06-01-2014 05:00',
         value2: null,
         value3: '2018-04-05T14:26',
@@ -475,7 +478,8 @@
           { key: 'lastMonth', label: 'Last month', value: '-month' },
           { key: 'thisYear', label: 'This year', value: 'year' },
           { key: 'lastYear', label: 'Last year', value: '-year' }
-        ]
+        ],
+        scrollSelect: true
       }
     }
   }
