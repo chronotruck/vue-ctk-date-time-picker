@@ -218,8 +218,10 @@
         updateMomentLocale(value, this.firstDayOfWeek)
       }
     },
-    mounted () {
+    created () {
       updateMomentLocale(this.locale, this.firstDayOfWeek)
+    },
+    mounted () {
       this.pickerPosition = this.getPosition()
       this.pickerOpen = this.open
       if (this.hasCustomElem) {
