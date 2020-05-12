@@ -220,6 +220,7 @@
                 :no-value-to-custom-elem="demo.options.noValueToCustomElem"
                 :disabled-weekly="demo.options.disabledWeekly"
                 :right="demo.options.right"
+                :scroll-select="demo.options.scrollSelect"
                 :no-clear-button="demo.options.noClearButton"
               >
                 <input
@@ -256,7 +257,7 @@
         booleanOptions: [
           'noHeader', 'autoClose', 'error', 'dark', 'overlay', 'noWeekendDays', 'noShortcuts',
           'noButton', 'onlyDate', 'range', 'onlyTime', 'inline', 'persistent', 'disabled', 'noButtonNow', 'noValueToCustomElem',
-          'noKeyboard', 'right', 'noClearButton', 'noLabel'
+          'noKeyboard', 'right', 'noClearButton', 'noLabel', 'scroll-select'
         ],
         stringOptions: [
           'id', 'label', 'hint', 'color', 'buttonColor', 'position', 'format', 'formatted', 'outputFormat',
@@ -344,7 +345,8 @@
               label: 'Select time',
               inputSize: 'sm',
               id: 'TimePicker',
-              noLabel: true
+              noLabel: true,
+              scrollSelect: true
             }
           },
           {
@@ -427,6 +429,7 @@
             }
           }
         ],
+        scrollSelect: false,
         value: '06-01-2014 05:00',
         value2: null,
         value3: '2018-04-05T14:26',

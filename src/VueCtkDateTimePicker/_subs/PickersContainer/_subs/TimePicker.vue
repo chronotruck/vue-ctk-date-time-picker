@@ -64,6 +64,7 @@
       }
     })
   }
+
   const ArrayMinuteRange = (start, end, twoDigit, step = 1, disabledMinutes) => {
     const len = Math.floor(end / step) - start
 
@@ -113,7 +114,7 @@
         apm: null,
         oldvalue: this.value,
         columnPadding: {},
-        noScrollEvent: !!(this.value && !this.scrollSelect),
+        noScrollEvent: this.getNoScrollEvent(),
         delay: 0
       }
     },
@@ -279,6 +280,14 @@
     mounted () {
       this.buildComponent()
       this.initPositionView()
+
+      /* eslint-disable no-console */
+      console.log('this.scrollSelect: ', this.scrollSelect)
+      console.log('this.value: ', this.value)
+      console.log('this.inline: ', this.inline)
+      console.log('this.getNoScrollEvent(): ', this.getNoScrollEvent())
+      console.log('this.noScrollEvent: ', this.noScrollEvent)
+      /* eslint-enable no-console */
     },
     methods: {
       getValue (scroll) {
@@ -287,13 +296,16 @@
         return Math.round(scrollTop / itemHeight)
       },
       onScrollHours: debounce(function (scroll) {
+        /* eslint-disable no-console */
+        console.log('this.noScrollEvent: ', this.noScrollEvent)
+        /* eslint-enable no-console */
         const value = this.getValue(scroll)
         const hour = this.isTwelveFormat
-					? this.apm
-						? this.apm.toLowerCase() === 'am'
-							? value + 1
-							: (value + 1 + 12)
-						:value
+          ? this.apm
+            ? this.apm.toLowerCase() === 'am'
+              ? value + 1
+              : (value + 1 + 12)
+            : value
           : value
         if (this.isHoursDisabled(hour)) return
         this.hour = hour === 24 && !this.isTwelveFormat ? 23 : hour
@@ -389,7 +401,7 @@
               }
             }
             setTimeout(() => {
-              this.noScrollEvent = false
+              this.noScrollEvent = this.getNoScrollEvent()
             }, 500)
           })
         }, 0)
@@ -421,6 +433,14 @@
         const minute = this.minute ? (this.minute < 10 ? '0' : '') + this.minute : '00'
         const time = `${hour}:${minute}`
         this.$emit('input', time)
+      },
+      getNoScrollEvent () {
+        // This is (essentially) the original implementation
+        // if (this.scrollSelect) {
+        //   return !!(this.value && !this.inline)
+        // }
+
+        return !this.scrollSelect
       }
     }
   }

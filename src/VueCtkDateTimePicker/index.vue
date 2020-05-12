@@ -70,6 +70,7 @@
       :custom-shortcuts="customShortcuts"
       :no-keyboard="noKeyboard"
       :right="right"
+      :scroll-select="scrollSelect"
       :behaviour="_behaviour"
       @validate="validate"
       @close="closePicker"
@@ -231,7 +232,7 @@
         }
       }
       if (this.format === 'YYYY-MM-DD hh:mm a' && this.onlyTime) {
-        console.warn(`A (time) format must be indicated/ (Ex : format="HH:mm")`)
+        // console.warn(`A (time) format must be indicated/ (Ex : format="HH:mm")`)
       }
     },
     beforeDestroy () {
