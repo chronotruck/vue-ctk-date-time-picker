@@ -280,14 +280,6 @@
     mounted () {
       this.buildComponent()
       this.initPositionView()
-
-      /* eslint-disable no-console */
-      console.log('this.scrollSelect: ', this.scrollSelect)
-      console.log('this.value: ', this.value)
-      console.log('this.inline: ', this.inline)
-      console.log('this.getNoScrollEvent(): ', this.getNoScrollEvent())
-      console.log('this.noScrollEvent: ', this.noScrollEvent)
-      /* eslint-enable no-console */
     },
     methods: {
       getValue (scroll) {
@@ -296,9 +288,6 @@
         return Math.round(scrollTop / itemHeight)
       },
       onScrollHours: debounce(function (scroll) {
-        /* eslint-disable no-console */
-        console.log('this.noScrollEvent: ', this.noScrollEvent)
-        /* eslint-enable no-console */
         const value = this.getValue(scroll)
         const hour = this.isTwelveFormat
           ? this.apm
