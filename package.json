@@ -40,11 +40,11 @@
     "babel-jest": "^23.6.0",
     "eslint": "^5.8.0",
     "eslint-plugin-vue": "^5.0.0",
-    "node-sass": "^4.11.0",
-    "nuxt": "^2.9.2",
+    "node-sass": "^4.14.1",
+    "nuxt": "^2.12.2",
     "sass-loader": "^7.1.0",
     "vue-cli-plugin-webpack-bundle-analyzer": "^1.2.0",
-    "vue-server-renderer": "^2.6.9",
+    "vue-server-renderer": "^2.6.11",
     "vue-template-compiler": "^2.6.9"
   },
   "postcss": {
