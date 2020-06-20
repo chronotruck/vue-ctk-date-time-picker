@@ -373,6 +373,9 @@
     }
   }
   @media screen and (max-width: 415px) {
+    $header-size: 58px;
+    $footer-size: 41px;
+
     .pickers-container {
       -webkit-flex-direction: column;
       -ms-flex-direction: column;
@@ -397,6 +400,11 @@
       bottom: 0;
       right: 0;
       left: 0;
+
+      .pickers-container {
+        height: calc(100% - #{$header-size} - #{$footer-size});
+      }
+
       .datepicker {
         border-radius: 0 !important;
         bottom: 0 !important;
