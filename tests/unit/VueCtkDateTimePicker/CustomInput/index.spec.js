@@ -1,6 +1,7 @@
 import { shallowMount } from '@vue/test-utils'
 
 import CustomInput from '@/VueCtkDateTimePicker/_subs/CustomInput'
+import CustomButton from '@/VueCtkDateTimePicker/_subs/CustomButton'
 
 describe('VueCtkDateTimePicker/CustomInput', () => {
   let wrapper
@@ -72,6 +73,64 @@ describe('VueCtkDateTimePicker/CustomInput', () => {
   /**
    * TODO: Add clear button test cases
    */
+  describe('clear button', () => {
+    it('should be defined if the "noClearButton" prop is not defined, the input is not disabled and there is a value', () => {
+      const wrapper = shallowMount(CustomInput, {
+        propsData: {
+          value: '2020-06-20 12:00:00',
+          noClearButton: false
+        },
+        attrs: {
+          disabled: false
+        }
+      })
+
+      const button = wrapper.find(CustomButton)
+      expect(button.exists()).toBeTruthy()
+      expect(button.is(CustomButton)).toBeTruthy()
+    })
+
+    it('should undefined if the "noClearButton" prop is defined or the input is disabled or there is no value', () => {
+      let wrapper = shallowMount(CustomInput, {
+        propsData: {
+          value: '2020-06-20 12:00:00',
+          noClearButton: true
+        },
+        attrs: {
+          disabled: false
+        }
+      })
+
+      let button = wrapper.find('.field-clear-button')
+      expect(button.exists()).toBeFalsy()
+
+      wrapper = shallowMount(CustomInput, {
+        propsData: {
+          value: null,
+          noClearButton: false
+        },
+        attrs: {
+          disabled: false
+        }
+      })
+
+      button = wrapper.find('.field-clear-button')
+      expect(button.exists()).toBeFalsy()
+
+      wrapper = shallowMount(CustomInput, {
+        propsData: {
+          value: '2020-06-20 12:00:00',
+          noClearButton: false
+        },
+        attrs: {
+          disabled: true
+        }
+      })
+
+      button = wrapper.find('.field-clear-button')
+      expect(button.exists()).toBeFalsy()
+    })
+  })
 
   afterEach(() => {
     wrapper.destroy()
