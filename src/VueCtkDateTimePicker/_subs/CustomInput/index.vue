@@ -164,6 +164,9 @@
     &-clear-button {
       position: absolute;
       right: 12px;
+      top: 0px;
+      bottom: 0px;
+      margin: auto 0;
     }
     &.has-error {
       .field-input {

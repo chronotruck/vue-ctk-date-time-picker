@@ -38,7 +38,7 @@
             <CustomButton
               v-for="m in [month]"
               :key="m.month"
-              class="date-buttons lm-fs-16 padding-button"
+              class="date-buttons lm-fs-16 padding-button flex-1"
               :color="color"
               :dark="dark"
               @click="selectingYearMonth = 'month'"
@@ -53,7 +53,7 @@
             <CustomButton
               v-for="y in [year]"
               :key="y"
-              class="date-buttons lm-fs-16 padding-button"
+              class="date-buttons lm-fs-16 padding-button flex-1"
               :color="color"
               :dark="dark"
               @click="selectingYearMonth = 'year'"
