@@ -145,21 +145,10 @@
         return ArrayMinuteRange(0, 60, twoDigit, this.minuteInterval, this._disabledMinutes)
       },
       apms () {
-        const ampm = this.isTwelveFormat
-          ? this.minTime
-            ? moment(this.minTime, 'hh:mm a').format('a')
-            : this.maxTime
-              ? moment(this.maxTime, 'hh:mm a').format('a')
-              : ''
-          : ''
-        const upper = ampm
-          ? [{ value: ampm.toUpperCase(), item: ampm.toUpperCase() }]
-          : [{ value: 'AM', item: 'AM' }, { value: 'PM', item: 'PM' }]
-        const lower = ampm
-          ? [{ value: ampm, item: ampm }]
-          : [{ value: 'am', item: 'am' }, { value: 'pm', item: 'pm' }]
         return this.isTwelveFormat
-          ? this.format.includes('A') ? upper : lower
+          ? this.format.includes('A')
+            ? [{ value: 'AM', item: 'AM' }, { value: 'PM', item: 'PM' }]
+            : [{ value: 'am', item: 'am' }, { value: 'pm', item: 'pm' }]
           : null
       },
       columns () {
@@ -288,9 +277,11 @@
       onScrollHours: debounce(function (scroll) {
         const value = this.getValue(scroll)
         const hour = this.isTwelveFormat
-          ? this.apm.toLowerCase() === 'am'
-            ? value + 1
-            : (value + 1 + 12)
+					? this.apm
+						? this.apm.toLowerCase() === 'am'
+							? value + 1
+							: (value + 1 + 12)
+						:value
           : value
         if (this.isHoursDisabled(hour)) return
         this.hour = hour === 24 && !this.isTwelveFormat ? 23 : hour
@@ -368,28 +359,30 @@
           return null
         }
       },
-      initPositionView () {
+      async initPositionView () {
         this.noScrollEvent = true
         const containers = ['hours', 'minutes']
         if (this.apms) containers.push('apms')
-        setTimeout(() => {
-          containers.forEach((container) => {
-            const elem = this.$refs[container][0]
-            elem.scrollTop = 0
-            const selected = elem.querySelector(`.time-picker-column-item.active`)
-            if (selected) {
-              const boundsSelected = selected.getBoundingClientRect()
-              const boundsElem = elem.getBoundingClientRect()
-              const timePickerHeight = this.$refs['time-picker'].clientHeight
-              if (boundsSelected && boundsElem) {
-                elem.scrollTop = (28 / 2) + boundsSelected.top - boundsElem.top - timePickerHeight / 2
-              }
+
+        await this.$nextTick()
+        containers.forEach((container) => {
+          const elem = this.$refs[container][0]
+          if (!elem) return false
+
+          elem.scrollTop = 0
+          const selected = elem.querySelector(`.time-picker-column-item.active`)
+          if (selected) {
+            const boundsSelected = selected.getBoundingClientRect()
+            const boundsElem = elem.getBoundingClientRect()
+            const timePickerHeight = this.$refs['time-picker'].clientHeight
+            if (boundsSelected && boundsElem) {
+              elem.scrollTop = (28 / 2) + boundsSelected.top - boundsElem.top - timePickerHeight / 2
             }
-            setTimeout(() => {
-              this.noScrollEvent = false
-            }, 500)
-          })
-        }, 0)
+          }
+          setTimeout(() => {
+            this.noScrollEvent = false
+          }, 500)
+        })
       },
       getAvailableHour () {
         const availableHours = this.hours.find((element) => {
