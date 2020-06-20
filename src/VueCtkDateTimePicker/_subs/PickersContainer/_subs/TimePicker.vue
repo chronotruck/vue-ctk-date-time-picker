@@ -145,21 +145,10 @@
         return ArrayMinuteRange(0, 60, twoDigit, this.minuteInterval, this._disabledMinutes)
       },
       apms () {
-        const ampm = this.isTwelveFormat
-          ? this.minTime
-            ? moment(this.minTime, 'hh:mm a').format('a')
-            : this.maxTime
-              ? moment(this.maxTime, 'hh:mm a').format('a')
-              : ''
-          : ''
-        const upper = ampm
-          ? [{ value: ampm.toUpperCase(), item: ampm.toUpperCase() }]
-          : [{ value: 'AM', item: 'AM' }, { value: 'PM', item: 'PM' }]
-        const lower = ampm
-          ? [{ value: ampm, item: ampm }]
-          : [{ value: 'am', item: 'am' }, { value: 'pm', item: 'pm' }]
         return this.isTwelveFormat
-          ? this.format.includes('A') ? upper : lower
+          ? this.format.includes('A')
+            ? [{ value: 'AM', item: 'AM' }, { value: 'PM', item: 'PM' }]
+            : [{ value: 'am', item: 'am' }, { value: 'pm', item: 'pm' }]
           : null
       },
       columns () {
