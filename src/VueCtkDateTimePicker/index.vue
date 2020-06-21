@@ -231,6 +231,7 @@
         }
       }
       if (this.format === 'YYYY-MM-DD hh:mm a' && this.onlyTime) {
+        // eslint-disable-next-line
         console.warn(`A (time) format must be indicated/ (Ex : format="HH:mm")`)
       }
     },

@@ -34,6 +34,39 @@ jobs:
           command: |
             npm run test:unit
 
+  tests_integration:
+    working_directory: ~/app
+    docker:
+      - image: circleci/node:10.13.0
+        environment:
+          NODE_ENV: production
+      - image: browserless/chrome:1.9.0-puppeteer-1.15.0
+        environment:
+          MAX_CONCURRENT_SESSIONS: 10
+    steps:
+      - attach_workspace:
+          at: ~/app
+      - setup_remote_docker:
+          docker_layer_caching: true
+      - run:
+          name: Serve the build
+          background: true
+          command: |
+            echo 0.0.0.0 app | sudo tee -a /etc/hosts
+            echo 127.0.0.1 app | sudo tee -a /etc/hosts
+            npm run serve:integration
+      - run:
+          name: Wait for server (Using curl to really wait)
+          command: |
+            printenv
+            dockerize -wait tcp://127.0.0.1:8080 -timeout 1m
+            curl http://app:8080
+      - run:
+          name: Run tests
+          command: |
+            echo 127.0.0.1 chrome | sudo tee -a /etc/hosts
+            npm run test:integration
+
   misc:
     working_directory: ~/app
     docker:
@@ -52,6 +85,9 @@ workflows:
     jobs:
       - build
       - tests_unit:
+          requires:
+            - build
+      - tests_integration:
           requires:
             - build
       - misc:
