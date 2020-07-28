@@ -204,6 +204,8 @@
                 :disabled-hours="demo.options.disabledHours"
                 :enabled-dates="demo.options.enabledDates"
                 :minute-interval="demo.options.minuteInterval"
+                :start-minute="demo.options.startMinute"
+                :end-minute="demo.options.endMinute"
                 :first-day-of-week="demo.options.firstDayOfWeek"
                 :min-date="demo.options.minDate"
                 :max-date="demo.options.maxDate"
@@ -330,7 +332,7 @@
           },
           {
             id: '4',
-            title: 'Time Picker - With small input (input-size="sm") & minute-interval="10"',
+            title: 'Time Picker - With small input (input-size="sm") & minute-interval="8" & start-minute="3" & end-minute="59"',
             description: 'Time selector',
             editOption: false,
             initial: '11:26 am',
@@ -340,7 +342,9 @@
               formatted: 'hh:mm a',
               onlyTime: true,
               color: 'firebrick',
-              minuteInterval: '10',
+              minuteInterval: '8',
+              startMinute: 3,
+              endMinute: 59,
               label: 'Select time',
               inputSize: 'sm',
               id: 'TimePicker',
