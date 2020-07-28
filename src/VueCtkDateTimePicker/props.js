@@ -17,6 +17,8 @@ export default {
   format: { type: String, default: 'YYYY-MM-DD hh:mm a' },
   outputFormat: { type: String, default: null },
   minuteInterval: { type: [String, Number], default: 1 },
+  startMinute: { type: Number, default: 0 },
+  endMinute: { type: Number, default: 60 },
   minDate: { type: String, default: null },
   maxDate: { type: String, default: null },
   autoClose: { type: Boolean, default: false },
