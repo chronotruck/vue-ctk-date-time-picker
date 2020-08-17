@@ -143,6 +143,9 @@
         :dark="dark"
         :mode="selectingYearMonth"
         :month="month"
+        :min-date="minDate"
+        :max-date="maxDate"
+        :strict-limits="strictDateLimits"
         @input="selectYearMonth"
         @back="selectingYearMonth = null"
       />
@@ -185,7 +188,8 @@
       noShortcuts: { type: Boolean, default: null },
       firstDayOfWeek: { type: Number, default: null },
       customShortcuts: { type: Array, default: () => ([]) },
-      visible: { type: Boolean, default: null }
+      visible: { type: Boolean, default: null },
+      behaviour: { type: Object, default: () => ({}) }
     },
     data () {
       return {
@@ -220,6 +224,9 @@
       },
       weekDays () {
         return getWeekDays(this.locale, this.firstDayOfWeek)
+      },
+      strictDateLimits () {
+        return this.behaviour && this.behaviour.date && this.behaviour.date.strictDateLimits
       }
     },
     methods: {
