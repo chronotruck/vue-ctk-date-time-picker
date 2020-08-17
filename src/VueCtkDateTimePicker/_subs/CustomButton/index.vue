@@ -6,8 +6,10 @@
       'with-border': withBorder,
       'is-hover': hover,
       'is-selected': selected,
+      'is-disabled': disabled,
       'round': round
     }"
+    :disabled="disabled"
     tabindex="-1"
     type="button"
     @click.stop="$emit('click')"
@@ -38,14 +40,18 @@
       withBorder: { type: Boolean, default: false },
       hover: { type: Boolean, default: false },
       selected: { type: Boolean, default: false },
+      disabled: { type: Boolean, default: false },
       round: { type: Boolean, default: false }
     },
     computed: {
       colorStyle () {
-        const color = this.dark ? 'white' : this.color
+        const color = this.dark ? 'white'
+          : this.disabled ? '#424242'
+            : this.color
         return {
           color: color,
-          fill: color
+          fill: color,
+          opacity: this.disabled ? 0.5 : 1
         }
       },
       bgStyle () {
@@ -97,7 +103,7 @@
     &.with-border {
       border: 1px solid #eaeaea;
     }
-    &:hover, &.is-hover {
+    &:hover:enabled, &.is-hover {
       border: 1px solid transparent !important;
       .custom-button-effect {
         transform: scale(1);

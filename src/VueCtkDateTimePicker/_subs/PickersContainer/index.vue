@@ -52,6 +52,7 @@
             :custom-shortcuts="customShortcuts"
             :no-keyboard="noKeyboard"
             :locale="locale"
+            :behaviour="behaviour"
             @change-month="changeMonth"
             @change-year-month="changeYearMonth"
             @close="$emit('close')"

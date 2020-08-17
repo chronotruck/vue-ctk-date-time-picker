@@ -21,6 +21,7 @@
         :key="index"
         :color="color"
         :selected="currentMonth === index"
+        :disabled="strictLimits && isMonthDisabled(index)"
         :dark="dark"
         class="month-button"
         with-border
@@ -34,6 +35,7 @@
         :color="color"
         :dark="dark"
         :selected="currentYear === year"
+        :disabled="strictLimits && isYearDisabled(year)"
         with-border
         @click="selectYear(year)"
       >
@@ -44,6 +46,7 @@
 </template>
 
 <script>
+  import moment from 'moment'
   import { getMonthsShort } from '@/VueCtkDateTimePicker/modules/month'
   import CustomButton from '@/VueCtkDateTimePicker/_subs/CustomButton'
 
@@ -64,6 +67,9 @@
       dark: { type: Boolean, default: null },
       color: { type: String, default: null },
       mode: { type: String, default: null },
+      minDate: { type: String, default: null },
+      maxDate: { type: String, default: null },
+      strictLimits: { type: Boolean, default: false },
       month: { type: Object, default: null }
     },
     data () {
@@ -81,6 +87,12 @@
       },
       isMonthMode () {
         return this.mode === 'month'
+      },
+      minYear () {
+        return this.minDate && moment(this.minDate, 'YYYY-MM-DD').year()
+      },
+      maxYear () {
+        return this.maxDate && moment(this.maxDate, 'YYYY-MM-DD').year()
       }
     },
     mounted () {
@@ -91,6 +103,29 @@
       }
     },
     methods: {
+      isYearDisabled (year) {
+        return (this.minDate && this.isBeforeMinYear(year)) ||
+          (this.minDate && this.isAfterMaxYear(year))
+      },
+      isBeforeMinYear (year) {
+        return year < this.minYear
+      },
+      isAfterMaxYear (year) {
+        return year > this.maxYear
+      },
+      isMonthDisabled (month) {
+        return !this.currentYear ||
+          (this.minDate && this.isBeforeMinMonth(this.currentYear, month)) ||
+          (this.minDate && this.isAfterMaxMonth(this.currentYear, month))
+      },
+      isBeforeMinMonth (year, month) {
+        return this.isBeforeMinYear(year) ||
+          (year === this.minYear && month < moment(this.minDate, 'YYYY-MM-DD').month())
+      },
+      isAfterMaxMonth (year, month) {
+        return this.isAfterMaxYear(year) ||
+          (year === this.maxYear && month > moment(this.maxDate, 'YYYY-MM-DD').month())
+      },
       getMonths () {
         this.years = null
         this.months = getMonthsShort(this.locale)

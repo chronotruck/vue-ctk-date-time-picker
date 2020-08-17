@@ -221,6 +221,11 @@
                 :disabled-weekly="demo.options.disabledWeekly"
                 :right="demo.options.right"
                 :no-clear-button="demo.options.noClearButton"
+                :behaviour="{
+                  date: {
+                    strictDateLimits: demo.options.strictDateLimits
+                  }
+                }"
               >
                 <input
                   v-if="demo.options && demo.options.slot && demo.options.slot.type === 'input'"
@@ -256,7 +261,7 @@
         booleanOptions: [
           'noHeader', 'autoClose', 'error', 'dark', 'overlay', 'noWeekendDays', 'noShortcuts',
           'noButton', 'onlyDate', 'range', 'onlyTime', 'inline', 'persistent', 'disabled', 'noButtonNow', 'noValueToCustomElem',
-          'noKeyboard', 'right', 'noClearButton', 'noLabel'
+          'noKeyboard', 'right', 'noClearButton', 'noLabel', 'strictDateLimits'
         ],
         stringOptions: [
           'id', 'label', 'hint', 'color', 'buttonColor', 'position', 'format', 'formatted', 'outputFormat',
@@ -385,16 +390,17 @@
           },
           {
             id: '7',
-            title: 'Min and Max date with time in 24h-format',
-            description: 'minDate: 2019-03-03 20:10, maxDate: 2019-06-24 09:14',
+            title: 'Strict Min and Max date with time in 24h-format',
+            description: 'minDate: 2010-03-03 20:10, maxDate: 2022-06-24 09:14',
             initial: '2019-03-04 20:26',
             value: '2019-03-04 20:26',
             editOption: false,
             options: {
               format: 'YYYY-MM-DD HH:mm',
               id: 'DateTimePicker',
-              minDate: '2019-03-03 20:10',
-              maxDate: '2019-06-24 09:14'
+              minDate: '2010-03-03 20:10',
+              maxDate: '2022-06-24 09:14',
+              strictDateLimits: true
             }
           },
           {
@@ -408,7 +414,7 @@
               format: 'YYYY-MM-DD h:mm a',
               id: 'DateTimePicker',
               minDate: '2019-03-03 8:10 pm',
-              maxDate: '2019-03-24 9:14 am'
+              maxDate: '2019-06-24 9:14 am'
             }
           },
           {

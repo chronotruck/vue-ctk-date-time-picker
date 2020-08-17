@@ -111,6 +111,9 @@
    * @const defaultBehaviour
    */
   const defaultBehaviour = {
+    date: {
+      strictDateLimits: false
+    },
     time: {
       nearestIfDisabled: true
     }
@@ -199,9 +202,13 @@
        * @returns {Object}
        */
       _behaviour () {
-        const { time } = defaultBehaviour
+        const { date, time } = defaultBehaviour
 
         return {
+          date: {
+            ...date,
+            ...this.behaviour.date
+          },
           time: {
             ...time,
             ...this.behaviour.time

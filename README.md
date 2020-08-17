@@ -223,6 +223,9 @@ The default value for this object is:
 
 ```js
 {
+  date: {
+    strictDateLimits: false;
+  },
   time: {
     nearestIfDisabled: true;
   }
@@ -243,6 +246,7 @@ To override those values, pass a new object with the values you want to override
 
 | Behaviour              | Description                                                                                                                                                                                                                                                                                                                                                                       | Type    | Default |
 | ---------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------- | ------- |
+| date.strictDateLimits  | When `true`, selection of months and years will be disabled outside of any supplied limits (`min-date` – `max-date`). Set to `false`, all months and years will be selectable, even if all days are out of range.                                                                                                                                                                 | Boolean | false   |
 | time.nearestIfDisabled | If `true`, it will select the nearest available hour in the timepicker, if the current selected hour is disabled. Per example, if the hour is 12 but all the hours have been disabled until 14, then the 14 will be selected by default. Set `false` to disable this behaviour; the current hour will remain selected even if it has been disabled. The user cannot re-select it. | Boolean | true    |
 
 # Events API
