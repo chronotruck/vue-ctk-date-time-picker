@@ -365,12 +365,10 @@
         this.noScrollEvent = true
         const containers = ['hours', 'minutes']
         if (this.apms) containers.push('apms')
-
         await this.$nextTick()
         containers.forEach((container) => {
           const elem = this.$refs[container][0]
           if (!elem) return false
-
           elem.scrollTop = 0
           const selected = elem.querySelector(`.time-picker-column-item.active`)
           if (selected) {
@@ -380,11 +378,11 @@
             if (boundsSelected && boundsElem) {
               elem.scrollTop = (28 / 2) + boundsSelected.top - boundsElem.top - timePickerHeight / 2
             }
-            setTimeout(() => {
-              this.noScrollEvent = this.getNoScrollEvent()
-            }, 500)
-          })
-        }, 0)
+          }
+          setTimeout(() => {
+            this.noScrollEvent = this.getNoScrollEvent()
+          }, 500)
+        })
       },
       getAvailableHour () {
         const availableHours = this.hours.find((element) => {
