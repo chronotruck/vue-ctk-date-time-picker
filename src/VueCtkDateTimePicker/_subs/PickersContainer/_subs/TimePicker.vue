@@ -64,6 +64,7 @@
       }
     })
   }
+
   const ArrayMinuteRange = (start, end, twoDigit, step = 1, disabledMinutes) => {
     const len = Math.floor(end / step) - start
 
@@ -103,7 +104,8 @@
       disabledHours: { type: Array, default: () => ([]) },
       minTime: { type: String, default: null },
       behaviour: { type: Object, default: () => ({}) },
-      maxTime: { type: String, default: null }
+      maxTime: { type: String, default: null },
+      scrollSelect: { type: Boolean, default: true }
     },
     data () {
       return {
@@ -112,7 +114,7 @@
         apm: null,
         oldvalue: this.value,
         columnPadding: {},
-        noScrollEvent: !!(this.value && !this.inline),
+        noScrollEvent: this.getNoScrollEvent(),
         delay: 0
       }
     },
@@ -277,11 +279,11 @@
       onScrollHours: debounce(function (scroll) {
         const value = this.getValue(scroll)
         const hour = this.isTwelveFormat
-					? this.apm
-						? this.apm.toLowerCase() === 'am'
-							? value + 1
-							: (value + 1 + 12)
-						:value
+          ? this.apm
+            ? this.apm.toLowerCase() === 'am'
+              ? value + 1
+              : (value + 1 + 12)
+            : value
           : value
         if (this.isHoursDisabled(hour)) return
         this.hour = hour === 24 && !this.isTwelveFormat ? 23 : hour
@@ -363,12 +365,10 @@
         this.noScrollEvent = true
         const containers = ['hours', 'minutes']
         if (this.apms) containers.push('apms')
-
         await this.$nextTick()
         containers.forEach((container) => {
           const elem = this.$refs[container][0]
           if (!elem) return false
-
           elem.scrollTop = 0
           const selected = elem.querySelector(`.time-picker-column-item.active`)
           if (selected) {
@@ -380,7 +380,7 @@
             }
           }
           setTimeout(() => {
-            this.noScrollEvent = false
+            this.noScrollEvent = this.getNoScrollEvent()
           }, 500)
         })
       },
@@ -411,6 +411,14 @@
         const minute = this.minute ? (this.minute < 10 ? '0' : '') + this.minute : '00'
         const time = `${hour}:${minute}`
         this.$emit('input', time)
+      },
+      getNoScrollEvent () {
+        // This is (essentially) the original implementation
+        // if (this.scrollSelect) {
+        //   return !!(this.value && !this.inline)
+        // }
+
+        return !this.scrollSelect
       }
     }
   }

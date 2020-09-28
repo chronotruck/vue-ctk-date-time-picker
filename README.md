@@ -136,9 +136,10 @@ Here is an example of [UMD implementation](https://codepen.io/louismazel/pen/jQW
 | disabled-weekly (11)        | Array`<integer>`  | no       | []                          |
 | no-keyboard (12)            | Boolean           | no       | false                       |
 | right (13)                  | Boolean           | no       | false                       |
-| noClearButton               | Boolean           | no       | false                       |
+| no-clear-button             | Boolean           | no       | false                       |
 | behaviour                   | Object            | no       | [See behaviour](#Behaviour) |
 | id (14)                     | String            | no       | undefined                   |
+| scroll-select               | Boolean           | no       | true                        |
 
 (1) hint : Is a text that replaces the label/placeholder (Ex : Error designation)
 
