@@ -10,14 +10,17 @@ describe('VueCtkDateTimePicker/PickersContainer/DatePicker/RangeShortcuts', () =
     wrapper = shallowMount(RangeShortcuts, {
       propsData: {
         customShortcuts: [
-          { key: 'thisWeek', label: 'This week', value: 'isoWeek' },
           { key: 'lastWeek', label: 'Last week', value: '-isoWeek' },
+          { key: 'thisWeek', label: 'This week', value: 'isoWeek' },
+          { key: 'nextWeek', label: 'Next week', value: '+isoWeek' },
           { key: 'last7Days', label: 'Last 7 days', value: 7 },
           { key: 'last30Days', label: 'Last 30 days', value: 30 },
-          { key: 'thisMonth', label: 'This month', value: 'month' },
           { key: 'lastMonth', label: 'Last month', value: '-month' },
+          { key: 'thisMonth', label: 'This month', value: 'month' },
+          { key: 'nextMonth', label: 'Next month', value: '+month' },
+          { key: 'lastYear', label: 'Last year', value: '-year' },
           { key: 'thisYear', label: 'This year', value: 'year' },
-          { key: 'lastYear', label: 'Last year', value: '-year' }
+          { key: 'nextYear', label: 'Next year', value: '+year' }
         ],
         height: 200
       }
