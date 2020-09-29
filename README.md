@@ -162,21 +162,24 @@ Here is an example of [UMD implementation](https://codepen.io/louismazel/pen/jQW
 
 ```js
 [
-  { key: 'thisWeek', label: 'This week', value: 'isoWeek' },
   { key: 'lastWeek', label: 'Last week', value: '-isoWeek' },
+  { key: 'thisWeek', label: 'This week', value: 'isoWeek' },
+  { key: 'nextWeek', label: 'Next week', value: '+isoWeek' },
   { key: 'last7Days', label: 'Last 7 days', value: 7 },
   { key: 'last30Days', label: 'Last 30 days', value: 30 },
-  { key: 'thisMonth', label: 'This month', value: 'month' },
   { key: 'lastMonth', label: 'Last month', value: '-month' },
+  { key: 'thisMonth', label: 'This month', value: 'month' },
+  { key: 'nextMonth', label: 'Next month', value: '+month' },
+  { key: 'lastYear', label: 'Last year', value: '-year' },
   { key: 'thisYear', label: 'This year', value: 'year' },
-  { key: 'lastYear', label: 'Last year', value: '-year' }
+  { key: 'nextYear', label: 'Next year', value: '+year' }
 ];
 ```
 
-Shortcut types allowed are : `['day', '-day', 'isoWeek', '-isoWeek', 'quarter', 'month', '-month', 'year', '-year', 'week', '-week']`
+Shortcut types allowed are : `['-day', 'day', '+day', '-isoWeek', 'isoWeek', '+isoWeek', 'quarter', '-month', 'month', '+month', '-year', 'year', '+year', '-week', 'week', '+week']`
 For each shortcut, a `key`, `label` and `value` must be specified. The `key` is a unique key for that specific shortcut.
 Additional values can be passed as a `callback` function that will be called whenever the user clicks on the shortcut. The callback receives an object as first argument with the `start` and `end` values, with the `shortcut` object itself.
-You can use this feature for translate existings shortcuts.
+You can use this feature to translate existing shortcuts.
 If the **value of shortcut is a number** (Integer), this number correspond to number of day (for 5 --> Last 5 days).
 
 If the **value of shortcut is a function**, we'll use it to generate the `start` and `end` values. This function should return an object with the start & end values. Both values **must be a moment object**. The function is called when the user clicks on the shortcut button.
