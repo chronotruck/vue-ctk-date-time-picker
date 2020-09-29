@@ -36,12 +36,12 @@ describe('VueCtkDateTimePicker/PickersContainer/DatePicker/RangeShortcuts', () =
     it('should be defined', () => {
       const button = wrapper.find(CustomButton)
       expect(button.exists()).toBeTruthy()
-      expect(button.text()).toEqual('This week')
+      expect(button.text()).toEqual('Last week')
     })
 
     it('should be selected if the "selectedShortcut" value is the current shortcut', () => {
       wrapper.setData({
-        selectedShortcut: 'thisWeek'
+        selectedShortcut: 'lastWeek'
       })
       const button = wrapper.find(CustomButton)
       expect(button.props().selected).toBeTruthy()
@@ -49,7 +49,7 @@ describe('VueCtkDateTimePicker/PickersContainer/DatePicker/RangeShortcuts', () =
 
     it('should not be selected if the "selectedShortcut" value is different than current', () => {
       wrapper.setData({
-        selectedShortcut: 'lastWeek'
+        selectedShortcut: 'thisWeek'
       })
       const button = wrapper.find(CustomButton)
       expect(button.props().selected).toBeFalsy()
@@ -59,7 +59,7 @@ describe('VueCtkDateTimePicker/PickersContainer/DatePicker/RangeShortcuts', () =
       const wrapper = mount(RangeShortcuts, {
         propsData: {
           customShortcuts: [
-            { key: 'thisWeek', label: 'This week', value: 'isoWeek' }
+            { key: 'lastWeek', label: 'Last week', value: '-isoWeek' }
           ],
           height: 200
         }
