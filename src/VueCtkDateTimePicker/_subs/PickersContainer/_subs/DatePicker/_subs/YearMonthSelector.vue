@@ -66,6 +66,7 @@
       mode: { type: String, default: null },
       month: { type: Object, default: null }
     },
+    emits: ['input', 'back'],
     data () {
       return {
         months: null,

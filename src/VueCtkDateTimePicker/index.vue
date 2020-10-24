@@ -129,6 +129,14 @@
     },
     inheritAttrs: false,
     props,
+    emits: [
+      'update:model-value',
+      'formatted-value',
+      'destroy',
+      'is-hidden',
+      'is-shown',
+      'validate'
+    ],
     data () {
       return {
         pickerOpen: false,

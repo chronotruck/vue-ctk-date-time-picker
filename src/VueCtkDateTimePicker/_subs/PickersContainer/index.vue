@@ -143,6 +143,11 @@
       right: { type: Boolean, default: false },
       behaviour: { type: Object, default: () => ({}) }
     },
+    emits: [
+      'update:model-value',
+      'close',
+      'validate'
+    ],
     data () {
       return {
         month: this.getMonth(),

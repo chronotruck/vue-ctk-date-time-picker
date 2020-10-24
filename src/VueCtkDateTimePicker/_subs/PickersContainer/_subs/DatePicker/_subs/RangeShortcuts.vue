@@ -52,6 +52,7 @@
       },
       height: { type: Number, required: true }
     },
+    emits: ['change-range'],
     data () {
       return {
         computedTypes: {},

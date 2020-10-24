@@ -8,6 +8,7 @@ export default {
   props: {
     noKeyboard: { type: Boolean, default: false }
   },
+  emits: ['close'],
   data () {
     return {
       newValue: null

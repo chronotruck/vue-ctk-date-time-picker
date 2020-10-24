@@ -39,7 +39,8 @@
         default: false,
         required: true
       }
-    }
+    },
+    emits: ['update:model-value']
   }
 </script>
 

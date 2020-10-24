@@ -74,6 +74,12 @@
       inputSize: { type: String, default: null },
       noClearButton: { type: Boolean, default: false }
     },
+    emits: [
+      'focus',
+      'blur',
+      'click',
+      'clear'
+    ],
     computed: {
       borderStyle () {
         const cond = (this.isFocus && !this.errorHint)

@@ -193,6 +193,7 @@
       visible: { type: Boolean, default: null }
     },
     emits: [
+      'update:model-value',
       'change-month',
       'change-year-month'
     ],

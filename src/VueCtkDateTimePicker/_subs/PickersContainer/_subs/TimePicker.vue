@@ -105,6 +105,7 @@
       behaviour: { type: Object, default: () => ({}) },
       maxTime: { type: String, default: null }
     },
+    emits: ['update:model-value'],
     data () {
       return {
         hour: null,
