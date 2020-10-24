@@ -277,11 +277,11 @@
       onScrollHours: debounce(function (scroll) {
         const value = this.getValue(scroll)
         const hour = this.isTwelveFormat
-					? this.apm
-						? this.apm.toLowerCase() === 'am'
-							? value + 1
-							: (value + 1 + 12)
-						:value
+          ? this.apm
+            ? this.apm.toLowerCase() === 'am'
+              ? value + 1
+              : (value + 1 + 12)
+            : value
           : value
         if (this.isHoursDisabled(hour)) return
         this.hour = hour === 24 && !this.isTwelveFormat ? 23 : hour
@@ -370,7 +370,7 @@
           if (!elem) return false
 
           elem.scrollTop = 0
-          const selected = elem.querySelector(`.time-picker-column-item.active`)
+          const selected = elem.querySelector('.time-picker-column-item.active')
           if (selected) {
             const boundsSelected = selected.getBoundingClientRect()
             const boundsElem = elem.getBoundingClientRect()

@@ -162,8 +162,10 @@
       dateTime: {
         get () {
           const dateTime = this.range
-            ? { start: this.value && this.value.start ? moment(this.value.start, this.formatOutput).format('YYYY-MM-DD') : null,
-                end: this.value && this.value.end ? moment(this.value.end, this.formatOutput).format('YYYY-MM-DD') : null }
+            ? {
+              start: this.value && this.value.start ? moment(this.value.start, this.formatOutput).format('YYYY-MM-DD') : null,
+              end: this.value && this.value.end ? moment(this.value.end, this.formatOutput).format('YYYY-MM-DD') : null
+            }
             : this.getDateTime()
           return dateTime
         },
@@ -231,7 +233,7 @@
         }
       }
       if (this.format === 'YYYY-MM-DD hh:mm a' && this.onlyTime) {
-        console.warn(`A (time) format must be indicated/ (Ex : format="HH:mm")`)
+        console.warn('A (time) format must be indicated/ (Ex : format="HH:mm")')
       }
     },
     beforeDestroy () {
@@ -253,7 +255,7 @@
             target.elm.innerHTML = this.dateFormatted ? this.dateFormatted : this.label
           }
         } else {
-          window.console.warn(`Impossible to find custom element`)
+          window.console.warn('Impossible to find custom element')
         }
       },
       addEventToTriggerElement () {
@@ -263,7 +265,7 @@
             this.toggleDatePicker()
           })
         } else {
-          window.console.warn(`Impossible to find custom element`)
+          window.console.warn('Impossible to find custom element')
         }
       },
       getRangeDatesFormatted () {
@@ -285,12 +287,16 @@
       getRangeDateToSend (payload) {
         const { start, end } = typeof payload !== 'undefined' ? payload : this.value
         return start || end
-          ? { start: start ? moment(start, 'YYYY-MM-DD').set({ hour: 0, minute: 0, second: 0 }).format(this.formatOutput) : null,
-              end: end ? moment(end, 'YYYY-MM-DD').set({ hour: 23, minute: 59, second: 59 }).format(this.formatOutput) : null,
-              shortcut: payload.value }
-          : { start: moment().format(this.formatOutput),
-              end: moment().format(this.formatOutput),
-              shortcut: payload.value }
+          ? {
+            start: start ? moment(start, 'YYYY-MM-DD').set({ hour: 0, minute: 0, second: 0 }).format(this.formatOutput) : null,
+            end: end ? moment(end, 'YYYY-MM-DD').set({ hour: 23, minute: 59, second: 59 }).format(this.formatOutput) : null,
+            shortcut: payload.value
+          }
+          : {
+            start: moment().format(this.formatOutput),
+            end: moment().format(this.formatOutput),
+            shortcut: payload.value
+          }
       },
       getDateTimeToSend (value) {
         const dateTime = typeof value !== 'undefined' ? value : this.value

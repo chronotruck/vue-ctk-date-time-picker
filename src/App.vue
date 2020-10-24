@@ -416,7 +416,7 @@
             title: 'Enabled/Disabled dates Picker',
             description: '',
             editOption: false,
-            initial: { 'disabledDates': ['2021-02-22'], 'enabledDates': ['2021-02-21', '2021-02-22', '2021-02-23'] },
+            initial: { disabledDates: ['2021-02-22'], enabledDates: ['2021-02-21', '2021-02-22', '2021-02-23'] },
             value: '2021-02-22',
             options: {
               id: 'EnabledDisabledDatesPicker',
@@ -448,10 +448,10 @@
         maxDate: '2018-04-12',
         darkMode: false,
         shortcutsTranslation: {
-          'this_week': 'Cette semaine',
-          'last_30_days': '30 derniers jours',
-          'last_month': 'Mois précédent',
-          'last_year': 'L\'année dernière'
+          this_week: 'Cette semaine',
+          last_30_days: '30 derniers jours',
+          last_month: 'Mois précédent',
+          last_year: 'L\'année dernière'
         },
         disabledDates: ['2018-04-03', '2018-04-07', '2018-04-09', '2018-04-11', '2018-04-13', '2018-04-15', '2018-04-17', '2018-04-19'],
         disabledHours: Array.from(new Array(8), (x, i) => `0${i}`).concat(

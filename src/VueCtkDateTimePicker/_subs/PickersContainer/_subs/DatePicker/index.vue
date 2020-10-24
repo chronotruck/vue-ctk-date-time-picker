@@ -309,7 +309,7 @@
         const isBefore = year === this.month.year
           ? month < this.month.month
           : year < this.month.year
-        this.transitionLabelName = isBefore ? `slidevprev` : `slidevnext`
+        this.transitionLabelName = isBefore ? 'slidevprev' : 'slidevnext'
         this.selectingYearMonth = null
         this.$emit('change-year-month', event)
       }

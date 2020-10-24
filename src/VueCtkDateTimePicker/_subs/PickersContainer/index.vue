@@ -220,8 +220,10 @@
             ? this.onlyTime
               ? null
               : this.range
-                ? { start: this.value.start ? moment(this.value.start).format('YYYY-MM-DD') : null,
-                    end: this.value.end ? moment(this.value.end).format('YYYY-MM-DD') : null }
+                ? {
+                  start: this.value.start ? moment(this.value.start).format('YYYY-MM-DD') : null,
+                  end: this.value.end ? moment(this.value.end).format('YYYY-MM-DD') : null
+                }
                 : moment(this.value, 'YYYY-MM-DD HH:mm').format('YYYY-MM-DD')
             : this.range
               ? { start: null, end: null }
