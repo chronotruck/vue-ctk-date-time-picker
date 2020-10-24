@@ -33,6 +33,7 @@
         >
           <TransitionGroup
             :name="transitionLabelName"
+            tag="span"
             class="h-100 flex align-center flex-1 flex justify-content-right"
           >
             <CustomButton
@@ -48,6 +49,7 @@
           </TransitionGroup>
           <TransitionGroup
             :name="transitionLabelName"
+            tag="span"
             class="h-100 flex align-center flex-1 flex"
           >
             <CustomButton
@@ -83,7 +85,10 @@
         :style="{height: (monthDays.length + weekStart) > 35 ? '250px' : '210px'}"
         class="month-container"
       >
-        <TransitionGroup :name="transitionDaysName">
+        <TransitionGroup
+          :name="transitionDaysName"
+          tag="span"
+        >
           <div
             v-for="m in [month]"
             :key="m.month"

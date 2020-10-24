@@ -8,7 +8,10 @@
       v-if="!onlyTime"
       class="header-picker-year"
     >
-      <TransitionGroup :name="transitionName">
+      <TransitionGroup
+        :name="transitionName"
+        tag="span"
+      >
         <div
           v-for="y in [year]"
           :key="y"
@@ -25,6 +28,7 @@
       <TransitionGroup
         v-if="!onlyTime"
         :name="transitionName"
+        tag="span"
         class="header-picker-date dots-text flex-1"
       >
         <span
@@ -42,6 +46,7 @@
       >
         <TransitionGroup
           :name="transitionName"
+          tag="span"
           class="dots-text time-number header-picker-hour flex justify-content-right"
         >
           <span
@@ -54,6 +59,7 @@
         <span>:</span>
         <TransitionGroup
           :name="transitionName"
+          tag="span"
           class="dots-text time-number header-picker-minute flex justify-content-left"
         >
           <span
@@ -72,6 +78,7 @@
       >
         <TransitionGroup
           :name="transitionName"
+          tag="span"
           class="dots-text header-picker-hour twelve"
         >
           <span
