@@ -14,6 +14,7 @@
         class="datepicker flex flex-direction-column"
         :class="{ 'right': right }"
       >
+        <!-- eslint-disable vue/no-mutating-props -->
         <HeaderPicker
           v-if="!noHeader"
           :key="componentKey"
@@ -27,6 +28,7 @@
           :dark="dark"
           :range="range"
         />
+        <!--eslint-enable-->
         <div class="pickers-container flex">
           <!-- NEED 'YYYY-MM-DD' format -->
           <DatePicker

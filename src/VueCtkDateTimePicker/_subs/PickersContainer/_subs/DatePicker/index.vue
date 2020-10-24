@@ -299,9 +299,12 @@
         }
         if (this.range) {
           if (!this.modelValue.start || this.modelValue.end || day.isBefore(moment(this.modelValue.start))) {
+            // eslint-disable-next-line vue/no-mutating-props
             this.modelValue.start = day.format('YYYY-MM-DD')
+            // eslint-disable-next-line vue/no-mutating-props
             this.modelValue.end = null
           } else {
+            // eslint-disable-next-line vue/no-mutating-props
             this.modelValue.end = day.format('YYYY-MM-DD')
           }
           this.$emit('update:model-value', this.modelValue)
