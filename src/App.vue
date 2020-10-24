@@ -155,8 +155,8 @@
                   style="margin-bottom: 10px;"
                 >
                   <CheckboxInput
-                    :id="`${demo.id}${opt}`"
                     v-model="demo.options[opt]"
+                    :id="`${demo.id}${opt}`"
                     :disabled="opt === 'onlyDate' || opt === 'onlyTime' || opt === 'range'"
                   />
                   <span style="margin-left: 15px;">
@@ -178,8 +178,8 @@
             </div>
             <div class="component">
               <CtkDateTimePicker
-                :id="demo.options.id"
                 v-model="demo.value"
+                :id="demo.options.id"
                 :only-date="demo.options.onlyDate"
                 :only-time="demo.options.onlyTime"
                 :range="demo.options.range"

@@ -13,9 +13,9 @@
     @click="focusInput"
   >
     <input
-      :id="$attrs.id"
       ref="CustomInput"
       v-bind="$attrs"
+      :id="$attrs.id"
       :value="modelValue"
       :placeholder="label"
       :style="[borderStyle]"

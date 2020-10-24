@@ -1,17 +1,17 @@
 <template>
   <div
-    :id="`${$attrs.id}-wrapper`"
     ref="parent"
     v-click-outside="closePicker"
+    :id="`${$attrs.id}-wrapper`"
     class="date-time-picker"
   >
     <!-- Input -->
     <CustomInput
       v-if="hasInput"
-      :id="`${$attrs.id}-input`"
       ref="custom-input"
       v-model="dateFormatted"
       v-bind="$attrs"
+      :id="`${$attrs.id}-input`"
       :dark="dark"
       :hint="hint"
       :error-hint="error"
@@ -39,9 +39,9 @@
     <!-- Date picker container -->
     <PickersContainer
       v-if="!isDisabled"
-      :id="`${$attrs.id}-picker-container`"
       ref="agenda"
       v-model="dateTime"
+      :id="`${$attrs.id}-picker-container`"
       :visible="hasPickerOpen"
       :position="pickerPosition"
       :inline="inline"

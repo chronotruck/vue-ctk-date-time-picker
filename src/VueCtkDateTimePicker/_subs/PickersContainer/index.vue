@@ -31,8 +31,8 @@
           <!-- NEED 'YYYY-MM-DD' format -->
           <DatePicker
             v-if="!onlyTime"
-            :id="$attrs.id"
             v-model="date"
+            :id="$attrs.id"
             :dark="dark"
             :month="month"
             :inline="inline"
