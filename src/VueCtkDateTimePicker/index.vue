@@ -224,7 +224,7 @@
         console.warn('A (time) format must be indicated/ (Ex : format="HH:mm")')
       }
     },
-    beforeDestroy () {
+    beforeUnmount () {
       this.$emit('destroy')
     },
     methods: {

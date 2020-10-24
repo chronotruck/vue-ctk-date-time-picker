@@ -133,7 +133,7 @@ export default {
       window.addEventListener('keydown', this.keyPressed)
     }
   },
-  beforeDestroy () {
+  beforeUnmount () {
     window.removeEventListener('keydown', this.keyPressed)
   },
   watch: {
