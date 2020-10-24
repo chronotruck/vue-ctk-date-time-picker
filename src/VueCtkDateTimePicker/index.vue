@@ -79,7 +79,7 @@
 
 <script>
   import moment from 'moment'
-  import vClickOutside from 'v-click-outside'
+  import { directive as vClickOutside } from './directives/click-outside'
 
   import CustomInput from './_subs/CustomInput'
   import PickersContainer from './_subs/PickersContainer'
@@ -123,7 +123,7 @@
       PickersContainer
     },
     directives: {
-      clickOutside: vClickOutside.directive
+      clickOutside: vClickOutside
     },
     inheritAttrs: false,
     props,
