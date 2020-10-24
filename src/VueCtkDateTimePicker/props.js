@@ -52,7 +52,6 @@ export default {
       { key: 'lastYear', label: 'Last year', value: '-year' }
     ])
   },
-  noValueToCustomElem: { type: Boolean, default: false },
   behaviour: { type: Object, default: () => ({}) },
   noKeyboard: { type: Boolean, default: false },
   right: { type: Boolean, default: false },

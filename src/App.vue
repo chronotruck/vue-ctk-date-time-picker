@@ -217,21 +217,33 @@
                 :custom-shortcuts="demo.options.customShortcuts"
                 :persistent="demo.options.persistent"
                 :no-keyboard="demo.options.noKeyboard"
-                :no-value-to-custom-elem="demo.options.noValueToCustomElem"
                 :disabled-weekly="demo.options.disabledWeekly"
                 :right="demo.options.right"
                 :no-clear-button="demo.options.noClearButton"
               >
-                <input
+                <template
                   v-if="demo.options && demo.options.slot && demo.options.slot.type === 'input'"
-                  type="text"
+                  v-slot="{ dateFormatted, toggleDatePicker }"
                 >
-                <button
+                  <input
+                    type="text"
+                    :value="dateFormatted"
+                    @focus="toggleDatePicker(true)"
+                  >
+                </template>
+                <template
                   v-else-if="demo.options && demo.options.slot && demo.options.slot.type === 'button'"
-                  type="button"
-                  class="lm-btn"
-                  style="margin: 0;"
-                />
+                  v-slot="{ dateFormatted, toggleDatePicker }"
+                >
+                  <button
+                    type="button"
+                    class="lm-btn"
+                    style="margin: 0;"
+                    @click="toggleDatePicker(true)"
+                  >
+                    {{ dateFormatted }}
+                  </button>
+                </template>
               </CtkDateTimePicker>
             </div>
           </div>
@@ -255,7 +267,7 @@
         devMode: false,
         booleanOptions: [
           'noHeader', 'autoClose', 'error', 'dark', 'overlay', 'noWeekendDays', 'noShortcuts',
-          'noButton', 'onlyDate', 'range', 'onlyTime', 'inline', 'persistent', 'disabled', 'noButtonNow', 'noValueToCustomElem',
+          'noButton', 'onlyDate', 'range', 'onlyTime', 'inline', 'persistent', 'disabled', 'noButtonNow',
           'noKeyboard', 'right', 'noClearButton', 'noLabel'
         ],
         stringOptions: [

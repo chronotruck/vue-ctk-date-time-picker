@@ -26,6 +26,8 @@
     />
     <slot
       v-else
+      :dateFormatted="dateFormatted"
+      :toggleDatePicker="toggleDatePicker"
     />
 
     <div
@@ -153,9 +155,6 @@
         this.$emit('formatted-value', dateFormatted)
         return dateFormatted
       },
-      hasCustomElem () {
-        return this.$slots.default
-      },
       hasInput () {
         return !this.inline && !this.$slots.default
       },
@@ -177,11 +176,6 @@
           }
           const newValue = this.range ? this.getRangeDateToSend(value) : this.getDateTimeToSend(value)
           this.$emit('input', newValue)
-          if (this.hasCustomElem && !this.noValueToCustomElem) {
-            this.$nextTick(() => {
-              this.setValueToCustomElem()
-            })
-          }
         }
       },
       formatOutput () {
@@ -226,48 +220,14 @@
     mounted () {
       this.pickerPosition = this.getPosition()
       this.pickerOpen = this.open
-      if (this.hasCustomElem) {
-        this.addEventToTriggerElement()
-        if (!this.noValueToCustomElem) {
-          this.setValueToCustomElem()
-        }
-      }
       if (this.format === 'YYYY-MM-DD hh:mm a' && this.onlyTime) {
         console.warn('A (time) format must be indicated/ (Ex : format="HH:mm")')
       }
     },
     beforeDestroy () {
       this.$emit('destroy')
-      if (this.hasCustomElem) {
-        this.addEventToTriggerElement()
-      }
     },
     methods: {
-      setValueToCustomElem () {
-        /**
-         * TODO: Find a way (perhaps), to bind default attrs to custom element.
-         */
-        const target = this.$slots.default[0]
-        if (target) {
-          if (target.tag === 'input') {
-            target.elm.value = this.dateFormatted
-          } else {
-            target.elm.innerHTML = this.dateFormatted ? this.dateFormatted : this.label
-          }
-        } else {
-          window.console.warn('Impossible to find custom element')
-        }
-      },
-      addEventToTriggerElement () {
-        const target = this.$slots.default[0].elm
-        if (target) {
-          target.addEventListener('click', () => {
-            this.toggleDatePicker()
-          })
-        } else {
-          window.console.warn('Impossible to find custom element')
-        }
-      },
       getRangeDatesFormatted () {
         const hasStartValues = this.value && this.value.start
         const hasEndValues = this.value && this.value.end
