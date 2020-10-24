@@ -26,17 +26,17 @@
     props: {
       value: {
         type: Boolean,
-        default: Boolean,
+        default: false,
         required: true
       },
       id: {
         type: String,
-        default: String,
+        default: '',
         required: true
       },
       disabled: {
         type: Boolean,
-        default: Boolean,
+        default: false,
         required: true
       }
     }
