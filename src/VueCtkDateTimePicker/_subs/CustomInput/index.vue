@@ -3,7 +3,7 @@
     ref="parent"
     :class="[{
       'is-focused': isFocus,
-      'has-value': value,
+      'has-value': modelValue,
       'has-error': errorHint,
       'is-disabled': isDisabled,
       'is-dark': dark,
@@ -16,7 +16,7 @@
       :id="$attrs.id"
       ref="CustomInput"
       v-bind="$attrs"
-      :value="value"
+      :value="modelValue"
       :placeholder="label"
       :style="[borderStyle]"
       type="text"
@@ -64,7 +64,7 @@
     inheritAttrs: false,
     props: {
       isFocus: { type: Boolean, default: false },
-      value: { type: [String, Object], required: false, default: null },
+      modelValue: { type: [String, Object], required: false, default: null },
       label: { type: String, default: 'Select date & time' },
       noLabel: { type: Boolean, default: false },
       hint: { type: String, default: null },
@@ -88,7 +88,7 @@
           : null
       },
       hasClearButton () {
-        return !this.noClearButton && !this.isDisabled && this.value
+        return !this.noClearButton && !this.isDisabled && this.modelValue
       },
       /**
        * Returns true if the field is disabled

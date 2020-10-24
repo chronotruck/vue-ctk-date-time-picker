@@ -22,7 +22,7 @@
       :input-size="inputSize"
       :no-clear-button="noClearButton"
       @focus="toggleDatePicker(true)"
-      @clear="$emit('input', null)"
+      @clear="$emit('update:model-value', null)"
     />
     <slot
       v-else
@@ -162,8 +162,8 @@
         get () {
           const dateTime = this.range
             ? {
-              start: this.value && this.value.start ? moment(this.value.start, this.formatOutput).format('YYYY-MM-DD') : null,
-              end: this.value && this.value.end ? moment(this.value.end, this.formatOutput).format('YYYY-MM-DD') : null
+              start: this.modelValue && this.modelValue.start ? moment(this.modelValue.start, this.formatOutput).format('YYYY-MM-DD') : null,
+              end: this.modelValue && this.modelValue.end ? moment(this.modelValue.end, this.formatOutput).format('YYYY-MM-DD') : null
             }
             : this.getDateTime()
           return dateTime
@@ -175,7 +175,7 @@
             this.closePicker()
           }
           const newValue = this.range ? this.getRangeDateToSend(value) : this.getDateTimeToSend(value)
-          this.$emit('input', newValue)
+          this.$emit('update:model-value', newValue)
         }
       },
       formatOutput () {
@@ -229,23 +229,23 @@
     },
     methods: {
       getRangeDatesFormatted () {
-        const hasStartValues = this.value && this.value.start
-        const hasEndValues = this.value && this.value.end
+        const hasStartValues = this.modelValue && this.modelValue.start
+        const hasEndValues = this.modelValue && this.modelValue.end
         if (hasStartValues || hasEndValues) {
-          const datesFormatted = hasStartValues ? `${moment(this.value.start, this.formatOutput).set({ hour: 0, minute: 0, second: 0 }).format(this.formatted)}` : '...'
-          return hasEndValues ? `${datesFormatted} - ${moment(this.value.end, this.formatOutput).set({ hour: 23, minute: 59, second: 59 }).format(this.formatted)}` : `${datesFormatted} - ...`
+          const datesFormatted = hasStartValues ? `${moment(this.modelValue.start, this.formatOutput).set({ hour: 0, minute: 0, second: 0 }).format(this.formatted)}` : '...'
+          return hasEndValues ? `${datesFormatted} - ${moment(this.modelValue.end, this.formatOutput).set({ hour: 23, minute: 59, second: 59 }).format(this.formatted)}` : `${datesFormatted} - ...`
         } else {
           return null
         }
       },
       getDateFormatted () {
-        const date = this.value
-          ? moment(this.value, this.formatOutput).format(this.formatted)
+        const date = this.modelValue
+          ? moment(this.modelValue, this.formatOutput).format(this.formatted)
           : null
         return date
       },
       getRangeDateToSend (payload) {
-        const { start, end } = typeof payload !== 'undefined' ? payload : this.value
+        const { start, end } = typeof payload !== 'undefined' ? payload : this.modelValue
         return start || end
           ? {
             start: start ? moment(start, 'YYYY-MM-DD').set({ hour: 0, minute: 0, second: 0 }).format(this.formatOutput) : null,
@@ -259,7 +259,7 @@
           }
       },
       getDateTimeToSend (value) {
-        const dateTime = typeof value !== 'undefined' ? value : this.value
+        const dateTime = typeof value !== 'undefined' ? value : this.modelValue
         const dateToSend = dateTime
           ? moment(dateTime, 'YYYY-MM-DD HH:mm')
           : null
@@ -267,8 +267,8 @@
         return dateTimeToSend
       },
       getDateTime () {
-        const date = this.value
-          ? moment(this.value, this.formatOutput)
+        const date = this.modelValue
+          ? moment(this.modelValue, this.formatOutput)
           : null
         return date ? nearestMinutes(this.minuteInterval, date, this.formatOutput).format('YYYY-MM-DD HH:mm') : null
       },

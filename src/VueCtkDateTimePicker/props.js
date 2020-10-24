@@ -1,7 +1,7 @@
 import { getDefaultLocale } from './utils'
 
 export default {
-  value: { type: [String, Object], default: null },
+  modelValue: { type: [String, Object], default: null },
   label: { type: String, default: 'Select date & time' },
   noLabel: { type: Boolean, default: false },
   hint: { type: String, default: null },

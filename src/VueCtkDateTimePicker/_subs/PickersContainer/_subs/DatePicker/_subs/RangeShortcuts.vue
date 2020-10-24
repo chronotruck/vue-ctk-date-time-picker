@@ -37,7 +37,7 @@
     name: 'RangeShortcuts',
     components: { CustomButton },
     props: {
-      value: { type: String, required: false, default: null },
+      modelValue: { type: String, required: false, default: null },
       color: { type: String, default: null },
       dark: { type: Boolean, default: false },
       dateTime: { type: Object, default: null },
@@ -73,8 +73,8 @@
         /**
          * Find the pre-selected shortcut
          */
-        if (this.value) {
-          const selectedShortcut = this.customShortcuts.find(shortcut => shortcut.key === this.value)
+        if (this.modelValue) {
+          const selectedShortcut = this.customShortcuts.find(shortcut => shortcut.key === this.modelValue)
           if (selectedShortcut) this.select(selectedShortcut)
         }
       },

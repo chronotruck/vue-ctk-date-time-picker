@@ -72,8 +72,8 @@
                 locale="fr"
                 no-label
                 :format="'YYYY-MM-DD HH:mm'"
-                :min-date="'2018-04-05 12:15'"
-                :max-date="'2018-04-24 18:45'"
+                :min-date="'2020-10-10 12:15'"
+                :max-date="'2020-10-30 18:45'"
               />
             </div>
           </div>

@@ -4,12 +4,12 @@
       :id="id"
       type="checkbox"
       name="open"
-      :checked="value"
+      :checked="modelValue"
       style="display:none"
-      :class="{ 'checked': value }"
+      :class="{ 'checked': modelValue }"
       :disabled="disabled"
       class="checkbox-input"
-      @change="$emit('input', $event.target.checked)"
+      @change="$emit('update:model-value', $event.target.checked)"
     >
     <label
       :for="id"
@@ -24,7 +24,7 @@
   export default {
     name: 'CheckboxInput',
     props: {
-      value: {
+      modelValue: {
         type: Boolean,
         default: false,
         required: true
