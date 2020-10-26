@@ -72,8 +72,8 @@
                 locale="fr"
                 no-label
                 :format="'YYYY-MM-DD HH:mm'"
-                :min-date="'2018-04-05 12:15'"
-                :max-date="'2018-04-24 18:45'"
+                :min-date="'2020-10-10 12:15'"
+                :max-date="'2020-10-30 18:45'"
               />
             </div>
           </div>
@@ -155,8 +155,8 @@
                   style="margin-bottom: 10px;"
                 >
                   <CheckboxInput
-                    :id="`${demo.id}${opt}`"
                     v-model="demo.options[opt]"
+                    :id="`${demo.id}${opt}`"
                     :disabled="opt === 'onlyDate' || opt === 'onlyTime' || opt === 'range'"
                   />
                   <span style="margin-left: 15px;">
@@ -178,8 +178,8 @@
             </div>
             <div class="component">
               <CtkDateTimePicker
-                :id="demo.options.id"
                 v-model="demo.value"
+                :id="demo.options.id"
                 :only-date="demo.options.onlyDate"
                 :only-time="demo.options.onlyTime"
                 :range="demo.options.range"
@@ -217,21 +217,34 @@
                 :custom-shortcuts="demo.options.customShortcuts"
                 :persistent="demo.options.persistent"
                 :no-keyboard="demo.options.noKeyboard"
-                :no-value-to-custom-elem="demo.options.noValueToCustomElem"
                 :disabled-weekly="demo.options.disabledWeekly"
                 :right="demo.options.right"
                 :no-clear-button="demo.options.noClearButton"
               >
-                <input
+                <template
                   v-if="demo.options && demo.options.slot && demo.options.slot.type === 'input'"
-                  type="text"
+                  v-slot="{ dateFormatted, toggleDatePicker }"
                 >
-                <button
+                  <input
+                    type="text"
+                    :value="dateFormatted"
+                    @focus="toggleDatePicker(true)"
+                  >
+                </template>
+                <template
                   v-else-if="demo.options && demo.options.slot && demo.options.slot.type === 'button'"
-                  type="button"
-                  class="lm-btn"
-                  style="margin: 0;"
-                />
+                  v-slot="{ dateFormatted, toggleDatePicker, isOpen }"
+                >
+                  <button
+                    type="button"
+                    class="lm-btn"
+                    style="margin: 0;"
+                    :class="{ 'lm-btn-success': isOpen }"
+                    @click="isOpen ? toggleDatePicker(false) : toggleDatePicker(true)"
+                  >
+                    {{ dateFormatted }}
+                  </button>
+                </template>
               </CtkDateTimePicker>
             </div>
           </div>
@@ -255,7 +268,7 @@
         devMode: false,
         booleanOptions: [
           'noHeader', 'autoClose', 'error', 'dark', 'overlay', 'noWeekendDays', 'noShortcuts',
-          'noButton', 'onlyDate', 'range', 'onlyTime', 'inline', 'persistent', 'disabled', 'noButtonNow', 'noValueToCustomElem',
+          'noButton', 'onlyDate', 'range', 'onlyTime', 'inline', 'persistent', 'disabled', 'noButtonNow',
           'noKeyboard', 'right', 'noClearButton', 'noLabel'
         ],
         stringOptions: [
@@ -416,7 +429,7 @@
             title: 'Enabled/Disabled dates Picker',
             description: '',
             editOption: false,
-            initial: { 'disabledDates': ['2021-02-22'], 'enabledDates': ['2021-02-21', '2021-02-22', '2021-02-23'] },
+            initial: { disabledDates: ['2021-02-22'], enabledDates: ['2021-02-21', '2021-02-22', '2021-02-23'] },
             value: '2021-02-22',
             options: {
               id: 'EnabledDisabledDatesPicker',
@@ -448,10 +461,10 @@
         maxDate: '2018-04-12',
         darkMode: false,
         shortcutsTranslation: {
-          'this_week': 'Cette semaine',
-          'last_30_days': '30 derniers jours',
-          'last_month': 'Mois précédent',
-          'last_year': 'L\'année dernière'
+          this_week: 'Cette semaine',
+          last_30_days: '30 derniers jours',
+          last_month: 'Mois précédent',
+          last_year: 'L\'année dernière'
         },
         disabledDates: ['2018-04-03', '2018-04-07', '2018-04-09', '2018-04-11', '2018-04-13', '2018-04-15', '2018-04-17', '2018-04-19'],
         disabledHours: Array.from(new Array(8), (x, i) => `0${i}`).concat(

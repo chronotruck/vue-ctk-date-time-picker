@@ -14,10 +14,11 @@
         class="datepicker flex flex-direction-column"
         :class="{ 'right': right }"
       >
+        <!-- eslint-disable vue/no-mutating-props -->
         <HeaderPicker
           v-if="!noHeader"
           :key="componentKey"
-          v-model="value"
+          v-model="modelValue"
           :color="color"
           :only-time="onlyTime"
           :format="format"
@@ -27,12 +28,13 @@
           :dark="dark"
           :range="range"
         />
+        <!--eslint-enable-->
         <div class="pickers-container flex">
           <!-- NEED 'YYYY-MM-DD' format -->
           <DatePicker
             v-if="!onlyTime"
-            :id="$attrs.id"
             v-model="date"
+            :id="$attrs.id"
             :dark="dark"
             :month="month"
             :inline="inline"
@@ -110,7 +112,7 @@
     },
     inheritAttrs: false,
     props: {
-      value: { type: [String, Object], default: null },
+      modelValue: { type: [String, Object], default: null },
       visible: { type: Boolean, required: true, default: false },
       position: { type: String, default: 'bottom' },
       inline: { type: Boolean, default: false },
@@ -143,6 +145,11 @@
       right: { type: Boolean, default: false },
       behaviour: { type: Object, default: () => ({}) }
     },
+    emits: [
+      'update:model-value',
+      'close',
+      'validate'
+    ],
     data () {
       return {
         month: this.getMonth(),
@@ -203,8 +210,8 @@
           })
         },
         get () {
-          return this.value
-            ? moment(this.value, 'YYYY-MM-DD HH:mm').format('HH:mm')
+          return this.modelValue
+            ? moment(this.modelValue, 'YYYY-MM-DD HH:mm').format('HH:mm')
             : null
         }
       },
@@ -216,13 +223,15 @@
           })
         },
         get () {
-          const date = this.value
+          const date = this.modelValue
             ? this.onlyTime
               ? null
               : this.range
-                ? { start: this.value.start ? moment(this.value.start).format('YYYY-MM-DD') : null,
-                    end: this.value.end ? moment(this.value.end).format('YYYY-MM-DD') : null }
-                : moment(this.value, 'YYYY-MM-DD HH:mm').format('YYYY-MM-DD')
+                ? {
+                  start: this.modelValue.start ? moment(this.modelValue.start).format('YYYY-MM-DD') : null,
+                  end: this.modelValue.end ? moment(this.modelValue.end).format('YYYY-MM-DD') : null
+                }
+                : moment(this.modelValue, 'YYYY-MM-DD HH:mm').format('YYYY-MM-DD')
             : this.range
               ? { start: null, end: null }
               : null
@@ -251,7 +260,7 @@
       }
     },
     watch: {
-      value (value) {
+      modelValue (value) {
         this.month = this.getMonth(value)
       },
       locale () {
@@ -261,12 +270,12 @@
     },
     methods: {
       setNow (event) {
-        this.$emit('input', event)
+        this.$emit('update:model-value', event)
         this.$emit('close')
       },
       emitValue (payload) {
         const dateTime = this.range ? payload.value : this.getDateTime(payload)
-        this.$emit('input', dateTime)
+        this.$emit('update:model-value', dateTime)
         if (!this.range) {
           this.getTransitionName(dateTime)
         }
@@ -298,11 +307,11 @@
       },
       getMonth (payload) {
         if (this.range) {
-          const rangeVal = payload || this.value
+          const rangeVal = payload || this.modelValue
           const date = rangeVal && (rangeVal.end || rangeVal.start) ? moment(rangeVal.end ? rangeVal.end : rangeVal.start) : moment()
           return new Month(date.month(), date.year())
-        } else if (this.value) {
-          return new Month(moment(this.value, 'YYYY-MM-DD').month(), moment(this.value, 'YYYY-MM-DD').year(), this.locale)
+        } else if (this.modelValue) {
+          return new Month(moment(this.modelValue, 'YYYY-MM-DD').month(), moment(this.modelValue, 'YYYY-MM-DD').year(), this.locale)
         } else {
           return new Month(moment().month(), moment().year(), this.locale)
         }

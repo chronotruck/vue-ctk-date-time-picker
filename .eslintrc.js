@@ -26,12 +26,30 @@ module.exports = {
       'never'
     ],
     'no-var': 'error',
-    'vue/attributes-order': 'error',
+    'vue/attributes-order': ['error', {
+      order: [
+        'DEFINITION',
+        'LIST_RENDERING',
+        'CONDITIONALS',
+        'RENDER_MODIFIERS',
+        'UNIQUE',
+        'TWO_WAY_BINDING',
+        'OTHER_DIRECTIVES',
+        [
+          'OTHER_ATTR', // v-bind order is important since vue3 (https://v3.vuejs.org/guide/migration/v-bind.html#_3-x-syntax)
+          'GLOBAL'
+        ],
+        'EVENTS',
+        'CONTENT'
+      ],
+      alphabetical: false
+    }],
     'vue/no-confusing-v-for-v-if': 'error',
     'vue/no-v-html': 'error',
     'vue/order-in-components': 'error',
     'vue/this-in-template': 'error',
     'vue/script-indent': 'error',
+    'vue/v-slot-style': 'off',
     'no-console': process.env.NODE_ENV === 'production' ? 'error' : 'off'
   },
 

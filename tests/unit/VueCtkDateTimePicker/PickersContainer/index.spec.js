@@ -9,7 +9,7 @@ describe('VueCtkDateTimePicker/PickersContainer', () => {
 
   beforeEach(() => (
     wrapper = shallowMount(PickersContainer, {
-      propsData: {
+      props: {
         visible: true
       }
     })
@@ -17,47 +17,47 @@ describe('VueCtkDateTimePicker/PickersContainer', () => {
 
   it('should be defined', () => {
     expect(wrapper.exists()).toBeTruthy()
-    expect(wrapper.classes()).toContain('visible')
+    expect(wrapper.find('.datetimepicker').classes()).toContain('visible')
   })
 
   it('should have the "inline" class if the inline prop is defined', () => {
     let wrapper = shallowMount(PickersContainer, {
-      propsData: {
+      props: {
         visible: true,
         inline: true
       }
     })
-    expect(wrapper.classes()).toContain('inline')
-    wrapper.destroy()
+    expect(wrapper.find('.datetimepicker').classes()).toContain('inline')
+    wrapper.unmount()
 
     wrapper = shallowMount(PickersContainer, {
-      propsData: {
+      props: {
         visible: true,
         inline: false
       }
     })
     expect(wrapper.classes()).not.toContain('inline')
-    wrapper.destroy()
+    wrapper.unmount()
   })
 
   it('should have the "is-dark" class if the dark prop is defined', () => {
     let wrapper = shallowMount(PickersContainer, {
-      propsData: {
+      props: {
         visible: true,
         dark: true
       }
     })
-    expect(wrapper.classes()).toContain('is-dark')
-    wrapper.destroy()
+    expect(wrapper.find('.datetimepicker').classes()).toContain('is-dark')
+    wrapper.unmount()
 
     wrapper = shallowMount(PickersContainer, {
-      propsData: {
+      props: {
         visible: true,
         dark: false
       }
     })
     expect(wrapper.classes()).not.toContain('is-dark')
-    wrapper.destroy()
+    wrapper.unmount()
   })
 
   describe('datepicker', () => {
@@ -70,25 +70,25 @@ describe('VueCtkDateTimePicker/PickersContainer', () => {
     describe('header', () => {
       it('should be defined if the "no-header" prop is not defined', () => {
         const wrapper = shallowMount(PickersContainer, {
-          propsData: {
+          props: {
             visible: true,
             noHeader: false
           }
         })
 
-        const header = wrapper.find(HeaderPicker)
+        const header = wrapper.findComponent(HeaderPicker)
         expect(header.exists()).toBeTruthy()
       })
 
       it('should not be defined if the "no-header" prop is defined', () => {
         const wrapper = shallowMount(PickersContainer, {
-          propsData: {
+          props: {
             visible: true,
             noHeader: true
           }
         })
 
-        const header = wrapper.find(HeaderPicker)
+        const header = wrapper.findComponent(HeaderPicker)
         expect(header.exists()).toBeFalsy()
       })
 
@@ -104,30 +104,30 @@ describe('VueCtkDateTimePicker/PickersContainer', () => {
     describe('footer', () => {
       it('shoud be defined if the "has-no-button" prop is not defined and not inline or range mode', () => {
         let wrapper = shallowMount(PickersContainer, {
-          propsData: {
+          props: {
             visible: true,
             hasNoButton: false
           }
         })
 
-        let footer = wrapper.find(ButtonValidate)
+        let footer = wrapper.findComponent(ButtonValidate)
         expect(footer.exists()).toBeTruthy()
-        wrapper.destroy()
+        wrapper.unmount()
 
         wrapper = shallowMount(PickersContainer, {
-          propsData: {
+          props: {
             visible: true,
             hasNoButton: false,
             inline: true
           }
         })
 
-        footer = wrapper.find(ButtonValidate)
+        footer = wrapper.findComponent(ButtonValidate)
         expect(footer.exists()).toBeTruthy()
-        wrapper.destroy()
+        wrapper.unmount()
 
         wrapper = shallowMount(PickersContainer, {
-          propsData: {
+          props: {
             visible: true,
             hasNoButton: false,
             inline: false,
@@ -135,20 +135,20 @@ describe('VueCtkDateTimePicker/PickersContainer', () => {
           }
         })
 
-        footer = wrapper.find(ButtonValidate)
+        footer = wrapper.findComponent(ButtonValidate)
         expect(footer.exists()).toBeTruthy()
-        wrapper.destroy()
+        wrapper.unmount()
       })
 
       it('should not be defined if the "has-no-button" prop is defined, or it\'s inline or range mode', () => {
         const wrapper = shallowMount(PickersContainer, {
-          propsData: {
+          props: {
             visible: true,
             hasNoButton: true
           }
         })
 
-        const footer = wrapper.find(ButtonValidate)
+        const footer = wrapper.findComponent(ButtonValidate)
         expect(footer.exists()).toBeFalsy()
       })
 
@@ -159,6 +159,6 @@ describe('VueCtkDateTimePicker/PickersContainer', () => {
   })
 
   afterEach(() => {
-    wrapper.destroy()
+    wrapper.unmount()
   })
 })

@@ -8,7 +8,7 @@ describe('VueCtkDateTimePicker/CustomInput', () => {
 
   beforeEach(() => (
     wrapper = shallowMount(CustomInput, {
-      propsData: {}
+      props: {}
     })
   ))
 
@@ -21,18 +21,17 @@ describe('VueCtkDateTimePicker/CustomInput', () => {
     it('should be defined', () => {
       const input = wrapper.find('.field-input')
       expect(input.exists()).toBeTruthy()
-      expect(input.is('input')).toBeTruthy()
+      expect(input.element.tagName).toEqual('INPUT')
 
       const { type, readonly, placeholder } = input.attributes()
       expect(type).toEqual('text')
-      expect(readonly).toBeTruthy()
+      expect(readonly).toBe('') // https://v3.vuejs.org/guide/migration/attribute-coercion.html#_3-x-syntax
       expect(placeholder).toEqual('Select date & time')
     })
 
     it('should have the id from the attributes', () => {
       const wrapper = shallowMount(CustomInput, {
-        propsData: {},
-        attrs: {
+        props: {
           id: 'fieldId'
         }
       })
@@ -76,27 +75,23 @@ describe('VueCtkDateTimePicker/CustomInput', () => {
   describe('clear button', () => {
     it('should be defined if the "noClearButton" prop is not defined, the input is not disabled and there is a value', () => {
       const wrapper = shallowMount(CustomInput, {
-        propsData: {
-          value: '2020-06-20 12:00:00',
-          noClearButton: false
-        },
-        attrs: {
+        props: {
+          modelValue: '2020-06-20 12:00:00',
+          noClearButton: false,
           disabled: false
         }
       })
 
-      const button = wrapper.find(CustomButton)
+      const button = wrapper.findComponent(CustomButton)
       expect(button.exists()).toBeTruthy()
-      expect(button.is(CustomButton)).toBeTruthy()
+      expect(button.vm).toBeTruthy()
     })
 
     it('should undefined if the "noClearButton" prop is defined or the input is disabled or there is no value', () => {
       let wrapper = shallowMount(CustomInput, {
-        propsData: {
-          value: '2020-06-20 12:00:00',
-          noClearButton: true
-        },
-        attrs: {
+        props: {
+          modelValue: '2020-06-20 12:00:00',
+          noClearButton: true,
           disabled: false
         }
       })
@@ -105,11 +100,9 @@ describe('VueCtkDateTimePicker/CustomInput', () => {
       expect(button.exists()).toBeFalsy()
 
       wrapper = shallowMount(CustomInput, {
-        propsData: {
-          value: null,
-          noClearButton: false
-        },
-        attrs: {
+        props: {
+          modelValue: null,
+          noClearButton: false,
           disabled: false
         }
       })
@@ -118,11 +111,9 @@ describe('VueCtkDateTimePicker/CustomInput', () => {
       expect(button.exists()).toBeFalsy()
 
       wrapper = shallowMount(CustomInput, {
-        propsData: {
-          value: '2020-06-20 12:00:00',
-          noClearButton: false
-        },
-        attrs: {
+        props: {
+          modelValue: '2020-06-20 12:00:00',
+          noClearButton: false,
           disabled: true
         }
       })
@@ -133,6 +124,6 @@ describe('VueCtkDateTimePicker/CustomInput', () => {
   })
 
   afterEach(() => {
-    wrapper.destroy()
+    wrapper.unmount()
   })
 })
