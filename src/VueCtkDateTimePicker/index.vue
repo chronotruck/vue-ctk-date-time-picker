@@ -28,6 +28,8 @@
       v-else
       :dateFormatted="dateFormatted"
       :toggleDatePicker="toggleDatePicker"
+      :isOpen="hasPickerOpen"
+      :close="closePicker"
     />
 
     <div

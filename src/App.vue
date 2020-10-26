@@ -233,13 +233,14 @@
                 </template>
                 <template
                   v-else-if="demo.options && demo.options.slot && demo.options.slot.type === 'button'"
-                  v-slot="{ dateFormatted, toggleDatePicker }"
+                  v-slot="{ dateFormatted, toggleDatePicker, isOpen }"
                 >
                   <button
                     type="button"
                     class="lm-btn"
                     style="margin: 0;"
-                    @click="toggleDatePicker(true)"
+                    :class="{ 'lm-btn-success': isOpen }"
+                    @click="isOpen ? toggleDatePicker(false) : toggleDatePicker(true)"
                   >
                     {{ dateFormatted }}
                   </button>

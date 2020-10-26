@@ -84,7 +84,7 @@ Here is an example of [UMD implementation](https://codepen.io/louismazel/pen/jQW
 ## Use custom element to trigger the component (using [Slots api](https://v3.vuejs.org/api/directives.html#v-slot))
 ```html
 <VueCtkDateTimePicker>
-  <template v-slot="{ dateFormatted, toggleDatePicker }">
+  <template v-slot="{ dateFormatted, toggleDatePicker, isOpen, close }">
     ...
     <input
       type="text"
