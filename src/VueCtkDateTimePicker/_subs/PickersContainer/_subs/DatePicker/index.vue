@@ -1,6 +1,6 @@
 <template>
   <div
-    :id="`${id}-DatePicker`"
+    :id="getDatePickerId"
     :class="{'flex-1 inline': inline, 'p-0 range flex-1': range, 'is-dark': dark, 'has-shortcuts': range && !noShortcuts}"
     class="datepicker-container flex flex-fixed"
   >
@@ -196,6 +196,9 @@
       }
     },
     computed: {
+      getDatePickerId () {
+        return [undefined, null].includes(this.id) ? null : `${this.id}-DatePicker`
+      },
       bgStyle () {
         return {
           backgroundColor: this.color
