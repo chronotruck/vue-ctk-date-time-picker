@@ -316,6 +316,10 @@ For that, you need Docker with docker-compose in your machine.
 Once you've everything running, you can simply run the following command to start the dev server:
 
 ```bash
+docker-compose run --user 1000:1000 app npm install
+```
+
+```bash
 docker-compose up -d
 ```
 
