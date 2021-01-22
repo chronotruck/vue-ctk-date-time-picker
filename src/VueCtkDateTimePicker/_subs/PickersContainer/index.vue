@@ -136,7 +136,7 @@
       buttonColor: { type: String, default: null },
       buttonNowTranslation: { type: String, default: null },
       noButtonNow: { type: Boolean, default: false },
-      firstDayOfWeek: { type: Number, default: null },
+      firstDayOfWeek: { type: [String, Number], default: null },
       shortcut: { type: String, default: null },
       customShortcuts: { type: Array, default: null },
       noKeyboard: { type: Boolean, default: false },

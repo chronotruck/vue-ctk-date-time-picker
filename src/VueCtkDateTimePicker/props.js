@@ -37,7 +37,7 @@ export default {
   buttonNowTranslation: { type: String, default: null },
   noButtonNow: { type: Boolean, default: false },
   noButtonValidate: { type: Boolean, default: false },
-  firstDayOfWeek: { type: Number, default: null },
+  firstDayOfWeek: { type: [String, Number], default: null },
   shortcut: { type: String, default: null },
   customShortcuts: {
     type: Array,

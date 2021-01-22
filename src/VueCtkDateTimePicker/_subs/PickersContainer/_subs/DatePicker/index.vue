@@ -183,7 +183,7 @@
       month: { type: Object, default: null },
       height: { type: Number, default: null },
       noShortcuts: { type: Boolean, default: null },
-      firstDayOfWeek: { type: Number, default: null },
+      firstDayOfWeek: { type: [String, Number], default: null },
       customShortcuts: { type: Array, default: () => ([]) },
       visible: { type: Boolean, default: null }
     },
