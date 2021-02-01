@@ -9,12 +9,12 @@
       class="header-picker-year"
     >
       <TransitionGroup :name="transitionName">
-        <div
+        <span
           v-for="y in [year]"
           :key="y"
         >
           {{ y }}
-        </div>
+        </span>
       </TransitionGroup>
     </div>
 
