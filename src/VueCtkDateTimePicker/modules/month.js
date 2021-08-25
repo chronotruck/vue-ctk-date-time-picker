@@ -5,6 +5,12 @@ const moment = extendMoment(Moment)
 export default class Month {
   constructor (month, year, locale) {
     moment.locale(locale)
+    moment.updateLocale('ja', {
+      months: [
+        '1月', '2月', '3月','4月', '5月', '6月',
+        '7月', '8月', '9月', '10月', '11月', '12月'
+      ]
+    })
     this.start = moment([year, month])
     this.end = this.start.clone().endOf('month')
     this.month = month
