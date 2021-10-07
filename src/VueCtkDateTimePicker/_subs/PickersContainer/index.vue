@@ -160,7 +160,9 @@
               ? this.onlyDate
                 ? '260px'
                 : '420px'
-              : '400px'
+              : this.noShortcuts
+                ? '260px'
+                : '400px'
         return {
           width: size,
           maxWidth: size,
