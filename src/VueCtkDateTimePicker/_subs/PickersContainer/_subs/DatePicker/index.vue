@@ -7,12 +7,12 @@
     <RangeShortcuts
       v-if="range && !noShortcuts"
       ref="range-shortcuts"
-      :value="shortcut"
+      :model-value="shortcut"
       :color="color"
       :dark="dark"
       :custom-shortcuts="customShortcuts"
       :height="height"
-      @change-range="$emit('input', $event)"
+      @change-range="$emit('update:model-value', $event)"
     />
     <div class="calendar lm-w-100">
       <div class="datepicker-controls flex align-center justify-content-center">
@@ -33,6 +33,7 @@
         >
           <TransitionGroup
             :name="transitionLabelName"
+            tag="span"
             class="h-100 flex align-center flex-1 flex justify-content-right"
           >
             <CustomButton
@@ -48,6 +49,7 @@
           </TransitionGroup>
           <TransitionGroup
             :name="transitionLabelName"
+            tag="span"
             class="h-100 flex align-center flex-1 flex"
           >
             <CustomButton
@@ -83,7 +85,10 @@
         :style="{height: (monthDays.length + weekStart) > 35 ? '250px' : '210px'}"
         class="month-container"
       >
-        <TransitionGroup :name="transitionDaysName">
+        <TransitionGroup
+          :name="transitionDaysName"
+          tag="span"
+        >
           <div
             v-for="m in [month]"
             :key="m.month"
@@ -103,7 +108,7 @@
                 enable: !(isDisabled(day) || isWeekEndDay(day)),
                 between: isBetween(day) && range,
                 first: firstInRange(day) && range,
-                last: lastInRange(day) && !!value.end && range
+                last: lastInRange(day) && !!modelValue.end && range
               }"
               :disabled="isDisabled(day) || isWeekEndDay(day)"
               type="button"
@@ -167,7 +172,7 @@
     mixins: [KeyboardAccessibility],
     props: {
       id: { type: String, default: null },
-      value: { type: [String, Object], default: null },
+      modelValue: { type: [String, Object], default: null },
       shortcut: { type: String, default: null },
       color: { type: String, default: null },
       minDate: { type: String, default: null },
@@ -187,6 +192,11 @@
       customShortcuts: { type: Array, default: () => ([]) },
       visible: { type: Boolean, default: null }
     },
+    emits: [
+      'update:model-value',
+      'change-month',
+      'change-year-month'
+    ],
     data () {
       return {
         transitionDaysName: 'slidenext',
@@ -253,26 +263,26 @@
       },
       isSelected (day) {
         const date = [
-          ...(this.value && this.value.start
-            ? [moment(this.value.start).format('YYYY-MM-DD')]
-            : this.range ? [] : [moment(this.value).format('YYYY-MM-DD')]),
-          ...(this.value && this.value.end
-            ? [moment(this.value.end).format('YYYY-MM-DD')]
-            : this.range ? [] : [moment(this.value).format('YYYY-MM-DD')])
+          ...(this.modelValue && this.modelValue.start
+            ? [moment(this.modelValue.start).format('YYYY-MM-DD')]
+            : this.range ? [] : [moment(this.modelValue).format('YYYY-MM-DD')]),
+          ...(this.modelValue && this.modelValue.end
+            ? [moment(this.modelValue.end).format('YYYY-MM-DD')]
+            : this.range ? [] : [moment(this.modelValue).format('YYYY-MM-DD')])
         ]
         return date.indexOf(day.format('YYYY-MM-DD')) > -1
       },
       isBetween (day) {
-        const range = this.value && this.value.end
-          ? moment.range(moment(this.value.start), moment(this.value.end)).contains(day)
+        const range = this.modelValue && this.modelValue.end
+          ? moment.range(moment(this.modelValue.start), moment(this.modelValue.end)).contains(day)
           : false
         return range
       },
       firstInRange (day) {
-        return this.value && this.value.start ? moment(moment(this.value.start).format('YYYY-MM-DD')).isSame(day.format('YYYY-MM-DD')) : false
+        return this.modelValue && this.modelValue.start ? moment(moment(this.modelValue.start).format('YYYY-MM-DD')).isSame(day.format('YYYY-MM-DD')) : false
       },
       lastInRange (day) {
-        return this.value && this.value.end ? moment(moment(this.value.end).format('YYYY-MM-DD')).isSame(day.format('YYYY-MM-DD')) : false
+        return this.modelValue && this.modelValue.end ? moment(moment(this.modelValue.end).format('YYYY-MM-DD')).isSame(day.format('YYYY-MM-DD')) : false
       },
       isDayDisabledWeekly (day) {
         const dayConst = moment(day).day()
@@ -288,15 +298,18 @@
           this.$refs['range-shortcuts'].selectedShortcut = null
         }
         if (this.range) {
-          if (!this.value.start || this.value.end || day.isBefore(moment(this.value.start))) {
-            this.value.start = day.format('YYYY-MM-DD')
-            this.value.end = null
+          if (!this.modelValue.start || this.modelValue.end || day.isBefore(moment(this.modelValue.start))) {
+            // eslint-disable-next-line vue/no-mutating-props
+            this.modelValue.start = day.format('YYYY-MM-DD')
+            // eslint-disable-next-line vue/no-mutating-props
+            this.modelValue.end = null
           } else {
-            this.value.end = day.format('YYYY-MM-DD')
+            // eslint-disable-next-line vue/no-mutating-props
+            this.modelValue.end = day.format('YYYY-MM-DD')
           }
-          this.$emit('input', this.value)
+          this.$emit('update:model-value', this.modelValue)
         } else {
-          this.$emit('input', moment(day).format('YYYY-MM-DD'))
+          this.$emit('update:model-value', moment(day).format('YYYY-MM-DD'))
         }
       },
       changeMonth (val) {
@@ -309,7 +322,7 @@
         const isBefore = year === this.month.year
           ? month < this.month.month
           : year < this.month.year
-        this.transitionLabelName = isBefore ? `slidevprev` : `slidevnext`
+        this.transitionLabelName = isBefore ? 'slidevprev' : 'slidevnext'
         this.selectingYearMonth = null
         this.$emit('change-year-month', event)
       }

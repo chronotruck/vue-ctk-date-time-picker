@@ -40,6 +40,13 @@
       selected: { type: Boolean, default: false },
       round: { type: Boolean, default: false }
     },
+    emits: [
+      'click',
+      'focus',
+      'blur',
+      'mouseover',
+      'mouseleave'
+    ],
     computed: {
       colorStyle () {
         const color = this.dark ? 'white' : this.color

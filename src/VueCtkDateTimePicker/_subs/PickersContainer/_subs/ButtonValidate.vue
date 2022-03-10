@@ -67,6 +67,7 @@
       range: { type: Boolean, default: null },
       hasButtonValidate: { type: Boolean, default: null }
     },
+    emits: ['validate', 'now'],
     computed: {
       colorStyle () {
         return {

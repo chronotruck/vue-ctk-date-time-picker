@@ -2,10 +2,10 @@
 .slide-enter-active, .slide-leave-active {
   opacity: 1;
   z-index: 998;
-  transition: all 0.3s;
+  transition: all .3s;
   transform: translateY(0);
 }
-.slide-enter, .slide-leave-to /* .fade-leave-active below version 2.1.8 */ {
+.slide-enter-from, .slide-leave-to /* .fade-leave-active below version 2.1.8 */ {
   opacity: 0;
   z-index: 998;
   transform: translateY(-20px);
@@ -14,10 +14,10 @@
 .slideinvert-enter-active, .slideinvert-leave-active {
   opacity: 1;
   z-index: 998;
-  transition: all 0.3s;
+  transition: all .3s;
   transform: translateY(0);
 }
-.slideinvert-enter, .slideinvert-leave-to /* .fade-leave-active below version 2.1.8 */ {
+.slideinvert-enter-from, .slideinvert-leave-to /* .fade-leave-active below version 2.1.8 */ {
   opacity: 0;
   z-index: 998;
   transform: translateY(40px);
@@ -29,10 +29,10 @@
   position: absolute;
   transition: all .3s;
 }
-.slidenext-enter, .slideprev-leave-to {
+.slidenext-enter-from, .slideprev-leave-to {
   transform: translateX(100%);
 }
-.slidenext-leave-to, .slideprev-enter {
+.slidenext-leave-to, .slideprev-enter-from {
   transform: translateX(-100%);
 }
 /** Slide vertical animation  **/
@@ -42,11 +42,11 @@
   position: absolute;
   transition: all .3s;
 }
-.slidevnext-enter, .slidevprev-leave-to {
+.slidevnext-enter-from, .slidevprev-leave-to {
   transform: translateY(100%);
   opacity: 0;
 }
-.slidevnext-leave-to, .slidevprev-enter {
+.slidevnext-leave-to, .slidevprev-enter-from {
   transform: translateY(-100%);
   opacity: 0;
 }

@@ -8,7 +8,10 @@
       v-if="!onlyTime"
       class="header-picker-year"
     >
-      <TransitionGroup :name="transitionName">
+      <TransitionGroup
+        :name="transitionName"
+        tag="span"
+      >
         <div
           v-for="y in [year]"
           :key="y"
@@ -25,23 +28,25 @@
       <TransitionGroup
         v-if="!onlyTime"
         :name="transitionName"
+        tag="span"
         class="header-picker-date dots-text flex-1"
       >
         <span
           v-for="dateFormatted in [getDateFormatted]"
           :key="dateFormatted"
         >
-          {{ value ? getDateFormatted : '...' }}
+          {{ modelValue ? getDateFormatted : '...' }}
         </span>
       </TransitionGroup>
       <div
-        v-if="!isFormatTwelve && !noTime && value"
+        v-if="!isFormatTwelve && !noTime && modelValue"
         class="header-picker-time flex"
         :style="[getTimePickerWidth()]"
         :class="[!onlyTime ? 'pl-10' : 'flex-1 justify-content-center']"
       >
         <TransitionGroup
           :name="transitionName"
+          tag="span"
           class="dots-text time-number header-picker-hour flex justify-content-right"
         >
           <span
@@ -54,6 +59,7 @@
         <span>:</span>
         <TransitionGroup
           :name="transitionName"
+          tag="span"
           class="dots-text time-number header-picker-minute flex justify-content-left"
         >
           <span
@@ -65,13 +71,14 @@
         </TransitionGroup>
       </div>
       <div
-        v-else-if="!noTime && value"
+        v-else-if="!noTime && modelValue"
         :style="[getTimePickerWidth()]"
         class="header-picker-time flex flex-fixed"
         :class="[!onlyTime ? 'pl-10' : 'flex-1 justify-content-center']"
       >
         <TransitionGroup
           :name="transitionName"
+          tag="span"
           class="dots-text header-picker-hour twelve"
         >
           <span
@@ -111,7 +118,7 @@
   export default {
     name: 'HeaderPicker',
     props: {
-      value: { type: [String, Object], default: null },
+      modelValue: { type: [String, Object], default: null },
       color: { type: String, default: null },
       onlyTime: { type: Boolean, default: null },
       transitionName: { type: String, default: null },
@@ -129,12 +136,12 @@
         }
       },
       dateTime () {
-        const date = this.value
+        const date = this.modelValue
           ? this.range
-            ? (this.value.end || this.value.start)
-              ? moment(this.value.end ? this.value.end : this.value.start, 'YYYY-MM-DD HH:mm')
+            ? (this.modelValue.end || this.modelValue.start)
+              ? moment(this.modelValue.end ? this.modelValue.end : this.modelValue.start, 'YYYY-MM-DD HH:mm')
               : moment()
-            : moment(this.value, 'YYYY-MM-DD HH:mm')
+            : moment(this.modelValue, 'YYYY-MM-DD HH:mm')
           : moment()
         return date
       },
@@ -148,13 +155,13 @@
         return this.format ? (this.format.indexOf('a') > -1) || (this.format.indexOf('A') > -1) : false
       },
       getRangeDatesFormatted () {
-        const hasStartValues = this.value && this.value.start
-        const hasEndValues = this.value && this.value.end
+        const hasStartValues = this.modelValue && this.modelValue.start
+        const hasEndValues = this.modelValue && this.modelValue.end
         if (!hasStartValues && !hasEndValues) {
           return '... - ...'
         } else if (hasStartValues || hasEndValues) {
-          const datesFormatted = hasStartValues ? `${moment(this.value.start).format('ll')}` : '...'
-          return hasEndValues ? `${datesFormatted} - ${moment(this.value.end).format('ll')}` : `${datesFormatted} - ...`
+          const datesFormatted = hasStartValues ? `${moment(this.modelValue.start).format('ll')}` : '...'
+          return hasEndValues ? `${datesFormatted} - ${moment(this.modelValue.end).format('ll')}` : `${datesFormatted} - ...`
         } else {
           return null
         }

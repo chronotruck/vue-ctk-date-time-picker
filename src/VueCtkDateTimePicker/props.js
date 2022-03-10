@@ -1,7 +1,7 @@
 import { getDefaultLocale } from './utils'
 
 export default {
-  value: { type: [String, Object], default: null },
+  modelValue: { type: [String, Object], default: null },
   label: { type: String, default: 'Select date & time' },
   noLabel: { type: Boolean, default: false },
   hint: { type: String, default: null },
@@ -52,7 +52,6 @@ export default {
       { key: 'lastYear', label: 'Last year', value: '-year' }
     ])
   },
-  noValueToCustomElem: { type: Boolean, default: false },
   behaviour: { type: Object, default: () => ({}) },
   noKeyboard: { type: Boolean, default: false },
   right: { type: Boolean, default: false },

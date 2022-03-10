@@ -91,7 +91,7 @@
   export default {
     name: 'TimePicker',
     props: {
-      value: { type: String, default: null },
+      modelValue: { type: String, default: null },
       format: { type: String, default: null },
       minuteInterval: { type: [String, Number], default: 1 },
       height: { type: Number, required: true },
@@ -105,14 +105,15 @@
       behaviour: { type: Object, default: () => ({}) },
       maxTime: { type: String, default: null }
     },
+    emits: ['update:model-value'],
     data () {
       return {
         hour: null,
         minute: null,
         apm: null,
-        oldvalue: this.value,
+        oldvalue: this.modelValue,
         columnPadding: {},
-        noScrollEvent: !!(this.value && !this.inline),
+        noScrollEvent: !!(this.modelValue && !this.inline),
         delay: 0
       }
     },
@@ -252,7 +253,7 @@
           this.initPositionView()
         }
       },
-      value (value) {
+      modelValue (value) {
         if (value) {
           this.buildComponent()
           this.initPositionView()
@@ -277,11 +278,11 @@
       onScrollHours: debounce(function (scroll) {
         const value = this.getValue(scroll)
         const hour = this.isTwelveFormat
-					? this.apm
-						? this.apm.toLowerCase() === 'am'
-							? value + 1
-							: (value + 1 + 12)
-						:value
+          ? this.apm
+            ? this.apm.toLowerCase() === 'am'
+              ? value + 1
+              : (value + 1 + 12)
+            : value
           : value
         if (this.isHoursDisabled(hour)) return
         this.hour = hour === 24 && !this.isTwelveFormat ? 23 : hour
@@ -322,7 +323,7 @@
       },
       buildComponent () {
         if (this.isTwelveFormat && !this.apms) window.console.error(`VueCtkDateTimePicker - Format Error : To have the twelve hours format, the format must have "A" or "a" (Ex : ${this.format} a)`)
-        const tmpHour = parseInt(moment(this.value, this.format).format('HH'))
+        const tmpHour = parseInt(moment(this.modelValue, this.format).format('HH'))
         const hourToSet = this.isTwelveFormat && (tmpHour === 12 || tmpHour === 0)
           ? tmpHour === 0 ? 12 : 24
           : tmpHour
@@ -336,8 +337,8 @@
           ? this.getAvailableHour()
           : hourToSet
 
-        this.minute = parseInt(moment(this.value, this.format).format('mm'))
-        this.apm = this.apms && this.value
+        this.minute = parseInt(moment(this.modelValue, this.format).format('mm'))
+        this.apm = this.apms && this.modelValue
           ? this.hour > 12
             ? this.apms.length > 1 ? this.apms[1].value : this.apms[0].value
             : this.apms[0].value
@@ -370,7 +371,7 @@
           if (!elem) return false
 
           elem.scrollTop = 0
-          const selected = elem.querySelector(`.time-picker-column-item.active`)
+          const selected = elem.querySelector('.time-picker-column-item.active')
           if (selected) {
             const boundsSelected = selected.getBoundingClientRect()
             const boundsElem = elem.getBoundingClientRect()
@@ -410,7 +411,7 @@
         hour = (hour < 10 ? '0' : '') + hour
         const minute = this.minute ? (this.minute < 10 ? '0' : '') + this.minute : '00'
         const time = `${hour}:${minute}`
-        this.$emit('input', time)
+        this.$emit('update:model-value', time)
       }
     }
   }

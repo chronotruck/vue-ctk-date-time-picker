@@ -8,6 +8,7 @@ export default {
   props: {
     noKeyboard: { type: Boolean, default: false }
   },
+  emits: ['close'],
   data () {
     return {
       newValue: null
@@ -16,8 +17,8 @@ export default {
   computed: {
     currentValue () {
       return this.range
-        ? this.newValue || this.value.end || this.value.start || moment()
-        : this.newValue || this.value || moment()
+        ? this.newValue || this.modelValue.end || this.modelValue.start || moment()
+        : this.newValue || this.modelValue || moment()
     }
   },
   methods: {
@@ -133,7 +134,7 @@ export default {
       window.addEventListener('keydown', this.keyPressed)
     }
   },
-  beforeDestroy () {
+  beforeUnmount () {
     window.removeEventListener('keydown', this.keyPressed)
   },
   watch: {

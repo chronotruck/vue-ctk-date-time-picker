@@ -1,17 +1,17 @@
 <template>
   <div
-    :id="`${$attrs.id}-wrapper`"
     ref="parent"
     v-click-outside="closePicker"
+    :id="`${$attrs.id}-wrapper`"
     class="date-time-picker"
   >
     <!-- Input -->
     <CustomInput
       v-if="hasInput"
-      :id="`${$attrs.id}-input`"
       ref="custom-input"
       v-model="dateFormatted"
       v-bind="$attrs"
+      :id="`${$attrs.id}-input`"
       :dark="dark"
       :hint="hint"
       :error-hint="error"
@@ -22,10 +22,14 @@
       :input-size="inputSize"
       :no-clear-button="noClearButton"
       @focus="toggleDatePicker(true)"
-      @clear="$emit('input', null)"
+      @clear="$emit('update:model-value', null)"
     />
     <slot
       v-else
+      :dateFormatted="dateFormatted"
+      :toggleDatePicker="toggleDatePicker"
+      :isOpen="hasPickerOpen"
+      :close="closePicker"
     />
 
     <div
@@ -37,9 +41,9 @@
     <!-- Date picker container -->
     <PickersContainer
       v-if="!isDisabled"
-      :id="`${$attrs.id}-picker-container`"
       ref="agenda"
       v-model="dateTime"
+      :id="`${$attrs.id}-picker-container`"
       :visible="hasPickerOpen"
       :position="pickerPosition"
       :inline="inline"
@@ -79,7 +83,7 @@
 
 <script>
   import moment from 'moment'
-  import vClickOutside from 'v-click-outside'
+  import { directive as vClickOutside } from './directives/click-outside'
 
   import CustomInput from './_subs/CustomInput'
   import PickersContainer from './_subs/PickersContainer'
@@ -123,10 +127,18 @@
       PickersContainer
     },
     directives: {
-      clickOutside: vClickOutside.directive
+      clickOutside: vClickOutside
     },
     inheritAttrs: false,
     props,
+    emits: [
+      'update:model-value',
+      'formatted-value',
+      'destroy',
+      'is-hidden',
+      'is-shown',
+      'validate'
+    ],
     data () {
       return {
         pickerOpen: false,
@@ -153,17 +165,16 @@
         this.$emit('formatted-value', dateFormatted)
         return dateFormatted
       },
-      hasCustomElem () {
-        return this.$slots.default
-      },
       hasInput () {
         return !this.inline && !this.$slots.default
       },
       dateTime: {
         get () {
           const dateTime = this.range
-            ? { start: this.value && this.value.start ? moment(this.value.start, this.formatOutput).format('YYYY-MM-DD') : null,
-                end: this.value && this.value.end ? moment(this.value.end, this.formatOutput).format('YYYY-MM-DD') : null }
+            ? {
+              start: this.modelValue && this.modelValue.start ? moment(this.modelValue.start, this.formatOutput).format('YYYY-MM-DD') : null,
+              end: this.modelValue && this.modelValue.end ? moment(this.modelValue.end, this.formatOutput).format('YYYY-MM-DD') : null
+            }
             : this.getDateTime()
           return dateTime
         },
@@ -174,12 +185,7 @@
             this.closePicker()
           }
           const newValue = this.range ? this.getRangeDateToSend(value) : this.getDateTimeToSend(value)
-          this.$emit('input', newValue)
-          if (this.hasCustomElem && !this.noValueToCustomElem) {
-            this.$nextTick(() => {
-              this.setValueToCustomElem()
-            })
-          }
+          this.$emit('update:model-value', newValue)
         }
       },
       formatOutput () {
@@ -224,76 +230,46 @@
     mounted () {
       this.pickerPosition = this.getPosition()
       this.pickerOpen = this.open
-      if (this.hasCustomElem) {
-        this.addEventToTriggerElement()
-        if (!this.noValueToCustomElem) {
-          this.setValueToCustomElem()
-        }
-      }
       if (this.format === 'YYYY-MM-DD hh:mm a' && this.onlyTime) {
-        console.warn(`A (time) format must be indicated/ (Ex : format="HH:mm")`)
+        console.warn('A (time) format must be indicated/ (Ex : format="HH:mm")')
       }
     },
-    beforeDestroy () {
+    beforeUnmount () {
       this.$emit('destroy')
-      if (this.hasCustomElem) {
-        this.addEventToTriggerElement()
-      }
     },
     methods: {
-      setValueToCustomElem () {
-        /**
-         * TODO: Find a way (perhaps), to bind default attrs to custom element.
-         */
-        const target = this.$slots.default[0]
-        if (target) {
-          if (target.tag === 'input') {
-            target.elm.value = this.dateFormatted
-          } else {
-            target.elm.innerHTML = this.dateFormatted ? this.dateFormatted : this.label
-          }
-        } else {
-          window.console.warn(`Impossible to find custom element`)
-        }
-      },
-      addEventToTriggerElement () {
-        const target = this.$slots.default[0].elm
-        if (target) {
-          target.addEventListener('click', () => {
-            this.toggleDatePicker()
-          })
-        } else {
-          window.console.warn(`Impossible to find custom element`)
-        }
-      },
       getRangeDatesFormatted () {
-        const hasStartValues = this.value && this.value.start
-        const hasEndValues = this.value && this.value.end
+        const hasStartValues = this.modelValue && this.modelValue.start
+        const hasEndValues = this.modelValue && this.modelValue.end
         if (hasStartValues || hasEndValues) {
-          const datesFormatted = hasStartValues ? `${moment(this.value.start, this.formatOutput).set({ hour: 0, minute: 0, second: 0 }).format(this.formatted)}` : '...'
-          return hasEndValues ? `${datesFormatted} - ${moment(this.value.end, this.formatOutput).set({ hour: 23, minute: 59, second: 59 }).format(this.formatted)}` : `${datesFormatted} - ...`
+          const datesFormatted = hasStartValues ? `${moment(this.modelValue.start, this.formatOutput).set({ hour: 0, minute: 0, second: 0 }).format(this.formatted)}` : '...'
+          return hasEndValues ? `${datesFormatted} - ${moment(this.modelValue.end, this.formatOutput).set({ hour: 23, minute: 59, second: 59 }).format(this.formatted)}` : `${datesFormatted} - ...`
         } else {
           return null
         }
       },
       getDateFormatted () {
-        const date = this.value
-          ? moment(this.value, this.formatOutput).format(this.formatted)
+        const date = this.modelValue
+          ? moment(this.modelValue, this.formatOutput).format(this.formatted)
           : null
         return date
       },
       getRangeDateToSend (payload) {
-        const { start, end } = typeof payload !== 'undefined' ? payload : this.value
+        const { start, end } = typeof payload !== 'undefined' ? payload : this.modelValue
         return start || end
-          ? { start: start ? moment(start, 'YYYY-MM-DD').set({ hour: 0, minute: 0, second: 0 }).format(this.formatOutput) : null,
-              end: end ? moment(end, 'YYYY-MM-DD').set({ hour: 23, minute: 59, second: 59 }).format(this.formatOutput) : null,
-              shortcut: payload.value }
-          : { start: moment().format(this.formatOutput),
-              end: moment().format(this.formatOutput),
-              shortcut: payload.value }
+          ? {
+            start: start ? moment(start, 'YYYY-MM-DD').set({ hour: 0, minute: 0, second: 0 }).format(this.formatOutput) : null,
+            end: end ? moment(end, 'YYYY-MM-DD').set({ hour: 23, minute: 59, second: 59 }).format(this.formatOutput) : null,
+            shortcut: payload.value
+          }
+          : {
+            start: moment().format(this.formatOutput),
+            end: moment().format(this.formatOutput),
+            shortcut: payload.value
+          }
       },
       getDateTimeToSend (value) {
-        const dateTime = typeof value !== 'undefined' ? value : this.value
+        const dateTime = typeof value !== 'undefined' ? value : this.modelValue
         const dateToSend = dateTime
           ? moment(dateTime, 'YYYY-MM-DD HH:mm')
           : null
@@ -301,8 +277,8 @@
         return dateTimeToSend
       },
       getDateTime () {
-        const date = this.value
-          ? moment(this.value, this.formatOutput)
+        const date = this.modelValue
+          ? moment(this.modelValue, this.formatOutput)
           : null
         return date ? nearestMinutes(this.minuteInterval, date, this.formatOutput).format('YYYY-MM-DD HH:mm') : null
       },
