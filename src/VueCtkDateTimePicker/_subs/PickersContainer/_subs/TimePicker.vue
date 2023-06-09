@@ -367,7 +367,7 @@
 
         await this.$nextTick()
         containers.forEach((container) => {
-          const elem = this.$refs[container][0]
+          const elem = this.$refs[container][0] || this.$refs[container]
           if (!elem) return false
 
           elem.scrollTop = 0
