@@ -1,10 +1,10 @@
 const { resolve } = require('path')
 
-module.exports = function VueCtkDateTimePicker () {
+module.exports = function VDatetimePicker () {
   this.addPlugin({
     ssr: false,
     src: resolve(__dirname, 'plugin.js'),
-    fileName: 'vue-ctk-date-time-picker.js'
+    fileName: 'v-datetime-picker.js'
   })
 }
 

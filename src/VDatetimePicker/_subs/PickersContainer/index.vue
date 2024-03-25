@@ -102,7 +102,7 @@
   import HeaderPicker from './_subs/HeaderPicker'
   import ButtonValidate from './_subs/ButtonValidate'
 
-  import Month from '@/VueCtkDateTimePicker/modules/month'
+  import Month from '@/VDatetimePicker/modules/month'
 
   export default {
     name: 'PickersContainer',

@@ -23,7 +23,7 @@
 
 <script>
   import moment from 'moment'
-  import CustomButton from '@/VueCtkDateTimePicker/_subs/CustomButton'
+  import CustomButton from '@/VDatetimePicker/_subs/CustomButton'
 
   const SHORTCUT_TYPES = ['day', 'date', '-day', 'isoWeek', 'quarter', '-isoWeek', 'month', '-month', 'year', '-year', 'week', '-week']
 
@@ -84,7 +84,7 @@
        */
       noticeDeprecation () {
         const useDeprecatedAPI = this.customShortcuts.find(shortcut => typeof shortcut.isSelected !== 'undefined' || typeof shortcut.key === 'undefined')
-        if (useDeprecatedAPI) console.warn('[vue-ctk-date-time-picker]: You\'re using a deprecated API. Check the changelog (https://github.com/chronotruck/vue-ctk-date-time-picker/releases) for migration guide.')
+        if (useDeprecatedAPI) console.warn('[v-datetime-picker]: You\'re using a deprecated API. Check the changelog (https://github.com/aShu-guo/v-datetime-picker/releases) for migration guide.')
       },
       /**
        * Returns the shortcut values according to the key

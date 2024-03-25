@@ -44,8 +44,8 @@
 </template>
 
 <script>
-  import { getMonthsShort } from '@/VueCtkDateTimePicker/modules/month'
-  import CustomButton from '@/VueCtkDateTimePicker/_subs/CustomButton'
+  import { getMonthsShort } from '@/VDatetimePicker/modules/month'
+  import CustomButton from '@/VDatetimePicker/_subs/CustomButton'
 
   const ArrayRange = (start, end) => {
     return Array(end - start + 1).fill().map((_, idx) => {

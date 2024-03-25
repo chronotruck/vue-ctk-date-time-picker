@@ -66,7 +66,6 @@
   }
   const ArrayMinuteRange = (start, end, twoDigit, step = 1, disabledMinutes) => {
     const len = Math.floor(end / step) - start
-    console.log('>>>minute len:', len)
 
     return Array(len).fill().map((_, idx) => {
       const number = start + idx * step
@@ -80,7 +79,6 @@
   }
   const ArraySecondRange = (start, end, twoDigit, step = 1, disabledSeconds) => {
     const len = Math.floor(end / step) - start
-    console.log('seconds length: ', len)
     return Array(len).fill().map((_, idx) => {
       const number = start + idx * step
       const txtSecond = (twoDigit && (number < 10) ? '0' : '') + number
@@ -256,7 +254,6 @@
       _disabledSeconds () {
         let minEnabledSecond = 0
         let maxEnabledSecond = 60
-        // debugger
         if (this.minTime) {
           const minTime = moment(this.minTime, this.format)
           const minTimeHour = minTime.get('hour')
@@ -268,8 +265,6 @@
           const maxTimeMinute = maxTime.get('minute')
           maxEnabledSecond = maxTimeHour === this.hour && maxTimeMinute === this.minute ? maxTime.get('second') : maxEnabledSecond
         }
-
-        console.log('>>>minEnabledSecond:', minEnabledSecond)
 
         if (minEnabledSecond !== 0 || maxEnabledSecond !== 60) {
           const enabledSeconds = [...Array(60)]
@@ -384,7 +379,7 @@
         return this._disabledSeconds.includes(m)
       },
       buildComponent () {
-        if (this.isTwelveFormat && !this.apms) window.console.error(`VueCtkDateTimePicker - Format Error : To have the twelve hours format, the format must have "A" or "a" (Ex : ${this.format} a)`)
+        if (this.isTwelveFormat && !this.apms) window.console.error(`VDatetimePicker - Format Error : To have the twelve hours format, the format must have "A" or "a" (Ex : ${this.format} a)`)
         const tmpHour = parseInt(moment(this.value, this.format).format('HH'))
         const hourToSet = this.isTwelveFormat && (tmpHour === 12 || tmpHour === 0)
           ? tmpHour === 0 ? 12 : 24

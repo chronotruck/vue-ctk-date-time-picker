@@ -1,7 +1,7 @@
 import { shallowMount, mount } from '@vue/test-utils'
 
-import RangeShortcuts from '@/VueCtkDateTimePicker/_subs/PickersContainer/_subs/DatePicker/_subs/RangeShortcuts'
-import CustomButton from '@/VueCtkDateTimePicker/_subs/CustomButton'
+import RangeShortcuts from '@/VDatetimePicker/_subs/PickersContainer/_subs/DatePicker/_subs/RangeShortcuts'
+import CustomButton from '@/VDatetimePicker/_subs/CustomButton'
 
 describe('VueCtkDateTimePicker/PickersContainer/DatePicker/RangeShortcuts', () => {
   let wrapper

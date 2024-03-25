@@ -1,5 +1,5 @@
 import { shallowMount } from '@vue/test-utils'
-import CustomButton from '@/VueCtkDateTimePicker/_subs/CustomButton'
+import CustomButton from '@/VDatetimePicker/_subs/CustomButton'
 
 describe('CustomButton.vue', () => {
   it('check colorStyle computed data', () => {

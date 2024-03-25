@@ -4,21 +4,21 @@
     :class="{'dark': darkMode}"
   >
     <div
-      id="vueCtkDateTimePicker"
-      class="ctk-date-time-picker"
+      id="vDatetimePicker"
+      class="v-datetime-picker"
     >
       <header>
         <img
           v-if="!darkMode"
           src="./assets/logo.png"
-          alt="logo-chronotruck"
+          alt="logo-aShu-guo"
         >
         <img
           v-else
           src="./assets/logo-dark.png"
-          alt="logo-chronotruck-dark"
+          alt="logo-aShu-guo-dark"
         >
-        <h1>CtkDatetimePicker</h1>
+        <h1>VDatetimePicker</h1>
         <h3>A VueJs component for select date & time</h3>
         <div
           class="container lm-mt-4"
@@ -26,21 +26,21 @@
           <a
             class="lm-btn lm-btn-dark lm-mr-2"
             target="_blank"
-            href="https://github.com/chronotruck/vue-ctk-date-time-picker"
+            href="https://github.com/ashu-guo/v-datetime-picker"
           >
             Github
           </a>
           <a
             class="lm-btn lm-btn-dark lm-mr-2"
             target="_blank"
-            href="https://github.com/chronotruck/vue-ctk-date-time-picker/releases"
+            href="https://github.com/aShu-guo/v-datetime-picker/releases"
           >
             Changelog
           </a>
           <a
             class="lm-btn lm-btn-danger"
             target="_blank"
-            href="https://www.npmjs.com/package/vue-ctk-date-time-picker"
+            href="https://www.npmjs.com/package/v-datetime-picker"
           >
             Npm
           </a>
@@ -65,7 +65,7 @@
             <p>v-model = {{ value2 || 'null' }}</p>
             <br>
             <div class="flex">
-              <CtkDateTimePicker
+              <VDatetimePicker
                 v-model="value2"
                 color="purple"
                 :dark="darkMode"
@@ -177,7 +177,7 @@
               </div>
             </div>
             <div class="component">
-              <CtkDateTimePicker
+              <VDatetimePicker
                 :id="demo.options.id"
                 v-model="demo.value"
                 :only-date="demo.options.onlyDate"
@@ -233,7 +233,7 @@
                   class="lm-btn"
                   style="margin: 0;"
                 />
-              </CtkDateTimePicker>
+              </VDatetimePicker>
             </div>
           </div>
         </div>
@@ -243,13 +243,13 @@
 </template>
 
 <script>
-  import CtkDateTimePicker from './VueCtkDateTimePicker'
+  import VDatetimePicker from './VDatetimePicker'
   import CheckboxInput from './CheckboxInput'
 
   export default {
     name: 'App',
     components: {
-      CtkDateTimePicker, CheckboxInput
+      VDatetimePicker, CheckboxInput
     },
     data () {
       return {
@@ -486,7 +486,7 @@
 
 <style lang="scss">
   @import "./assets/scss/main.scss";
-  html, body, #app, #vueCtkDateTimePicker {
+  html, body, #app, #vueVDatetimePicker {
     margin: 0;
     min-height: 100%;
     min-width: 100%;

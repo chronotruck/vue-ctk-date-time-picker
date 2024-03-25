@@ -1,8 +1,8 @@
 import { shallowMount } from '@vue/test-utils'
 
-import PickersContainer from '@/VueCtkDateTimePicker/_subs/PickersContainer'
-import HeaderPicker from '@/VueCtkDateTimePicker/_subs/PickersContainer/_subs/HeaderPicker'
-import ButtonValidate from '@/VueCtkDateTimePicker/_subs/PickersContainer/_subs/ButtonValidate'
+import PickersContainer from '@/VDatetimePicker/_subs/PickersContainer'
+import HeaderPicker from '@/VDatetimePicker/_subs/PickersContainer/_subs/HeaderPicker'
+import ButtonValidate from '@/VDatetimePicker/_subs/PickersContainer/_subs/ButtonValidate'
 
 describe('VueCtkDateTimePicker/PickersContainer', () => {
   let wrapper

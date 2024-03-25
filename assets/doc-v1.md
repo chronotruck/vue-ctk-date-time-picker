@@ -1,6 +1,6 @@
-![vue-ctk-date-time-picker](./logo_sticky.png)
+![v-datetime-picker](./logo_sticky.png)
 
-# vue-ctk-date-time-picker
+# v-datetime-picker
 
 > Documention for v1.*
 
@@ -22,7 +22,7 @@
 | disable-time   | Boolean | no     | false |
 | disable-date   | Boolean | no  | false |
 | without-header   | Boolean | no   | false |
-| id  | string | no  | CtkDateTimePicker |
+| id  | string | no  | VDatetimePicker |
 | overlay | Boolean | no | true |
 | min-date (6)  | string | no  | - |
 | max-date (6)  | string | no  | - |
@@ -46,7 +46,7 @@
 (4) locale : Default value is the locale of the browser - Ex : Set `locale="fr"` to force to French language
 
 (5) time-zone : Default value is the time-zone of the browser - Ex : Set `Europe/Paris` to force to French TZ. Do not forget to use a format like this `YYYY-MM-DDTHH:mm:ssZ` to get the TZ
- 
+
 (6) min-date & max-date : Must be `'YYYY-MM-DD'` format
 
 (7) Disabled-Dates is an Array of dates in 'YYYY-MM-DD' format (ex: `['2018-04-03', '2018-04-07', '2018-04-09']`)

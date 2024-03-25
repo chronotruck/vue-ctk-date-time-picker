@@ -120,7 +120,7 @@
   }
 
   export default {
-    name: 'VueCtkDateTimePicker',
+    name: 'VDatetimePicker',
     components: {
       CustomInput,
       PickersContainer
