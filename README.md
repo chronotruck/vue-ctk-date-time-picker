@@ -95,50 +95,51 @@ Here is an example of [UMD implementation](https://codepen.io/louismazel/pen/jQW
 
 # Props API
 
-| Props                       | Type              | Required | Default                     |
-| --------------------------- | ----------------- | -------- | --------------------------- |
-| v-model                     | String            | yes      | -                           |
-| format                      | String            | no       | 'YYYY-MM-DD hh:mm a'        |
-| formatted                   | String            | no       | 'llll' (momentjs format)    |
-| label                       | String            | no       | Select date & time          |
-| hint (1)                    | String            | no       | -                           |
-| error (2)                   | Boolean           | no       | false                       |
-| color (3)                   | String (hex)      | no       | dodgerblue                  |
-| button-color (4)            | String (hex)      | no       | #00C853                     |
-| position                    | String            | no       | null                        |
-| locale (5)                  | String            | no       | Browser Locale              |
-| persistent                  | Boolean           | no       | false                       |
-| minute-interval             | Integer           | no       | 1                           |
-| output-format               | String            | no       | null                        |
-| only-time                   | Boolean           | no       | false                       |
-| only-date                   | Boolean           | no       | false                       |
-| no-label                    | Boolean           | no       | false                       |
-| no-header                   | Boolean           | no       | false                       |
-| no-value-to-custom-elem (6) | Boolean           | no       | false                       |
-| min-date (7)                | String            | no       | -                           |
-| max-date (7)                | String            | no       | -                           |
-| no-weekends-days            | Boolean           | no       | false                       |
-| auto-close                  | Boolean           | no       | false                       |
-| inline                      | Boolean           | no       | false                       |
-| overlay                     | Boolean           | no       | false                       |
-| range                       | Boolean           | no       | false                       |
-| dark                        | Boolean           | no       | false                       |
-| no-shortcuts                | Boolean           | no       | false                       |
-| no-button                   | Boolean           | no       | false                       |
-| input-size                  | String (sm or lg) | no       | null                        |
-| button-now-translation      | String            | no       | 'Now'                       |
-| no-button-now               | Boolean           | no       | false                       |
-| first-day-of-week           | Int (0 to 7)      | no       | -                           |
-| disabled-dates (8)          | Array`<string>`   | no       | []                          |
-| disabled-hours (9)          | Array`<string>`   | no       | -                           |
-| shortcut                    | String            | no       | -                           |
-| custom-shortcuts (10)       | Array`<object>`   | no       | -                           |
-| disabled-weekly (11)        | Array`<integer>`  | no       | []                          |
-| no-keyboard (12)            | Boolean           | no       | false                       |
-| right (13)                  | Boolean           | no       | false                       |
-| noClearButton               | Boolean           | no       | false                       |
+| Props                       | Type              | Required | Default                  |
+|-----------------------------| ----------------- | -------- |--------------------------|
+| v-model                     | String            | yes      | -                        |
+| format                      | String            | no       | 'YYYY-MM-DD hh:mm a'     |
+| formatted                   | String            | no       | 'llll' (momentjs format) |
+| label                       | String            | no       | Select date & time       |
+| hint (1)                    | String            | no       | -                        |
+| error (2)                   | Boolean           | no       | false                    |
+| color (3)                   | String (hex)      | no       | dodgerblue               |
+| button-color (4)            | String (hex)      | no       | #00C853                  |
+| position                    | String            | no       | null                     |
+| locale (5)                  | String            | no       | Browser Locale           |
+| persistent                  | Boolean           | no       | false                    |
+| minute-interval             | Integer           | no       | 1                        |
+| second-interval             | Integer           | no       | 1                        |
+| output-format               | String            | no       | null                     |
+| only-time                   | Boolean           | no       | false                    |
+| only-date                   | Boolean           | no       | false                    |
+| no-label                    | Boolean           | no       | false                    |
+| no-header                   | Boolean           | no       | false                    |
+| no-value-to-custom-elem (6) | Boolean           | no       | false                    |
+| min-date (7)                | String            | no       | -                        |
+| max-date (7)                | String            | no       | -                        |
+| no-weekends-days            | Boolean           | no       | false                    |
+| auto-close                  | Boolean           | no       | false                    |
+| inline                      | Boolean           | no       | false                    |
+| overlay                     | Boolean           | no       | false                    |
+| range                       | Boolean           | no       | false                    |
+| dark                        | Boolean           | no       | false                    |
+| no-shortcuts                | Boolean           | no       | false                    |
+| no-button                   | Boolean           | no       | false                    |
+| input-size                  | String (sm or lg) | no       | null                     |
+| button-now-translation      | String            | no       | 'Now'                    |
+| no-button-now               | Boolean           | no       | false                    |
+| first-day-of-week           | Int (0 to 7)      | no       | -                        |
+| disabled-dates (8)          | Array`<string>`   | no       | []                       |
+| disabled-hours (9)          | Array`<string>`   | no       | -                        |
+| shortcut                    | String            | no       | -                        |
+| custom-shortcuts (10)       | Array`<object>`   | no       | -                        |
+| disabled-weekly (11)        | Array`<integer>`  | no       | []                       |
+| no-keyboard (12)            | Boolean           | no       | false                    |
+| right (13)                  | Boolean           | no       | false                    |
+| noClearButton               | Boolean           | no       | false                    |
 | behaviour                   | Object            | no       | [See behaviour](#Behaviour) |
-| id (14)                     | String            | no       | undefined                   |
+| id (14)                     | String            | no       | undefined                |
 
 (1) hint : Is a text that replaces the label/placeholder (Ex : Error designation)
 

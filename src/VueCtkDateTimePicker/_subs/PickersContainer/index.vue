@@ -56,7 +56,7 @@
             @change-year-month="changeYearMonth"
             @close="$emit('close')"
           />
-          <!-- NEED 'HH:mm' format -->
+          <!-- NEED 'HH:mm:ss' format -->
           <TimePicker
             v-if="!onlyDate"
             ref="TimePicker"
@@ -67,6 +67,7 @@
             :format="timeFormat"
             :only-time="onlyTime"
             :minute-interval="minuteInterval"
+            :second-interval="secondInterval"
             :visible="visible"
             :height="height"
             :disabled-hours="disabledHours"
@@ -120,7 +121,8 @@
       onlyDate: { type: Boolean, default: false },
       onlyTime: { type: Boolean, default: null },
       minuteInterval: { type: [String, Number], default: 1 },
-      format: { type: String, default: 'YYYY-MM-DD hh:mm a' },
+      secondInterval: { type: [String, Number], default: 1 },
+      format: { type: String, default: 'YYYY-MM-DD hh:mm:ss a' },
       locale: { type: String, default: null },
       maxDate: { type: String, default: null },
       minDate: { type: String, default: null },
@@ -204,7 +206,7 @@
         },
         get () {
           return this.value
-            ? moment(this.value, 'YYYY-MM-DD HH:mm').format('HH:mm')
+            ? moment(this.value, 'YYYY-MM-DD HH:mm:ss').format('HH:mm:ss')
             : null
         }
       },
@@ -222,7 +224,7 @@
               : this.range
                 ? { start: this.value.start ? moment(this.value.start).format('YYYY-MM-DD') : null,
                     end: this.value.end ? moment(this.value.end).format('YYYY-MM-DD') : null }
-                : moment(this.value, 'YYYY-MM-DD HH:mm').format('YYYY-MM-DD')
+                : moment(this.value, 'YYYY-MM-DD HH:mm:ss').format('YYYY-MM-DD')
             : this.range
               ? { start: null, end: null }
               : null
@@ -266,6 +268,7 @@
       },
       emitValue (payload) {
         const dateTime = this.range ? payload.value : this.getDateTime(payload)
+        console.log('>>>dateTime:', dateTime)
         this.$emit('input', dateTime)
         if (!this.range) {
           this.getTransitionName(dateTime)
@@ -275,11 +278,11 @@
         return this.onlyTime
           ? `${moment().format('YYYY-MM-DD')} ${value}`
           : type === 'date'
-            ? this.time ? `${value} ${this.time}` : `${value} ${moment().format('HH:mm')}`
+            ? this.time ? `${value} ${this.time}` : `${value} ${moment().format('HH:mm:ss')}`
             : this.date ? `${this.date} ${value}` : `${moment().format('YYYY-MM-DD')} ${value}`
       },
       getTransitionName (date) {
-        const isBigger = moment(date) > moment(`${this.date || moment().format('YYYY-MM-DD')} ${this.time || moment().format('HH:mm')}`)
+        const isBigger = moment(date) > moment(`${this.date || moment().format('YYYY-MM-DD')} ${this.time || moment().format('HH:mm:ss')}`)
         this.transitionName = isBigger ? 'slidevnext' : 'slidevprev'
       },
       getDateFormat () {

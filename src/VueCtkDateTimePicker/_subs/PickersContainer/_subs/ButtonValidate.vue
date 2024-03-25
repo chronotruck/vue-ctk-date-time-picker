@@ -85,7 +85,7 @@
     },
     methods: {
       emitNow () {
-        this.$emit('now', moment().format('YYYY-MM-DD HH:mm'))
+        this.$emit('now', moment().format('YYYY-MM-DD HH:mm:ss'))
       }
     }
   }

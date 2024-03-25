@@ -204,6 +204,7 @@
                 :disabled-hours="demo.options.disabledHours"
                 :enabled-dates="demo.options.enabledDates"
                 :minute-interval="demo.options.minuteInterval"
+                :second-interval="demo.options.secondInterval"
                 :first-day-of-week="demo.options.firstDayOfWeek"
                 :min-date="demo.options.minDate"
                 :max-date="demo.options.maxDate"
@@ -266,21 +267,21 @@
           'customShortcuts', 'disabledDates', 'disabledHours', 'locale'
         ],
         intOptions: [
-          'minuteInterval', 'firstDayOfWeek'
+          'minuteInterval', 'secondInterval', 'firstDayOfWeek'
         ],
         demoComponents: [
           {
             id: '1',
             title: 'Date Time Picker',
             description: 'Date & Time selector',
-            initial: '2018-04-07 20:26',
-            value: '2018-04-07 20:26',
+            initial: '2018-04-07 20:26:30',
+            value: '2018-04-07 20:26:30',
             editOption: false,
             options: {
-              format: 'YYYY-MM-DD HH:mm',
+              format: 'YYYY-MM-DD HH:mm:ss',
               id: 'DateTimePicker',
-              minDate: '2018-04-05',
-              maxDate: '2018-04-24'
+              minDate: '2018-04-05 12:20:30',
+              maxDate: '2018-04-24 8:13:20'
             }
           },
           {
@@ -474,6 +475,11 @@
           { key: 'lastYear', label: 'Last year', value: '-year' }
         ]
       }
+    },
+    mounted () {
+      setTimeout(() => {
+        // this.demoComponents[0].options.minDate = '2018-04-07 21:26:30'
+      }, 2000)
     }
   }
 </script>

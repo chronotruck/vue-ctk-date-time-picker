@@ -13,7 +13,7 @@
       class="time-picker-column flex-1 flex flex-direction-column text-center"
       @scroll="noScrollEvent
         ? null
-        : column.type === 'hours' ? onScrollHours($event) : column.type === 'minutes' ? onScrollMinutes($event) : onScrollApms($event)
+        : column.type === 'hours' ? onScrollHours($event) : column.type === 'minutes' ? onScrollMinutes($event) : column.type === 'seconds' ? onScrollSeconds($event) : onScrollApms($event)
       "
     >
       <div>
@@ -66,6 +66,7 @@
   }
   const ArrayMinuteRange = (start, end, twoDigit, step = 1, disabledMinutes) => {
     const len = Math.floor(end / step) - start
+    console.log('>>>minute len:', len)
 
     return Array(len).fill().map((_, idx) => {
       const number = start + idx * step
@@ -74,6 +75,19 @@
         value: number,
         item: txtMinute,
         disabled: disabledMinutes.includes(txtMinute)
+      }
+    })
+  }
+  const ArraySecondRange = (start, end, twoDigit, step = 1, disabledSeconds) => {
+    const len = Math.floor(end / step) - start
+    console.log('seconds length: ', len)
+    return Array(len).fill().map((_, idx) => {
+      const number = start + idx * step
+      const txtSecond = (twoDigit && (number < 10) ? '0' : '') + number
+      return {
+        value: number,
+        item: txtSecond,
+        disabled: disabledSeconds.includes(txtSecond)
       }
     })
   }
@@ -94,6 +108,7 @@
       value: { type: String, default: null },
       format: { type: String, default: null },
       minuteInterval: { type: [String, Number], default: 1 },
+      secondInterval: { type: [String, Number], default: 1 },
       height: { type: Number, required: true },
       color: { type: String, default: null },
       inline: { type: Boolean, default: null },
@@ -109,6 +124,7 @@
       return {
         hour: null,
         minute: null,
+        second: null,
         apm: null,
         oldvalue: this.value,
         columnPadding: {},
@@ -141,8 +157,12 @@
         )
       },
       minutes () {
-        const twoDigit = this.format.includes('mm') || this.format.includes('MM')
+        const twoDigit = this.format.includes('mm') || this.format.includes('m')
         return ArrayMinuteRange(0, 60, twoDigit, this.minuteInterval, this._disabledMinutes)
+      },
+      seconds () {
+        const twoDigit = this.format.includes('ss') || this.format.includes('s')
+        return ArraySecondRange(0, 60, twoDigit, this.secondInterval, this._disabledSeconds)
       },
       apms () {
         return this.isTwelveFormat
@@ -155,6 +175,7 @@
         return [
           { type: 'hours', items: this.hours },
           { type: 'minutes', items: this.minutes },
+          { type: 'seconds', items: this.seconds },
           ...(this.apms ? [{ type: 'apms', items: this.apms }] : [])
         ]
       },
@@ -204,26 +225,14 @@
       _disabledMinutes () {
         let minEnabledMinute = 0
         let maxEnabledMinute = 60
-        if (this.isTwelveFormat) {
-          if (this.minTime && this.apm) {
-            const minTime = moment(this.minTime, 'h:mm a')
-            const minTimeHour = parseInt(minTime.format('h'), 10) + (this.apm.toUpperCase() === 'PM' ? 12 : 0)
-            minEnabledMinute = minTimeHour === this.hour ? parseInt(minTime.format('mm'), 10) : minEnabledMinute
-          } else if (this.maxTime) {
-            const maxTime = moment(this.maxTime, 'h:mm a')
-            const maxTimeHour = parseInt(maxTime.format('h'), 10) + (this.apm.toUpperCase() === 'PM' ? 12 : 0)
-            maxEnabledMinute = maxTimeHour === this.hour ? parseInt(maxTime.format('mm'), 10) : maxEnabledMinute
-          }
-        } else {
-          if (this.minTime) {
-            const minTime = moment(this.minTime, 'HH:mm')
-            const minTimeHour = parseInt(moment(this.minTime, 'HH:mm').format('HH'), 10)
-            minEnabledMinute = minTimeHour === this.hour ? parseInt(minTime.format('mm'), 10) : minEnabledMinute
-          } else if (this.maxTime) {
-            const maxTime = moment(this.maxTime, 'HH:mm')
-            const maxTimeHour = parseInt(moment(this.maxTime, 'HH:mm').format('HH'), 10)
-            maxEnabledMinute = maxTimeHour === this.hour ? parseInt(maxTime.format('mm'), 10) : maxEnabledMinute
-          }
+        if (this.minTime) {
+          const minTime = moment(this.minTime, this.format)
+          const minTimeHour = minTime.get('hour')
+          minEnabledMinute = minTimeHour === this.hour ? minTime.get('minute') : minEnabledMinute
+        } else if (this.maxTime) {
+          const maxTime = moment(this.maxTime, this.format)
+          const maxTimeHour = maxTime.get('hour')
+          maxEnabledMinute = maxTimeHour === this.hour ? maxTime.get('minute') : maxEnabledMinute
         }
 
         if (minEnabledMinute !== 0 || maxEnabledMinute !== 60) {
@@ -239,6 +248,47 @@
           return [...Array(60)]
             .map((_, i) => i)
             .filter(m => !enabledMinutes.includes(m))
+            .map(m => m < 10 ? '0' + m : '' + m)
+        } else {
+          return []
+        }
+      },
+      _disabledSeconds () {
+        let minEnabledSecond = 0
+        let maxEnabledSecond = 60
+        // debugger
+        if (this.minTime) {
+          const minTime = moment(this.minTime, this.format)
+          const minTimeHour = minTime.get('hour')
+          const minTimeMinute = minTime.get('minute')
+          minEnabledSecond = minTimeHour === this.hour && minTimeMinute === this.minute ? minTime.get('second') : minEnabledSecond
+        } else if (this.maxTime) {
+          const maxTime = moment(this.maxTime, this.format)
+          const maxTimeHour = maxTime.get('hour')
+          const maxTimeMinute = maxTime.get('minute')
+          maxEnabledSecond = maxTimeHour === this.hour && maxTimeMinute === this.minute ? maxTime.get('second') : maxEnabledSecond
+        }
+
+        console.log('>>>minEnabledSecond:', minEnabledSecond)
+
+        if (minEnabledSecond !== 0 || maxEnabledSecond !== 60) {
+          const enabledSeconds = [...Array(60)]
+            .map((_, i) => i)
+            .filter(m => m >= minEnabledSecond && m <= maxEnabledSecond)
+
+          if (!enabledSeconds.includes(this.second) && this.behaviour && this.behaviour.time && this.behaviour.time.nearestIfDisabled) {
+            this.second = enabledSeconds[0] // eslint-disable-line
+            this.emitValue()
+          }
+
+          console.log('>>>disabledSeconds:', [...Array(60)]
+            .map((_, i) => i)
+            .filter(m => !enabledSeconds.includes(m))
+            .map(m => m < 10 ? '0' + m : '' + m))
+
+          return [...Array(60)]
+            .map((_, i) => i)
+            .filter(m => !enabledSeconds.includes(m))
             .map(m => m < 10 ? '0' + m : '' + m)
         } else {
           return []
@@ -277,11 +327,11 @@
       onScrollHours: debounce(function (scroll) {
         const value = this.getValue(scroll)
         const hour = this.isTwelveFormat
-					? this.apm
-						? this.apm.toLowerCase() === 'am'
-							? value + 1
-							: (value + 1 + 12)
-						:value
+          ? this.apm
+            ? this.apm.toLowerCase() === 'am'
+              ? value + 1
+              : (value + 1 + 12)
+            : value
           : value
         if (this.isHoursDisabled(hour)) return
         this.hour = hour === 24 && !this.isTwelveFormat ? 23 : hour
@@ -292,6 +342,13 @@
         const minute = value * this.minuteInterval
         if (this.isMinutesDisabled(minute)) return
         this.minute = minute === 60 ? 59 : minute
+        this.emitValue()
+      }, 100),
+      onScrollSeconds: debounce(function (scroll) {
+        const value = this.getValue(scroll)
+        const second = value * this.secondInterval
+        if (this.isSecondsDisabled(second)) return
+        this.second = second === 60 ? 59 : second
         this.emitValue()
       }, 100),
       onScrollApms: debounce(function (scroll) {
@@ -308,7 +365,9 @@
           ? this.hour
           : type === 'minutes'
             ? this.minute
-            : this.apm ? this.apm : null) === value
+            : type === 'seconds'
+              ? this.second
+              : this.apm ? this.apm : null) === value
       },
       isHoursDisabled (h) {
         const hourToTest = this.apmType
@@ -319,6 +378,10 @@
       isMinutesDisabled (m) {
         m = m < 10 ? '0' + m : '' + m
         return this._disabledMinutes.includes(m)
+      },
+      isSecondsDisabled (m) {
+        m = m < 10 ? '0' + m : '' + m
+        return this._disabledSeconds.includes(m)
       },
       buildComponent () {
         if (this.isTwelveFormat && !this.apms) window.console.error(`VueCtkDateTimePicker - Format Error : To have the twelve hours format, the format must have "A" or "a" (Ex : ${this.format} a)`)
@@ -337,6 +400,7 @@
           : hourToSet
 
         this.minute = parseInt(moment(this.value, this.format).format('mm'))
+        this.second = parseInt(moment(this.value, this.format).format('ss'))
         this.apm = this.apms && this.value
           ? this.hour > 12
             ? this.apms.length > 1 ? this.apms[1].value : this.apms[0].value
@@ -361,7 +425,7 @@
       },
       async initPositionView () {
         this.noScrollEvent = true
-        const containers = ['hours', 'minutes']
+        const containers = ['hours', 'minutes', 'seconds']
         if (this.apms) containers.push('apms')
 
         await this.$nextTick()
@@ -379,6 +443,7 @@
               elem.scrollTop = (28 / 2) + boundsSelected.top - boundsElem.top - timePickerHeight / 2
             }
           }
+
           setTimeout(() => {
             this.noScrollEvent = false
           }, 500)
@@ -395,6 +460,9 @@
           this.hour = item
         } else if (type === 'minutes') {
           this.minute = item
+        } else if (type === 'seconds') {
+          this.second = item
+          console.log('>>>item:', item)
         } else if (type === 'apms' && this.apm !== item) {
           const newHour = item === 'pm' || item === 'PM' ? this.hour + 12 : this.hour - 12
           this.hour = newHour
@@ -409,7 +477,8 @@
           : tmpHour
         hour = (hour < 10 ? '0' : '') + hour
         const minute = this.minute ? (this.minute < 10 ? '0' : '') + this.minute : '00'
-        const time = `${hour}:${minute}`
+        const second = this.second ? (this.second < 10 ? '0' : '') + this.second : '00'
+        const time = `${hour}:${minute}:${second}`
         this.$emit('input', time)
       }
     }
@@ -434,7 +503,7 @@
       top: 50%;
       position: absolute;
       margin: 0 auto;
-      margin-top: -14px;
+      margin-top: -15px;
       height: 30px;
       z-index: -1;
       width: 85%;
