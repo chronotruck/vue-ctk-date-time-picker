@@ -411,13 +411,16 @@
               minDate: '2019-03-03 8:10 pm',
               maxDate: '2019-03-24 9:14 am'
             }
-          },
-          {
+          }
+          /* {
             id: '9',
             title: 'Enabled/Disabled dates Picker',
             description: '',
             editOption: false,
-            initial: { 'disabledDates': ['2021-02-22'], 'enabledDates': ['2021-02-21', '2021-02-22', '2021-02-23'] },
+            initial: {
+              disabledDates: ['2021-02-22'],
+              enabledDates: ['2021-02-21', '2021-02-22', '2021-02-23']
+            },
             value: '2021-02-22',
             options: {
               id: 'EnabledDisabledDatesPicker',
@@ -426,7 +429,7 @@
               inline: true,
               format: 'YYYY-MM-DD HH:mm'
             }
-          }
+          } */
         ],
         value: '06-01-2014 05:00',
         value2: null,
@@ -475,11 +478,6 @@
           { key: 'lastYear', label: 'Last year', value: '-year' }
         ]
       }
-    },
-    mounted () {
-      setTimeout(() => {
-        // this.demoComponents[0].options.minDate = '2018-04-07 21:26:30'
-      }, 2000)
     }
   }
 </script>
