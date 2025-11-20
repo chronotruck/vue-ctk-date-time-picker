@@ -139,6 +139,7 @@ Here is an example of [UMD implementation](https://codepen.io/louismazel/pen/jQW
 | noClearButton               | Boolean           | no       | false                       |
 | behaviour                   | Object            | no       | [See behaviour](#Behaviour) |
 | id (14)                     | String            | no       | undefined                   |
+| border-radius               | String            | no       | '4px'                       |
 
 (1) hint : Is a text that replaces the label/placeholder (Ex : Error designation)
 

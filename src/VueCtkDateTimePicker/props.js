@@ -56,5 +56,6 @@ export default {
   behaviour: { type: Object, default: () => ({}) },
   noKeyboard: { type: Boolean, default: false },
   right: { type: Boolean, default: false },
-  noClearButton: { type: Boolean, default: false }
+  noClearButton: { type: Boolean, default: false },
+  borderRadius: { type: String, default: '4px' }
 }

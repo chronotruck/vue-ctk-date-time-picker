@@ -21,6 +21,7 @@
       :no-label="noLabel"
       :input-size="inputSize"
       :no-clear-button="noClearButton"
+      :border-radius="borderRadius"
       @focus="toggleDatePicker(true)"
       @clear="$emit('input', null)"
     />

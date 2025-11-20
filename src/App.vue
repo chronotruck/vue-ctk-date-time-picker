@@ -221,6 +221,7 @@
                 :disabled-weekly="demo.options.disabledWeekly"
                 :right="demo.options.right"
                 :no-clear-button="demo.options.noClearButton"
+                :border-radius="demo.options.borderRadius"
               >
                 <input
                   v-if="demo.options && demo.options.slot && demo.options.slot.type === 'input'"
@@ -280,7 +281,8 @@
               format: 'YYYY-MM-DD HH:mm',
               id: 'DateTimePicker',
               minDate: '2018-04-05',
-              maxDate: '2018-04-24'
+              maxDate: '2018-04-24',
+              borderRadius: '0'
             }
           },
           {
@@ -325,7 +327,8 @@
               format: 'DD-MM-YYYY',
               formatted: 'll',
               right: true,
-              noLabel: true
+              noLabel: true,
+              borderRadius: '10px'
             }
           },
           {
