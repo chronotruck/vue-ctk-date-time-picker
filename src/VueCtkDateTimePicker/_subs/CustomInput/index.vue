@@ -18,7 +18,7 @@
       v-bind="$attrs"
       :value="value"
       :placeholder="label"
-      :style="[borderStyle]"
+      :style="[borderStyle, { borderRadius }]"
       type="text"
       class="field-input"
       :class="{ 'no-clear-button': noClearButton }"
@@ -72,7 +72,8 @@
       color: { type: String, default: null },
       dark: { type: Boolean, default: false },
       inputSize: { type: String, default: null },
-      noClearButton: { type: Boolean, default: false }
+      noClearButton: { type: Boolean, default: false },
+      borderRadius: { type: String, default: null }
     },
     computed: {
       borderStyle () {
@@ -154,7 +155,6 @@
       -webkit-appearance: none;
       outline: none;
       border: 1px solid rgba(0, 0, 0, 0.2);
-      border-radius: 4px;
       font-size: 14px;
       z-index: 0;
       &.no-clear-button {
