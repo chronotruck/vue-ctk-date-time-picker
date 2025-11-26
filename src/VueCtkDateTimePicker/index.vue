@@ -217,6 +217,13 @@
       },
       locale (value) {
         updateMomentLocale(value, this.firstDayOfWeek)
+      },
+      label () {
+        if (this.hasCustomElem && !this.noValueToCustomElem) {
+          this.$nextTick(() => {
+            this.setValueToCustomElem()
+          })
+        }
       }
     },
     created () {
