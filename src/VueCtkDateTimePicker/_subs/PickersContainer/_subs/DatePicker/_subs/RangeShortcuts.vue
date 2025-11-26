@@ -25,7 +25,25 @@
   import moment from 'moment'
   import CustomButton from '@/VueCtkDateTimePicker/_subs/CustomButton'
 
-  const SHORTCUT_TYPES = ['day', 'date', '-day', 'isoWeek', 'quarter', '-isoWeek', 'month', '-month', 'year', '-year', 'week', '-week']
+  const SHORTCUT_TYPES = [
+    '-day',
+    'day',
+    '+day',
+    'date',
+    '-isoWeek',
+    'isoWeek',
+    '+isoWeek',
+    'quarter',
+    '-month',
+    'month',
+    '+month',
+    '-year',
+    'year',
+    '+year',
+    '-week',
+    'week',
+    '+week'
+  ]
 
   /**
    * Component used to show a list of the shortcuts currently available
@@ -125,7 +143,13 @@
         }
 
         switch (value) {
-        case 'year': case 'month': case 'quarter': case 'week': case 'isoWeek': case 'day': case 'date':
+        case 'year':
+        case 'month':
+        case 'quarter':
+        case 'week':
+        case 'isoWeek':
+        case 'day':
+        case 'date':
           return {
             start: moment().startOf(value),
             end: moment().endOf(value),
@@ -137,10 +161,22 @@
             end: moment().subtract(1, 'months').endOf('month'),
             value
           }
+        case '+month':
+          return {
+            start: moment().add(1, 'months').startOf('month'),
+            end: moment().add(1, 'months').endOf('month'),
+            value
+          }
         case '-year':
           return {
             start: moment().subtract(1, 'years').startOf('year'),
             end: moment().subtract(1, 'years').endOf('year'),
+            value
+          }
+        case '+year':
+          return {
+            start: moment().add(1, 'years').startOf('year'),
+            end: moment().add(1, 'years').endOf('year'),
             value
           }
         case '-week':
@@ -149,16 +185,34 @@
             end: moment().subtract(1, 'weeks').endOf('week'),
             value
           }
+        case '+week':
+          return {
+            start: moment().add(1, 'weeks').startOf('week'),
+            end: moment().add(1, 'weeks').endOf('week'),
+            value
+          }
         case '-isoWeek':
           return {
             start: moment().subtract(1, 'weeks').startOf('isoWeek'),
             end: moment().subtract(1, 'weeks').endOf('isoWeek'),
             value
           }
+        case '+isoWeek':
+          return {
+            start: moment().add(1, 'weeks').startOf('isoWeek'),
+            end: moment().add(1, 'weeks').endOf('isoWeek'),
+            value
+          }
         case '-day':
           return {
             start: moment().subtract(1, 'days').startOf('day'),
             end: moment().subtract(1, 'days').endOf('day'),
+            value
+          }
+        case '+day':
+          return {
+            start: moment().add(1, 'days').startOf('day'),
+            end: moment().add(1, 'days').endOf('day'),
             value
           }
         }
