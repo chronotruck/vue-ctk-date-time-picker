@@ -1,6 +1,6 @@
 <template>
   <div
-    :id="`${$attrs.id}-wrapper`"
+    :id="getWrapperId"
     ref="parent"
     v-click-outside="closePicker"
     class="date-time-picker"
@@ -8,7 +8,7 @@
     <!-- Input -->
     <CustomInput
       v-if="hasInput"
-      :id="`${$attrs.id}-input`"
+      :id="getInputId"
       ref="custom-input"
       v-model="dateFormatted"
       v-bind="$attrs"
@@ -38,7 +38,7 @@
     <!-- Date picker container -->
     <PickersContainer
       v-if="!isDisabled"
-      :id="`${$attrs.id}-picker-container`"
+      :id="getPickerContainerId"
       ref="agenda"
       v-model="dateTime"
       :visible="hasPickerOpen"
@@ -135,6 +135,15 @@
       }
     },
     computed: {
+      getWrapperId () {
+        return [undefined, null].includes(this.$attrs.id) ? null : `${this.$attrs.id}-wrapper`
+      },
+      getInputId () {
+        return [undefined, null].includes(this.$attrs.id) ? null : `${this.$attrs.id}-input`
+      },
+      getPickerContainerId () {
+        return [undefined, null].includes(this.$attrs.id) ? null : `${this.$attrs.id}-picker-container`
+      },
       hasPickerOpen () {
         return this.persistent || this.pickerOpen
       },
