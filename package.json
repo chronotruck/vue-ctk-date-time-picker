@@ -41,7 +41,7 @@
     "eslint": "^5.8.0",
     "eslint-plugin-vue": "^5.0.0",
     "node-sass": "^4.11.0",
-    "nuxt": "^2.9.2",
+    "nuxt": "^3.4.3",
     "sass-loader": "^7.1.0",
     "vue-cli-plugin-webpack-bundle-analyzer": "^1.2.0",
     "vue-server-renderer": "^2.6.9",
