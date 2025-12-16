@@ -1,6 +1,7 @@
 version: '2'
 services:
   app:
+    user: node
     image: node:10.13.0
     command: npm run serve
     working_dir: /app
