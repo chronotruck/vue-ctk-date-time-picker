@@ -67,6 +67,8 @@
             :format="timeFormat"
             :only-time="onlyTime"
             :minute-interval="minuteInterval"
+            :start-minute="startMinute"
+            :end-minute="endMinute"
             :visible="visible"
             :height="height"
             :disabled-hours="disabledHours"
@@ -120,6 +122,8 @@
       onlyDate: { type: Boolean, default: false },
       onlyTime: { type: Boolean, default: null },
       minuteInterval: { type: [String, Number], default: 1 },
+      startMinute: { type: Number, default: 0 },
+      endMinute: { type: Number, default: 60 },
       format: { type: String, default: 'YYYY-MM-DD hh:mm a' },
       locale: { type: String, default: null },
       maxDate: { type: String, default: null },

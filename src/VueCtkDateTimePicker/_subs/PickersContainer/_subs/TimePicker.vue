@@ -65,7 +65,9 @@
     })
   }
   const ArrayMinuteRange = (start, end, twoDigit, step = 1, disabledMinutes) => {
-    const len = Math.floor(end / step) - start
+    step = Math.trunc(step)
+    end = Math.min(end, 59)
+    const len = Math.ceil((end - start + 1) / step)
 
     return Array(len).fill().map((_, idx) => {
       const number = start + idx * step
@@ -94,6 +96,8 @@
       value: { type: String, default: null },
       format: { type: String, default: null },
       minuteInterval: { type: [String, Number], default: 1 },
+      startMinute: { type: Number, default: 0 },
+      endMinute: { type: Number, default: 60 },
       height: { type: Number, required: true },
       color: { type: String, default: null },
       inline: { type: Boolean, default: null },
@@ -142,7 +146,7 @@
       },
       minutes () {
         const twoDigit = this.format.includes('mm') || this.format.includes('MM')
-        return ArrayMinuteRange(0, 60, twoDigit, this.minuteInterval, this._disabledMinutes)
+        return ArrayMinuteRange(this.startMinute, this.endMinute, twoDigit, this.minuteInterval, this._disabledMinutes)
       },
       apms () {
         return this.isTwelveFormat
@@ -277,11 +281,11 @@
       onScrollHours: debounce(function (scroll) {
         const value = this.getValue(scroll)
         const hour = this.isTwelveFormat
-					? this.apm
-						? this.apm.toLowerCase() === 'am'
-							? value + 1
-							: (value + 1 + 12)
-						:value
+          ? this.apm
+            ? this.apm.toLowerCase() === 'am'
+              ? value + 1
+              : (value + 1 + 12)
+            : value
           : value
         if (this.isHoursDisabled(hour)) return
         this.hour = hour === 24 && !this.isTwelveFormat ? 23 : hour
