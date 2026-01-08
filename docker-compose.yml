@@ -8,3 +8,12 @@ services:
       - ./:/app
     ports:
       - 8080:8080
+
+  chrome:
+    image: browserless/chrome:1.9.0-puppeteer-1.15.0
+    environment:
+      - MAX_CONCURRENT_SESSIONS=10
+    ports:
+      - '3000:3000'
+    links:
+      - app

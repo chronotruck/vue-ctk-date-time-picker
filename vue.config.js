@@ -5,5 +5,8 @@ module.exports = {
     }
   },
   publicPath: './',
-  lintOnSave: undefined
+  lintOnSave: undefined,
+  devServer: {
+    disableHostCheck: true
+  }
 }
