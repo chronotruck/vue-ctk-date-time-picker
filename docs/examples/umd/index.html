@@ -1,0 +1,69 @@
+<!-- also @https://codepen.io/yordangeorgiev/pen/xxwNeJL -->
+<html>
+   <head> <title>vue-ctk-date-time-picker-02</title>
+
+ <style>
+ html, body {
+   overflow-x: hidden;
+   max-width: 100%;
+   font-family: Helvetica Neue, Arial, sansserif;
+	height: 1000px;
+ }
+ </style>
+	<link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/vue-ctk-date-time-picker@2.4.0/dist/vue-ctk-date-time-picker.css">
+</head>
+
+<body>
+    <script src="https://unpkg.com/vue" charset="utf-8"></script>
+    <script src="https://cdn.jsdelivr.net/npm/vue-ctk-date-time-picker@2.4.0/dist/vue-ctk-date-time-picker.umd.min.js" charset="utf-8"></script>
+<div id="app" style="fontsize: 7em">
+      <vue-ctk-date-time-pic :label="start_time" id="start_time_control" :value="time"> </vue-ctk-date-time-pic>
+      <vue-ctk-date-time-pic :label="stop_time" id="stop_time_control" :value="time"> </vue-ctk-date-time-pic>
+</div>
+
+<script type="text/x-template" id="vue-ctk-date-time-picker-tpl">
+   <vue-ctk-date-time-picker :format="'YYYY-MM-DD HH:mm'" :formatted="'YYYY-MM-DD HH:mm'" :label="'Select date'"
+      v-model="value" :first-day-of-week="1" :no-weekends-days="false">
+   </vue-ctk-date-time-picker>
+</script>
+
+<script>
+var valVueDtPick = Vue.component('vue-ctk-date-time-pic', {
+    template: "#vue-ctk-date-time-picker-tpl"
+   , data: function () {
+       return {
+         value: null
+       }
+     },
+     methods: {
+      log: function (val) {
+         console.log(val)
+      }
+    },
+     components: { 'datetime-picker': Vue.component('vue-ctk-date-time-picker', window['vue-ctk-date-time-picker'])}
+   })
+
+new Vue({
+   el: "#app"
+   , data: function () {
+       return {
+         time: null
+       }
+     },
+     components: { 'vue-ctk-date-time-pic': valVueDtPick}
+})
+</script>
+
+
+
+<div>
+<p> this page demonstrates the following : </p>
+<pre>
+ - umd usage of vue-ctk-date-time-picker from CDN - https://www.jsdelivr.com/package/npm/vue-ctk-date-time-picker?path=dist
+ - iso-8601 :formatted="'YYYY-MM-DD HH:mm'" for the string in the inputs
+ - use monday as the first day of the week
+ - :no-weekends-days="false" - can be set to true and the user cannot select the days
+ - extend the vue-ctk-date-time-picker via custom template
+</pre>
+</body>
+</html>
