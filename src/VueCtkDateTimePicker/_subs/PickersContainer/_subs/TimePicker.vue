@@ -405,7 +405,7 @@
       emitValue () {
         const tmpHour = this.hour ? this.hour : this.getAvailableHour()
         let hour = this.isTwelveFormat && (tmpHour === 24 || tmpHour === 12)
-          ? this.apm.toLowerCase() === 'am' ? 0 : 12
+          ? this.apm && this.apm.toLowerCase() === 'am' ? 0 : 12
           : tmpHour
         hour = (hour < 10 ? '0' : '') + hour
         const minute = this.minute ? (this.minute < 10 ? '0' : '') + this.minute : '00'
